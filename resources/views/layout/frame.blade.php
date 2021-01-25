@@ -21,8 +21,7 @@
     <!-- custom styles -->
     <style>
         .row {
-            margin-right: 0;
-            margin-left: 0;
+            margin: 5px 0 5px 0;
         }
 
         main {
@@ -40,6 +39,10 @@
 
         .white {
             color: white;
+        }
+
+        .row-space {
+            padding: 15px 0 15px 0;
         }
     </style>
     @yield('extra-css')
