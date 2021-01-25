@@ -70,10 +70,10 @@
 
                     @guest
 
-                    <li class="nav-item {{ (request()->is('about-us')) ? 'active font-weight-bold' : '' }}>
+                    <li class="nav-item {{ (request()->is('about-us')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('about-us') }}">About Us</a>
                     </li>
-                    <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}>
+                    <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('login') }}">Login</a>
                     </li>
                     <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
@@ -82,13 +82,13 @@
 
                     @else
 
-                    <li class="nav-item {{ (request()->is('court')) ? 'active font-weight-bold' : '' }}>
+                    <li class="nav-item {{ (request()->is('court')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('court') }}">Book Courts</a>
                     </li>
-                    <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}>
+                    <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('mybookings') }}">My Bookings</a>
                     </li>
-                    <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}>
+                    <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('myaccount') }}">{{ Auth::user()->name }}</a>
                     </li>
                     <li class="nav-item">
