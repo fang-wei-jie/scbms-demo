@@ -109,12 +109,7 @@
 
         <!-- body/content -->
         <main class="flex-fill" style="padding-top: 75px;">
-            <div class="container-fluid">
-                @yield('body-fluid')
-            </div>
-            <div class="container">
-                @yield('body')
-            </div>
+            @yield('body')
         </main>
 
         <!-- footer -->
