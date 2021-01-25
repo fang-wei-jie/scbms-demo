@@ -74,7 +74,7 @@
                         <a class="nav-link" href="{{ ('about-us') }}">About Us</a>
                     </li>
                     <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ ('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
