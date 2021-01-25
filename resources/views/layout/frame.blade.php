@@ -77,10 +77,12 @@
                         <a class="nav-link" href="{{ ('login') }}">Login</a>
                     </li>
                     <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ ('register') }}">Register</a>
+                        <a class="nav-link" href="{{ route('register') }}">Register</a>
                     </li>
 
-                    @else
+                    @endguest
+
+                    @auth
 
                     <li class="nav-item {{ (request()->is('court')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ ('court') }}">Book Courts</a>
@@ -102,7 +104,7 @@
                         </form>
                     </li>
 
-                    @endguest
+                    @endauth
                 </ul>
             </div>
         </nav>
@@ -163,5 +165,7 @@
         </footer>
     </wrapper>
 </body>
+
+@yield('bottom-js')
 
 </html>
