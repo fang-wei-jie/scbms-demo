@@ -12,7 +12,15 @@ class RegisterController extends Controller
 {
     function view () {
 
-        return view ('auth.register');
+        if (Auth() -> user()) {
+
+            return back();
+
+        } else {
+
+            return view ('auth.register');
+            
+        }
 
     }
 

@@ -10,8 +10,15 @@ class LoginController extends Controller
 {
     function view () {
 
-        return view ('auth.login');
+        if (Auth() -> user()) {
 
+            return back();
+
+        } else {
+
+            return view ('auth.login');
+
+        }
     }
 
     function auth (Request $request) {
