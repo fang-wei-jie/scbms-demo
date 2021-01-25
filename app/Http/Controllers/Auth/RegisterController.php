@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function view () {
+    function view () {
 
         return view ('auth.register');
 
     }
 
-    public function store (Request $request) {
+    function store (Request $request) {
 
         // sanction and validate user input
         $this -> validate($request, [
