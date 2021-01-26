@@ -46,11 +46,6 @@
         }
     </style>
     @yield('extra-css')
-
-    @php
-    // obtains the URL address
-    $url = $_SERVER['REQUEST_URI'];
-    @endphp
 </head>
 
 <body>
