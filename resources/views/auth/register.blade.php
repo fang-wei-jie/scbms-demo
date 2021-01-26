@@ -25,7 +25,7 @@ Register -
                 </div>
 
                 <div class="row">
-                    <input id="phone" class="form-control @error('phone') is-invalid @enderror @if(old('phone')) is-valid @endif" type="tel" name="phone" value="{{ old('phone') }}" maxlength=11 placeholder="Mobile Phone Number (01XXXXXXXXX)" required>
+                    <input id="phone" class="form-control @error('phone') is-invalid @enderror @if(old('phone')) is-valid @endif" type="tel" name="phone" value="{{ old('phone') }}" minlength="10" maxlength=11 placeholder="Mobile Phone Number (01XXXXXXXXX)" required>
                     @error('phone')
                     <div class="invalid-feedback">
                         {{ $message }}
