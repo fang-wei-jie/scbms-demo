@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+
+    function __construct()
+    {
+
+        $this -> middleware('guest');
+
+    }
+
     function view () {
 
-        if (Auth() -> user()) {
-
-            return back();
-
-        } else {
-
-            return view ('auth.register');
-            
-        }
+        return view ('auth.register');
 
     }
 

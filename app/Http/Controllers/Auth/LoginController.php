@@ -8,17 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+
+    function __construct()
+    {
+
+        $this -> middleware(['guest']);
+
+    }
+
     function view () {
 
-        if (Auth() -> user()) {
+        return view ('auth.login');
 
-            return back();
-
-        } else {
-
-            return view ('auth.login');
-
-        }
     }
 
     function auth (Request $request) {
