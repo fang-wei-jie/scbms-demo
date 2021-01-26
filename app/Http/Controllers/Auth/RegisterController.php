@@ -30,8 +30,8 @@ class RegisterController extends Controller
         $this -> validate($request, [
 
             'name' => 'required | max:255',
-            'phone' => 'required | min:10 | max:11',
-            'email' => 'required | email | max:75',
+            'phone' => 'required | min:10 | max:11 | unique:users',
+            'email' => 'required | email | max:75 | unique:users',
             'password' => 'required | min:8 | max:50 | confirmed'
 
         ]);
