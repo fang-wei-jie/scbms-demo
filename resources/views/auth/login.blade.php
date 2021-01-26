@@ -39,6 +39,9 @@ Login -
                     @enderror
                 </div>
 
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Keep me signed in</label>
+
                 <div class="row">
                     <button class="btn btn-primary" type="submit" name="login">Login</button>
                 </div>
