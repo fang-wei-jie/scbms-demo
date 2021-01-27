@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::post('/login', [LoginController::class, 'auth']);
 
 // Logout
 Route::post('/logout', [LogoutController::class, 'logout']) -> name('logout');
+
+// My Account
+Route::get('/myaccount', [AccountController::class, 'view']) -> name('myaccount');
+Route::post('/myaccount', [AccountController::class, 'update']);

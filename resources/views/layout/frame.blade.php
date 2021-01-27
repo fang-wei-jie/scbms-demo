@@ -89,7 +89,7 @@
                         <a class="nav-link" href="{{ ('mybookings') }}">My Bookings</a>
                     </li>
                     <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ ('myaccount') }}">{{ Auth::user()->name }}</a>
+                        <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" style="color: red; " href="{{ ('logout') }}"
