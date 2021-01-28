@@ -86,7 +86,7 @@
                         <a class="nav-link" href="{{ ('court') }}">Book Courts</a>
                     </li>
                     <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ ('mybookings') }}">My Bookings</a>
+                        <a class="nav-link" href="{{ route('mybookings') }}">My Bookings</a>
                     </li>
                     <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
