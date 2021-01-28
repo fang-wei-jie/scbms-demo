@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ViewBookingsController;
@@ -18,17 +18,20 @@ use App\Http\Controllers\ViewBookingsController;
 |
 */
 
+// GLOBAL PAGES
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Registration
-Route::get('/register', [RegisterController::class, 'view']) -> name('register');
-Route::post('/register', [RegisterController::class, 'store']);
-
 // Login
 Route::get('/login', [LoginController::class, 'view']) -> name('login');
 Route::post('/login', [LoginController::class, 'auth']);
+
+// CUSTOMER PAGES
+// Registration
+Route::get('/register', [RegisterController::class, 'view']) -> name('register');
+Route::post('/register', [RegisterController::class, 'store']);
 
 // Logout
 Route::post('/logout', [LogoutController::class, 'logout']) -> name('logout');
