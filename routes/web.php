@@ -42,3 +42,6 @@ Route::post('/myaccount', [AccountController::class, 'update']);
 
 // My Bookings
 Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
+
+// Receipt/Invoice
+Route::post('/receipt', [ReceiptController::class, 'view']) -> name('view-receipt');
