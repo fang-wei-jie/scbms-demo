@@ -59,12 +59,16 @@ My Bookings -
                         </td>
 
                         <td>
-                            <button type="button" class="btn btn-outline-secondary" id="show-receipt">
-                                <i class="bi bi-receipt"></i>
-                                View receipt
-                            </button>
+                            <form action="{{ route('view-receipt') }}" method="post">
+                                @csrf
+                                <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                    <i class="bi bi-receipt"></i>
+                                    Receipt
+                                </button>
+                            </form>
                             <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}"><i class="bi bi-upc"></i>
-                                Show Check-in Code
+                                Check-in Code
                             </button>
                         </td>
                     </tr>
@@ -110,10 +114,14 @@ My Bookings -
                             </td>
 
                             <td>
-                                <button type="button" class="btn btn-outline-secondary" id="show-receipt">
-                                    <i class="bi bi-receipt"></i>
-                                    View receipt
-                                </button>
+                                <form action="{{ route('view-receipt') }}" method="post">
+                                    @csrf
+                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                        <i class="bi bi-receipt"></i>
+                                        Receipt
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
