@@ -19,7 +19,7 @@ class AccountController extends Controller
 
     function view () {
 
-        return view ('myaccount');
+        return view ('customer.myaccount');
 
     }
 
