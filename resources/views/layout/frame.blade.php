@@ -52,7 +52,7 @@
     <wrapper class="d-flex flex-column">
         <!-- navbar/header -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href=" @guest {{ '/' }} @endguest @auth {{ 'mybookings' }} @endauth">
                 <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top" alt=""
                     loading="lazy">
                 X Badminton Court
