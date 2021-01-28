@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\ViewBookingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +38,4 @@ Route::get('/myaccount', [AccountController::class, 'view']) -> name('myaccount'
 Route::post('/myaccount', [AccountController::class, 'update']);
 
 // My Bookings
-Route::get('/mybookings', [BookingsController::class, 'view_bookings']) -> name('mybookings');
+Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
