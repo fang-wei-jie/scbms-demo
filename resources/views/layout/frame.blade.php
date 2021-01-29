@@ -96,8 +96,7 @@
                         <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="color: red; " href="{{ ('logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="nav-link" style="color: red; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
                         </a>
 
