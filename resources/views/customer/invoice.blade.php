@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-
+Receipt -
 @endsection
 
 @section('body')
@@ -26,19 +26,19 @@
 </div>
 <div>
     @foreach($invoiceDetail as $detail)
-    <table class="table table-borderless">
+    <table class="table table-borderless table-sm">
         <tbody>
             <tr>
-                <td>
-                    <h5>Booking Details</h5>
+                <td colspan="2">
+                    <h4>Booking Details</h4>
                     <hr>
                     Invoice ID / Book ID: {{ str_pad($detail->bookID, 7, 0, STR_PAD_LEFT) }}{{ str_pad($detail->custID, 7, 0, STR_PAD_LEFT) }}<br>
                     Order Date: {{ substr($detail->bookDateTime, 6, 2) }}/{{ substr($detail->bookDateTime, 4, 2) }}/{{ substr($detail->bookDateTime, 0, 4) }}<br>
                     Order Time: {{ substr($detail->bookDateTime, 8, 2) }}:{{ substr($detail->bookDateTime, 10, 2) }}:{{ substr($detail->bookDateTime, 12, 2) }}
                 </td>
 
-                <td>
-                    <h5>Customer Details</h5>
+                <td colspan="2">
+                    <h4>Customer Details</h4>
                     <hr>
                     Name: {{ $detail->name }}<br>
                     Phone: {{ $detail->phone }}<br>
@@ -47,25 +47,57 @@
             </tr>
 
             <tr>
-                <td colspan="2">
+                <td colspan="4">
                     <h4>Purchase Detail</h4>
                     <hr>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <h5>
-                        {{ substr($detail->dateSlot, 6, 2) }}/{{ substr($detail->dateSlot, 4, 2) }}/{{ substr($detail->dateSlot, 0, 4) }} {{ $detail->timeSlot }}:00 - {{ ($detail->timeSlot + $detail->timeLength) }}:00<br>
-                        Court {{ $detail->courtID }} {{ $detail->rateName }}<br>
-                    </h5>
+                    {{ substr($detail->dateSlot, 6, 2) }}/{{ substr($detail->dateSlot, 4, 2) }}/{{ substr($detail->dateSlot, 0, 4) }} {{ $detail->timeSlot }}:00 - {{ ($detail->timeSlot + $detail->timeLength) }}:00<br>
+                    Court {{ $detail->courtID }} {{ $detail->rateName }}<br>
                 </td>
                 <td>
-                    <h5>RM{{ $detail->ratePrice }}/hour * {{ $detail->timeLength }} @if($detail->timeLength > 1) hours @else hour @endif = RM{{ ($detail->ratePrice * $detail->timeLength) }}</h5>
+                    RM{{ $detail->ratePrice }}/hour
+                </td>
+                <td>
+                    {{ $detail->timeLength }} @if($detail->timeLength > 1) hours @else hour @endif
+                </td>
+                <td>
+                    RM{{ ($detail->ratePrice * $detail->timeLength) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">
+                    Net total
+                </td>
+                <td>
+                    RM{{ round(($detail->ratePrice * $detail->timeLength) / 106 * 100, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">
+                    SST (6%)
+                </td>
+                <td>
+                    RM{{ round(($detail->ratePrice * $detail->timeLength) / 106 * 6, 2) }}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="text-right">
+                    Total
+                </td>
+                <td>
+                    RM{{ ($detail->ratePrice * $detail->timeLength) }}.00
                 </td>
             </tr>
         </tbody>
     </table>
     @endforeach
 </div>
-<div style="display: flex; justify-content: center; padding-top: 30px;"><button id="printPageButton" onclick="window.print();" class="btn btn-outline-primary">Print</button></div>
+<div class="hide-from-print" style="display: flex; justify-content: center; padding-top: 30px;">
+    <button id="printPageButton" onclick="window.print();" class="btn btn-outline-primary hide-from-print">
+        Print
+    </button>
+</div>
 @endsection
