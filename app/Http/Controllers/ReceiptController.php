@@ -27,8 +27,8 @@ class ReceiptController extends Controller
         $invoiceDetail = DB::table('bookings')
             -> join('users', 'bookings.custID', '=', 'users.id')
             -> join('rates', 'bookings.rateID', '=', 'rates.rateID')
-            -> where('bookings.bookID', $request->input('bookID'))
-            -> select('bookID', 'custID', 'bookDateTime', 'name', 'phone', 'email', 'dateSlot', 'timeSlot', 'timeLength', 'courtID', 'rateName', 'ratePrice')
+            -> where('bookings.bookingID', $request->input('bookID'))
+            -> select('bookingID', 'custID', 'bookings.created_at as bookingDateTime', 'name', 'phone', 'email', 'dateSlot', 'timeSlot', 'timeLength', 'courtID', 'rateName', 'ratePrice')
             -> get();
 
         return view('customer.invoice', ['invoiceDetail' => $invoiceDetail]);

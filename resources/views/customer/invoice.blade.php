@@ -32,9 +32,8 @@ Receipt -
                 <td colspan="2">
                     <h4>Booking Details</h4>
                     <hr>
-                    Invoice ID / Book ID: {{ str_pad($detail->bookID, 7, 0, STR_PAD_LEFT) }}{{ str_pad($detail->custID, 7, 0, STR_PAD_LEFT) }}<br>
-                    Order Date: {{ substr($detail->bookDateTime, 6, 2) }}/{{ substr($detail->bookDateTime, 4, 2) }}/{{ substr($detail->bookDateTime, 0, 4) }}<br>
-                    Order Time: {{ substr($detail->bookDateTime, 8, 2) }}:{{ substr($detail->bookDateTime, 10, 2) }}:{{ substr($detail->bookDateTime, 12, 2) }}
+                    Invoice ID / Book ID: {{ str_pad($detail->bookingID, 7, 0, STR_PAD_LEFT) }}{{ str_pad($detail->custID, 7, 0, STR_PAD_LEFT) }}<br>
+                    Order Created On: {{ $detail->bookingDateTime }}
                 </td>
 
                 <td colspan="2">
