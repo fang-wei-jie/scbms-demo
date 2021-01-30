@@ -11,7 +11,7 @@ My Bookings -
             <h1>My Bookings</h1>
         </div>
         <div class="col-1.5">
-            <a href="{{ 'book-court' }}" class="btn btn-outline-primary">
+            <a href="{{ route('book-court') }}" class="btn btn-outline-primary">
                 <i class="bi bi-plus-circle-fill"></i>
                 New Booking
             </a>
@@ -129,7 +129,7 @@ My Bookings -
                         @else
 
                         <tr>
-                            <td colspan=2 id="today-nodata">No bookings for the selected time range. </td>
+                            <td colspan=2 id="today-nodata">No bookings were expired. </td>
                         </tr>
 
                         @endif
