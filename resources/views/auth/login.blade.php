@@ -1,6 +1,6 @@
 @extends('layout.frame')
 
-@section('name')
+@section('title')
 Login -
 @endsection
 
