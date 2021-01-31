@@ -58,7 +58,17 @@
     <wrapper class="d-flex flex-column">
         <!-- navbar/header -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top hide-from-print">
-            <a class="navbar-brand" href=" @guest {{ '/' }} @endguest @auth {{ 'mybookings' }} @endauth">
+            <a class="navbar-brand" href="
+                @guest {{ '/' }} @endguest
+                @auth
+                    @if (request()->is('admin/*'))
+                        {{ route('admin.dashboard') }}
+                    @else
+                        {{ route('mybookings') }}
+                    @endif
+                @endauth
+            ">
+
                 <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
                 X Badminton Court
             </a>

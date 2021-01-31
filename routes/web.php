@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\Admin\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,13 @@ Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> n
 
 // Receipt/Invoice
 Route::post('/receipt', [ReceiptController::class, 'view']) -> name('view-receipt');
+
+// END OF CUSTOMER PAGES
+
+// ADMIN PAGES
+Route::prefix('admin')->group(function() {
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'view']) -> name('admin.dashboard');
+
+});

@@ -57,7 +57,7 @@ class LoginController extends Controller
                 return back()->with(['status' => 'Invalid login details', 'switchtab' => 'pills-admin-login-tab']);
             }
 
-            return redirect()->route('admin-dash');
+            return redirect()->route('admin.dashboard');
 
 
         }
