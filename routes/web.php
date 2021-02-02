@@ -53,6 +53,10 @@ Route::post('/receipt', [ReceiptController::class, 'view']) -> name('view-receip
 // ADMIN PAGES
 Route::prefix('admin')->group(function() {
 
+    Route::get('/', function () {
+        return redirect() -> route('admin.dashboard');
+    });
+
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'view']) -> name('admin.dashboard');
 
