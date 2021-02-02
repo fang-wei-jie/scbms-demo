@@ -29,7 +29,7 @@ class ReceiptController extends Controller
             -> join('rates', 'bookings.rateID', '=', 'rates.rateID')
             -> where('bookings.bookingID', $request->input('bookID'))
             -> select('bookingID', 'custID', 'bookings.created_at as bookingDateTime', 'name', 'phone', 'email', 'dateSlot', 'timeSlot', 'timeLength', 'courtID', 'rateName', 'ratePrice')
-            -> get();
+            -> first();
 
         return view('customer.invoice', ['invoiceDetail' => $invoiceDetail]);
 
