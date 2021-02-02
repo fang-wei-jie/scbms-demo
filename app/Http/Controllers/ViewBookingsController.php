@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 
 class ViewBookingsController extends Controller
 {
@@ -21,7 +19,7 @@ class ViewBookingsController extends Controller
         // Query Bookings for current customer
         $current_bookings = DB::table('bookings')
             ->join('rates', 'bookings.rateID', '=', 'rates.rateID')
-            ->where('bookings.custID', '=', Auth::user()->id)
+            ->where('bookings.custID', '=', session('custID'))
             ->where(function ($query) {
 
                 $query
@@ -43,7 +41,7 @@ class ViewBookingsController extends Controller
 
         $past_bookings = DB::table('bookings')
             ->join('rates', 'bookings.rateID', '=', 'rates.rateID')
-            ->where('bookings.custID', '=', Auth::user()->id)
+            ->where('bookings.custID', '=', session('custID'))
 
             ->where(function ($query) {
 

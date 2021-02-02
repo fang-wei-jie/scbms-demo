@@ -39,6 +39,11 @@ class LoginController extends Controller
                 return back()->with('status', 'Invalid login details');
             }
 
+
+            // store username and userID into session
+            $request->session()->put('custName', Auth::user()->name);
+            $request->session()->put('custID', Auth::user()->id);
+
             return redirect()->route('mybookings');
 
         } else if (isset($_POST['admin-login'])) {
@@ -58,8 +63,6 @@ class LoginController extends Controller
             }
 
             return redirect()->route('admin.dashboard');
-
-
         }
     }
 }
