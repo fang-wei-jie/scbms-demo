@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')X Badminton Court</title>
+    @if (request()->is('admin/*'))
+    <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/adminFavicon.ico') }}" />
+    @else
     <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/custFavicon.ico') }}" />
+    @endif
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -50,6 +54,10 @@
                 display: none;
             }
         }
+
+        .admin-red-bg {
+            background-color: #AC2332;
+        }
     </style>
     @yield('extra-css')
 </head>
@@ -57,7 +65,7 @@
 <body>
     <wrapper class="d-flex flex-column">
         <!-- navbar/header -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top hide-from-print">
+        <nav class="navbar navbar-expand-lg @if (request()->is('admin/*')) admin-red-bg navbar-dark @else bg-light navbar-light @endif fixed-top hide-from-print">
             <a class="navbar-brand" href="
                 @guest {{ '/' }} @endguest
                 @auth
@@ -69,7 +77,7 @@
                 @endauth
             ">
 
-                <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top" @if (request()->is('admin/*')) style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); " @endif alt="">
                 X Badminton Court
             </a>
 
@@ -96,15 +104,44 @@
 
                     @auth
 
-                    <li class="nav-item {{ (request()->is('court')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ ('court') }}">Book Courts</a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('mybookings') }}">My Bookings</a>
-                    </li>
-                    <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
-                    </li>
+                    @if (request()->is('admin/*'))
+
+                        <li class="nav-item {{ (request()->is('admin/dashboard')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/checkin')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ 'checkin' }}">Customer Check In</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/bookings')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ 'bookings' }}">Court Bookings</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/rates')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ 'rates' }}">Rates Management</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ 'accounts' }}">Accounts Management</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ 'sales' }}">Sales Report</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ route('admin.myaccount') }}">My Account</a>
+                        </li>
+
+                    @else
+
+                        <li class="nav-item {{ (request()->is('book-court')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ route('book-court') }}">Book Courts</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ route('mybookings') }}">My Bookings</a>
+                        </li>
+                        <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
+                            <a class="nav-link" href="{{ route('myaccount') }}">{{ session('custName') }}</a>
+                        </li>
+
+                    @endif
+
                     <li class="nav-item">
                         <a class="nav-link" style="color: red; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
