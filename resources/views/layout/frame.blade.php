@@ -162,6 +162,7 @@
             @yield('body')
         </main>
 
+        @if (!request()->is('admin/*'))
         <!-- footer -->
         <footer class="footer mt-auto py-3 bg-dark hide-from-print">
             <div class="container">
@@ -211,6 +212,7 @@
                 </div>
             </div>
         </footer>
+        @endif
     </wrapper>
 </body>
 
