@@ -10,7 +10,11 @@ Bookings - Admin
 @endsection
 
 @section('extra-css')
-<style>th{cursor: pointer;}</style>
+<style>
+    th {
+        cursor: pointer;
+    }
+</style>
 @endsection
 
 @section('body')
@@ -129,7 +133,7 @@ Bookings - Admin
                         <td>Court {{ $futureBookingsData->courtID }}</td>
                         <td>{{ $futureBookingsData->rateName }}</td>
                         <td>
-                            <button type="button" class="btn btn-danger" id="removeFutureBookingButton" data-toggle="modal" data-target="#removeFutureBooking" data-id="{{ $futureBookingsData->bookID }}" data-custid="{{ $futureBookingsData->custID }}" data-name="{{ $futureBookingsData->custName }}" data-date="{{ substr($futureBookingsData->dateSlot, 6, 2) }}/{{ substr($futureBookingsData->dateSlot, 4, 2) }}/{{ substr($futureBookingsData->dateSlot, 0, 4) }}" data-time="{{ $futureBookingsData->timeSlot }}:00" data-length="{{ $futureBookingsData->timeLength }}" data-court="{{ $futureBookingsData->courtID }}" data-phone="{{ $futureBookingsData->custPhone }}" data-email="{{ $futureBookingsData->custEmail }}">Delete Booking</button>
+                            <button type="button" class="btn btn-danger" id="removeFutureBookingButton" data-toggle="modal" data-target="#removeFutureBooking" data-id="{{ $futureBookingsData->bookingID }}" data-custid="{{ $futureBookingsData->custID }}" data-name="{{ $futureBookingsData->name }}" data-date="{{ substr($futureBookingsData->dateSlot, 6, 2) }}/{{ substr($futureBookingsData->dateSlot, 4, 2) }}/{{ substr($futureBookingsData->dateSlot, 0, 4) }}" data-time="{{ $futureBookingsData->timeSlot }}:00" data-length="{{ $futureBookingsData->timeLength }}" data-court="{{ $futureBookingsData->courtID }}" data-phone="{{ $futureBookingsData->phone }}" data-email="{{ $futureBookingsData->email }}">Delete Booking</button>
                         </td>
                     </tr>
                     @endforeach
@@ -254,6 +258,44 @@ Bookings - Admin
                 </tbody>
             </table>
         </div>
+
+        <!-- removeFutureBooking modal view -->
+        <div class="modal fade" id="removeFutureBooking" tabindex="-1" role="dialog" aria-labelledby="removeFutureBookingLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titleLabel">Booking Deletion Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form action="" method="post">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <b>Are you sure you want to delete booking for: </b><br>
+                                Customer Name: <span class="modal-custName"></span><br>
+                                Booked Date: <span class="modal-bookedDate"></span><br>
+                                Booked Time: <span class="modal-bookedTime"></span><br>
+                                Booked Length: <span class="modal-bookedLength"></span> Hours<br>
+                                Booked Court: Court <span class="modal-bookedCourt"></span><br>
+                                <br>
+                                <b>Confirm the following customer details to avoid spams: </b><br>
+                                Phone: <span class="modal-custPhone"></span><br>
+                                Email: <span class="modal-custEmail"></span><br>
+                                <input type="text" class="form-control modal-custID" name="custID" style="display: none;">
+                                <input type="text" class="form-control modal-bookID" name="bookingID" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger" name="deleteBooking">DELETE BOOKING</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -262,10 +304,22 @@ Bookings - Admin
 <script>
     $(document).ready(function() {
         // disable search bar if no data in the selected table
-        if ($("#today-nodata").length > 0) { $("#today-bookings-search").prop("placeholder", "Nothing to search for"); $("#today-bookings-search").prop("disabled", "true"); }
-        if ($("#future-nodata").length > 0) { $("#future-bookings-search").prop("placeholder", "Nothing to search for"); $("#future-bookings-search").prop("disabled", "true"); }
-        if ($("#previous-nodata").length > 0) { $("#previous-bookings-search").prop("placeholder", "Nothing to search for"); $("#previous-bookings-search").prop("disabled", "true"); }
-        if ($("#all-nodata").length > 0) { $("#all-bookings-search").prop("placeholder", "Nothing to search for"); $("#all-bookings-search").prop("disabled", "true"); }
+        if ($("#today-nodata").length > 0) {
+            $("#today-bookings-search").prop("placeholder", "Nothing to search for");
+            $("#today-bookings-search").prop("disabled", "true");
+        }
+        if ($("#future-nodata").length > 0) {
+            $("#future-bookings-search").prop("placeholder", "Nothing to search for");
+            $("#future-bookings-search").prop("disabled", "true");
+        }
+        if ($("#previous-nodata").length > 0) {
+            $("#previous-bookings-search").prop("placeholder", "Nothing to search for");
+            $("#previous-bookings-search").prop("disabled", "true");
+        }
+        if ($("#all-nodata").length > 0) {
+            $("#all-bookings-search").prop("placeholder", "Nothing to search for");
+            $("#all-bookings-search").prop("disabled", "true");
+        }
     })
 
     // feed data into the modal dialog
@@ -279,6 +333,6 @@ Bookings - Admin
         $(".modal-bookedCourt").text($(this).data('court'))
         $(".modal-custPhone").text($(this).data('phone'))
         $(".modal-custEmail").text($(this).data('email'))
-	})
+    })
 </script>
 @endsection
