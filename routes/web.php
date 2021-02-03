@@ -63,4 +63,5 @@ Route::prefix('admin')->group(function() {
 
     // Bookings
     Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
+    Route::post('/bookings', [BookingsController::class, 'delete']);
 });
