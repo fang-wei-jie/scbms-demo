@@ -64,4 +64,9 @@ Route::prefix('admin')->group(function() {
     // Bookings
     Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
     Route::post('/bookings', [BookingsController::class, 'delete']);
+
+    // Rates Management
+    Route::get('/rates', [RatesController::class, 'view']) -> name('admin.rates');
+    Route::post('/rates', [RatesController::class, 'update']);
+    Route::post('/rates-add', [RatesController::class, 'add']);
 });
