@@ -117,6 +117,7 @@
                         </li>
                         <li class="nav-item {{ (request()->is('admin/rates')) ? 'active font-weight-bold' : '' }}">
                             <a class="nav-link" href="{{ 'rates' }}">Rates Management</a>
+                            <a class="nav-link" href="{{ route('admin/rates') }}">Rates Management</a>
                         </li>
                         <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
                             <a class="nav-link" href="{{ 'accounts' }}">Accounts Management</a>
