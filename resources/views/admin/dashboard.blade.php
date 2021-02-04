@@ -29,7 +29,10 @@ Dashboard - Admin
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{ 'rates' }}" class="btn btn-primary">Manage rates</a>
+                    <a href="{{ route('admin.rates') }}" class="btn btn-primary">
+                        <i class="bi bi-tags-fill"></i>
+                        Manage rates
+                    </a>
                 </div>
             </div>
         </div>
@@ -49,9 +52,14 @@ Dashboard - Admin
                             @endif
                         @endforeach
                     @endfor
-                        <br>
-                        <a href="{{ 'checkin' }}" class="btn btn-primary">Customer Check-in</a>
-                        <a href="{{ 'bookings' }}" class="btn btn-primary">View court bookings</a>
+                    <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
+                        <i class="bi bi-person-check-fill"></i>
+                        Customer Check-in
+                    </a>
+                    <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
+                        <i class="bi bi-book-half"></i>
+                        View court bookings
+                    </a>
                 </div>
             </div>
         </div>
