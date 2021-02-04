@@ -18,14 +18,14 @@ class BookingsController extends Controller
     {
 
         $todayBookings = DB::table('bookings')
-            ->join('rates', 'rates.rateID', '=', 'bookings.rateID')
+            ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '=', date('Ymd'))
             ->orderBy('timeSlot')
             ->get();
 
             $futureBookings = DB::table('bookings')
-            ->join('rates', 'rates.rateID', '=', 'bookings.rateID')
+            ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '>', date('Ymd'))
             ->orderBy('dateSlot')
@@ -33,7 +33,7 @@ class BookingsController extends Controller
             ->get();
 
         $previousBookings = DB::table('bookings')
-            ->join('rates', 'rates.rateID', '=', 'bookings.rateID')
+            ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '<', date('Ymd'))
             ->orderByDesc('dateSlot')
@@ -41,7 +41,7 @@ class BookingsController extends Controller
             ->get();
 
         $allBookings = DB::table('bookings')
-            ->join('rates', 'rates.rateID', '=', 'bookings.rateID')
+            ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->orderByDesc('dateSlot')
             ->orderByDesc('timeSlot')

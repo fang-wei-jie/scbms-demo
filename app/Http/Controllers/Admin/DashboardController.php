@@ -27,7 +27,7 @@ class DashboardController extends Controller
             -> get();
 
         $bookingRows = DB::table('bookings')
-            -> join('rates', 'bookings.rateID', '=', 'rates.rateID')
+            -> join('rates', 'bookings.rateID', '=', 'rates.id')
             -> where('dateSlot', '=', date('Ymd'))
             -> where('timeSlot', '<=', date('H'))
             -> where(DB::raw('(timeSlot + timeLength - 1) '), '>=', date('H'))
