@@ -63,8 +63,8 @@ Login -
                             @enderror
                         </div>
 
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Keep me signed in</label>
+                        <input type="checkbox" id="rememberCustomer" name="remember">
+                        <label for="rememberCustomer">Keep me signed in</label>
 
                         <div class="row">
                             <button class="btn btn-primary" type="submit" name="login">Login</button>
@@ -115,8 +115,8 @@ Login -
                             @enderror
                         </div>
 
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">Keep me signed in</label>
+                        <input type="checkbox" id="rememberAdmin" name="remember">
+                        <label for="rememberAdmin">Keep me signed in</label>
 
                         <div class="row">
                             <button class="btn btn-danger" type="submit" name="admin-login">Login to admin
