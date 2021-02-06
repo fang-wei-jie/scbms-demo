@@ -57,7 +57,7 @@ Dashboard - Admin
                         </div>
                     </div>
 
-                    <br>
+                    <div class="my-2"></div>
 
                     <!-- Earnings Daily Card -->
                     <div class="card py-2">
@@ -77,7 +77,7 @@ Dashboard - Admin
                         </div>
                     </div>
 
-                    <br>
+                    <div class="my-2"></div>
 
                     <!-- Today Bookings' Sale Card -->
                     <div class="card py-2">
