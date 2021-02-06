@@ -7,7 +7,38 @@ Dashboard - Admin
 @section('body')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-4">
+        <div class="col-xl">
+            <br>
+            <!-- courts booked -->
+            <div class="card bg-light">
+                <div class="card-body">
+                    <h1 class="card-title">Courts Booked</h1>
+                    <hr>
+                    @for ($i = 1; $i <= 9; $i++)
+                        @foreach ($bookings as $bookingDetails)
+                            @if ($i==$bookingDetails -> courtID)
+                                <h5>Court {{ $i }}</h5><span>{{ $bookingDetails -> rateName }} rate</span> <br>
+                                <span>{{ $bookingDetails -> timeLength }} hours, {{ $bookingDetails -> timeSlot }}:00 - {{ ($bookingDetails -> timeSlot + $bookingDetails -> timeLength) }}:00</span>
+                                <hr>
+                            @endif
+                        @endforeach
+                    @endfor
+                    <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
+                        <i class="bi bi-person-check-fill"></i>
+                        Customer Check-in
+                    </a>
+                    <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
+                        <i class="bi bi-book-half"></i>
+                        View court bookings
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm">
+
+            <br>
+
             <!-- rates card -->
             <div class="text-white card bg-secondary">
                 <div class="card-body">
@@ -38,6 +69,7 @@ Dashboard - Admin
 
             <br>
 
+            {{-- sales performance card --}}
             <div class="card bg-light">
                 <div class="card-body">
                     <h1 class="card-title">Sales Performance</h1>
@@ -100,33 +132,6 @@ Dashboard - Admin
                     <a href="{{ route('admin.sales') }}" class="btn btn-primary">
                         <i class="bi bi-cash-stack"></i>
                         Sales Report
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <!-- courts booked -->
-            <div class="card bg-light">
-                <div class="card-body">
-                    <h1 class="card-title">Courts Booked</h1>
-                    <hr>
-                    @for ($i = 1; $i <= 9; $i++)
-                        @foreach ($bookings as $bookingDetails)
-                            @if ($i==$bookingDetails -> courtID)
-                                <h5>Court {{ $i }}</h5><span>{{ $bookingDetails -> rateName }} rate</span> <br>
-                                <span>{{ $bookingDetails -> timeLength }} hours, {{ $bookingDetails -> timeSlot }}:00 - {{ ($bookingDetails -> timeSlot + $bookingDetails -> timeLength) }}:00</span>
-                                <hr>
-                            @endif
-                        @endforeach
-                    @endfor
-                    <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
-                        <i class="bi bi-person-check-fill"></i>
-                        Customer Check-in
-                    </a>
-                    <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
-                        <i class="bi bi-book-half"></i>
-                        View court bookings
                     </a>
                 </div>
             </div>
