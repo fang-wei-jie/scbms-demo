@@ -9,6 +9,7 @@ use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +70,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/rates', [RatesController::class, 'view']) -> name('admin.rates');
     Route::post('/rates', [RatesController::class, 'update']);
     Route::post('/rates-add', [RatesController::class, 'add']);
+
+    // Sales Report
+    Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
 });
