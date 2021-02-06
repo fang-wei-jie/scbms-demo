@@ -122,7 +122,7 @@
                             <a class="nav-link" href="{{ 'accounts' }}">Accounts Management</a>
                         </li>
                         <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">
-                            <a class="nav-link" href="{{ 'sales' }}">Sales Report</a>
+                            <a class="nav-link" href="{{ route('admin.sales') }}">Sales Report</a>
                         </li>
                         <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
                             <a class="nav-link" href="{{ route('admin.myaccount') }}">My Account</a>
