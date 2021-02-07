@@ -18,7 +18,7 @@ class ViewBookingsController extends Controller
 
         // Query Bookings for current customer
         $current_bookings = DB::table('bookings')
-            ->join('rates', 'bookings.rateID', '=', 'rates.rateID')
+            ->join('rates', 'bookings.rateID', '=', 'rates.id')
             ->where('bookings.custID', '=', session('custID'))
             ->where(function ($query) {
 
@@ -40,7 +40,7 @@ class ViewBookingsController extends Controller
             ->get();
 
         $past_bookings = DB::table('bookings')
-            ->join('rates', 'bookings.rateID', '=', 'rates.rateID')
+            ->join('rates', 'bookings.rateID', '=', 'rates.id')
             ->where('bookings.custID', '=', session('custID'))
 
             ->where(function ($query) {
