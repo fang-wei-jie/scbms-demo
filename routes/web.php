@@ -8,6 +8,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\CheckInController;   
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\SalesController;
 
@@ -62,7 +63,10 @@ Route::prefix('admin')->group(function() {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'view']) -> name('admin.dashboard');
 
-    // Bookings
+    // Check In
+    Route::get('/checkin', [CheckInController::class, 'view']) -> name('admin.checkin');
+    Route::post('/checkin', [CheckInController::class, 'check']);
+
     Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
     Route::post('/bookings', [BookingsController::class, 'delete']);
 
