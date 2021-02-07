@@ -10,6 +10,7 @@ use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CheckInController;   
 use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\SalesController;
 
 /*
@@ -34,6 +35,7 @@ Route::get('/login', [LoginController::class, 'view']) -> name('login');
 Route::post('/login', [LoginController::class, 'auth']);
 
 // CUSTOMER PAGES
+
 // Registration
 Route::get('/register', [RegisterController::class, 'view']) -> name('register');
 Route::post('/register', [RegisterController::class, 'store']);
@@ -67,6 +69,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/checkin', [CheckInController::class, 'view']) -> name('admin.checkin');
     Route::post('/checkin', [CheckInController::class, 'check']);
 
+    // Court Bookings
     Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
     Route::post('/bookings', [BookingsController::class, 'delete']);
 
