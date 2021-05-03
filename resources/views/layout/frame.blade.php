@@ -172,7 +172,6 @@
 
     function resizeContentPadding() {
         headerHeight = parseInt(document.getElementById('header').clientHeight)
-        console.log(headerHeight)
         $('.body').css('padding-top', headerHeight)
     }
     // dynamic header resize feature end
