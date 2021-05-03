@@ -1,5 +1,9 @@
 @extends('layout.frame')
 
+@section('extra-css')
+
+@endsection
+
 @section('body')
 <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -29,32 +33,39 @@
 </div>
 
 <div class="container row-space">
+<div class="container">
 
     <div class="row">
+    <div class="row mt-3">
         <h1>Why Choose Us? </h1>
     </div>
 
     <div class="row">
+    <div class="row mt-3">
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=07" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/layers-half.svg') }}" height="150px">
             <h2>Feature 1</h2>
             <span>Feature description. </span>
         </div>
 
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=08" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/layers-half.svg') }}" height="150px">
             <h2>Feature 2</h2>
             <span>Feature description. </span>
         </div>
 
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=09" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/layers-half.svg') }}" height="150px">
             <h2>Feature 3</h2>
             <span>Feature description. </span>
         </div>
 
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=10" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/layers-half.svg') }}" height="150px">
             <h2>Feature 4</h2>
             <span>Feature description. </span>
         </div>
@@ -63,24 +74,29 @@
     <div class="row-space"></div>
 
     <div class="row">
+    <div class="row mt-5">
         <h1>Rental Rates</h1>
     </div>
 
     <div class="row">
+    <div class="row mt-3">
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=04" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/calendar-week-fill.svg') }}" height="100px">
             <h2>Students</h2>
             <span>Primary, Secondary, University</span><br>
             <h4>RM 10/hour</h4>
         </div>
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=05" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/calendar-week-fill.svg') }}" height="100px">
             <h2>Weekdays</h2>
             <span>Monday till Friday, Public Holiday or Not</span>
             <h4>RM 20/hour</h4>
         </div>
         <div class="col-sm">
             <img src="https://generative-placeholders.glitch.me/image?width=150&height=150&img=06" height="150px">
+            <img src="{{ asset('dependencies/bootstrap-icons-1.3.0/calendar-range-fill.svg') }}" height="100px">
             <h2>Weekends</h2>
             <span>Saturday and Sunday, Public Holiday or Not</span>
             <h4>RM 23/hour</h4>
@@ -90,6 +106,7 @@
     <div class="row-space"></div>
 
     <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
         <a href="court.php">
             <button type="button" class="btn btn-primary btn-lg">
                 <i class="bi bi-collection-fill"></i> Make a Booking Now
