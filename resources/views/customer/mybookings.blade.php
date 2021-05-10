@@ -77,7 +77,7 @@ My Bookings -
                     @else
 
                     <tr>
-                        <td colspan=2 id="today-nodata">No bookings here. <a href="{{ route('book-court') }}">Add a new booking?</a> </td>
+                        <td colspan=2 id="today-nodata">No bookings here. <a href="{{ route('book-court') }}">Make a new booking?</a> </td>
                     </tr>
 
                     @endif
