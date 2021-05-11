@@ -6,28 +6,28 @@ My Bookings -
 
 @section('body')
 <div class="container">
-    <div class="row d-flex align-items-center">
-        <div class="col">
-            <h1>My Bookings</h1>
+    <h1>My Bookings</h1>
+
+    <hr>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="pills-current-bookings-tab" data-toggle="pill" href="#pills-current-bookings" role="tab" aria-controls="pills-current-bookings" aria-selected="true">Current</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="pills-past-bookings-tab" data-toggle="pill" href="#pills-past-bookings" role="tab" aria-controls="pills-past-bookings" aria-selected="false">Past</a>
+                </li>
+            </ul>
         </div>
-        <div class="col-1.5">
+        <div>
             <a href="{{ route('book-court') }}" class="btn btn-outline-primary">
                 <i class="bi bi-plus-circle-fill"></i>
                 New Booking
             </a>
         </div>
     </div>
-
-    <hr>
-
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="pills-current-bookings-tab" data-toggle="pill" href="#pills-current-bookings" role="tab" aria-controls="pills-current-bookings" aria-selected="true">Current Bookings</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" id="pills-past-bookings-tab" data-toggle="pill" href="#pills-past-bookings" role="tab" aria-controls="pills-past-bookings" aria-selected="false">Past Bookings</a>
-        </li>
-    </ul>
 
     <!-- lists today and future bookings -->
     <div class="tab-content" id="pills-tabContent">
@@ -45,26 +45,26 @@ My Bookings -
                     @foreach ($current_bookings as $list)
                     <tr>
                         <td>
-                            <h5>
+                            <span>
                                 {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                                 {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                                Court {{ $list->courtID }} - {{ $list->rateName }} rate <br>
-                            </h5>
+                                Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                            </span>
                         </td>
 
                         <td>
-                            <h5>
+                            <span>
                                 RM {{ $list->ratePrice * $list->timeLength }}
-                            </h5>
+                            </span>
                         </td>
 
                         <td>
                             <form action="{{ route('view-receipt') }}" method="post">
                                 @csrf
                                 <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm" id="show-receipt">
                                     <i class="bi bi-receipt"></i>
-                                    Receipt
+                                    Invoice
                                 </button>
                             </form>
                             <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}"><i class="bi bi-upc"></i>
@@ -100,26 +100,26 @@ My Bookings -
                         @foreach ($past_bookings as $list)
                         <tr>
                             <td>
-                                <h5>
+                                <span>
                                     {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                                     {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                                    Court {{ $list->courtID }} - {{ $list->rateName }} rate <br>
-                                </h5>
+                                    Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                                </span>
                             </td>
 
                             <td>
-                                <h5>
+                                <span>
                                     RM {{ $list->ratePrice * $list->timeLength }}
-                                </h5>
+                                </span>
                             </td>
 
                             <td>
                                 <form action="{{ route('view-receipt') }}" method="post">
                                     @csrf
                                     <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm" id="show-receipt">
                                         <i class="bi bi-receipt"></i>
-                                        Receipt
+                                        Invoice
                                     </button>
                                 </form>
                             </td>
