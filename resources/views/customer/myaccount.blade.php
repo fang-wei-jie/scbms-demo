@@ -10,89 +10,80 @@ My Account -
 
     <hr>
 
-    <table class="table table-borderless" width="100vw">
-        <thead>
-            <tr>
-                <th width="45%"></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Name</h3>
-                        <span>{{ Auth::user()->name }}</span>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h4>Name</h4>
+            <span>{{ Auth::user()->name }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
 
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Phone Number</h3>
-                        <span>{{ Auth::user()->phone }}</span>
-                    </div>
-                </td>
-                <td>
-                    <button class="btn btn-outline-primary" id="change-phone-button" data-toggle="modal" data-target="#changePhone">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
+    <br>
 
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Email</h3>
-                        <span>{{ Auth::user()->email }}</span>
-                    </div>
-                </td>
-                <td>
-                    <button class="btn btn-outline-primary" id="change-email-button" data-toggle="modal" data-target="#changeEmail">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h4>Phone Number</h4>
+            <span>{{ Auth::user()->phone }}</span>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary" id="change-phone-button" data-toggle="modal" data-target="#changePhone">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
 
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Password</h3>
-                        <span>Change password every few months for security</span>
-                    </div>
-                </td>
-                <td>
-                    <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
+    <br>
 
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Delete Account</h3>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-toggle="modal" data-target="#accountDeleteConfirmation">
-                        <i class="bi bi-trash-fill"></i>
-                        DELETE ACCOUNT
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h4>Email</h4>
+            <span>{{ Auth::user()->email }}</span>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary" id="change-email-button" data-toggle="modal" data-target="#changeEmail">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h4>Password</h4>
+            <span>Change often to improve security</span>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h4>Delete Account</h4>
+            <span>No longer need this account?</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-toggle="modal" data-target="#accountDeleteConfirmation">
+                <i class="bi bi-trash-fill"></i>
+                DELETE
+            </button>
+        </div>
+    </div>
+
+    <br>
 
     <!-- change name modal view -->
     <div class="modal fade" id="changeName" tabindex="-1" role="dialog" aria-labelledby="changeNameLabel" aria-hidden="true">
