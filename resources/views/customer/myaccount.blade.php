@@ -221,7 +221,7 @@ My Account -
                     <div class="modal-body">
                         <div class="form-group">
                             <span>Are you sure? This action is <b>irreversible</b> for your privacy. </span><br><br>
-                            <span>All your data will be removed from our database, except the custID (randomized, can't be used to identify you) and the booking history as we need it for bookkeeping and legal reasons. </span><br><br>
+                            <span>All your data will be removed from our database, except the custID (randomized, can't be used to identify you) and the booking history as we need it for bookkeeping and legal reasons. All unused bookings will be forfitted with no refund (since we can't refer back to the record). </span><br><br>
                             <label>Retype password to confirm deletion</label>
                             <input type="password" class="form-control" name="delete-password" placeholder="Retype your password" required>
                             <input type="text" class="form-control" name="custID" value="{{ Auth::user()->id }}" style="display: none;">
