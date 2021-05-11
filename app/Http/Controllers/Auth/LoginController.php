@@ -34,7 +34,7 @@ class LoginController extends Controller
             ]);
 
             // login verification
-            if (!Auth::attempt($request->only('email', 'password'), $request->remember)) {
+            if (!Auth::attempt($request->only('email', 'password'))) {
 
                 return back()->with('status', 'Invalid login details');
             }
@@ -50,16 +50,16 @@ class LoginController extends Controller
 
             $this->validate($request, [
 
-                // 'adminLoginID' => 'required | exists:adminLoginID',
-                'adminLoginID' => 'required',
+                // 'id' => 'required | exists:id',
+                'email' => 'required',
                 'password' => 'required'
 
             ]);
 
             // login verification
-            if (!Auth::guard('admin')->attempt($request->only('adminLoginID', 'password'), $request->remember)) {
+            if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
 
-                return back()->with(['status' => 'Invalid login details', 'switchtab' => 'pills-admin-login-tab']);
+                return back()->with('status', 'Invalid login details');
             }
 
             return redirect()->route('admin.dashboard');
