@@ -90,7 +90,7 @@
     </div>
 
     <div class="row justify-content-center mt-3">
-        <a href="court.php">
+        <a href="book-court.php">
             <button type="button" class="btn btn-primary btn-lg">
                 <i class="bi bi-collection-fill"></i> Make a Booking Now
             </button>
