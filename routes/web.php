@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\SalesController;
+use App\Http\Controllers\Admin\AdminAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,4 +81,9 @@ Route::prefix('admin')->group(function() {
 
     // Sales Report
     Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
+
+    // My Account
+    Route::get('/myaccount', [AdminAccountController::class, 'view']) -> name('admin.myadminaccount');
+    Route::post('/myaccount', [AdminAccountController::class, 'update']);
+
 });
