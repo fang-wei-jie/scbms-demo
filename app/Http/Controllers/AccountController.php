@@ -40,6 +40,9 @@ class AccountController extends Controller
             $user->name = $request->input('name');
             $user->save();
 
+            // set new name to the frame
+            $request->session()->put('custName', $request->input('name'));
+
             // redirect back to page with info prompt
             return back() -> with('info', 'Name updated');
 
