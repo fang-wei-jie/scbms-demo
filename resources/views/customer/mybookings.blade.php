@@ -32,111 +32,84 @@ My Bookings -
     <!-- lists today and future bookings -->
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-current-bookings" role="tabpanel" aria-labelledby="pills-current-bookings-tab">
-            <table class="table table-borderless" width="100vw">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($current_bookings -> count() > 0)
 
-                    @foreach ($current_bookings as $list)
-                    <tr>
-                        <td>
-                            <span>
-                                {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                                Court {{ $list->courtID }} - {{ $list->rateName }} rate
-                            </span>
-                        </td>
+            @if ($current_bookings -> count() > 0)
 
-                        <td>
-                            <span>
-                                RM {{ $list->ratePrice * $list->timeLength }}
-                            </span>
-                        </td>
+                @foreach ($current_bookings as $list)
 
-                        <td>
-                            <form action="{{ route('view-receipt') }}" method="post">
-                                @csrf
-                                <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                <button type="submit" class="btn btn-outline-secondary btn-sm" id="show-receipt">
-                                    <i class="bi bi-receipt"></i>
-                                    Invoice
-                                </button>
-                            </form>
-                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}"><i class="bi bi-upc"></i>
-                                Check-in Code
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                        {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
+                        Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                    </div>
+                    <div>
+                        <b>RM {{ $list->ratePrice * $list->timeLength }}</b>
+                    </div>
+                    <div>
+                        <form action="{{ route('view-receipt') }}" method="post">
+                            @csrf
+                            <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                            <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                <i class="bi bi-receipt"></i>
+                                Invoice
                             </button>
-                        </td>
-                    </tr>
-                    @endforeach
+                        </form>
+                        <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}"><i class="bi bi-upc"></i>
+                            Check-in Code
+                        </button>
+                    </div>
+                </div>
 
-                    @else
+                <br>
 
-                    <tr>
-                        <td colspan=2 id="today-nodata">No bookings here. <a href="{{ route('book-court') }}">Make a new booking?</a> </td>
-                    </tr>
+                @endforeach
 
-                    @endif
-
-                </tbody>
-            </table>
+            @else
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="{{ route('book-court') }}">Make a new booking? 🙃</a>
+            </div>
+            @endif
         </div>
 
         <!-- lists previous bookings (older than today) -->
         <div class="tab-pane fade" id="pills-past-bookings" role="tabpanel" aria-labelledby="pills-past-bookings-tab">
-            <table class="table table-borderless" width="100vw">
-                <thead>
-                    <tr>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($past_bookings -> count() > 0)
 
-                        @foreach ($past_bookings as $list)
-                        <tr>
-                            <td>
-                                <span>
-                                    {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                    {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                                    Court {{ $list->courtID }} - {{ $list->rateName }} rate
-                                </span>
-                            </td>
+            @if ($past_bookings -> count() > 0)
 
-                            <td>
-                                <span>
-                                    RM {{ $list->ratePrice * $list->timeLength }}
-                                </span>
-                            </td>
+                @foreach ($past_bookings as $list)
 
-                            <td>
-                                <form action="{{ route('view-receipt') }}" method="post">
-                                    @csrf
-                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                    <button type="submit" class="btn btn-outline-secondary btn-sm" id="show-receipt">
-                                        <i class="bi bi-receipt"></i>
-                                        Invoice
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                        {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
+                        Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                    </div>
+                    <div>
+                        <b>RM {{ $list->ratePrice * $list->timeLength }}</b>
+                    </div>
+                    <div>
+                        <form action="{{ route('view-receipt') }}" method="post">
+                            @csrf
+                            <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                            <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                <i class="bi bi-receipt"></i>
+                                Invoice
+                            </button>
+                        </form>
+                    </div>
+                </div>
 
-                        @else
+                <br>
 
-                        <tr>
-                            <td colspan=2 id="today-nodata">No bookings were expired. </td>
-                        </tr>
+                @endforeach
 
-                        @endif
-                </tbody>
-            </table>
+            @else
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                Nothing Here 🙃
+            </div>
+            @endif
         </div>
-
     </div>
 
     <!-- show-qrcode-dialog modal view -->
