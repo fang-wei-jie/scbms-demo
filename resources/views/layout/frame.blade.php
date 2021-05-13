@@ -104,7 +104,7 @@
                         <a class="nav-link" href="{{ route('admin.sales') }}">Sales Report</a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.myadminaccount') }}">My Account</a>
+                        <a class="nav-link" href="{{ route('admin.myadminaccount') }}">{{ Auth::user()->name }}</a>
                     </li>
 
                 @else
@@ -116,7 +116,7 @@
                         <a class="nav-link" href="{{ route('mybookings') }}">My Bookings</a>
                     </li>
                     <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('myaccount') }}">{{ session('custName') }}</a>
+                        <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
                     </li>
 
                 @endif

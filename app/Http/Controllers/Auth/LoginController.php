@@ -40,8 +40,7 @@ class LoginController extends Controller
             }
 
 
-            // store username and userID into session
-            $request->session()->put('custName', Auth::user()->name);
+            // store userID into session
             $request->session()->put('custID', Auth::user()->id);
 
             return redirect()->route('mybookings');
