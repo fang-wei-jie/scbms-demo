@@ -10,45 +10,33 @@ My Admin Account -
 
     <hr>
 
-    <table class="table table-borderless" width="100vw">
-        <thead>
-            <tr>
-                <th width="45%"></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Name</h3>
-                        <span>{{ Auth::user()->name }}</span>
-                    </div>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h3>Name</h3>
+            <span>{{ Auth::user()->name }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
 
-            <tr>
-                <td>
-                    <div class="col">
-                        <h3>Password</h3>
-                        <span>Change password every few months for security</span>
-                    </div>
-                </td>
-                <td>
-                    <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
-                        <i class="bi bi-pencil-fill"></i>
-                        Change
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <br>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h3>Password</h3>
+            <span>Change often to improve security</span>
+        </div>
+        <div>
+            <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
+                <i class="bi bi-pencil-fill"></i>
+                Change
+            </button>
+        </div>
+    </div>
 
     <!-- change name modal view -->
     <div class="modal fade" id="changeName" tabindex="-1" role="dialog" aria-labelledby="changeNameLabel" aria-hidden="true">
