@@ -18,12 +18,12 @@ Rates - Admin
 @endsection
 
 @section('body')
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col">
             <input type="text" id="rates-search" class="form-control" placeholder="Search anything in the table ...">
         </div>
-        <div class="col-1.5">
+        <div class="col-auto">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRate">
                 <i class="bi bi-plus-circle-fill"></i>
                 Create new rate
