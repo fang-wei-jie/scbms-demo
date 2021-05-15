@@ -97,8 +97,8 @@
                     <li class="nav-item {{ (request()->is('admin/rates')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.rates') }}">Rates Management</a>
                     </li>
-                    <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ 'accounts' }}">Accounts Management</a>
+                    <li class="nav-item {{ (request()->is('admin/customer')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.customer_accounts') }}">Customer Accounts</a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.sales') }}">Sales Report</a>
