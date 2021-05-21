@@ -19,7 +19,7 @@ Login -
             @endif
 
             <div class="form-group">
-                <input id="email" class="form-control @error('email') is-invalid @enderror @if(old('email')) is-valid @endif" type="text" name="email" value="{{ old('email') }}" maxlength=255 placeholder="Email address / Admin ID">
+                <input id="email" class="form-control @error('email') is-invalid @enderror @if(old('email')) is-valid @endif" type="email" name="email" value="{{ old('email') }}" maxlength=255 placeholder="Email address">
                 @error('email')
                 <div class="invalid-feedback">
                     {{ $message }}
