@@ -70,13 +70,22 @@
                 @guest
 
                 <li class="nav-item {{ (request()->is('about-us')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ ('about-us') }}">About Us</a>
+                    <a class="nav-link" href="{{ ('about-us') }}">
+                        <i class="bi bi-info-circle"></i>
+                        About Us
+                    </a>
                 </li>
                 <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">
+                        <i class="bi bi-person-square"></i>
+                        Login
+                    </a>
                 </li>
                 <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('register') }}">Register</a>
+                    <a class="nav-link" href="{{ route('register') }}">
+                        <i class="bi bi-person-plus"></i>
+                        Register
+                    </a>
                 </li>
 
                 @endguest
@@ -86,43 +95,74 @@
                 @if (request()->is('admin/*'))
 
                     <li class="nav-item {{ (request()->is('admin/dashboard')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">
+                            <i class="bi bi-kanban"></i>
+                            Dashboard
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/checkin')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.checkin') }}">Customer Check In</a>
+                        <a class="nav-link" href="{{ route('admin.checkin') }}">
+                            <i class="bi bi-upc-scan"></i>
+                            Customer Check In
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/bookings')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.bookings') }}">Court Bookings</a>
+                        <a class="nav-link" href="{{ route('admin.bookings') }}">
+                            <i class="bi bi-journal-album"></i>
+                            Court Bookings
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/rates')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.rates') }}">Rates Management</a>
+                        <a class="nav-link" href="{{ route('admin.rates') }}">
+                            <i class="bi bi-tags"></i>
+                            Rates Management
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/customer')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.customer_accounts') }}">Customer Accounts</a>
+                        <a class="nav-link" href="{{ route('admin.customer_accounts') }}">
+                            <i class="bi bi-person-circle"></i>
+                            Customer Accounts
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.sales') }}">Sales Report</a>
+                        <a class="nav-link" href="{{ route('admin.sales') }}">
+                            <i class="bi bi-cash-stack"></i>
+                            Sales Report
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.myadminaccount') }}">{{ Auth::user()->name }}</a>
+                        <a class="nav-link" href="{{ route('admin.myadminaccount') }}">
+                            <i class="bi bi-person-badge"></i>
+                            {{ Auth::user()->name }}
+                        </a>
                     </li>
 
                 @else
 
                     <li class="nav-item {{ (request()->is('book-court')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('book-court') }}">Book Courts</a>
+                        <a class="nav-link" href="{{ route('book-court') }}">
+                            <i class="bi bi-journal-plus"></i>
+                            Book Courts
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('mybookings')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('mybookings') }}">My Bookings</a>
+                        <a class="nav-link" href="{{ route('mybookings') }}">
+                            <i class="bi bi-journal-album"></i>
+                            My Bookings
+                        </a>
                     </li>
                     <li class="nav-item {{ (request()->is('myaccount')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('myaccount') }}">{{ Auth::user()->name }}</a>
+                        <a class="nav-link" href="{{ route('myaccount') }}">
+                            <i class="bi bi-person-circle"></i>
+                            {{ Auth::user()->name }}
+                        </a>
                     </li>
 
                 @endif
 
                 <li class="nav-item">
-                    <a class="nav-link" style="color: red; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="nav-link" style="color: @if (!(request()->is('admin/*'))) red @endif; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-door-open"></i>
                         Logout
                     </a>
 
