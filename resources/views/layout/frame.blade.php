@@ -19,7 +19,7 @@
     <script src="{{ URL::asset('dependencies/popper-2.6.0.min.js') }}"></script>
     <script src="{{ URL::asset('dependencies/bootstrap-4.6.0-dist/js/bootstrap.bundle.min.js') }}"></script>
     <link rel="stylesheet" href="{{ URL::asset('dependencies/bootstrap-4.6.0-dist/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('dependencies/bootstrap-icons-1.3.0/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     @yield('extra-dependencies')
 
     <!-- custom styles -->
