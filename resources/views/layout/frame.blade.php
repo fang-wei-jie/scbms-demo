@@ -161,8 +161,8 @@
                 @endif
 
                 <li class="nav-item">
-                    <a class="nav-link" style="color: @if (!(request()->is('admin/*'))) red @endif; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="bi bi-door-open"></i>
+                    <a class="nav-link" id="logout-button" style="color: @if (!(request()->is('admin/*'))) red @endif; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i id="logout-icon" class="bi bi-door-closed"></i>
                         Logout
                     </a>
 
@@ -215,6 +215,15 @@
         $('.body').css('padding-top', headerHeight)
     }
     // dynamic header resize feature end
+
+    // open the door when hover on logout button
+    $("#logout-button").hover(function(){
+        $("#logout-icon").removeClass("bi-door-closed")
+        $("#logout-icon").addClass("bi-door-open")
+    }, function(){
+        $("#logout-icon").addClass("bi-door-closed")
+        $("#logout-icon").removeClass("bi-door-open")
+    })
 </script>
 
 </html>
