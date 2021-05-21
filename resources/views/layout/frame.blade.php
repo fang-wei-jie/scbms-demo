@@ -102,7 +102,7 @@
                     </li>
                     <li class="nav-item {{ (request()->is('admin/checkin')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.checkin') }}">
-                            <i class="bi bi-upc-scan"></i>
+                            <i class="bi bi-person-check-fill"></i>
                             Customer Check In
                         </a>
                     </li>
