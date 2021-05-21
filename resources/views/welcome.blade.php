@@ -106,13 +106,6 @@
         </div>
     </div>
 
-    <div class="row justify-content-center mt-3">
-        <a href="book-court.php">
-            <button type="button" class="btn btn-primary btn-lg">
-                <i class="bi bi-collection-fill"></i> Make a Booking Now
-            </button>
-        </a>
-    </div>
     <div class="row mt-3">
         <h1>Amenities</h1>
     </div>
