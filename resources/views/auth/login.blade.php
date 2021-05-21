@@ -37,8 +37,14 @@ Login -
             </div>
 
             <div class="form-group">
-                <button class="btn btn-primary" type="submit" name="login">Login as Customer</button>
-                <button class="btn btn-danger" type="submit" name="admin-login">Login as Admin</button>
+                <button class="btn btn-primary" type="submit" name="login">
+                    <i class="bi bi-person-circle"></i>
+                    Login as Customer
+                </button>
+                <button class="btn btn-danger" type="submit" name="admin-login">
+                    <i class="bi bi-person-badge"></i>
+                    Login as Admin
+                </button>
             </div>
 
             <div class="form-group">
