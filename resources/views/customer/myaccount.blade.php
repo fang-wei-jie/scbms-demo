@@ -17,7 +17,7 @@ My Account -
         </div>
         <div>
             <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
-                <i class="bi bi-pencil-fill"></i>
+                <i class="bi bi-pencil-square"></i>
                 Change
             </button>
         </div>
@@ -32,7 +32,7 @@ My Account -
         </div>
         <div>
             <button class="btn btn-outline-primary" id="change-phone-button" data-toggle="modal" data-target="#changePhone">
-                <i class="bi bi-pencil-fill"></i>
+                <i class="bi bi-pencil-square"></i>
                 Change
             </button>
         </div>
@@ -47,7 +47,7 @@ My Account -
         </div>
         <div>
             <button class="btn btn-outline-primary" id="change-email-button" data-toggle="modal" data-target="#changeEmail">
-                <i class="bi bi-pencil-fill"></i>
+                <i class="bi bi-pencil-square"></i>
                 Change
             </button>
         </div>
@@ -62,7 +62,7 @@ My Account -
         </div>
         <div>
             <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
-                <i class="bi bi-pencil-fill"></i>
+                <i class="bi bi-pencil-square"></i>
                 Change
             </button>
         </div>
