@@ -103,19 +103,19 @@
                     <li class="nav-item {{ (request()->is('admin/checkin')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.checkin') }}">
                             <i class="bi bi-person-check-fill"></i>
-                            Customer Check In
+                            Check In
                         </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/bookings')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.bookings') }}">
                             <i class="bi bi-journal-album"></i>
-                            Court Bookings
+                            Bookings
                         </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/rates')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.rates') }}">
                             <i class="bi bi-tags"></i>
-                            Rates Management
+                            Rates
                         </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/customer')) ? 'active font-weight-bold' : '' }}">
