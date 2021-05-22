@@ -36,9 +36,9 @@ Rates - Admin
     <table id="rates-list" class="table table-bordered" data-sortable>
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Rate Name</th>
-                <th scope="col">Rate Status</th>
-                <th scope="col">Rate Price (RM)</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Price (RM)</th>
                 <th scope="col" data-sortable="false">Actions</th>
             </tr>
         </thead>
