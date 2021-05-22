@@ -16,7 +16,7 @@ My Admin Account -
             <span>{{ Auth::user()->name }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
+            <button type="button" class="btn btn-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
                 <i class="bi bi-pencil-square"></i>
                 Change
             </button>
@@ -31,7 +31,7 @@ My Admin Account -
             <span>Change often to improve security</span>
         </div>
         <div>
-            <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
+            <button class="btn btn-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
                 <i class="bi bi-pencil-square"></i>
                 Change
             </button>
