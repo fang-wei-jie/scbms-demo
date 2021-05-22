@@ -66,8 +66,10 @@ class RatesController extends Controller
                 DB::table('rates')
                     ->where('id', '=', $request->id)
                     ->update(
-                        ['rateName' => $request->rateName],
-                        ['ratePrice' => $request->ratePrice],
+                        [
+                            'rateName' => $request->input('rateName'),
+                            'ratePrice' => $request->input('ratePrice')
+                        ],
                     );
 
             }
