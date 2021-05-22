@@ -138,7 +138,9 @@ Rates - Admin
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editLabel">Edit rate details</h5>
+                <h5 class="modal-title" id="editLabel">
+                    Edit <b><span id="rateName"></span></b>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -149,10 +151,10 @@ Rates - Admin
                     <div class="form-group">
                         <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="editRateNameSection">
                         <label for="rateName">Rate Name</label>
                         <input type="text" class="form-control modal-rateName" name="oldRateName" minlength="1" maxlength="25" style="display: none;">
-                        <input type="text" class="form-control modal-rateName" id="rateName" name="rateName" placeholder="Enter new rate name" minlength="1" maxlength="25">
+                        <input type="text" class="form-control modal-rateName" name="rateName" placeholder="Enter new rate name" minlength="1" maxlength="25">
                         <small" class="form-text text-muted">Make sure you do not enter same name for multiple rates to avoid confucian for customers and admins (including yourself). </small>
                     </div>
                     <div class="form-group">
@@ -250,14 +252,15 @@ Rates - Admin
 <script>
     // feed data into the modal dialog
     $(document).on("click", "#editRate", function() {
+        $("#rateName").text($(this).data('name'))
         $(".modal-id").prop("value", $(this).data('id'))
         $(".modal-rateName").prop("value", $(this).data('name'))
         $("#modal-ratePrice").prop("value", $(this).data('price'))
 
         if ($(this).data('name') == 'Weekdays' || $(this).data('name') == 'Weekend') {
-            $("#rateName").prop("disabled", true);
+            $("#editRateNameSection").css("display", "none");
         } else {
-            $("#rateName").prop("disabled", false);
+            $("#editRateNameSection").css("display", "");
         }
     })
 
