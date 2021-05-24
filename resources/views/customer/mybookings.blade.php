@@ -54,10 +54,11 @@ My Bookings -
                                 <i class="bi bi-receipt"></i>
                                 Invoice
                             </button>
+                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
+                                <i class="bi bi-upc"></i>
+                                Check-in Code
+                            </button>
                         </form>
-                        <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}"><i class="bi bi-upc"></i>
-                            Check-in Code
-                        </button>
                     </div>
                 </div>
 
