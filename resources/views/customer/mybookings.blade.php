@@ -23,7 +23,7 @@ My Bookings -
         </div>
         <div>
             <a href="{{ route('book-court') }}" class="btn btn-outline-primary">
-                <i class="bi bi-plus-circle-fill"></i>
+                <i class="bi bi-journal-plus"></i>
                 New Booking
             </a>
         </div>
