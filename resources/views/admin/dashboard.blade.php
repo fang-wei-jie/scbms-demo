@@ -5,7 +5,7 @@ Dashboard - Admin
 @endsection
 
 @section('body')
-<div class="container-fluid">
+<div class="container">
     <div class="row">
         <div class="col-xl">
             <br>
