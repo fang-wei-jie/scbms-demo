@@ -6,9 +6,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ViewBookingsController;
+use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CheckInController;   
+use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\SalesController;
@@ -50,6 +51,10 @@ Route::post('/myaccount', [AccountController::class, 'update']);
 
 // My Bookings
 Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
+
+// Book Courts
+Route::get('/book-court', [MakeBookingsController::class, 'view_court']) -> name('book-court');
+Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
 
 // Receipt/Invoice
 Route::post('/receipt', [ReceiptController::class, 'view']) -> name('view-receipt');
