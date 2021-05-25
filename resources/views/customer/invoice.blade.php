@@ -56,13 +56,13 @@ Receipt -
                     Court {{ $invoiceDetail->courtID }} {{ $invoiceDetail->rateName }}<br>
                 </td>
                 <td>
-                    RM{{ $invoiceDetail->ratePrice }}/hour
+                    RM{{ $invoiceDetail->bookingPrice }}/hour
                 </td>
                 <td>
                     {{ $invoiceDetail->timeLength }} @if($invoiceDetail->timeLength > 1) hours @else hour @endif
                 </td>
                 <td>
-                    RM{{ ($invoiceDetail->ratePrice * $invoiceDetail->timeLength) }}
+                    RM{{ ($invoiceDetail->bookingPrice * $invoiceDetail->timeLength) }}
                 </td>
             </tr>
             <tr>
@@ -70,7 +70,7 @@ Receipt -
                     Net total
                 </td>
                 <td>
-                    RM{{ round(($invoiceDetail->ratePrice * $invoiceDetail->timeLength) / 106 * 100, 2) }}
+                    RM{{ round(($invoiceDetail->bookingPrice * $invoiceDetail->timeLength) / 106 * 100, 2) }}
                 </td>
             </tr>
             <tr>
@@ -78,7 +78,7 @@ Receipt -
                     SST (6%)
                 </td>
                 <td>
-                    RM{{ round(($invoiceDetail->ratePrice * $invoiceDetail->timeLength) / 106 * 6, 2) }}
+                    RM{{ round(($invoiceDetail->bookingPrice * $invoiceDetail->timeLength) / 106 * 6, 2) }}
                 </td>
             </tr>
             <tr>
@@ -86,7 +86,7 @@ Receipt -
                     Total
                 </td>
                 <td>
-                    RM{{ ($invoiceDetail->ratePrice * $invoiceDetail->timeLength) }}.00
+                    RM{{ ($invoiceDetail->bookingPrice * $invoiceDetail->timeLength) }}.00
                 </td>
             </tr>
         </tbody>

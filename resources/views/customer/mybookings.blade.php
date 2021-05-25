@@ -44,7 +44,7 @@ My Bookings -
                         Court {{ $list->courtID }} - {{ $list->rateName }} rate
                     </div>
                     <div>
-                        <b>RM {{ $list->ratePrice * $list->timeLength }}</b>
+                        <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
                     </div>
                     <div>
                         <form action="{{ route('view-receipt') }}" method="post">
@@ -87,7 +87,7 @@ My Bookings -
                         Court {{ $list->courtID }} - {{ $list->rateName }} rate
                     </div>
                     <div>
-                        <b>RM {{ $list->ratePrice * $list->timeLength }}</b>
+                        <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
                     </div>
                     <div>
                         <form action="{{ route('view-receipt') }}" method="post">
