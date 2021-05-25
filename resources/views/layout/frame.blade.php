@@ -118,10 +118,10 @@
                             Rates
                         </a>
                     </li>
-                    <li class="nav-item {{ (request()->is('admin/customer')) ? 'active font-weight-bold' : '' }}">
+                    <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.customer_accounts') }}">
                             <i class="bi bi-person-circle"></i>
-                            Customer Accounts
+                            Accounts
                         </a>
                     </li>
                     <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">

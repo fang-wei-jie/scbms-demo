@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\RatesController;
+use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\AdminAccountController;
 
@@ -83,6 +84,10 @@ Route::prefix('admin')->group(function() {
     Route::get('/rates', [RatesController::class, 'view']) -> name('admin.rates');
     Route::post('/rates', [RatesController::class, 'update']);
     Route::post('/rates-add', [RatesController::class, 'add']);
+
+    // Accounts Management (Customer)
+    Route::get('/accounts', [CustomerAccountManagementController::class, 'view']) -> name('admin.customer_accounts');
+    Route::post('/accounts', [CustomerAccountManagementController::class, 'process']);
 
     // Sales Report
     Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
