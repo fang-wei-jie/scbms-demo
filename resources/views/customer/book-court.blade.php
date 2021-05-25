@@ -67,12 +67,16 @@ Book Courts -
                 <!-- resets the selected date, time, and length; shows the upper portion of form and hides the lower portion of form -->
                 <tr>
                     <td>
-                        <b>Selected Date and Time</b> <br>
-                        {{ $dateSlot }} {{ $timeSlot }}:00-{{ $endTime }}:00
-                        <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
-                    </td>
-                    <td>
-                        <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <b>Selected Date and Time</b> <br>
+                                {{ $dateSlot }} {{ $timeSlot }}:00-{{ $endTime }}:00
+                                <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
+                            </div>
+                            <div>
+                                <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
