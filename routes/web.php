@@ -90,7 +90,7 @@ Route::prefix('admin')->group(function() {
     Route::post('/accounts', [CustomerAccountManagementController::class, 'process']);
 
     // Sales Report
-    Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
+    // Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
 
     // My Account
     Route::get('/myaccount', [AdminAccountController::class, 'view']) -> name('admin.myadminaccount');

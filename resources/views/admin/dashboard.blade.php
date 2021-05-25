@@ -80,7 +80,7 @@ Dashboard - Admin
             <br>
 
             {{-- sales performance card --}}
-            <div class="card bg-light">
+            {{-- <div class="card bg-light">
                 <div class="card-body">
                     <h1 class="card-title">Sales Performance</h1>
                     <!-- Earnings Monthly Card -->
@@ -144,7 +144,7 @@ Dashboard - Admin
                         Sales Report
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

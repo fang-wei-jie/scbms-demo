@@ -124,12 +124,6 @@
                             Accounts
                         </a>
                     </li>
-                    <li class="nav-item {{ (request()->is('admin/sales')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.sales') }}">
-                            <i class="bi bi-cash-stack"></i>
-                            Sales Report
-                        </a>
-                    </li>
                     <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.myadminaccount') }}">
                             <i class="bi bi-person-badge"></i>
