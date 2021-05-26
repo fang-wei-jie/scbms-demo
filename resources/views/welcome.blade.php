@@ -35,7 +35,7 @@
 <div class="container">
 
     <div class="col-sm">
-        <div class="row">
+        <div class="row mt-5">
             <h1>Why Choose Us? </h1>
         </div>
 
@@ -90,7 +90,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             <h1>Amenities</h1>
         </div>
 
