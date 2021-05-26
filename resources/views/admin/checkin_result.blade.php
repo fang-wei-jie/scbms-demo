@@ -17,7 +17,7 @@ Check In Result - Admin
 @endsection
 
 @section('body')
-<div class="container-fluid">
+<div class="container">
 @if($result == null)
     @php
         // invalid booking ID
