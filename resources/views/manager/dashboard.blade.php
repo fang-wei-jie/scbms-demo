@@ -70,7 +70,7 @@ Dashboard - Manager
                             @endforeach
                         </tbody>
                     </table>
-                    <a href="{{ route('admin.rates') }}" class="btn btn-primary">
+                    <a href="{{ route('manager.rates') }}" class="btn btn-primary">
                         <i class="bi bi-tags-fill"></i>
                         Manage rates
                     </a>

@@ -168,14 +168,14 @@
                             <i class="bi bi-journal-album"></i>
                             Bookings
                         </a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item {{ (request()->is('manager/rates')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.rates') }}">
                             <i class="bi bi-tags"></i>
                             Rates
                         </a>
                     </li>
-                    <li class="nav-item {{ (request()->is('manager/managers')) ? 'active font-weight-bold' : '' }}">
+                    {{-- <li class="nav-item {{ (request()->is('manager/managers')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.managers') }}">
                             <i class="bi bi-file-person"></i>
                             Managers

@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class RatesController extends Controller
+class ManagerRatesController extends Controller
 {
 
     function __construct()
     {
 
-        $this->middleware('auth:admin');
+        $this->middleware('auth:manager');
     }
 
     function view()
@@ -22,7 +22,7 @@ class RatesController extends Controller
             ->where('rateStatus', '!=', 2)
             ->get();
 
-        return view('admin.rates', ['rates' => $rates]);
+        return view('manager.rates', ['rates' => $rates]);
     }
 
     function update(Request $request)
@@ -82,7 +82,7 @@ class RatesController extends Controller
 
         }
 
-        return redirect() -> route('admin.rates');
+        return redirect() -> route('manager.rates');
     }
 
     function add(Request $request)
@@ -104,7 +104,7 @@ class RatesController extends Controller
 
         ]);
 
-        return redirect() -> route('admin.rates');
+        return redirect() -> route('manager.rates');
 
     }
 }
