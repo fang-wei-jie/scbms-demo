@@ -45,7 +45,7 @@ Rates - Manager
         <tbody>
             @foreach ($rates as $rateDetail)
             <tr>
-                <form action="{{ route('admin.rates') }}" method="post">
+                <form action="{{ route('manager.rates') }}" method="post">
                     @csrf
                     <td>{{$rateDetail->rateName}}</td>
                     <td>
