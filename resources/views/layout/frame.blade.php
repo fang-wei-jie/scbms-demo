@@ -50,6 +50,8 @@
             @auth
                 @if (request()->is('admin/*'))
                     {{ route('admin.dashboard') }}
+                @elseif (request()->is('manager/*'))
+                    {{ route('manager.dashboard') }}
                 @else
                     {{ route('mybookings') }}
                 @endif
@@ -130,6 +132,21 @@
                             {{ Auth::user()->name }}
                         </a>
                     </li>
+
+                @elseif(request()->is('manager/*'))
+
+                    <li class="nav-item {{ (request()->is('manager/dashboard')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.dashboard') }}">
+                            <i class="bi bi-kanban"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item {{ (request()->is('manager/sales')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.sales') }}">
+                            <i class="bi bi-cash-stack"></i>
+                            Sales Report
+                        </a>
+                    </li> --}}
 
                 @else
 

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\AdminAccountController;
 
+use App\Http\Controllers\Manager\DashboardViewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -95,5 +96,17 @@ Route::prefix('admin')->group(function() {
     // My Account
     Route::get('/myaccount', [AdminAccountController::class, 'view']) -> name('admin.myadminaccount');
     Route::post('/myaccount', [AdminAccountController::class, 'update']);
+
+});
+
+// MANAGER PAGES
+Route::prefix('manager')->group(function() {
+
+    Route::get('/', function () {
+        return redirect() -> route('admin.dashboard');
+    });
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardViewController::class, 'view']) -> name('manager.dashboard');
 
 });
