@@ -19,7 +19,7 @@ use App\Http\Controllers\ReceiptController;
 
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CheckInController;
+use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\CustomerAccountManagementController;
@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\AdminAccountController;
 
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
+use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerAccountController;
@@ -88,8 +89,8 @@ Route::prefix('admin')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'view']) -> name('admin.dashboard');
 
     // Check In
-    Route::get('/checkin', [CheckInController::class, 'view']) -> name('admin.checkin');
-    Route::post('/checkin', [CheckInController::class, 'check']);
+    Route::get('/checkin', [AdminCheckInController::class, 'view']) -> name('admin.checkin');
+    Route::post('/checkin', [AdminCheckInController::class, 'check']);
 
     // Court Bookings
     Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
@@ -119,6 +120,10 @@ Route::prefix('manager')->group(function() {
 
     // Dashboard
     Route::get('/dashboard', [DashboardViewController::class, 'view']) -> name('manager.dashboard');
+
+    // Check In
+    Route::get('/checkin', [ManagerCheckInController::class, 'view']) -> name('manager.checkin');
+    Route::post('/checkin', [ManagerCheckInController::class, 'check']);
 
     // Rates Management
     Route::get('/rates', [ManagerRatesController::class, 'view']) -> name('manager.rates');

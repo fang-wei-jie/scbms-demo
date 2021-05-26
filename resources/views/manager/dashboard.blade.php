@@ -33,7 +33,7 @@ Dashboard - Manager
                             @endif
                         @endforeach
                     @endfor
-                    <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
+                    <a href="{{ route('manager.checkin') }}" class="btn btn-primary">
                         <i class="bi bi-person-check-fill"></i>
                         Customer Check-in
                     </a>

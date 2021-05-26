@@ -157,13 +157,13 @@
                             Dashboard
                         </a>
                     </li>
-                    {{-- <li class="nav-item {{ (request()->is('manager/checkin')) ? 'active font-weight-bold' : '' }}">
+                    <li class="nav-item {{ (request()->is('manager/checkin')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.checkin') }}">
                             <i class="bi bi-person-check-fill"></i>
                             Check In
                         </a>
                     </li>
-                    <li class="nav-item {{ (request()->is('manager/bookings')) ? 'active font-weight-bold' : '' }}">
+                    {{-- <li class="nav-item {{ (request()->is('manager/bookings')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.bookings') }}">
                             <i class="bi bi-journal-album"></i>
                             Bookings
