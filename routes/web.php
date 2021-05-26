@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\AdminAccountController;
 
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
+use App\Http\Controllers\Manager\ManagerAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -115,10 +116,14 @@ Route::prefix('admin')->group(function() {
 Route::prefix('manager')->group(function() {
 
     Route::get('/', function () {
-        return redirect() -> route('admin.dashboard');
+        return redirect() -> route('manager.dashboard');
     });
 
     // Dashboard
     Route::get('/dashboard', [DashboardViewController::class, 'view']) -> name('manager.dashboard');
+
+    // My Account
+    Route::get('/myaccount', [ManagerAccountController::class, 'view']) -> name('manager.myaccount');
+    Route::post('/myaccount', [ManagerAccountController::class, 'update']);
 
 });
