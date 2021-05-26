@@ -1,6 +1,10 @@
 @extends('layout.frame')
 
 @section('extra-css')
+<style>
+    .feature {
+        font-size: 100px;
+    }
 
 @endsection
 
