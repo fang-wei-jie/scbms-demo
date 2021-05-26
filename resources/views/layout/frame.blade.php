@@ -37,6 +37,10 @@
         .admin-red-bg {
             background-color: #AC2332;
         }
+
+        .manager-dark-bg {
+            background-color: #343a40;
+        }
     </style>
     @yield('extra-css')
 </head>
@@ -44,7 +48,15 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg @if (request()->is('admin/*')) admin-red-bg navbar-dark @else bg-light navbar-light @endif fixed-top hide-from-print">
+    <nav id="header" class="navbar navbar-expand-lg
+        @if (request()->is('admin/*'))
+            admin-red-bg navbar-dark
+        @elseif (request()->is('manager/*'))
+            manager-dark-bg navbar-dark
+        @else
+            bg-light navbar-light
+        @endif
+        fixed-top hide-from-print">
         <a class="navbar-brand" href="
             @guest {{ '/' }} @endguest
             @auth
@@ -58,8 +70,12 @@
             @endauth
         ">
 
-            <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top" @if (request()->is('admin/*')) style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); " @endif alt="">
-            X Badminton Court
+            <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top"
+                @if (request()->is('admin/*') | request()->is('manager/*'))
+                    style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); "
+                @endif
+            alt="">
+            X Badminton Court @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,6 +163,12 @@
                             Sales Report
                         </a>
                     </li> --}}
+                    <li class="nav-item {{ (request()->is('manager/myaccount')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.myaccount') }}">
+                            <i class="bi bi-person-square"></i>
+                            {{ Auth::user()->name }}
+                        </a>
+                    </li>
 
                 @else
 
@@ -192,7 +214,7 @@
     </div>
 
     <!-- footer -->
-    @if (!request()->is('admin/*'))
+    @if (!(request()->is('admin/*') || request()->is('manager/*')))
     <footer class="footer mt-auto py-3 bg-dark hide-from-print">
         <div class="container d-flex justify-content-between flex-wrap">
             <div>
