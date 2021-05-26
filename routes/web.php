@@ -23,11 +23,11 @@ use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\BookingsController;
 use App\Http\Controllers\Admin\RatesController;
 use App\Http\Controllers\Admin\CustomerAccountManagementController;
-use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\AdminAccountController;
 
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
+use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerAccountController;
 
 /*
@@ -103,9 +103,6 @@ Route::prefix('admin')->group(function() {
     Route::get('/accounts', [CustomerAccountManagementController::class, 'view']) -> name('admin.customer_accounts');
     Route::post('/accounts', [CustomerAccountManagementController::class, 'process']);
 
-    // Sales Report
-    // Route::get('/sales', [SalesController::class, 'view']) -> name('admin.sales');
-
     // My Account
     Route::get('/myaccount', [AdminAccountController::class, 'view']) -> name('admin.myadminaccount');
     Route::post('/myaccount', [AdminAccountController::class, 'update']);
@@ -121,6 +118,9 @@ Route::prefix('manager')->group(function() {
 
     // Dashboard
     Route::get('/dashboard', [DashboardViewController::class, 'view']) -> name('manager.dashboard');
+
+    // Sales Report
+    Route::get('/sales', [SalesController::class, 'view']) -> name('manager.sales');
 
     // My Account
     Route::get('/myaccount', [ManagerAccountController::class, 'view']) -> name('manager.myaccount');

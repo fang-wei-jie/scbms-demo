@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Sales Report - Admin
+Sales Report - Manager
 @endsection
 
 @section('body')

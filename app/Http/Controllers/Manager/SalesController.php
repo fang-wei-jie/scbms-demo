@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -9,7 +9,7 @@ class SalesController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:manager');
     }
 
     function view()
@@ -31,6 +31,6 @@ class SalesController extends Controller
             ->where('dateSlot', '=', date('Ymd'))
             ->first();
 
-        return view('admin.sales', ['monthSales' => $monthSales, 'todaySales' => $todaySales, 'todayBookingSales' => $todayBookingSales]);
+        return view('manager.sales', ['monthSales' => $monthSales, 'todaySales' => $todaySales, 'todayBookingSales' => $todayBookingSales]);
     }
 }

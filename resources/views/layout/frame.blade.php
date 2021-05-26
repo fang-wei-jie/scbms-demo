@@ -157,12 +157,42 @@
                             Dashboard
                         </a>
                     </li>
-                    {{-- <li class="nav-item {{ (request()->is('manager/sales')) ? 'active font-weight-bold' : '' }}">
+                    {{-- <li class="nav-item {{ (request()->is('manager/checkin')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.checkin') }}">
+                            <i class="bi bi-person-check-fill"></i>
+                            Check In
+                        </a>
+                    </li>
+                    <li class="nav-item {{ (request()->is('manager/bookings')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.bookings') }}">
+                            <i class="bi bi-journal-album"></i>
+                            Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item {{ (request()->is('manager/rates')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.rates') }}">
+                            <i class="bi bi-tags"></i>
+                            Rates
+                        </a>
+                    </li>
+                    <li class="nav-item {{ (request()->is('manager/managers')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.managers') }}">
+                            <i class="bi bi-file-person"></i>
+                            Managers
+                        </a>
+                    </li>
+                    <li class="nav-item {{ (request()->is('manager/admins')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.admins') }}">
+                            <i class="bi bi-person-badge"></i>
+                            Admins
+                        </a>
+                    </li> --}}
+                    <li class="nav-item {{ (request()->is('manager/sales')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.sales') }}">
                             <i class="bi bi-cash-stack"></i>
                             Sales Report
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item {{ (request()->is('manager/myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.myaccount') }}">
                             <i class="bi bi-person-square"></i>

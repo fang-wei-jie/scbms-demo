@@ -80,7 +80,7 @@ Dashboard - Manager
             <br>
 
             {{-- sales performance card --}}
-            {{-- <div class="card bg-light">
+            <div class="card bg-light">
                 <div class="card-body">
                     <h1 class="card-title">Sales Performance</h1>
                     <!-- Earnings Monthly Card -->
@@ -139,12 +139,12 @@ Dashboard - Manager
 
                     <br>
 
-                    <a href="{{ route('admin.sales') }}" class="btn btn-primary">
+                    <a href="{{ route('manager.sales') }}" class="btn btn-primary">
                         <i class="bi bi-cash-stack"></i>
                         Sales Report
                     </a>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
 </div>
