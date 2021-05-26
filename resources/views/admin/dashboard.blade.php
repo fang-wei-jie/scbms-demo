@@ -35,11 +35,11 @@ Dashboard - Admin
                     @endfor
                     <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
                         <i class="bi bi-person-check-fill"></i>
-                        Customer Check-in
+                        Check-in
                     </a>
                     <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
-                        <i class="bi bi-book-half"></i>
-                        View court bookings
+                        <i class="bi bi-journal-album"></i>
+                        View Bookings
                     </a>
                 </div>
             </div>
@@ -72,7 +72,7 @@ Dashboard - Admin
                     </table>
                     <a href="{{ route('admin.rates') }}" class="btn btn-primary">
                         <i class="bi bi-tags-fill"></i>
-                        Manage rates
+                        Manage Rates
                     </a>
                 </div>
             </div>

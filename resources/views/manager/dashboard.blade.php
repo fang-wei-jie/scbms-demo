@@ -35,11 +35,11 @@ Dashboard - Manager
                     @endfor
                     <a href="{{ route('manager.checkin') }}" class="btn btn-primary">
                         <i class="bi bi-person-check-fill"></i>
-                        Customer Check-in
+                        Check-in
                     </a>
                     <a href="{{ route('manager.bookings') }}" class="btn btn-primary">
-                        <i class="bi bi-book-half"></i>
-                        View court bookings
+                        <i class="bi bi-journal-album"></i>
+                        View Bookings
                     </a>
                 </div>
             </div>
@@ -72,7 +72,7 @@ Dashboard - Manager
                     </table>
                     <a href="{{ route('manager.rates') }}" class="btn btn-primary">
                         <i class="bi bi-tags-fill"></i>
-                        Manage rates
+                        Manage Rates
                     </a>
                 </div>
             </div>
@@ -141,7 +141,7 @@ Dashboard - Manager
 
                     <a href="{{ route('manager.sales') }}" class="btn btn-primary">
                         <i class="bi bi-cash-stack"></i>
-                        Sales Report
+                        View Sales Report
                     </a>
                 </div>
             </div>
