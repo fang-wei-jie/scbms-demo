@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class AccountController extends Controller
+class CustomerMyAccountController extends Controller
 {
 
     function __construct()

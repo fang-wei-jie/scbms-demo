@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\CustomerMyAccountController;
 use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
@@ -23,7 +23,7 @@ use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\CustomerAccountManagementController;
-use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminMyAccountController;
 
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
@@ -31,7 +31,7 @@ use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
-use App\Http\Controllers\Manager\ManagerAccountController;
+use App\Http\Controllers\Manager\ManagerMyAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,8 +64,8 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/logout', [LogoutController::class, 'logout']) -> name('logout');
 
 // My Account
-Route::get('/myaccount', [AccountController::class, 'view']) -> name('myaccount');
-Route::post('/myaccount', [AccountController::class, 'update']);
+Route::get('/myaccount', [CustomerMyAccountController::class, 'view']) -> name('myaccount');
+Route::post('/myaccount', [CustomerMyAccountController::class, 'update']);
 
 // My Bookings
 Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
@@ -107,8 +107,8 @@ Route::prefix('admin')->group(function() {
     Route::post('/accounts', [CustomerAccountManagementController::class, 'process']);
 
     // My Account
-    Route::get('/myaccount', [AdminAccountController::class, 'view']) -> name('admin.myadminaccount');
-    Route::post('/myaccount', [AdminAccountController::class, 'update']);
+    Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myadminaccount');
+    Route::post('/myaccount', [AdminMyAccountController::class, 'update']);
 
 });
 
@@ -139,7 +139,7 @@ Route::prefix('manager')->group(function() {
     Route::get('/sales', [SalesController::class, 'view']) -> name('manager.sales');
 
     // My Account
-    Route::get('/myaccount', [ManagerAccountController::class, 'view']) -> name('manager.myaccount');
-    Route::post('/myaccount', [ManagerAccountController::class, 'update']);
+    Route::get('/myaccount', [ManagerMyAccountController::class, 'view']) -> name('manager.myaccount');
+    Route::post('/myaccount', [ManagerMyAccountController::class, 'update']);
 
 });

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class ManagerAccountController extends Controller
+class ManagerMyAccountController extends Controller
 {
     function __construct()
     {
