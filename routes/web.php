@@ -1,6 +1,14 @@
 <?php
 
+// Functions
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
+// Customer Controllers
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -8,6 +16,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
+
+// Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\BookingsController;
@@ -16,7 +26,9 @@ use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\SalesController;
 use App\Http\Controllers\Admin\AdminAccountController;
 
+// Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
