@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class BookingsController extends Controller
+class AdminBookingsController extends Controller
 {
 
     function __construct()

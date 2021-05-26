@@ -37,7 +37,7 @@ Dashboard - Manager
                         <i class="bi bi-person-check-fill"></i>
                         Customer Check-in
                     </a>
-                    <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
+                    <a href="{{ route('manager.bookings') }}" class="btn btn-primary">
                         <i class="bi bi-book-half"></i>
                         View court bookings
                     </a>

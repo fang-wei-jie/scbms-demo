@@ -20,7 +20,7 @@ use App\Http\Controllers\ReceiptController;
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
-use App\Http\Controllers\Admin\BookingsController;
+use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\AdminAccountController;
@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\AdminAccountController;
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
+use App\Http\Controllers\Manager\ManagerBookingsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerAccountController;
@@ -93,8 +94,8 @@ Route::prefix('admin')->group(function() {
     Route::post('/checkin', [AdminCheckInController::class, 'check']);
 
     // Court Bookings
-    Route::get('/bookings', [BookingsController::class, 'view']) -> name('admin.bookings');
-    Route::post('/bookings', [BookingsController::class, 'delete']);
+    Route::get('/bookings', [AdminBookingsController::class, 'view']) -> name('admin.bookings');
+    Route::post('/bookings', [AdminBookingsController::class, 'delete']);
 
     // Rates Management
     Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
@@ -124,6 +125,10 @@ Route::prefix('manager')->group(function() {
     // Check In
     Route::get('/checkin', [ManagerCheckInController::class, 'view']) -> name('manager.checkin');
     Route::post('/checkin', [ManagerCheckInController::class, 'check']);
+
+    // Court Bookings
+    Route::get('/bookings', [ManagerBookingsController::class, 'view']) -> name('manager.bookings');
+    Route::post('/bookings', [ManagerBookingsController::class, 'delete']);
 
     // Rates Management
     Route::get('/rates', [ManagerRatesController::class, 'view']) -> name('manager.rates');

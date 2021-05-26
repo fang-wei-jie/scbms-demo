@@ -163,12 +163,12 @@
                             Check In
                         </a>
                     </li>
-                    {{-- <li class="nav-item {{ (request()->is('manager/bookings')) ? 'active font-weight-bold' : '' }}">
+                    <li class="nav-item {{ (request()->is('manager/bookings')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.bookings') }}">
                             <i class="bi bi-journal-album"></i>
                             Bookings
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item {{ (request()->is('manager/rates')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.rates') }}">
                             <i class="bi bi-tags"></i>
