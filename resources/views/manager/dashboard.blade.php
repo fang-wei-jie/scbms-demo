@@ -17,7 +17,7 @@ Dashboard - Manager
                             <h1 class="card-title">Courts Booked</h1>
                         </div>
                         <div class="col-auto">
-                            <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">
+                            <a href="{{ route('manager.dashboard') }}" class="btn btn-primary">
                                 <i class="bi bi-arrow-clockwise"></i>
                                 Refresh
                             </a>
