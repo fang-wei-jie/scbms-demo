@@ -55,13 +55,29 @@ class LoginController extends Controller
 
             ]);
 
-            // login verification
-            if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+            // identify whether it is admin or manager
+            if (str_ends_with($request->email, '@xbcm')) {
 
-                return back()->with('status', 'Invalid login details');
+                // login verification for manager
+                if (!Auth::guard('manager')->attempt($request->only('email', 'password'))) {
+
+                    return back()->with('status', 'Invalid login details');
+                }
+
+                return redirect()->route('manager.dashboard');
+
+            } else if (str_ends_with($request->email, '@xbc')){
+
+                // login verification for admin
+                if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+
+                    return back()->with('status', 'Invalid login details');
+                }
+
+                return redirect()->route('admin.dashboard');
+
             }
 
-            return redirect()->route('admin.dashboard');
         }
     }
 }
