@@ -39,10 +39,6 @@ class LoginController extends Controller
                 return back()->with('status', 'Invalid login details');
             }
 
-
-            // store userID into session
-            $request->session()->put('custID', Auth::user()->id);
-
             return redirect()->route('mybookings');
 
         } else if (isset($_POST['admin-login'])) {
