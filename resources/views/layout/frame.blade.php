@@ -98,7 +98,7 @@
                 </li>
                 <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
                     <a class="nav-link" href="{{ route('login') }}">
-                        <i class="bi bi-person-square"></i>
+                        <i class="bi bi-person-circle"></i>
                         Login
                     </a>
                 </li>
