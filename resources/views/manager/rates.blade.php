@@ -102,7 +102,7 @@ Rates - Manager
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ 'rates-add' }}" method="post">
+            <form action="{{ route('manager.rates') }}" method="post">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">

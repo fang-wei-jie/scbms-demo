@@ -25,7 +25,7 @@ class AdminRatesController extends Controller
         return view('admin.rates', ['rates' => $rates]);
     }
 
-    function update(Request $request)
+    function process(Request $request)
     {
 
         if (isset($_POST['enableRate'])) {
@@ -80,31 +80,26 @@ class AdminRatesController extends Controller
                 ->where('id', '=', $request->id)
                 ->update(['rateStatus' => 2]);
 
+        } else if (isset($_POST['addRate'])) {
+
+            $this -> validate($request, [
+
+                'rateStatus' => 'required | regex:/^[0-1]{1}/u',
+                'rateName' => 'required | max:255 | unique:rates,rateName',
+                'ratePrice' => 'required | max:99 | numeric',
+
+            ]);
+
+            DB::table('rates')->insert([
+
+                'rateStatus' => $request->rateStatus,
+                'rateName' => $request->rateName,
+                'ratePrice' => $request->ratePrice,
+
+            ]);
+
         }
 
         return redirect() -> route('admin.rates');
-    }
-
-    function add(Request $request)
-    {
-
-        $this -> validate($request, [
-
-            'rateStatus' => 'required | regex:/^[0-1]{1}/u',
-            'rateName' => 'required | max:255 | unique:rates,rateName',
-            'ratePrice' => 'required | max:99 | numeric',
-
-        ]);
-
-        DB::table('rates')->insert([
-
-            'rateStatus' => $request->rateStatus,
-            'rateName' => $request->rateName,
-            'ratePrice' => $request->ratePrice,
-
-        ]);
-
-        return redirect() -> route('admin.rates');
-
     }
 }

@@ -99,8 +99,7 @@ Route::prefix('admin')->group(function() {
 
     // Rates Management
     Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
-    Route::post('/rates', [AdminRatesController::class, 'update']);
-    Route::post('/rates-add', [AdminRatesController::class, 'add']);
+    Route::post('/rates', [AdminRatesController::class, 'process']);
 
     // Accounts Management (Customer)
     Route::get('/accounts', [CustomerAccountManagementController::class, 'view']) -> name('admin.customer_accounts');
@@ -132,8 +131,7 @@ Route::prefix('manager')->group(function() {
 
     // Rates Management
     Route::get('/rates', [ManagerRatesController::class, 'view']) -> name('manager.rates');
-    Route::post('/rates', [ManagerRatesController::class, 'update']);
-    Route::post('/rates-add', [ManagerRatesController::class, 'add']);
+    Route::post('/rates', [ManagerRatesController::class, 'process']);
 
     // Sales Report
     Route::get('/sales', [SalesController::class, 'view']) -> name('manager.sales');
