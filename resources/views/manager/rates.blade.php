@@ -212,10 +212,10 @@ Rates - Manager
                 </button>
             </div>
             <div class="modal-body">
-                @if(session('info')) {{ session('info') }} @endif <br>
-                @error('rateStatus') {{ $message }} @enderror <br>
-                @error('rateName') {{ $message }} @enderror <br>
-                @error('ratePrice') {{ $message }} @enderror <br>
+                @if(session('info')) {{ session('info') }} @endif
+                @error('rateStatus') {{ $message }} @enderror
+                @error('rateName') {{ $message }} @enderror
+                @error('ratePrice') {{ $message }} @enderror
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">
