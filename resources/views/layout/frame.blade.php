@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')X Badminton Court</title>
-    @if (request()->is('admin/*'))
-    <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/adminFavicon.ico') }}" />
+    @if(request()->is('manager/*'))
+    <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/file-person.svg" />
+    @elseif (request()->is('admin/*'))
+    {{-- <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/adminFavicon.ico') }}" /> --}}
+    <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/person-badge.svg" />
     @else
     <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/custFavicon.ico') }}" />
     @endif
@@ -70,7 +73,7 @@
             @endauth
         ">
 
-            <img src="{{ asset('images/logo.svg') }}" width="30" height="30" class="d-inline-block align-top"
+            <img src=" @if(request()->is('admin/*')) https://icons.getbootstrap.com/assets/icons/person-badge.svg @elseif(request()->is('manager/*')) https://icons.getbootstrap.com/assets/icons/file-person.svg @else {{ asset('images/logo.svg') }} @endif " width="30" height="30" class="d-inline-block align-top"
                 @if (request()->is('admin/*') | request()->is('manager/*'))
                     style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); "
                 @endif
