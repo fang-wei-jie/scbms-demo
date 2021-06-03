@@ -18,7 +18,7 @@ class AdminCheckInController extends Controller
     function view()
     {
 
-        return view('admin.checkin');
+        return view('admin.checkin', ['result' => null]);
     }
 
     function check(Request $request)
@@ -37,6 +37,6 @@ class AdminCheckInController extends Controller
             ->where('custID', '=', substr($request->input('resultToQuery'), 8, 7))
             ->first();
 
-        return view('admin.checkin_result', ['resultToQuery' => $request->resultToQuery, 'currentTime' => date('H'), 'currentDate' => date('Ymd'), 'result' => $result]);
+        return view('admin.checkin', ['resultToQuery' => $request->resultToQuery, 'currentTime' => date('H'), 'currentDate' => date('Ymd'), 'result' => $result]);
     }
 }
