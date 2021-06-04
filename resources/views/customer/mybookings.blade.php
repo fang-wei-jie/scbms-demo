@@ -50,9 +50,19 @@ My Bookings -
                         <form action="{{ route('view-receipt') }}" method="post">
                             @csrf
                             <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-upc"></i>
+                                    <span class="d-none d-md-block">&nbsp;Check-in Code</span>
+                                </span>
+                            </button>
                             <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
                                 <i class="bi bi-receipt"></i>
                                 Invoice
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-receipt"></i>
+                                    <span class="d-none d-md-block">&nbsp;Invoice</span>
+                                </span>
                             </button>
                             <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
                                 <i class="bi bi-upc"></i>
@@ -94,8 +104,10 @@ My Bookings -
                             @csrf
                             <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
                             <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                <i class="bi bi-receipt"></i>
-                                Invoice
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-receipt"></i>
+                                    <span class="d-none d-md-block">&nbsp;Invoice</span>
+                                </span>
                             </button>
                         </form>
                     </div>
