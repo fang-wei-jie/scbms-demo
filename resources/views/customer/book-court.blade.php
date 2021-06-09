@@ -176,16 +176,16 @@ $(document).ready(function() {
             // get today's hours
             var todayHours = today.getHours()
 
-            if (todayHours >= 20) {
+            if (todayHours >= {{ $end_time->value }}) {
 
-                // if today's hours was over 8pm, clear date selected and prompt user we were closed
+                // if today's hours was over {{ $start_time->value }}pm, clear date selected and prompt user we were closed
                 document.getElementById("dateSlot").valueAsDate = null;
                 $("#date-error").text("We are closed at this time. Please select tomorrow or future date. ")
 
             } else {
 
                 // inserts updated time slot select list based on the hours left today
-                for (i = todayHours; i < 20; i++) {
+                for (i = todayHours; i < {{ $end_time->value }}; i++) {
                     $("#timeSlot").append(new Option(i + ":00", i))
                 }
 
@@ -198,7 +198,7 @@ $(document).ready(function() {
 
             // if selected time was tomorrow or future
             // inserts updated time slot select list based on the hours left today
-            for (i = 8; i < 20; i++) {
+            for (i = {{ $start_time->value }}; i < {{ $end_time->value }}; i++) {
                 $("#timeSlot").append(new Option(i + ":00", i))
             }
 
@@ -221,7 +221,7 @@ $(document).ready(function() {
         $("#timeLength").empty()
 
         // inserts updated time length select list based on the hours left today
-        for (i = 1; i <= (20 - $("#timeSlot").val()); i++) {
+        for (i = 1; i <= ({{ $end_time->value }} - $("#timeSlot").val()); i++) {
 
             if (i != 1) {
                 $("#timeLength").append(new Option(i + " hours", i))

@@ -19,7 +19,11 @@ class MakeBookingsController extends Controller
     function view_court ()
     {
 
-        return view ('customer.book-court', ['selectedDate' => 0]);
+        // get operation hours
+        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first();
+        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first();
+
+        return view ('customer.book-court', ['selectedDate' => 0, 'start_time' => $start_time, 'end_time' => $end_time]);
 
     }
 
@@ -27,6 +31,8 @@ class MakeBookingsController extends Controller
     {
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
+        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first();
+        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first();
 
         if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
         {
@@ -45,7 +51,7 @@ class MakeBookingsController extends Controller
             $timeSlot = $request->input('timeSlot');
             $timeLength = $request->input('timeLength');
 
-            if (($dateSlot == date("Y-m-d") && $_POST["timeSlot"] >= date("H") && ($_POST["timeLength"] + $_POST["timeSlot"]) <= 20))
+            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time->value))
             {
 
                 // if selected date is today
@@ -56,7 +62,7 @@ class MakeBookingsController extends Controller
                     ->count();
 
 
-            } else if ($dateSlot > date("Y-m-d") && ($_POST["timeLength"] + $_POST["timeSlot"]) <= 20) {
+            } else if ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time->value) {
 
                 // if selected date is after today
 
@@ -91,8 +97,6 @@ class MakeBookingsController extends Controller
                         ->where('rateStatus', 1)
                         ->get();
                 }
-
-                // dd($count);
 
                 return view ('customer.book-court', [
                     'count' => $count,
@@ -129,7 +133,7 @@ class MakeBookingsController extends Controller
             $bookingPrice = $request->input('bookingPrice');
 
             // verify once again the booking details before storing in database
-            if (($dateSlot == date("Y-m-d") && $_POST["timeSlot"] >= date("H") && ($_POST["timeLength"] + $_POST["timeSlot"]) <= 20) || ($dateSlot > date("Y-m-d") && ($_POST["timeLength"] + $_POST["timeSlot"]) <= 20)) {
+            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time->value) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time->value)) {
                 DB::table('bookings')->insert([
                     'created_at' => date('Y-m-d H:m:s'),
                     'custID' => Auth::user()->id,
@@ -148,7 +152,7 @@ class MakeBookingsController extends Controller
                 return view ('customer.book-court', [
                     'selectedDate' => 0,
                 ]);
-                
+
             }
 
         } else {
