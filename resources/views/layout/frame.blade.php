@@ -66,37 +66,37 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
         {{ $name->value }} {{ ucfirst($path) }}
     </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarToggler">
-            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
-                @guest
+            @guest
 
-                <li class="nav-item {{ (request()->is('about-us')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ ('about-us') }}">
-                        <i class="bi bi-info-circle"></i>
-                        About Us
-                    </a>
-                </li>
-                <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('login') }}">
-                        <i class="bi bi-person-circle"></i>
-                        Login
-                    </a>
-                </li>
-                <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
-                    <a class="nav-link" href="{{ route('register') }}">
-                        <i class="bi bi-person-plus"></i>
-                        Register
-                    </a>
-                </li>
+            <li class="nav-item {{ (request()->is('about-us')) ? 'active font-weight-bold' : '' }}">
+                <a class="nav-link" href="{{ ('about-us') }}">
+                    <i class="bi bi-info-circle"></i>
+                    About Us
+                </a>
+            </li>
+            <li class="nav-item {{ (request()->is('login')) ? 'active font-weight-bold' : '' }}">
+                <a class="nav-link" href="{{ route('login') }}">
+                    <i class="bi bi-person-circle"></i>
+                    Login
+                </a>
+            </li>
+            <li class="nav-item {{ (request()->is('register')) ? 'active font-weight-bold' : '' }}">
+                <a class="nav-link" href="{{ route('register') }}">
+                    <i class="bi bi-person-plus"></i>
+                    Register
+                </a>
+            </li>
 
-                @endguest
+            @endguest
 
-                @auth
+            @auth
 
                 @if ($path == "admin")
 
@@ -163,18 +163,18 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
                             Rates
                         </a>
                     </li>
-                    {{-- <li class="nav-item {{ (request()->is('manager/managers')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('manager.managers') }}">
+                    <li class="nav-item {{ (request()->is('manager/managers')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.managers_management') }}">
                             <i class="bi bi-file-person"></i>
                             Managers
                         </a>
                     </li>
                     <li class="nav-item {{ (request()->is('manager/admins')) ? 'active font-weight-bold' : '' }}">
-                        <a class="nav-link" href="{{ route('manager.admins') }}">
+                        <a class="nav-link" href="{{ route('manager.admins_management') }}">
                             <i class="bi bi-person-badge"></i>
                             Admins
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item {{ (request()->is('manager/sales')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.sales') }}">
                             <i class="bi bi-cash-stack"></i>
@@ -222,7 +222,7 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
                     </form>
                 </li>
 
-                @endauth
+            @endauth
             </ul>
         </div>
     </nav>
