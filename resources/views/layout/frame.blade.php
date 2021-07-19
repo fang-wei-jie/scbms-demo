@@ -22,6 +22,8 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
 
     <head>
         <meta charset="UTF-8">
+        <!-- chrome and safari tab color meta tag -->
+        <!-- <meta name="theme-color" content="#{{ $ui->navbar_class }}"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@yield('title'){{ $name->value }}</title>
         @if($path == "admin" || $path == "manager")
@@ -59,7 +61,7 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg fixed-top hide-from-print navbar-{{ $ui->navbar_text_class }}" style="background-color: #{{ $ui->navbar_color }}">
+    <nav id="header" class="navbar navbar-expand-lg fixed-top hide-from-print navbar-{{ $ui->navbar_text_class }} {{ $ui->navbar_class }}">
         <a class="navbar-brand" href="@guest {{ '/' }} @endguest @auth {{ route($rootRoute ?? '') }} @endauth">
 
         <img src=" @if($path == "admin" || $path == "manager") https://icons.getbootstrap.com/assets/icons/{{ $ui->logo }}.svg @else {{ asset('images/logo.svg') }} @endif " width="30" height="30" class="d-inline-block align-top" @if($path == "admin" || $path == "manager") style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); " @endif alt="">

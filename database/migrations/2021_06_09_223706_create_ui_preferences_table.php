@@ -17,7 +17,7 @@ class CreateUiPreferencesTable extends Migration
         Schema::create('ui_preferences', function (Blueprint $table) {
             $table->id();
             $table->string('side');
-            $table->string('navbar_color');
+            $table->string('navbar_class');
             $table->string('navbar_text_class');
             $table->string('logo');
         });
@@ -26,19 +26,19 @@ class CreateUiPreferencesTable extends Migration
         DB::table('ui_preferences') -> insert( array(
             [
                 'side' => 'manager',
-                'navbar_color' => '343A40',
+                'navbar_class' => 'bg-dark',
                 'navbar_text_class' => 'dark',
                 'logo' => 'file-person'
             ],
             [
                 'side' => 'admin',
-                'navbar_color' => 'DC3545',
+                'navbar_class' => 'bg-danger',
                 'navbar_text_class' => 'dark',
                 'logo' => 'person-badge'
             ],
             [
                 'side' => '',
-                'navbar_color' => 'F8F9FA',
+                'navbar_class' => 'bg-light',
                 'navbar_text_class' => 'light',
                 'logo' => ''
             ]
