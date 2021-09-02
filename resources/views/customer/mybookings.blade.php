@@ -57,17 +57,17 @@ My Bookings -
                                 </span>
                             </button>
                             <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                <i class="bi bi-receipt"></i>
-                                Invoice
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-receipt"></i>
-                                    <span class="d-none d-md-block">&nbsp;Invoice</span>
+                                    <span class="d-none d-md-block">&nbsp;Receipt</span>
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
-                                <i class="bi bi-upc"></i>
-                                Check-in Code
-                            </button>
+                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-toggle="modal" data-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->rateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-journal-x"></i>
+                                    <span class="d-none d-md-block">&nbsp;Delete Booking</span>
+                                </span>
+                            </button> --}}
                         </form>
                     </div>
                 </div>
@@ -106,7 +106,7 @@ My Bookings -
                             <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-receipt"></i>
-                                    <span class="d-none d-md-block">&nbsp;Invoice</span>
+                                    <span class="d-none d-md-block">&nbsp;Receipt</span>
                                 </span>
                             </button>
                         </form>
