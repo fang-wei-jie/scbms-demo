@@ -1,15 +1,18 @@
 @php
 $path = substr(request()->path(), 0, strpos(request()->path(), '/'));
 $ui = DB::table('ui_preferences') -> where('side', $path) -> first();
-$name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
+$brandName = DB::table('operation_preferences') -> where('attr', 'name') -> first();
+$companyName = DB::table('operation_preferences') -> where('attr', 'name') -> first();
 @endphp
 
 
 @if ($path == "admin" || $path == "manager")
+    {{-- logo link is dashbaord for admin and manager --}}
     @php
         $rootRoute = $path.'.dashboard';
     @endphp
 @else
+    {{-- logo link is mybookings for authenticated customer --}}
     @auth
         @php
             $rootRoute = 'mybookings';
@@ -25,7 +28,7 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
         <!-- chrome and safari tab color meta tag -->
         <!-- <meta name="theme-color" content="#{{ $ui->navbar_class }}"> -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@yield('title'){{ $name->value }}</title>
+        <title>@yield('title'){{ $brandName->value }}</title>
         @if($path == "admin" || $path == "manager")
             <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/{{ $ui->logo }}.svg" />
         @else
@@ -65,7 +68,7 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
         <a class="navbar-brand" href="@guest {{ '/' }} @endguest @auth {{ route($rootRoute ?? '') }} @endauth">
 
         <img src=" @if($path == "admin" || $path == "manager") https://icons.getbootstrap.com/assets/icons/{{ $ui->logo }}.svg @else {{ asset('images/logo.svg') }} @endif " width="30" height="30" class="d-inline-block align-top" @if($path == "admin" || $path == "manager") style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); " @endif alt="">
-        {{ $name->value }} {{ ucfirst($path) }}
+        {{ $brandName->value }} {{ ucfirst($path) }}
     </a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,12 +129,12 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
                             Rates
                         </a>
                     </li>
-                    <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
+                    <!-- <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.customer_accounts') }}">
                             <i class="bi bi-person-circle"></i>
                             Accounts
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.myadminaccount') }}">
                             <i class="bi bi-person-badge"></i>
@@ -238,7 +241,7 @@ $name = DB::table('operation_preferences') -> where('attr', 'name') -> first();
     <footer class="footer mt-auto py-3 bg-dark hide-from-print">
         <div class="container d-flex justify-content-between flex-wrap">
             <div>
-                <span class="white">&#169; {{ date('Y') }} X Badminton Court Sdn Bhd</span>
+                <span class="white">&#169; {{ date('Y') }} {{ $companyName -> value }}</span>
             </div>
             <div>
                 <a class="white" href="{{ ('tos') }}">
