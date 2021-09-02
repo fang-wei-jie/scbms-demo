@@ -41,7 +41,7 @@ Check In - Manager
 <div class="container">
 
     <!-- scanner/camera preview window -->
-    <div class="video-container row justify-content-md-center">
+    <div class="video-container row justify-content-md-center" style="display: none">
         <video id="video-preview"></video>
         <canvas id="qr-canvas" style="display: none;"></canvas>
     </div>
@@ -58,20 +58,16 @@ Check In - Manager
     </div>
 
     <div class="row justify-content-md-center">
-        <div class="col-3">
+        <div class="col-auto">
             <form action="{{ route('manager.checkin') }}" method="post">
                 @csrf
-                <input id="resultToQuery" class="form-control" name="resultToQuery" type="text" placeholder="Check-in ID (14 digit code)" value="" minlength=14 maxlength="14" required>
+                <input id="resultToQuery" class="form-control" name="resultToQuery" type="text" placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
         </div>
-        <div class="col-1.5">
+        <div class="col-auto">
             <button class="btn btn-primary" type="submit" id="startQuery" name="startQuery">
                 <i class="bi bi-person-check-fill"></i>
                 Check-in
             </button>
-            <a href="{{ route('manager.checkin') }}" class="btn btn-primary">
-                <i class="bi bi-upc-scan"></i>
-                Scan Again
-            </a>
             </form>
         </div>
     </div>
