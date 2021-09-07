@@ -226,7 +226,7 @@ Admin Management - Manager
         // feed data into the modal dialog
         $(document).on("click", "#editAdmin", function() {
             $(".name").text($(this).data('name'))
-            $(".manager-id").prop("value", $(this).data('email'))
+            $(".admin-id").prop("value", $(this).data('email'))
             $(".id").prop("value", $(this).data('id'))
             $(".name").prop("value", $(this).data('name'))
         })
