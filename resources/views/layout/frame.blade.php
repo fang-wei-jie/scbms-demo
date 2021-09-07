@@ -58,6 +58,12 @@ $companyName = DB::table('operation_preferences') -> where('attr', 'name') -> fi
                 }
             }
         </style>
+        .form-signin {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
     @yield('extra-css')
 </head>
 
