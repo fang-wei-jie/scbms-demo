@@ -33,6 +33,7 @@ use App\Http\Controllers\Manager\AdminAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
+use App\Http\Controllers\Manager\PreferencesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -148,5 +149,9 @@ Route::prefix('manager')->group(function() {
     // My Account
     Route::get('/myaccount', [ManagerMyAccountController::class, 'view']) -> name('manager.myaccount');
     Route::post('/myaccount', [ManagerMyAccountController::class, 'update']);
+
+    // Prefernces
+    Route::get('/preferences', [PreferencesController::class, 'view']) -> name('manager.preferences');
+    Route::post('/preferences', [PreferencesController::class, 'update']);
 
 });
