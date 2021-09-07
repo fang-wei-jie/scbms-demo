@@ -27,7 +27,7 @@ Rates - Admin
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRate">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-plus-circle-fill"></i>
-                    <span class="d-none d-md-block">&nbsp;Create new rate</span>
+                    <span class="d-none d-md-block">&nbsp;Add Rate</span>
                 </span>
             </button>
         </div>
