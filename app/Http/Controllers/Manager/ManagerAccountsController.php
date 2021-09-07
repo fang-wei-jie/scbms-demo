@@ -20,7 +20,7 @@ class ManagerAccountsController extends Controller
 
         $managers = DB::table('managers')->get();
 
-        return view('manager.manager_management', ['managers' => $managers]);
+        return view('manager.managers_management', ['managers' => $managers]);
 
     }
 
@@ -50,7 +50,7 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.manager_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
 
         } else if (isset($_POST['editManager'])){
 
@@ -69,7 +69,7 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.manager_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
 
         } else if (isset($_POST['deleteManager'])){
 
@@ -84,7 +84,7 @@ class ManagerAccountsController extends Controller
 
         }
 
-        return redirect() -> route('manager.manager_management');
+        return redirect() -> route('manager.managers_management');
 
     }
 }
