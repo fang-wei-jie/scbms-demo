@@ -14,9 +14,7 @@ Book Courts -
 
 @section('body')
 <div class="container">
-    <h1>Book Courts</h1>
-
-    <hr>
+    <h3>Book Courts</h3>
 
     <div class="col">
         <!-- upper portion of form, hidden if lower portion of form shown -->

@@ -6,9 +6,7 @@ My Bookings -
 
 @section('body')
 <div class="container">
-    <h1>My Bookings</h1>
-
-    <hr>
+    <h3>My Bookings</h3>
 
     <div style="display: flex; justify-content: space-between;">
         <div>
@@ -148,6 +146,36 @@ My Bookings -
         </div>
     </div>
 
+    <!-- delete-booking-dialog modal view -->
+    <div class="modal fade" id="delete-booking-dialog" tabindex="-1" role="dialog" aria-labelledby="show-qrcode-dialogLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleLabel">Delete booking</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        Are you sure you want to delete this booking? <br>
+                        <span id="date"></span> <span id="time"></span>:00 - <span id="end-time"></span>:00<br>
+                        Court <span id="court"></span> - <span id="rate"></span> rate <br>
+                        <span id="length"></span> hour * RM<span id="bookingPrice"></span>/hour = RM<span id="totalPrice"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <form action="" method="post">
+                        @csrf
+                        <input type="text" name="bookingID" id="bookingID" style="display: none">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger" name="delete-booking">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -158,6 +186,19 @@ My Bookings -
         var data=$(this).data('code')
         document.getElementById("qrimage").innerHTML="<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="+encodeURIComponent(data)+"'/>"
         document.getElementById("book-id-text").innerHTML="<h4>"+data+"</h4>"
+    })
+
+    // injects data for delete booking dialog
+    $(document).on("click", "#delete-booking", function(){
+        $("#bookingID").prop('value', $(this).data('id'))
+        $("#date").text($(this).data('date'))
+        $("#time").text($(this).data('time'))
+        $("#end-time").text($(this).data('time') + $(this).data('length'))
+        $("#court").text($(this).data('court'))
+        $("#rate").text($(this).data('rate'))
+        $("#length").text($(this).data('length'))
+        $("#bookingPrice").text($(this).data('price'))
+        $("#totalPrice").text($(this).data('length') * $(this).data('price'))
     })
 </script>
 @endsection
