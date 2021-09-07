@@ -24,11 +24,12 @@ use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
-
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardViewController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
+use App\Http\Controllers\Manager\ManagerAccountsController;
+use App\Http\Controllers\Manager\AdminAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
