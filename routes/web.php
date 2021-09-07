@@ -129,6 +129,14 @@ Route::prefix('manager')->group(function() {
     Route::get('/bookings', [ManagerBookingsController::class, 'view']) -> name('manager.bookings');
     Route::post('/bookings', [ManagerBookingsController::class, 'delete']);
 
+    // Admin Accounts Management
+    Route::get('/admins', [AdminAccountsController::class, 'view']) -> name('manager.admins_management');
+    Route::post('/admins', [AdminAccountsController::class, 'process']);
+
+    // Manager Accounts Management
+    Route::get('/managers', [ManagerAccountsController::class, 'view']) -> name('manager.managers_management');
+    Route::post('/managers', [ManagerAccountsController::class, 'process']);
+
     // Rates Management
     Route::get('/rates', [ManagerRatesController::class, 'view']) -> name('manager.rates');
     Route::post('/rates', [ManagerRatesController::class, 'process']);
