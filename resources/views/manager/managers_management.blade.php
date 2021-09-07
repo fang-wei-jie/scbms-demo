@@ -24,7 +24,7 @@ Managers - Manager
             <input type="text" id="accounts-search" class="form-control" placeholder="Search anything in the table ...">
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newManager">
+            <button type="button" id="add" class="btn btn-primary" data-toggle="modal" data-target="#newManager">
                 <i class="bi bi-plus-circle"></i>
                 Add Manager
             </button>
@@ -234,6 +234,10 @@ Managers - Manager
         $(document).on("click", "#deleteManager", function() {
             $(".id").prop("value", $(this).data('id'))
             $(".name").prop("value", $(this).data('name'))
+        })
+
+        $(document).on("click", "#add", function() {
+            $(".manager-id").prop("value", "")
         })
     })
 </script>
