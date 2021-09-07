@@ -7,7 +7,7 @@ Login -
 @section('body')
 <form class="form-signin" method="post" action="{{ route('login') }}">
     @csrf
-    <h1>Login</h1>
+    <h3>Login</h3>
 
     @if (session('status'))
     <div class="alert alert-danger" role="alert">

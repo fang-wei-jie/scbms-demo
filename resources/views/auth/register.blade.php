@@ -7,7 +7,7 @@ Register -
 @section('body')
 <form class="form-signin" method="post" action="{{ route('register') }}">
     @csrf
-    <h1>Register</h1>
+    <h3>Register</h3>
 
     <div class="form-group">
         <input id="name" class="form-control @error('name') is-invalid @enderror @if(old('name')) is-valid @endif" type="text" name="name" value="{{ old('name') }}" maxlength=255 placeholder="Name">
