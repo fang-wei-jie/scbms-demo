@@ -1,10 +1,14 @@
+@php
+    $name = DB::table("operation_preferences")->where('attr', 'name')->first();
+@endphp
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title')X Badminton Court</title>
+    <title>@yield('title'){{ $name->value }}</title>
     @if(request()->is('manager/*'))
     <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/file-person.svg" />
     @elseif (request()->is('admin/*'))
@@ -85,7 +89,7 @@
                     style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); "
                 @endif
             alt="">
-            X Badminton Court @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
+            {{ $name->value }} @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
         </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -207,6 +211,12 @@
                         <a class="nav-link" href="{{ route('manager.myaccount') }}">
                             <i class="bi bi-person-square"></i>
                             {{ Auth::user()->name }}
+                        </a>
+                    </li>
+                    <li class="nav-item {{ (request()->is('manager/preferences')) ? 'active font-weight-bold' : '' }}">
+                        <a class="nav-link" href="{{ route('manager.preferences') }}">
+                            <i class="bi bi-gear-fill"></i>
+                            Preferences
                         </a>
                     </li>
 
