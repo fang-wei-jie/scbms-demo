@@ -244,7 +244,7 @@
                     </form>
                 </li>
 
-            @endauth
+                @endauth
             </ul>
         </div>
     </nav>
@@ -254,18 +254,11 @@
     </div>
 
     <!-- footer -->
-    @if ($path == "")
+    @if (!(request()->is('admin/*') || request()->is('manager/*')))
     <footer class="footer mt-auto py-3 bg-dark hide-from-print">
         <div class="container d-flex justify-content-between flex-wrap">
             <div>
-                <span class="white">&#169; {{ date('Y') }} {{ $companyName -> value }}</span>
-            </div>
-            <div>
-                <a class="white" href="{{ ('tos') }}">
-                    Terms of Service
-                </a>
-                <a class="white" href="{{ ('privacy') }}">
-                    Privacy Policy
+                <span class="white">&#169; {{ date('Y') }} X Badminton Court Sdn Bhd</span>
                 </a>
             </div>
         </div>
