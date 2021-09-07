@@ -33,47 +33,30 @@ class LoginController extends Controller
 
             ]);
 
-            // login verification
-            if (!Auth::attempt($request->only('email', 'password'))) {
-
-                return back()->with('status', 'Invalid login details');
-            }
-
-            return redirect()->route('mybookings');
-
-        } else if (isset($_POST['admin-login'])) {
-
-            $this->validate($request, [
-
-                // 'id' => 'required | exists:id',
-                'email' => 'required',
-                'password' => 'required'
-
-            ]);
-
-            // identify whether it is admin or manager
             if (str_ends_with($request->email, '@xbcm')) {
 
                 // login verification for manager
-                if (!Auth::guard('manager')->attempt($request->only('email', 'password'))) {
-
+                if (!Auth::guard('manager')->attempt(['email' => str_replace("@xbcm", "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 
                 return redirect()->route('manager.dashboard');
-
-            } else if (str_ends_with($request->email, '@xbc')){
+            } else if (str_ends_with($request->email, '@xbc')) {
 
                 // login verification for admin
-                if (!Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-
+                if (!Auth::guard('admin')->attempt(['email' => str_replace("@xbc", "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 
                 return redirect()->route('admin.dashboard');
+            } else {
 
+                if (!Auth::attempt($request->only('email', 'password'))) {
+                    return back()->with('status', 'Invalid login details');
+                }
+
+                return redirect()->route('mybookings');
             }
-
         }
     }
 }

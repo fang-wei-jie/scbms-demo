@@ -33,6 +33,12 @@ Login -
         @enderror
     </div>
 
+    <div class="form-group">
+        <button class="btn btn-primary btn-block" type="submit" name="login">
+            Login
+        </button>
+    </div>
+
 
     <div class="form-group">
         Don't have an account? <a href="{{ route('register') }}"> Register now</a>

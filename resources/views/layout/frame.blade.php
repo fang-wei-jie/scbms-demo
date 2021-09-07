@@ -129,12 +129,12 @@ $companyName = DB::table('operation_preferences') -> where('attr', 'name') -> fi
                             Rates
                         </a>
                     </li>
-                    <!-- <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
+                    <li class="nav-item {{ (request()->is('admin/accounts')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.customer_accounts') }}">
                             <i class="bi bi-person-circle"></i>
                             Accounts
                         </a>
-                    </li> -->
+                    </li>
                     <li class="nav-item {{ (request()->is('admin/myaccount')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('admin.myadminaccount') }}">
                             <i class="bi bi-person-badge"></i>
@@ -142,7 +142,7 @@ $companyName = DB::table('operation_preferences') -> where('attr', 'name') -> fi
                         </a>
                     </li>
 
-                @elseif($path == "manager")
+                @elseif(request()->is('manager/*'))
 
                     <li class="nav-item {{ (request()->is('manager/dashboard')) ? 'active font-weight-bold' : '' }}">
                         <a class="nav-link" href="{{ route('manager.dashboard') }}">
