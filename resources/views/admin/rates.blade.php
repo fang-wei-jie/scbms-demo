@@ -25,8 +25,10 @@ Rates - Admin
         </div>
         <div class="col-auto">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRate">
-                <i class="bi bi-plus-circle-fill"></i>
-                Create new rate
+                <span style="display: flex; justify-content: space-between; align-items: center;">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span class="d-none d-md-block">&nbsp;Create new rate</span>
+                </span>
             </button>
         </div>
     </div>
@@ -51,19 +53,25 @@ Rates - Admin
                     <td>
                         @if($rateDetail->id == 1 || $rateDetail->id == 2)
                             <button class="btn btn-success" type="button" disabled>
-                                Enabled
-                                <i class="bi bi-toggle-on"></i>
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                    <i class="bi bi-toggle-on"></i>
+                                </span>
                             </button>
                         @else
                             @if($rateDetail->rateStatus == 1)
                             <button class="btn btn-success" type="submit" name="disableRate">
-                                Enabled
-                                <i class="bi bi-toggle-on"></i>
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                    <i class="bi bi-toggle-on"></i>
+                                </span>
                             </button>
                             @else
                             <button class="btn btn-danger" type="submit" name="enableRate">
-                                Disabled
-                                <i class="bi bi-toggle-off"></i>
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span class="d-none d-md-block">Disabled&nbsp;</span>
+                                    <i class="bi bi-toggle-off"></i>
+                                </span>
                             </button>
                             @endif
                         @endif
@@ -74,14 +82,18 @@ Rates - Admin
 
                         <button type="button" class="btn btn-primary" id="editRate" data-toggle="modal"
                         data-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
-                            <i class="bi bi-pencil-fill"></i>
-                            Edit
+                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="bi bi-pencil-fill"></i>
+                                <span class="d-none d-md-block">&nbsp;Edit</span>
+                            </span>
                         </button>
 
                         @if($rateDetail->id == 1 || $rateDetail->id == 2) @else
                         <button class="btn btn-danger" type="button" id="archiveRate" data-toggle="modal" data-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
-                            <i class="bi bi-archive-fill"></i>
-                            Archive
+                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="bi bi-archive-fill"></i>
+                                <span class="d-none d-md-block">&nbsp;Archive</span>
+                            </span>
                         </button>
                         @endif
                     </td>
