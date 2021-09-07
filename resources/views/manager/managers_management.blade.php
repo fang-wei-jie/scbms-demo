@@ -57,7 +57,7 @@ Managers - Manager
                             Edit
                         </button>
 
-                        <button class="btn btn-danger" type="button" id="deleteManager" data-toggle="modal" data-target="#delete" data-id="{{ $managersDetail->id }}" data-name="{{ $managersDetail->name }}" data-email="{{ $managersDetail->email }}">
+                        <button class="btn btn-danger" type="button" id="deleteManager" data-toggle="modal" data-target="#delete" data-id="{{ $managersDetail->id }}" data-name="{{ $managersDetail->name }}">
                             <i class="bi bi-trash"></i>
                             Delete
                         </button>
