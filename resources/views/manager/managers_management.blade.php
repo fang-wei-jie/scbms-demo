@@ -233,6 +233,7 @@ Managers - Manager
 
         $(document).on("click", "#deleteManager", function() {
             $(".id").prop("value", $(this).data('id'))
+            $(".name").text($(this).data('name'))
             $(".name").prop("value", $(this).data('name'))
         })
 

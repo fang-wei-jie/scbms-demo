@@ -154,7 +154,7 @@ Admin Management - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteLabel">
-                    Confirm delete <b><span class="adminName"></span></b>
+                    Confirm delete <b><span class="name"></span></b>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -166,7 +166,7 @@ Admin Management - Manager
                     <div class="form-group">
                     </div>
                     <div class="form-group">
-                        Are you sure to delete <b><span class="adminName"></span></b>? This act cannot be undone.
+                        Are you sure to delete <b><span class="name"></span></b>? This act cannot be undone.
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -233,6 +233,7 @@ Admin Management - Manager
 
         $(document).on("click", "#deleteAdmin", function() {
             $(".id").prop("value", $(this).data('id'))
+            $(".name").text($(this).data('name'))
             $(".name").prop("value", $(this).data('name'))
         })
 
