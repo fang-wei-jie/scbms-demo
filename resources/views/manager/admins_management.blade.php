@@ -25,8 +25,10 @@ Admin Management - Manager
         </div>
         <div class="col-auto">
             <button type="button" id="add" class="btn btn-primary" data-toggle="modal" data-target="#newAdmin">
-                <i class="bi bi-plus-circle"></i>
-                Add Admin
+                <span style="display: flex; justify-content: space-between; align-items: center;">
+                    <i class="bi bi-plus-circle-fill"></i>
+                    <span class="d-none d-md-block">&nbsp;Add Admin</span>
+                </span>
             </button>
         </div>
     </div>
@@ -53,13 +55,17 @@ Admin Management - Manager
 
                         <button type="button" class="btn btn-primary" id="editAdmin" data-toggle="modal"
                         data-target="#edit" data-id="{{$adminsDetail->id}}" data-name="{{ $adminsDetail->name }}" data-email="{{ $adminsDetail->email }}">
-                            <i class="bi bi-pencil-square"></i>
-                            Edit
+                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="bi bi-pencil-square"></i>
+                                <span class="d-none d-md-block">&nbsp;Edit</span>
+                            </span>
                         </button>
 
                         <button class="btn btn-danger" type="button" id="deleteAdmin" data-toggle="modal" data-target="#delete" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
-                            <i class="bi bi-trash"></i>
-                            Delete
+                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="bi bi-trash"></i>
+                                <span class="d-none d-md-block">&nbsp;Delete</span>
+                            </span>
                         </button>
                     </td>
                 </form>
