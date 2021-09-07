@@ -58,6 +58,28 @@ Dashboard - Manager
 
             <br>
 
+            <div class="card bg-light">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="card-title">Business Preferences</h3>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('manager.preferences') }}" class="btn btn-primary">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-gear-fill"></i>
+                                    <span class="d-none d-md-block">&nbsp;Preferences</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    {{ $name }} <br>
+                    {{ '@'.$domain }} <br>
+                    {{ $start_time.':00 - '.$end_time.':00' }}
+                </div>
+            </div>
+
+            <br>
 
             <!-- rates card -->
             <div class="card bg-light">

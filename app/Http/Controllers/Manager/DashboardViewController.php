@@ -46,7 +46,31 @@ class DashboardViewController extends Controller
             -> orderBy('courtID', 'asc')
             -> get();
 
-        return view ('manager.dashboard', ['ratesEnabled' => $ratesEnabled, 'monthSales' => $monthSales, 'todaySales' => $todaySales, 'todayBookingSales' => $todayBookingSales, 'bookings' => $bookingRows]);
+        $bookingCount = DB::table('bookings')
+            -> join('rates', 'bookings.rateID', '=', 'rates.id')
+            -> where('dateSlot', '=', date('Ymd'))
+            -> where('timeSlot', '<=', date('H'))
+            -> where(DB::raw('(timeSlot + timeLength - 1) '), '>=', date('H'))
+            -> orderBy('courtID', 'asc')
+            -> count();
+
+        $name = DB::table('operation_preferences')->where('attr', 'name')->first();
+        $domain = DB::table('operation_preferences')->where('attr', 'domain')->first();
+        $start_time = DB::table('operation_preferences')->where('attr', 'start_time')->first();
+        $end_time = DB::table('operation_preferences')->where('attr', 'end_time')->first();
+
+        return view ('manager.dashboard', [
+            'ratesEnabled' => $ratesEnabled,
+            'monthSales' => $monthSales,
+            'todaySales' => $todaySales,
+            'todayBookingSales' => $todayBookingSales,
+            'bookings' => $bookingRows,
+            'bookingCount' => $bookingCount,
+            "name" => $name->value,
+            "domain" => $domain->value,
+            "start_time" => $start_time->value,
+            "end_time" => $end_time->value,
+        ]);
 
     }
 }
