@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -33,7 +34,12 @@ class LoginController extends Controller
 
             ]);
 
-            if (str_ends_with($request->email, '@xbcm')) {
+            $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+
+            $managerDomain = '@'.$domain->value.'m';
+            $adminDomain = '@'.$domain->value;
+
+            if (str_ends_with($request->email, $managerDomain)) {
 
                 // login verification for manager
                 if (!Auth::guard('manager')->attempt(['email' => str_replace("@xbcm", "", $request->email), 'password' => $request->password])) {
@@ -41,7 +47,7 @@ class LoginController extends Controller
                 }
 
                 return redirect()->route('manager.dashboard');
-            } else if (str_ends_with($request->email, '@xbc')) {
+            } else if (str_ends_with($request->email, $adminDomain)) {
 
                 // login verification for admin
                 if (!Auth::guard('admin')->attempt(['email' => str_replace("@xbc", "", $request->email), 'password' => $request->password])) {

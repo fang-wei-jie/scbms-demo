@@ -22,13 +22,18 @@ class AdminAccountsController extends Controller
     {
 
         $admins = DB::table('admins')->get();
+        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+        $adminDomain = '@'.$domain->value;
 
-        return view('manager.admins_management', ['admins' => $admins]);
+        return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain]);
 
     }
 
     function process(Request $request)
     {
+
+        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+        $adminDomain = '@'.$domain;
 
         if (isset($_POST['addAdmin'])){
 
@@ -53,7 +58,7 @@ class AdminAccountsController extends Controller
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'info' => "Successfully created ".$request->name." with password ".$password]);
+            return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain, 'info' => "Successfully created ".$request->name." with password ".$password]);
 
         } else if (isset($_POST['editAdmin'])){
 
@@ -77,7 +82,7 @@ class AdminAccountsController extends Controller
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'info' => "Admin ID for ".$request->name." was updated."]);
+            return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain, 'info' => "Admin ID for ".$request->name." was updated."]);
 
         } else if (isset($_POST['deleteAdmin'])){
 

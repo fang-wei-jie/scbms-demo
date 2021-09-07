@@ -19,13 +19,18 @@ class ManagerAccountsController extends Controller
     {
 
         $managers = DB::table('managers')->get();
+        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+        $managerDomain = '@'.$domain->value.'m';
 
-        return view('manager.managers_management', ['managers' => $managers]);
+        return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain]);
 
     }
 
     function process(Request $request)
     {
+
+        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+        $managerDomain = '@'.$domain->value.'m';
 
         if(isset($_POST['addManager'])) {
 
@@ -50,7 +55,7 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain, 'info' => "Manager ID for ".$request->name." was updated."]);
 
         } else if (isset($_POST['editManager'])){
 
@@ -69,7 +74,7 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain, 'info' => "Manager ID for ".$request->name." was updated."]);
 
         } else if (isset($_POST['deleteManager'])){
 

@@ -97,7 +97,7 @@ Admin Management - Manager
                         <div class="input-group">
                             <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
                             <div class="input-group-append">
-                                <span class="input-group-text" id="my-addon">@xbc</span>
+                                <span class="input-group-text" id="my-addon">{{ $domain }}</span>
                             </div>
                         </div>
                         <small class="form-text text-muted">Maximum character is 25</small>
@@ -132,7 +132,7 @@ Admin Management - Manager
                         <div class="input-group">
                             <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
                             <div class="input-group-append">
-                                <span class="input-group-text" id="my-addon">@xbc</span>
+                                <span class="input-group-text" id="my-addon">{{ $domain }}</span>
                             </div>
                         </div>
                         <small" class="form-text text-muted">Admin ID should be unique, and should not exceed 25 characters</small>
