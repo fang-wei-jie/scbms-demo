@@ -224,14 +224,14 @@ Admin Management - Manager
         @endif
 
         // feed data into the modal dialog
-        $(document).on("click", "#editManager", function() {
+        $(document).on("click", "#editAdmin", function() {
             $(".name").text($(this).data('name'))
             $(".manager-id").prop("value", $(this).data('email'))
             $(".id").prop("value", $(this).data('id'))
             $(".name").prop("value", $(this).data('name'))
         })
 
-        $(document).on("click", "#deleteManager", function() {
+        $(document).on("click", "#deleteAdmin", function() {
             $(".id").prop("value", $(this).data('id'))
             $(".name").prop("value", $(this).data('name'))
         })
