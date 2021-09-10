@@ -136,16 +136,16 @@ Dashboard - Manager
                             </a>
                         </div>
                     </div>
-                    <!-- Earnings Monthly Card -->
+
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-primary mb-1">
-                                        This Month's Revenue
+                                    <div class="text-xs font-weight-bold text-warning mb-1">
+                                        Today
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        RM @if($monthSales->monthSales != 0){{ $monthSales->monthSales }} @else {{ '0' }} @endif
+                                        RM @if($todaySales != 0){{ $todaySales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
                             </div>
@@ -154,17 +154,16 @@ Dashboard - Manager
 
                     <div class="my-2"></div>
 
-                    <!-- Earnings Daily Card -->
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
                                     <div class="text-xs font-weight-bold text-info mb-1">
-                                        Today's Revenue
+                                        This Week
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            RM @if($todaySales->todaySales != 0){{ $todaySales->todaySales }} @else {{ '0' }} @endif
+                                            RM @if($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
                                         </div>
                                     </div>
                                 </div>
@@ -174,21 +173,21 @@ Dashboard - Manager
 
                     <div class="my-2"></div>
 
-                    <!-- Today Bookings' Sale Card -->
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-warning mb-1">
-                                        Today Bookings' Sale
+                                    <div class="text-xs font-weight-bold text-primary mb-1">
+                                        This Month
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        RM @if($todayBookingSales->todayBookingSales != 0){{ $todayBookingSales->todayBookingSales }} @else {{ '0' }} @endif
+                                        RM @if($monthSales != 0){{ $monthSales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

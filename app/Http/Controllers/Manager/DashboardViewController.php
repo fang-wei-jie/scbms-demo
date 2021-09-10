@@ -28,14 +28,19 @@ class DashboardViewController extends Controller
             ->where('created_at', 'LIKE', date('Y-m').'%')
             ->first();
 
+        $dayOfWeek = date("w");
+        $startDateNumber = str_pad(date("d") - $dayOfWeek, 2, "0", STR_PAD_LEFT);
+        $endDateNumber = str_pad(date("d") + (6 - $dayOfWeek), 2, "0", STR_PAD_LEFT);
+        $weekQuery = '`created_at` BETWEEN "'.date('Y-m-').$startDateNumber.'%" AND "'.date('Y-m-').$endDateNumber.'%"';
+
+        $weekSales = DB::table('bookings')
+            ->selectRaw('SUM(timeLength*bookingPrice) as weekSales')
+            ->whereRaw($weekQuery)
+            ->first();
+
         $todaySales = DB::table('bookings')
             ->selectRaw('SUM(timeLength*bookingPrice) as todaySales')
             ->where('created_at', 'LIKE', date('Y-m-d').'%')
-            ->first();
-
-        $todayBookingSales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as todayBookingSales')
-            ->where('dateSlot', '=', date('Ymd'))
             ->first();
 
         $bookingRows = DB::table('bookings')
@@ -61,15 +66,17 @@ class DashboardViewController extends Controller
 
         return view ('manager.dashboard', [
             'ratesEnabled' => $ratesEnabled,
-            'monthSales' => $monthSales,
-            'todaySales' => $todaySales,
-            'todayBookingSales' => $todayBookingSales,
+            'monthSales' => $monthSales->monthSales,
+            'weekSales' => $weekSales->weekSales,
+            'todaySales' => $todaySales->todaySales,
             'bookings' => $bookingRows,
             'bookingCount' => $bookingCount,
             "name" => $name->value,
             "domain" => $domain->value,
             "start_time" => $start_time->value,
             "end_time" => $end_time->value,
+            "week_start_date" => $startDateNumber,
+            "week_end_date" => $endDateNumber,
         ]);
 
     }
