@@ -14,16 +14,34 @@ Dashboard - Admin
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h1 class="card-title">Courts Booked</h1>
+                            <h3 class="card-title">Bookings</h3>
                         </div>
                         <div class="col-auto">
                             <a href="{{ route('admin.dashboard') }}" class="btn btn-primary">
-                                <i class="bi bi-arrow-clockwise"></i>
-                                Refresh
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                    <span class="d-none d-md-block">&nbsp;Refresh</span>
+                                </span>
+                            </a>
+                            <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-person-check-fill"></i>
+                                    <span class="d-none d-md-block">&nbsp;Check-in</span>
+                                </span>
+                            </a>
+                            <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-journal-album"></i>
+                                    <span class="d-none d-md-block">&nbsp;Bookings</span>
+                                </span>
                             </a>
                         </div>
                     </div>
-                    <hr>
+
+                    @if (count($bookings) == 0)
+                        <h5>No Bookings Currently</h5>
+                    @endif
+
                     @for ($i = 1; $i <= 9; $i++)
                         @foreach ($bookings as $bookingDetails)
                             @if ($i==$bookingDetails -> courtID)
@@ -33,14 +51,6 @@ Dashboard - Admin
                             @endif
                         @endforeach
                     @endfor
-                    <a href="{{ route('admin.checkin') }}" class="btn btn-primary">
-                        <i class="bi bi-person-check-fill"></i>
-                        Check-in
-                    </a>
-                    <a href="{{ route('admin.bookings') }}" class="btn btn-primary">
-                        <i class="bi bi-journal-album"></i>
-                        View Bookings
-                    </a>
                 </div>
             </div>
         </div>
@@ -50,30 +60,39 @@ Dashboard - Admin
             <br>
 
             <!-- rates card -->
-            <div class="text-white card bg-secondary">
+            <div class="card bg-light">
                 <div class="card-body">
-                    <h1 class="card-title">Rates Enabled</h1>
-                    <table class="table table-light">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Rate Name</th>
-                                <th scope="col">Rate Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- displays all enabled rate by their name and price -->
-                            @foreach ($ratesEnabled as $ratesDetail)
-                            <tr>
-                                <td>{{ $ratesDetail -> rateName }}</td>
-                                <td>RM {{ $ratesDetail -> ratePrice }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <a href="{{ route('admin.rates') }}" class="btn btn-primary">
-                        <i class="bi bi-tags-fill"></i>
-                        Manage Rates
-                    </a>
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="card-title">Rates Enabled</h3>
+                        </div>
+                        <div class="col-auto">
+                            <a href="{{ route('admin.rates') }}" class="btn btn-primary">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-tags-fill"></i>
+                                    <span class="d-none d-md-block">&nbsp;Rates</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    @foreach ($ratesEnabled as $ratesDetail)
+                        <div class="card py-2">
+                            <div class="mx-3 my-1">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col d-flex justify-content-between">
+                                        <div class="text-xs font-weight-bold text-primary mb-1">
+                                            {{ $ratesDetail->rateName }}
+                                        </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            RM {{ $ratesDetail->ratePrice }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2"></div>
+                    @endforeach
                 </div>
             </div>
         </div>
