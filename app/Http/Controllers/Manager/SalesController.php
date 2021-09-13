@@ -40,13 +40,6 @@ class SalesController extends Controller
             ->where('created_at', 'LIKE', date('Y-m-d').'%')
             ->first();
 
-        $todayBookings = DB::table('bookings')
-            ->join('rates', 'rates.id', '=', 'bookings.rateID')
-            ->join('users', 'users.id', '=', 'bookings.custID')
-            ->whereRaw('`bookings`.`created_at` LIKE "'.date("Y-m-d").'%"')
-            ->orderByDesc('bookings.created_at')
-            ->get();
-
         return view('manager.sales', [
             'yearSales' => $yearSales->yearSales,
             'monthSales' => $monthSales->monthSales,

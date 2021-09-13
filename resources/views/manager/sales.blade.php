@@ -1,7 +1,8 @@
 @extends('layout.frame')
 
 @section('title')
-Sales Report - Manager
+    Sales Report - Manager
+@endsection
 @endsection
 
 @section('body')
@@ -28,7 +29,7 @@ Sales Report - Manager
 
                 <br>
 
-                <div class="col">
+                {{-- <div class="col">
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
@@ -37,9 +38,7 @@ Sales Report - Manager
                                         This Week
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            RM @if ($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
-                                        </div>
+                                        RM @if ($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
                             </div>
@@ -47,7 +46,7 @@ Sales Report - Manager
                     </div>
                 </div>
 
-                <br>
+                <br> --}}
 
                 <div class="col">
                     <div class="card py-2">
@@ -73,7 +72,7 @@ Sales Report - Manager
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-primary mb-1">
+                                    <div class="text-xs font-weight-bold text-dark mb-1">
                                         This Year
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -90,58 +89,32 @@ Sales Report - Manager
             </div>
         </div>
 
-        <!-- Earnings Daily Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col d-flex justify-content-between">
-                            <div class="text-xs font-weight-bold text-info mb-1">
-                                Today's Revenue
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                RM @if($todaySales->todaySales != 0){{ $todaySales->todaySales }} @else {{ '0' }} @endif
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{-- <br>
 
-        <!-- Today Bookings' Sale Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col d-flex justify-content-between">
-                            <div class="text-xs font-weight-bold text-warning mb-1">
-                                Today Bookings' Sale
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                RM @if($todayBookingSales->todayBookingSales != 0){{
-                                $todayBookingSales->todayBookingSales }} @else {{ '0' }} @endif
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div>
+            <div id="chart" style="height: 300px;"></div>
+        </div> --}}
+
+        <br>
+
+        @livewire('sales-report-performance-category')
+
+
     </div>
-</div>
 @endsection
 
 @section('bottom-js')
 <script>
-    $(document).ready(function () {
-        $('.card').hover(function () {
-            $(this).toggleClass('shadow h-100');
-        })
-    })
+
+    const chart = new Chartisan({
+        el: '#chart',
+        data: {
+            "chart": { "labels": ["First", "Second", "Third"] },
+            "datasets": [
+                { "name": "Sample 1", "values": [10, 3, 7] },
+                { "name": "Sample 2", "values": [1, 6, 2] }
+            ]}
+      })
+
 </script>
 @endsection
