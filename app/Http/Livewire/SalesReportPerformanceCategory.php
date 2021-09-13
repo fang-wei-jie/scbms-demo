@@ -4,52 +4,82 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SalesReportPerformanceCategory extends Component
 {
 
-    public $type = "";
+    public $type = "y";
+    public $date = "";
+    public $month = "";
+    public $day = "";
 
     public function render()
     {
+        $year = date("Y");
+        $month = date("m");
+        $day = date("d");
 
         $dayOfWeek = date("w");
         $startDateNumber = str_pad(date("d") - $dayOfWeek, 2, "0", STR_PAD_LEFT);
         $endDateNumber = str_pad(date("d") + (6 - $dayOfWeek), 2, "0", STR_PAD_LEFT);
 
-        switch (date("m")) {
-            case "1": $monthString = "January"; break;
-            case "2": $monthString = "February"; break;
-            case "3": $monthString = "March"; break;
-            case "4": $monthString = "April"; break;
-            case "5": $monthString = "May"; break;
-            case "6": $monthString = "June"; break;
-            case "7": $monthString = "July"; break;
-            case "8": $monthString = "August"; break;
-            case "9": $monthString = "September"; break;
-            case "10": $monthString = "October"; break;
-            case "11": $monthString = "November"; break;
-            case "12": $monthString = "December"; break;
-        }
+        // switch ($this->month) {
+        //     case "1": $monthString = "January"; break;
+        //     case "2": $monthString = "February"; break;
+        //     case "3": $monthString = "March"; break;
+        //     case "4": $monthString = "April"; break;
+        //     case "5": $monthString = "May"; break;
+        //     case "6": $monthString = "June"; break;
+        //     case "7": $monthString = "July"; break;
+        //     case "8": $monthString = "August"; break;
+        //     case "9": $monthString = "September"; break;
+        //     case "10": $monthString = "October"; break;
+        //     case "11": $monthString = "November"; break;
+        //     case "12": $monthString = "December"; break;
+        // }
 
         switch ($this->type) {
-            case 'd':
-                $condition = 'LIKE "' . date("Y-m-d%");
-                $period = date("d") . " " . $monthString . " " . date("Y");
-                break;
-            case 'w':
-                $condition = 'BETWEEN "' . date('Y-m-') . $startDateNumber . '%" AND "' . date('Y-m-') . $endDateNumber . '%';
-                $period = $startDateNumber . date('/m/Y') . " till " . $endDateNumber . date('/m/Y');
-                break;
+            // case 'd':
+            //     $type = "d";
+            //     $condition = 'LIKE "' . date("Y-m-d%");
+            //     $period = date("d") . " " . $monthString . " " . date("Y");
+            //     break;
+            // case 'w':
+            //     $type = "w";
+            //     $condition = 'BETWEEN "' . date('Y-m-') . $startDateNumber . '%" AND "' . date('Y-m-') . $endDateNumber . '%';
+            //     $period = $startDateNumber . date('/m/Y') . " till " . $endDateNumber . date('/m/Y');
+            //     break;
             case 'm':
-                $condition = 'LIKE "' . date("Y-m%");
-                $period = $monthString . " " . date("Y");
+                $type = "m";
+                $dateTrim = "1, 7";
+                if ($this->date != "") { $date = $this->date; } else { $date = $year."-".$month; }
+                $condition = 'LIKE "' . $date .'%';
+                // $period = $monthString . " " . $this->date;
+                $period = $date;
                 break;
 
-            default:
-                $condition = 'LIKE "' . date("Y%");
-                $period = "Year " . date("Y");
+            case 'y':
+                $type = "y";
+                $dateTrim = "1, 4";
+                if ($this->date != "") { $date = $this->date; } else { $date = $year; }
+                $condition = 'LIKE "' . $date .'%';
+                $period = $date;
                 break;
+        }
+
+        $dates = DB::table('bookings')
+            ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
+            ->orderByDesc("created_at")
+            ->first();
+
+        // used to handle when the type is changed
+        // date will be automatically set to the first row result of dates list
+        if ($this->date == ""
+            || (Str::length($this->date) == 4 && $this->type =="m"
+            || (Str::length($this->date) == 7 && $this->type =="y"))) {
+            $condition = 'LIKE "' . $dates->date .'%';
+            $period = $dates->date;
         }
 
         $ratesPerf = DB::table('bookings')
@@ -64,17 +94,25 @@ class SalesReportPerformanceCategory extends Component
             ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
             ->groupBy('bookings.timeSlot')
             ->get();
+
         $timelengthPerf = DB::table('bookings')
             ->selectRaw('bookings.timeLength as length, SUM(timeLength*bookingPrice) as total')
             ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
             ->groupBy('bookings.timelength')
             ->get();
 
+        $dates = DB::table('bookings')
+            ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
+            ->orderByDesc("created_at")
+            ->get();
+
         return view('livewire.sales-report-performance-category', [
             'period' => $period,
+            'type' => $type,
             'ratesPerf' => $ratesPerf,
             'timelengthPerf' => $timelengthPerf,
             'timeslotPerf' => $timeslotPerf,
+            'dates' => $dates,
         ]);
     }
 }

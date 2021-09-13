@@ -10,12 +10,21 @@
                         </span>
                     </div>
                     <div class="col-auto">
-                        <select class="form-control" wire:model="type">
-                            <option value="y">Year</option>
-                            <option value="m">Month</option>
-                            {{-- <option value="w">Week</option> --}}
-                            <option value="d">Day</option>
-                        </select>
+                        <span style="display: flex; justify-content: space-between; align-items: center;">
+                            <select class="form-control" wire:model="type">
+                                <option value="y">Year</option>
+                                <option value="m">Month</option>
+                                {{-- <option value="w">Week</option> --}}
+                                {{-- <option value="d">Day</option> --}}
+                            </select>
+
+                            <select id="date" class="form-control" wire:model="date">
+                                {{-- <option value="" hidden>Please select</option> --}}
+                                @foreach ($dates as $date)
+                                    <option value="{{ $date->date }}">{{ $date->date }}</option>
+                                @endforeach
+                            </select>
+                        </span>
                     </div>
                 </div>
 
