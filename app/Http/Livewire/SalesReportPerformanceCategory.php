@@ -13,8 +13,6 @@ class SalesReportPerformanceCategory extends Component
     public function render()
     {
 
-        $condition = 'LIKE "' . date("Y-m-d%");
-
         $dayOfWeek = date("w");
         $startDateNumber = str_pad(date("d") - $dayOfWeek, 2, "0", STR_PAD_LEFT);
         $endDateNumber = str_pad(date("d") + (6 - $dayOfWeek), 2, "0", STR_PAD_LEFT);
@@ -47,14 +45,10 @@ class SalesReportPerformanceCategory extends Component
                 $condition = 'LIKE "' . date("Y-m%");
                 $period = $monthString . " " . date("Y");
                 break;
-            case 'y':
-                $condition = 'LIKE "' . date("Y%");
-                $period = "Year " . date("Y");
-                break;
 
             default:
-                $condition = 'LIKE "' . date("Y-m-d%");
-                $period = date("d") . " " . $monthString . " " . date("Y");
+                $condition = 'LIKE "' . date("Y%");
+                $period = "Year " . date("Y");
                 break;
         }
 

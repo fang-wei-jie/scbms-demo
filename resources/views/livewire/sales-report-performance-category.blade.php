@@ -11,10 +11,10 @@
                     </div>
                     <div class="col-auto">
                         <select class="form-control" wire:model="type">
-                            <option value="d">Day</option>
-                            {{-- <option value="w">Week</option> --}}
-                            <option value="m">Month</option>
                             <option value="y">Year</option>
+                            <option value="m">Month</option>
+                            {{-- <option value="w">Week</option> --}}
+                            <option value="d">Day</option>
                         </select>
                     </div>
                 </div>
