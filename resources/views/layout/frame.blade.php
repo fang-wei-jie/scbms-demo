@@ -46,6 +46,13 @@
             display: none;
         }
 
+        .form-auth {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            margin: auto;
+        }
+
         .form-resize {
             width: 100%;
             max-width: 500px;
