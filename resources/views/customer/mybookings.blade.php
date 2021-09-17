@@ -12,10 +12,10 @@ My Bookings -
         <div>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="pills-current-bookings-tab" data-toggle="pill" href="#pills-current-bookings" role="tab" aria-controls="pills-current-bookings" aria-selected="true">Current</a>
+                    <a class="nav-link active" id="pills-current-bookings-tab" data-bs-toggle="pill" href="#pills-current-bookings" role="tab" aria-controls="pills-current-bookings" aria-selected="true">Current</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-past-bookings-tab" data-toggle="pill" href="#pills-past-bookings" role="tab" aria-controls="pills-past-bookings" aria-selected="false">Past</a>
+                    <a class="nav-link" id="pills-past-bookings-tab" data-bs-toggle="pill" href="#pills-past-bookings" role="tab" aria-controls="pills-past-bookings" aria-selected="false">Past</a>
                 </li>
             </ul>
         </div>
@@ -48,7 +48,7 @@ My Bookings -
                         <form action="{{ route('view-receipt') }}" method="post">
                             @csrf
                             <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-toggle="modal" data-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
+                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-bs-toggle="modal" data-bs-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-upc"></i>
                                     <span class="d-none d-md-block">&nbsp;Check-in Code</span>
@@ -60,7 +60,7 @@ My Bookings -
                                     <span class="d-none d-md-block">&nbsp;Receipt</span>
                                 </span>
                             </button>
-                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-toggle="modal" data-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->rateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
+                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-bs-toggle="modal" data-bs-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->rateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-journal-x"></i>
                                     <span class="d-none d-md-block">&nbsp;Delete Booking</span>
@@ -129,9 +129,7 @@ My Bookings -
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="titleLabel">Check-in Code</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col" style="display: flex; flex-direction: column; align-items: center;">
@@ -140,7 +138,7 @@ My Bookings -
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -152,9 +150,7 @@ My Bookings -
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="titleLabel">Delete booking</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -168,7 +164,7 @@ My Bookings -
                     <form action="" method="post">
                         @csrf
                         <input type="text" name="bookingID" id="bookingID" style="display: none">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-danger" name="delete-booking">Delete</button>
                     </form>
                 </div>

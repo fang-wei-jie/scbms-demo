@@ -13,7 +13,7 @@ My Account -
             <span>{{ Auth::user()->name }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
+            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -30,7 +30,7 @@ My Account -
             <span>{{ Auth::user()->phone }}</span>
         </div>
         <div>
-            <button class="btn btn-outline-primary" id="change-phone-button" data-toggle="modal" data-target="#changePhone">
+            <button class="btn btn-outline-primary" id="change-phone-button" data-bs-toggle="modal" data-bs-target="#changePhone">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -47,7 +47,7 @@ My Account -
             <span>{{ Auth::user()->email }}</span>
         </div>
         <div>
-            <button class="btn btn-outline-primary" id="change-email-button" data-toggle="modal" data-target="#changeEmail">
+            <button class="btn btn-outline-primary" id="change-email-button" data-bs-toggle="modal" data-bs-target="#changeEmail">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -64,7 +64,7 @@ My Account -
             <span>Change often to improve security</span>
         </div>
         <div>
-            <button class="btn btn-outline-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
+            <button class="btn btn-outline-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -81,7 +81,7 @@ My Account -
             <span>No longer need this account?</span>
         </div>
         <div>
-            <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-toggle="modal" data-target="#accountDeleteConfirmation">
+            <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-bs-toggle="modal" data-bs-target="#accountDeleteConfirmation">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-trash-fill"></i>
                     <span class="d-none d-md-block">&nbsp;DELETE</span>
@@ -98,9 +98,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change name</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="{{ route('myaccount') }}" method="post">
@@ -112,7 +110,7 @@ My Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" name="change-name">Change name</button>
                     </div>
                 </form>
@@ -126,9 +124,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change Phone Number</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="{{ route('myaccount') }}" method="post">
@@ -142,7 +138,7 @@ My Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" name="change-phone">Change phone number</button>
                     </div>
                 </form>
@@ -156,9 +152,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change Email Address</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="{{ route('myaccount') }}" method="post">
@@ -172,7 +166,7 @@ My Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" name="change-email">Change email address</button>
                     </div>
                 </form>
@@ -186,9 +180,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change Password</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="{{ route('myaccount') }}" method="post">
@@ -204,7 +196,7 @@ My Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button class="btn btn-primary" type="submit" name="change-password">Change password</button>
                     </div>
                 </form>
@@ -218,9 +210,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Account Deletion Confirmation</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="{{ route('myaccount') }}" method="post">
@@ -236,7 +226,7 @@ My Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-danger" name="delete-account">DELETE MY ACCOUNT</button>
                     </div>
                 </form>
@@ -250,9 +240,7 @@ My Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="infoBoxLabel">Info</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @if(session('info')) {{ session('info') }} @endif
@@ -260,7 +248,7 @@ My Account -
                     @error('password') {{ $message }} @enderror
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                         @if (session('info'))
                             {{ 'Okay' }}
                         @else
@@ -276,15 +264,21 @@ My Account -
 @endsection
 
 @section('bottom-js')
+
+<script>
+    var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
+</script>
+
 @if(session('alert') || session('info'))
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @endif
 
 @error('password')
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @enderror
+
 @endsection
