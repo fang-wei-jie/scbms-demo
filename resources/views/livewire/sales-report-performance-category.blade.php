@@ -8,7 +8,7 @@
                     </div>
                     <div class="col-auto">
                         <div class="row">
-                            <span class="d-none d-md-block">
+                            <div class="col-auto d-none d-md-block">
                                 <div class="col-auto">
                                     <div wire:loading>
                                         <div class="spinner-border" role="status">
@@ -16,10 +16,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            </span>
+                            </div>
 
                             <div class="col-auto">
-                                <select class="form-control" wire:model="type">
+                                <select class="form-select" wire:model="type">
                                     <option value="y">Year</option>
                                     <option value="m">Month</option>
                                     {{-- <option value="w">Week</option> --}}
@@ -28,7 +28,7 @@
                             </div>
 
                             <div class="col-auto">
-                                <select id="date" class="form-control" wire:model="date">
+                                <select id="date" class="form-select" wire:model="date">
                                     {{-- <option value="" hidden>Please select</option> --}}
                                     @foreach ($dates as $date)
                                         <option value="{{ $date->date }}">
@@ -39,7 +39,7 @@
                                 </select>
                             </div>
 
-                            <span class="d-block d-sm-none d-none d-sm-block d-md-none">
+                            <div class="col-auto d-block d-md-block d-lg-none">
                                 <div class="col-auto">
                                     <div wire:loading>
                                         <div class="spinner-border" role="status">
@@ -47,7 +47,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </span>
+                            </div>
 
                         </div>
                     </div>
