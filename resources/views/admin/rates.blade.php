@@ -36,7 +36,7 @@ Rates - Admin
     <br>
 
     <table id="rates-list" class="table table-bordered" data-sortable>
-        <thead class="thead-dark">
+        <thead>
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>

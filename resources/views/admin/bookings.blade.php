@@ -41,7 +41,7 @@ Bookings - Admin
             <input type="text" id="today-bookings-search" class="form-control" placeholder="Search anything in the table ..."><br>
 
             <table id="today-bookings" class="table table-bordered" data-sortable>
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th scope="col">Book ID</th>
                         <th scope="col">Booking Made</th>
@@ -96,7 +96,7 @@ Bookings - Admin
             <input type="text" id="future-bookings-search" class="form-control" placeholder="Search anything in the table ..."><br>
 
             <table id="future-bookings" class="table table-bordered" data-sortable>
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th scope="col">Book ID</th>
                         <th scope="col">Booking Made</th>
@@ -155,7 +155,7 @@ Bookings - Admin
             <input type="text" id="previous-bookings-search" class="form-control" placeholder="Search anything in the table ..."><br>
 
             <table id="previous-bookings" class="table table-bordered" data-sortable>
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th scope="col">Book ID</th>
                         <th scope="col">Booking Made</th>
@@ -210,7 +210,7 @@ Bookings - Admin
             <input type="text" id="all-bookings-search" class="form-control" placeholder="Search anything in the table ..."><br>
 
             <table id="all-bookings" class="table table-bordered" data-sortable>
-                <thead class="thead-dark">
+                <thead>
                     <tr>
                         <th scope="col">Book ID</th>
                         <th scope="col">Booking Made</th>
