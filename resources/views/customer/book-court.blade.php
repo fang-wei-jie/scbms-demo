@@ -14,114 +14,82 @@ Book Courts -
 
 @section('body')
 <div class="container">
-    <h3>Book Courts</h3>
-
     <div class="col">
         <!-- upper portion of form, hidden if lower portion of form shown -->
         @if ($selectedDate == 0)
-        <form method="post" action="{{ route('book-court') }}">
+        <form class="form-resize" method="post" action="{{ route('book-court') }}">
             @csrf
-            <table class="table table-borderless">
-                <!-- date selection -->
-                <tr>
-                    <td>
-                        <label for="dateSlot">Date</label><br>
-                        <input type="date" class="form-control" id="dateSlot" name="dateSlot" required>
-                        <span style="color: red" id="date-error"></span>
-                    </td>
-                </tr>
+            <h3 class="mb-3">Book Courts</h3>
 
-                <!-- time slot selection -->
-                <tr>
-                    <td>
-                        <label for="timeSlot">Start Time</label><br>
-                        <select id="timeSlot" name="timeSlot" class="form-control" required></select>
-                    </td>
-                </tr>
+            <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="dateSlot" name="dateSlot" required>
+                <label for="dateSlot" id="dateLabel">Date</label>
+            </div>
 
-                <!-- time length selection -->
-                <tr>
-                    <td>
-                        <label for="timeLength">Duration</label>
-                        <select class="form-control" id="timeLength" name="timeLength" required></select>
-                    </td>
-                </tr>
+            <div class="form-floating mb-3">
+                <select id="timeSlot" name="timeSlot" class="form-select" required></select>
+                <label for="timeSlot">Start Time</label>
+            </div>
 
-                <!-- search for available courts based on the selected date, time, and length -->
-                <tr>
-                    <td>
-                        <button class="btn btn-outline-primary" type="submit" name="searchForAvailability">Show available courts</button>
-                    </td>
-                </tr>
-            </table>
+            <div class="form-floating mb-3">
+                <select id="timeLength" name="timeLength" class="form-select" required></select>
+                <label for="timeLength">Duration</label>
+            </div>
+
+            <button class="btn btn-outline-primary" type="submit" name="searchForAvailability">Show available courts</button>
         </form>
 
         @elseif($selectedDate == 1)
 
         <!-- lower portion of form, hidden if upper portion of form shown -->
-        <form action="{{ route('book-court') }}" method="post">
+        <form class="form-resize" action="{{ route('book-court') }}" method="post">
             @csrf
-            <table class="table table-borderless">
-                <!-- resets the selected date, time, and length; shows the upper portion of form and hides the lower portion of form -->
-                <tr>
-                    <td>
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <b>Selected Date and Time</b> <br>
-                                {{ $dateSlot }} {{ $timeSlot }}:00-{{ $endTime }}:00
-                                <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
-                            </div>
-                            <div>
-                                <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        DEBUG OUTPUT Courts booked: {{ $count }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="courtID">Court</label>
-                        <select class="form-control" id="courtID" name="courtID" required>
-                            @foreach ($courts as $booked)
-                                @if($booked == 0)
-                                    <option value="{{ $loop->iteration }}">
-                                        Court {{ $loop->iteration }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="rateID">Rate</label>
-                        <select class="form-control" name="rateID" id="rateID">
-                            @foreach ($rates as $rateDetail)
-                                <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->ratePrice }}>
-                                    {{ $rateDetail->rateName }} @ RM{{ $rateDetail->ratePrice }}/hour
-                                </option>
-                            @endforeach
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="date" class="confirmed-fields" name="dateSlot" value="{{ $dateSlot }}">
-                        <input type="text" class="confirmed-fields" name="timeSlot" value="{{ $timeSlot }}">
-                        <input type="text" class="confirmed-fields" name="timeLength" value="{{ $timeLength }}">
-                        <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
 
-                        <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
-                            <i class="bi bi-journal-check"></i>
-                            Confirm Booking for RM<span id="price"></span> in Cash
-                        </button>
-                    </td>
-                </tr>
-            </table>
+            <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <b>Selected Date and Time</b> <br>
+                    {{ $dateSlot }} {{ $timeSlot }}:00-{{ $endTime }}:00
+                    <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
+                </div>
+                <div>
+                    <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="courtID" name="courtID" required>
+                    @foreach ($courts as $booked)
+                        @if($booked == 0)
+                            <option value="{{ $loop->iteration }}">
+                                Court {{ $loop->iteration }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+                <label for="courtID">Court</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" name="rateID" id="rateID">
+                    @foreach ($rates as $rateDetail)
+                        <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->ratePrice }}>
+                            {{ $rateDetail->rateName }} @ RM{{ $rateDetail->ratePrice }}/hour
+                        </option>
+                    @endforeach
+                </select>
+                <label for="rateID">Rate</label>
+            </div>
+
+            <input type="date" class="confirmed-fields" name="dateSlot" value="{{ $dateSlot }}">
+            <input type="text" class="confirmed-fields" name="timeSlot" value="{{ $timeSlot }}">
+            <input type="text" class="confirmed-fields" name="timeLength" value="{{ $timeLength }}">
+            <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
+
+
+            <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
+                <i class="bi bi-journal-check"></i>
+                Confirm Booking for RM<span id="price"></span> in Cash
+            </button>
         </form>
 
         @endif
@@ -146,7 +114,8 @@ $(document).ready(function() {
         // empties the time slot and time length select list before filling in
         $("#timeSlot").empty()
         $("#timeLength").empty()
-        $("#date-error").empty()
+        $("#dateLabel").text("Date")
+        $("#dateSlot").removeClass("is-invalid")
 
         // obtains today's date with and without time
         var today = new Date()
@@ -165,7 +134,8 @@ $(document).ready(function() {
             document.getElementById("dateSlot").valueAsDate = null
 
             // prompts user about invalid selection of date
-            $("#date-error").text("Invalid date. Please select a date that was today or future. ")
+            $("#dateLabel").text("Select date that was today or future. ")
+            $("#dateSlot").addClass("is-invalid")
 
         } else if (isSameTime(todayDate, selectedDate)) {
             // js date comparasion guide: https://css-tricks.com/everything-you-need-to-know-about-date-in-javascript/
@@ -178,7 +148,8 @@ $(document).ready(function() {
 
                 // if today's hours was over {{ $start_time->value }}pm, clear date selected and prompt user we were closed
                 document.getElementById("dateSlot").valueAsDate = null;
-                $("#date-error").text("We are closed at this time. Please select tomorrow or future date. ")
+                $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
+                $("#dateSlot").addClass("is-invalid")
 
             } else {
 
