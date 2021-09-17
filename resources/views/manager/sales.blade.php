@@ -3,6 +3,32 @@
 @section('title')
     Sales Report - Manager
 @endsection
+
+@section('extra-dependencies')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css@0.7.0/dist/charts.min.css">
+@endsection
+
+@section('extra-css')
+    <style>
+        .charts-css td {
+            color: white;
+            border-radius: 100px;
+        }
+
+        --labels
+
+        .data {
+            font-weight: 600;
+        }
+
+        .charts-css caption {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            line-height: 0;
+            margin-top: 0;
+        }
+    </style>
 @endsection
 
 @section('body')
@@ -10,7 +36,7 @@
 
         <div>
             <div class="row">
-                <div class="col">
+                <div class="col-sm">
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
@@ -25,11 +51,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="my-2"></div>
                 </div>
 
-                <br>
 
-                {{-- <div class="col">
+                {{-- <div class="col-sm">
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
@@ -41,14 +67,13 @@
                                         RM @if ($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="my-2"></div>
+            </div> --}}
 
-                <br> --}}
-
-                <div class="col">
+                <div class="col-sm">
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
@@ -63,11 +88,11 @@
                             </div>
                         </div>
                     </div>
+                    <div class="my-2"></div>
                 </div>
 
-                <br>
 
-                <div class="col">
+                <div class="col-sm">
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
@@ -82,39 +107,15 @@
                             </div>
                         </div>
                     </div>
+                    <div class="my-2"></div>
                 </div>
-
-                <br>
 
             </div>
         </div>
-
-        {{-- <br>
-
-        <div>
-            <div id="chart" style="height: 300px;"></div>
-        </div> --}}
 
         <br>
 
         @livewire('sales-report-performance-category')
 
-
     </div>
-@endsection
-
-@section('bottom-js')
-<script>
-
-    const chart = new Chartisan({
-        el: '#chart',
-        data: {
-            "chart": { "labels": ["First", "Second", "Third"] },
-            "datasets": [
-                { "name": "Sample 1", "values": [10, 3, 7] },
-                { "name": "Sample 2", "values": [1, 6, 2] }
-            ]}
-      })
-
-</script>
 @endsection

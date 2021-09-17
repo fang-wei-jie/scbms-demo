@@ -24,21 +24,6 @@ class SalesReportPerformanceCategory extends Component
         $startDateNumber = str_pad(date("d") - $dayOfWeek, 2, "0", STR_PAD_LEFT);
         $endDateNumber = str_pad(date("d") + (6 - $dayOfWeek), 2, "0", STR_PAD_LEFT);
 
-        // switch ($this->month) {
-        //     case "1": $monthString = "January"; break;
-        //     case "2": $monthString = "February"; break;
-        //     case "3": $monthString = "March"; break;
-        //     case "4": $monthString = "April"; break;
-        //     case "5": $monthString = "May"; break;
-        //     case "6": $monthString = "June"; break;
-        //     case "7": $monthString = "July"; break;
-        //     case "8": $monthString = "August"; break;
-        //     case "9": $monthString = "September"; break;
-        //     case "10": $monthString = "October"; break;
-        //     case "11": $monthString = "November"; break;
-        //     case "12": $monthString = "December"; break;
-        // }
-
         switch ($this->type) {
             // case 'd':
             //     $type = "d";
@@ -55,8 +40,6 @@ class SalesReportPerformanceCategory extends Component
                 $dateTrim = "1, 7";
                 if ($this->date != "") { $date = $this->date; } else { $date = $year."-".$month; }
                 $condition = 'LIKE "' . $date .'%';
-                // $period = $monthString . " " . $this->date;
-                $period = $date;
                 break;
 
             case 'y':
@@ -64,7 +47,6 @@ class SalesReportPerformanceCategory extends Component
                 $dateTrim = "1, 4";
                 if ($this->date != "") { $date = $this->date; } else { $date = $year; }
                 $condition = 'LIKE "' . $date .'%';
-                $period = $date;
                 break;
         }
 
@@ -79,7 +61,6 @@ class SalesReportPerformanceCategory extends Component
             || (Str::length($this->date) == 4 && $this->type =="m"
             || (Str::length($this->date) == 7 && $this->type =="y"))) {
             $condition = 'LIKE "' . $dates->date .'%';
-            $period = $dates->date;
         }
 
         $ratesPerf = DB::table('bookings')
@@ -87,18 +68,21 @@ class SalesReportPerformanceCategory extends Component
             ->selectRaw('rates.rateName as rate, SUM(timeLength*bookingPrice) as total')
             ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
             ->groupBy('rates.rateName')
+            ->orderBy('rates.rateName')
             ->get();
 
         $timeslotPerf = DB::table('bookings')
             ->selectRaw('timeSlot as slot, SUM(timeLength*bookingPrice) as total')
             ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
             ->groupBy('bookings.timeSlot')
+            ->orderBy('bookings.timeSlot')
             ->get();
 
         $timelengthPerf = DB::table('bookings')
             ->selectRaw('bookings.timeLength as length, SUM(timeLength*bookingPrice) as total')
             ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
             ->groupBy('bookings.timelength')
+            ->orderBy('bookings.timelength')
             ->get();
 
         $dates = DB::table('bookings')
@@ -107,11 +91,16 @@ class SalesReportPerformanceCategory extends Component
             ->get();
 
         return view('livewire.sales-report-performance-category', [
-            'period' => $period,
             'type' => $type,
-            'ratesPerf' => $ratesPerf,
-            'timelengthPerf' => $timelengthPerf,
-            'timeslotPerf' => $timeslotPerf,
+            'rates' => $ratesPerf,
+            'ratesMax' => $ratesPerf->max("total"),
+            'ratesSum' => $ratesPerf->sum("total"),
+            'length' => $timelengthPerf,
+            'lengthMax' => $timelengthPerf->max("total"),
+            'lengthSum' => $timelengthPerf->sum("total"),
+            'slot' => $timeslotPerf,
+            'slotMax' => $timeslotPerf->max("total"),
+            'slotSum' => $timeslotPerf->sum("total"),
             'dates' => $dates,
         ]);
     }
