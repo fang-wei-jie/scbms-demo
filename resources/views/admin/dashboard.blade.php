@@ -38,6 +38,8 @@ Dashboard - Admin
                         </div>
                     </div>
 
+                    <div class="my-2"></div>
+
                     @if (count($bookings) == 0)
                         <h5>No Bookings Currently</h5>
                     @endif
@@ -75,6 +77,9 @@ Dashboard - Admin
                             </a>
                         </div>
                     </div>
+
+                    <div class="my-2"></div>
+
                     @foreach ($ratesEnabled as $ratesDetail)
                         <div class="card py-2">
                             <div class="mx-3 my-1">

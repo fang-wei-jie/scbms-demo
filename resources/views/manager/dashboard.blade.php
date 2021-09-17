@@ -37,6 +37,9 @@ Dashboard - Manager
                             </a>
                         </div>
                     </div>
+
+                    <div class="my-2"></div>
+
                     @if ($bookingCount == 0)
                         <h5>No Bookings Currently</h5>
                     @endif
@@ -73,6 +76,9 @@ Dashboard - Manager
                             </a>
                         </div>
                     </div>
+
+                    <div class="my-2"></div>
+
                     {{ $name }} <br>
                     {{ '@'.$domain }} <br>
                     {{ $start_time.':00 - '.$end_time.':00' }}
@@ -97,6 +103,9 @@ Dashboard - Manager
                             </a>
                         </div>
                     </div>
+
+                    <div class="my-2"></div>
+
                     @foreach ($ratesEnabled as $ratesDetail)
                         <div class="card py-2">
                             <div class="mx-3 my-1">
@@ -136,6 +145,8 @@ Dashboard - Manager
                             </a>
                         </div>
                     </div>
+
+                    <div class="my-2"></div>
 
                     <div class="card py-2">
                         <div class="mx-3 my-1">
