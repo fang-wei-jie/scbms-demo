@@ -46,7 +46,7 @@
             display: none;
         }
 
-        .form-signin {
+        .form-resize {
             width: 100%;
             max-width: 500px;
             padding: 15px;

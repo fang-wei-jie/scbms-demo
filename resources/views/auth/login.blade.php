@@ -5,7 +5,7 @@ Login -
 @endsection
 
 @section('body')
-<form class="form-signin" method="post" action="{{ route('login') }}">
+<form class="form-resize" method="post" action="{{ route('login') }}">
     @csrf
     <h3 class="mb-3">Login</h3>
 
