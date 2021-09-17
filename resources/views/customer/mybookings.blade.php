@@ -6,7 +6,11 @@ My Bookings -
 
 @section('body')
 <div class="container">
-    <h3>My Bookings</h3>
+
+    {{-- show title when items in navbar are invisible --}}
+    <span class="d-block d-md-block d-lg-none mb-3">
+        <h3>My Bookings</h3>
+    </span>
 
     <div style="display: flex; justify-content: space-between;">
         <div>

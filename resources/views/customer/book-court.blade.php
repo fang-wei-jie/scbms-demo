@@ -19,7 +19,11 @@ Book Courts -
         @if ($selectedDate == 0)
         <form class="form-resize" method="post" action="{{ route('book-court') }}">
             @csrf
-            <h3 class="mb-3">Book Courts</h3>
+
+            {{-- show title when items in navbar are invisible --}}
+            <span class="d-block d-md-block d-lg-none mb-3">
+                <h3>Book Courts</h3>
+            </span>
 
             <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="dateSlot" name="dateSlot" required>
