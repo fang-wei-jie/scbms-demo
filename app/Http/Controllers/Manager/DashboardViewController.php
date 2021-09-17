@@ -23,6 +23,11 @@ class DashboardViewController extends Controller
             -> where('rateStatus', 1)
             -> get();
 
+        $yearSales = DB::table('bookings')
+            ->selectRaw('SUM(timeLength*bookingPrice) as yearSales')
+            ->where('created_at', 'LIKE', date('Y').'%')
+            ->first();
+
         $monthSales = DB::table('bookings')
             ->selectRaw('SUM(timeLength*bookingPrice) as monthSales')
             ->where('created_at', 'LIKE', date('Y-m').'%')
@@ -66,6 +71,7 @@ class DashboardViewController extends Controller
 
         return view ('manager.dashboard', [
             'ratesEnabled' => $ratesEnabled,
+            'yearSales' => $yearSales->yearSales,
             'monthSales' => $monthSales->monthSales,
             'weekSales' => $weekSales->weekSales,
             'todaySales' => $todaySales->todaySales,

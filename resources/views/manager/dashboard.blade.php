@@ -165,7 +165,7 @@ Dashboard - Manager
 
                     <div class="my-2"></div>
 
-                    <div class="card py-2">
+                    {{-- <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
@@ -182,7 +182,7 @@ Dashboard - Manager
                         </div>
                     </div>
 
-                    <div class="my-2"></div>
+                    <div class="my-2"></div> --}}
 
                     <div class="card py-2">
                         <div class="mx-3 my-1">
@@ -192,7 +192,26 @@ Dashboard - Manager
                                         This Month
                                     </div>
                                     <div class="h5 mb-0 fw-bold text-gray-800">
-                                        RM @if($monthSales != 0){{ $monthSales }} @else {{ '0' }} @endif
+                                        <div class="h5 mb-0 fw-bold text-gray-800">
+                                            RM @if($monthSales != 0){{ $monthSales }} @else {{ '0' }} @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-2"></div>
+
+                    <div class="card py-2">
+                        <div class="mx-3 my-1">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col d-flex justify-content-between">
+                                    <div class="text-xs fw-bold text-dark mb-1">
+                                        This Year
+                                    </div>
+                                    <div class="h5 mb-0 fw-bold text-gray-800">
+                                        RM @if($yearSales != 0){{ $yearSales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
                             </div>
