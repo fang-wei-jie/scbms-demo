@@ -42,7 +42,7 @@ class LoginController extends Controller
             if (str_ends_with($request->email, $managerDomain)) {
 
                 // login verification for manager
-                if (!Auth::guard('manager')->attempt(['email' => str_replace("@xbcm", "", $request->email), 'password' => $request->password])) {
+                if (!Auth::guard('manager')->attempt(['email' => str_replace('@'.$domain->value.'m', "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 
@@ -50,7 +50,7 @@ class LoginController extends Controller
             } else if (str_ends_with($request->email, $adminDomain)) {
 
                 // login verification for admin
-                if (!Auth::guard('admin')->attempt(['email' => str_replace("@xbc", "", $request->email), 'password' => $request->password])) {
+                if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain->value, "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 
