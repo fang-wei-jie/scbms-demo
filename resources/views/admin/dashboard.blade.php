@@ -80,10 +80,10 @@ Dashboard - Admin
                             <div class="mx-3 my-1">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col d-flex justify-content-between">
-                                        <div class="text-xs font-weight-bold text-primary mb-1">
+                                        <div class="h5 fw-bold text-primary mb-1">
                                             {{ $ratesDetail->rateName }}
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <div class="h5 mb-0 fw-bold text-gray-800">
                                             RM {{ $ratesDetail->ratePrice }}
                                         </div>
                                     </div>

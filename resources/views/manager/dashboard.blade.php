@@ -102,10 +102,10 @@ Dashboard - Manager
                             <div class="mx-3 my-1">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col d-flex justify-content-between">
-                                        <div class="text-xs font-weight-bold text-primary mb-1">
+                                        <div class="text-xs fw-bold text-primary mb-1">
                                             {{ $ratesDetail->rateName }}
                                         </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        <div class="h5 mb-0 fw-bold text-gray-800">
                                             RM {{ $ratesDetail->ratePrice }}
                                         </div>
                                     </div>
@@ -141,10 +141,10 @@ Dashboard - Manager
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-warning mb-1">
+                                    <div class="text-xs fw-bold text-warning mb-1">
                                         Today
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <div class="h5 mb-0 fw-bold text-gray-800">
                                         RM @if($todaySales != 0){{ $todaySales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
@@ -158,11 +158,11 @@ Dashboard - Manager
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-info mb-1">
+                                    <div class="text-xs fw-bold text-info mb-1">
                                         This Week
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <div class="h5 mb-0 fw-bold text-gray-800">
+                                        <div class="h5 mb-0 fw-bold text-gray-800">
                                             RM @if($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
                                         </div>
                                     </div>
@@ -177,10 +177,10 @@ Dashboard - Manager
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
                                 <div class="col d-flex justify-content-between">
-                                    <div class="text-xs font-weight-bold text-primary mb-1">
+                                    <div class="text-xs fw-bold text-primary mb-1">
                                         This Month
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <div class="h5 mb-0 fw-bold text-gray-800">
                                         RM @if($monthSales != 0){{ $monthSales }} @else {{ '0' }} @endif
                                     </div>
                                 </div>
