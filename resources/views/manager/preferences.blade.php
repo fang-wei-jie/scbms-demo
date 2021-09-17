@@ -7,34 +7,48 @@ Preferences - Manager
 @section('body')
 <div class="container">
 
-    <form class="form-signin" action="{{ route('manager.preferences') }}" method="post">
+    <form class="form-resize" action="{{ route('manager.preferences') }}" method="post">
         @csrf
 
-        <div class="form-group">
-            <label for="name">Name</label>
+        <h3 class="mb-3">General</h3>
+
+        <hr>
+
+        <div class="form-floating mb-3">
             <input id="name" class="form-control" type="text" name="name" maxlength="255" value="{{ $name }}">
+            <label for="name">Name</label>
         </div>
 
-        <div class="form-group">
-            <label for="domain">Domain</label>
+        <div class="form-floating mb-3">
             <input id="domain" class="form-control" type="text" name="domain" maxlength="255" value="{{ $domain }}">
+            <label for="domain">Domain</label>
         </div>
 
-        <div class="form-group">
+        <div class="form-floating mb-3">
+            <select class="form-select" name="start_time" id="start_time"></select>
             <label for="start_time">Start Time</label>
-            <select class="form-control" name="start_time" id="start_time"></select>
         </div>
 
-        <div class="form-group">
+        <div class="form-floating mb-3">
+            <select class="form-select" name="end_time" id="end_time"></select>
             <label for="end_time">End Time</label>
-            <select class="form-control" name="end_time" id="end_time"></select>
         </div>
 
-        <div class="form-group">
-            <button class="btn btn-primary btn-block" type="submit" id="save" name="save">
+        <div class="form-control mb-3">
+            <label for="logo">Logo</label>
+            <input id="logo" class="form-control form-control-file" type="file" name="logo">
+            Best uploaded in SVG format, or PNG format between 64x64 till 512x512 resolution
+        </div>
+
+        <div class="d-grid gap-2 mb-3">
+            <button class="btn btn-primary" type="submit" id="save" name="save">
                 Save
             </button>
         </div>
+
+        <h3>Features</h3>
+
+        <hr>
 
     </form>
 

@@ -24,7 +24,7 @@ Admin Management - Manager
             <input type="text" id="accounts-search" class="form-control" placeholder="Search anything in the table ...">
         </div>
         <div class="col-auto">
-            <button type="button" id="add" class="btn btn-primary" data-toggle="modal" data-target="#newAdmin">
+            <button type="button" id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newAdmin">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-plus-circle-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Add Admin</span>
@@ -53,15 +53,15 @@ Admin Management - Manager
                     <td>
                         <input type="hidden" name="id" value="{{$adminsDetail->id}}">
 
-                        <button type="button" class="btn btn-primary" id="editAdmin" data-toggle="modal"
-                        data-target="#edit" data-id="{{$adminsDetail->id}}" data-name="{{ $adminsDetail->name }}" data-email="{{ $adminsDetail->email }}">
+                        <button type="button" class="btn btn-primary" id="editAdmin" data-bs-toggle="modal"
+                        data-bs-target="#edit" data-id="{{$adminsDetail->id}}" data-name="{{ $adminsDetail->name }}" data-email="{{ $adminsDetail->email }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-pencil-square"></i>
                                 <span class="d-none d-md-block">&nbsp;Edit</span>
                             </span>
                         </button>
 
-                        <button class="btn btn-danger" type="button" id="deleteAdmin" data-toggle="modal" data-target="#delete" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
+                        <button class="btn btn-danger" type="button" id="deleteAdmin" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-trash"></i>
                                 <span class="d-none d-md-block">&nbsp;Delete</span>
@@ -86,9 +86,7 @@ Admin Management - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newAdminLabel">Add Admin</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('manager.admins_management') }}" method="post">
                 @csrf
@@ -110,7 +108,7 @@ Admin Management - Manager
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="addAdmin">Add Admin</button>
                 </div>
             </form>
@@ -126,9 +124,7 @@ Admin Management - Manager
                 <h5 class="modal-title" id="editLabel">
                     Edit <b><span class="adminName"></span></b>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="post">
                 @csrf
@@ -146,7 +142,7 @@ Admin Management - Manager
                 </div>
                 <div class="modal-footer">
                     <input type="text" class="id" name="id" style="display: none">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="editAdmin">Submit changes</button>
                 </div>
             </form>
@@ -162,9 +158,7 @@ Admin Management - Manager
                 <h5 class="modal-title" id="deleteLabel">
                     Confirm delete <b><span class="name"></span></b>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="post">
                 @csrf
@@ -177,7 +171,7 @@ Admin Management - Manager
                 </div>
                 <div class="modal-footer">
                     <input type="text" class="id" name="id" style="display: none;">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger" name="deleteAdmin">Submit changes</button>
                 </div>
             </form>
@@ -191,9 +185,7 @@ Admin Management - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="infoBoxLabel">Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 @if($info ?? '') {{ $info ?? '' }}@endif
@@ -201,7 +193,7 @@ Admin Management - Manager
                 @error('name') {{ $message }} @enderror
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                     Okay
                 </button>
             </div>
@@ -211,22 +203,25 @@ Admin Management - Manager
 @endsection
 
 @section('bottom-js')
+<script>
+    var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
+</script>
 
 @error('email')
     <script>
-        $("#infoBox").modal()
+        infoBox.show()
     </script>
 @enderror
 @error('name')
     <script>
-        $("#infoBox").modal()
+        infoBox.show()
     </script>
 @enderror
 <script>
     $(document).ready(function(){
         // if info were passed to infobox
         @if($info ?? '')
-            $("#infoBox").modal()
+            infoBox.show()
         @endif
 
         // feed data into the modal dialog

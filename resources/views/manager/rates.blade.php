@@ -24,7 +24,7 @@ Rates - Manager
             <input type="text" id="rates-search" class="form-control" placeholder="Search anything in the table ...">
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newRate">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRate">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-plus-circle-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Add Rate</span>
@@ -80,8 +80,8 @@ Rates - Manager
                     <td>
                         <input type="hidden" name="id" value="{{$rateDetail->id}}">
 
-                        <button type="button" class="btn btn-primary" id="editRate" data-toggle="modal"
-                        data-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
+                        <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
+                        data-bs-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-pencil-fill"></i>
                                 <span class="d-none d-md-block">&nbsp;Edit</span>
@@ -89,7 +89,7 @@ Rates - Manager
                         </button>
 
                         @if($rateDetail->id == 1 || $rateDetail->id == 2) @else
-                        <button class="btn btn-danger" type="button" id="archiveRate" data-toggle="modal" data-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
+                        <button class="btn btn-danger" type="button" id="archiveRate" data-bs-toggle="modal" data-bs-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-archive-fill"></i>
                                 <span class="d-none d-md-block">&nbsp;Archive</span>
@@ -110,9 +110,7 @@ Rates - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="newRateLabel">Create new rate</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('manager.rates') }}" method="post">
                 @csrf
@@ -137,7 +135,7 @@ Rates - Manager
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="addRate">Add Rate</button>
                 </div>
             </form>
@@ -153,9 +151,7 @@ Rates - Manager
                 <h5 class="modal-title" id="editLabel">
                     Edit <b><span id="rateName"></span></b>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="post">
                 @csrf
@@ -176,7 +172,7 @@ Rates - Manager
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="editRate">Submit changes</button>
                 </div>
             </form>
@@ -190,9 +186,7 @@ Rates - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="archiveLabel">Confirm archive rate</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="post">
                 @csrf
@@ -205,7 +199,7 @@ Rates - Manager
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-danger" name="archiveRate">Submit changes</button>
                 </div>
             </form>
@@ -219,9 +213,7 @@ Rates - Manager
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="infoBoxLabel">Info</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 @if(session('info')) {{ session('info') }} @endif
@@ -230,7 +222,7 @@ Rates - Manager
                 @error('ratePrice') {{ $message }} @enderror
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                     @if (session('info'))
                         {{ 'Okay' }}
                     @else

@@ -21,16 +21,16 @@ Bookings - Manager
 <div class="container-fluid">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" id="pills-today-tab" data-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today's Bookings</a>
+            <a class="nav-link active" id="pills-today-tab" data-bs-toggle="pill" href="#pills-today" role="tab" aria-controls="pills-today" aria-selected="true">Today's Bookings</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="pills-future-tab" data-toggle="pill" href="#pills-future" role="tab" aria-controls="pills-future" aria-selected="false">Future Bookings</a>
+            <a class="nav-link" id="pills-future-tab" data-bs-toggle="pill" href="#pills-future" role="tab" aria-controls="pills-future" aria-selected="false">Future Bookings</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="pills-previous-tab" data-toggle="pill" href="#pills-previous" role="tab" aria-controls="pills-previous" aria-selected="false">Previous Bookings</a>
+            <a class="nav-link" id="pills-previous-tab" data-bs-toggle="pill" href="#pills-previous" role="tab" aria-controls="pills-previous" aria-selected="false">Previous Bookings</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a class="nav-link" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="false">All Bookings</a>
+            <a class="nav-link" id="pills-all-tab" data-bs-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="false">All Bookings</a>
         </li>
     </ul>
 
@@ -133,7 +133,7 @@ Bookings - Manager
                         <td>Court {{ $futureBookingsData->courtID }}</td>
                         <td>{{ $futureBookingsData->rateName }}</td>
                         <td>
-                            <button type="button" class="btn btn-danger" id="removeFutureBookingButton" data-toggle="modal" data-target="#removeFutureBooking" data-id="{{ $futureBookingsData->bookingID }}" data-custid="{{ $futureBookingsData->custID }}" data-name="{{ $futureBookingsData->name }}" data-date="{{ substr($futureBookingsData->dateSlot, 6, 2) }}/{{ substr($futureBookingsData->dateSlot, 4, 2) }}/{{ substr($futureBookingsData->dateSlot, 0, 4) }}" data-time="{{ $futureBookingsData->timeSlot }}:00" data-length="{{ $futureBookingsData->timeLength }}" data-court="{{ $futureBookingsData->courtID }}" data-phone="{{ $futureBookingsData->phone }}" data-email="{{ $futureBookingsData->email }}">Delete Booking</button>
+                            <button type="button" class="btn btn-danger" id="removeFutureBookingButton" data-bs-toggle="modal" data-bs-target="#removeFutureBooking" data-id="{{ $futureBookingsData->bookingID }}" data-custid="{{ $futureBookingsData->custID }}" data-name="{{ $futureBookingsData->name }}" data-date="{{ substr($futureBookingsData->dateSlot, 6, 2) }}/{{ substr($futureBookingsData->dateSlot, 4, 2) }}/{{ substr($futureBookingsData->dateSlot, 0, 4) }}" data-time="{{ $futureBookingsData->timeSlot }}:00" data-length="{{ $futureBookingsData->timeLength }}" data-court="{{ $futureBookingsData->courtID }}" data-phone="{{ $futureBookingsData->phone }}" data-email="{{ $futureBookingsData->email }}">Delete Booking</button>
                         </td>
                     </tr>
                     @endforeach
@@ -265,9 +265,7 @@ Bookings - Manager
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="titleLabel">Booking Deletion Confirmation</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <form action="" method="post">
@@ -289,7 +287,7 @@ Bookings - Manager
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-danger" name="deleteBooking">DELETE BOOKING</button>
                         </div>
                     </form>

@@ -13,7 +13,7 @@ My Admin Account -
             <span>{{ Auth::user()->name }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" id="changeNameButton" data-toggle="modal" data-target="#changeName">
+            <button type="button" class="btn btn-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -30,7 +30,7 @@ My Admin Account -
             <span>Change often to improve security</span>
         </div>
         <div>
-            <button class="btn btn-primary" id="change-password-button" data-toggle="modal" data-target="#changePassword">
+            <button class="btn btn-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-pencil-square"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
@@ -45,9 +45,7 @@ My Admin Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change name</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="" method="post">
@@ -59,7 +57,7 @@ My Admin Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" name="change-name">Change name</button>
                     </div>
                 </form>
@@ -73,9 +71,7 @@ My Admin Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Change Password</span>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
                 <form action="" method="post">
@@ -91,7 +87,7 @@ My Admin Account -
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button class="btn btn-primary" type="submit" name="change-password">Change password</button>
                     </div>
                 </form>
@@ -105,9 +101,7 @@ My Admin Account -
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="infoBoxLabel">Info</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     @if(session('info')) {{ session('info') }} @endif
@@ -115,7 +109,7 @@ My Admin Account -
                     @error('password') {{ $message }} @enderror
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
                         @if (session('info'))
                             {{ 'Okay' }}
                         @else
@@ -131,15 +125,21 @@ My Admin Account -
 @endsection
 
 @section('bottom-js')
+
+<script>
+    var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
+</script>
+
 @if(session('alert') || session('info'))
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @endif
 
 @error('password')
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @enderror
+
 @endsection
