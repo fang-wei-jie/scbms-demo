@@ -54,6 +54,8 @@
         }
     </style>
     @yield('extra-css')
+
+    @livewireStyles
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -277,6 +279,8 @@
         </div>
     </footer>
     @endif
+
+    @livewireScripts
 </body>
 
 @yield('bottom-js')
