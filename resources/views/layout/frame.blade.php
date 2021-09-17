@@ -253,7 +253,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" id="logout-button" style="color: @if (!(request()->is('admin/*'))) red @endif; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i id="logout-icon" class="bi bi-door-closed"></i>
+                            <i id="logout-icon" class="bi bi-door-closed-fill"></i>
                             Logout
                         </a>
 
@@ -307,11 +307,11 @@
 
     // open the door when hover on logout button
     $("#logout-button").hover(function(){
-        $("#logout-icon").removeClass("bi-door-closed")
-        $("#logout-icon").addClass("bi-door-open")
+        $("#logout-icon").removeClass("bi-door-closed-fill")
+        $("#logout-icon").addClass("bi-door-open-fill")
     }, function(){
-        $("#logout-icon").addClass("bi-door-closed")
-        $("#logout-icon").removeClass("bi-door-open")
+        $("#logout-icon").addClass("bi-door-closed-fill")
+        $("#logout-icon").removeClass("bi-door-open-fill")
     })
 </script>
 
