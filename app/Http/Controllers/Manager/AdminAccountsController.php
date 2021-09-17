@@ -33,7 +33,7 @@ class AdminAccountsController extends Controller
     {
 
         $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
-        $adminDomain = '@'.$domain;
+        $adminDomain = '@'.$domain->value;
 
         if (isset($_POST['addAdmin'])){
 
