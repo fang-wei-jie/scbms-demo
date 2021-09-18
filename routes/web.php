@@ -104,7 +104,7 @@ Route::prefix('admin')->group(function() {
     Route::post('/rates', [AdminRatesController::class, 'process']);
 
     // My Account
-    Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myadminaccount');
+    Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myaccount');
     Route::post('/myaccount', [AdminMyAccountController::class, 'update']);
 
 });

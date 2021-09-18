@@ -173,7 +173,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myadminaccount') }}">
+                            <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myaccount') }}">
                                 <i class="bi bi-person-badge"></i>
                                 {{ Auth::user()->name }}
                             </a>
