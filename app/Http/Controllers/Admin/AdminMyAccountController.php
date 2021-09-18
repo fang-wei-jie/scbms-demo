@@ -18,7 +18,7 @@ class AdminMyAccountController extends Controller
 
     function view () {
 
-        return view ('admin.myadminaccount');
+        return view ('admin.myaccount');
 
     }
 
