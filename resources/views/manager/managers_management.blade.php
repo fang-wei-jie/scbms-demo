@@ -120,7 +120,7 @@ Managers Account - Manager
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="addManager">Add Manager</button>
+                    <button type="submit" class="btn btn-primary" name="add">Add Manager</button>
                 </div>
             </form>
         </div>
@@ -152,7 +152,7 @@ Managers Account - Manager
                 <div class="modal-footer">
                     <input type="text" class="id" name="id" style="display: none">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="editManager">Save Changes</button>
+                    <button type="submit" class="btn btn-primary" name="edit">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -200,7 +200,7 @@ Managers Account - Manager
                 <div class="modal-footer">
                     <input type="text" class="id" name="id" style="display: none;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger" name="deleteManager">Delete account</button>
+                    <button type="submit" class="btn btn-danger" name="delete">Delete account</button>
                 </div>
             </form>
         </div>
