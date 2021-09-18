@@ -109,29 +109,26 @@ Rates - Admin
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="newRateLabel">Create new rate</h5>
+                <h5 class="modal-title" id="newRateLabel">Create New Rate</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('admin.rates') }}" method="post">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="rateName" placeholder="Enter rate name" maxlength="255" required>
                         <label for="rateName">Rate Name</label>
-                        <input type="text" class="form-control" name="rateName" placeholder="Enter rate name"
-                        maxlength="255" required>
                     </div>
-                    <div class="form-group">
-                        <label for="rateStatus">Rate Status</label>
-                        <select class="form-control" name="rateStatus" id="rateStatus">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="rateStatus" id="rateStatus">
                             <option value="1">Enabled</option>
                             <option value="0">Disabled</option>
                         </select>
+                        <label for="rateStatus">Rate Status</label>
                     </div>
-                    <div class="form-group">
-                        <label for="ratePrice">Rate Price</label>
-                        <input type="text" class="form-control" name="ratePrice" placeholder="Enter rate price (RM)"
-                        maxlength="2" required>
-                        <small" class="form-text text-muted">Price in integer only</small>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="ratePrice" placeholder="Enter rate price (RM)" minlength="1" maxlength="2" required>
+                        <label for="ratePrice">Rate Price (RM)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -156,19 +153,17 @@ Rates - Admin
             <form action="" method="post">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
-                    </div>
-                    <div class="form-group" id="editRateNameSection">
-                        <label for="rateName">Rate Name</label>
-                        <input type="text" class="form-control modal-rateName" name="oldRateName" minlength="1" maxlength="25" style="display: none;">
+                    <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
+
+                    <div class="form-floating mb-3" id="editRateNameSection">
+                        <input type="text" class="modal-rateName" name="oldRateName" minlength="1" maxlength="25" style="display: none;">
                         <input type="text" class="form-control modal-rateName" name="rateName" placeholder="Enter new rate name" minlength="1" maxlength="25">
+                        <label for="rateName">Rate Name</label>
                         <small" class="form-text text-muted">Make sure you do not enter same name for multiple rates to avoid confucian for customers and admins (including yourself). </small>
                     </div>
-                    <div class="form-group">
-                        <label for="ratePrice">Rate Price (RM)</label>
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="modal-ratePrice" name="ratePrice" placeholder="Enter new rate price (RM)" minlength="1" maxlength="2">
-                        <small" class="form-text text-muted">Price in integer only</small>
+                        <label for="ratePrice">Rate Price (RM)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -191,12 +186,8 @@ Rates - Admin
             <form action="" method="post">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
-                    </div>
-                    <div class="form-group">
-                        Are you sure to archive <b></b>? This act cannot be undone.
-                    </div>
+                    <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
+                    Are you sure to archive <b></b>? This act cannot be undone.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
