@@ -64,6 +64,14 @@
             max-width: 500px;
             margin: auto;
         }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
     </style>
     @yield('extra-css')
 
