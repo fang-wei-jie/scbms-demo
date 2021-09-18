@@ -15,6 +15,10 @@ class ReceiptController extends Controller
 
     }
 
+    function get_request () {
+        return redirect() -> route('mybookings');
+    }
+
     function view (Request $request)
     {
 
