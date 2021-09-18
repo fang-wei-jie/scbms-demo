@@ -83,7 +83,7 @@ Rates - Admin
                         <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
                         data-bs-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
-                                <i class="bi bi-pencil-fill"></i>
+                                <i class="bi bi-pencil-square"></i>
                                 <span class="d-none d-md-block">&nbsp;Edit</span>
                             </span>
                         </button>
