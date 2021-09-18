@@ -54,7 +54,7 @@ class ReceiptController extends Controller
             'rateName' => $invoiceDetail->rateName,
             'companyName' => $companyName->value,
             'ratePrice' => $invoiceDetail->bookingPrice,
-            'timeLength' => $invoiceDetail->timeLength,`
+            'timeLength' => $invoiceDetail->timeLength,
             'logo' => $logo,
         ]);
 
