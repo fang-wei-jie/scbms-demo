@@ -1,5 +1,18 @@
 @php
     $name = DB::table("operation_preferences")->where('attr', 'name')->first();
+    $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
+
+    if (str_contains($_SERVER['REQUEST_URI'], "admin")) {
+        $side = "admin";
+    } else if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
+        $side = "manager";
+    } else { $side = ""; }
+
+    $logoQuery = DB::table("ui_preferences")->where('side', $side)->first()->logo;
+
+    if ($logoQuery != "") {
+        $logo = $logoQuery;
+    }
 @endphp
 
 <!DOCTYPE html>
@@ -9,14 +22,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title'){{ $name->value }}</title>
-    @if(request()->is('manager/*'))
-    <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/file-person.svg" />
-    @elseif (request()->is('admin/*'))
-    {{-- <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/adminFavicon.ico') }}" /> --}}
-    <link rel="shortcut icon" type="image/jpg" href="https://icons.getbootstrap.com/assets/icons/person-badge.svg" />
-    @else
-    <link rel="shortcut icon" type="image/jpg" href="{{ URL('/favicon/custFavicon.ico') }}" />
-    @endif
+    <link rel="shortcut icon" type="image/jpg" href="{{ $logo }}" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -91,7 +97,7 @@
                 @endauth
             ">
 
-                <img src=" @if(request()->is('admin/*')) https://icons.getbootstrap.com/assets/icons/person-badge.svg @elseif(request()->is('manager/*')) https://icons.getbootstrap.com/assets/icons/file-person.svg @else {{ $logo }} @endif " width="30" height="30" class="d-inline-block align-top"
+                <img src="{{ $logo }}" width="30" height="30" class="d-inline-block align-top"
                     @if (request()->is('admin/*') | request()->is('manager/*'))
                         style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); "
                     @endif
