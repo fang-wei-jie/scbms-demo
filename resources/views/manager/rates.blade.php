@@ -60,14 +60,14 @@ Rates - Manager
                             </button>
                         @else
                             @if($rateDetail->rateStatus == 1)
-                            <button class="btn btn-success" type="submit" name="disableRate">
+                            <button class="btn btn-success" type="submit" name="disable">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <span class="d-none d-md-block">Enabled&nbsp;</span>
                                     <i class="bi bi-toggle-on"></i>
                                 </span>
                             </button>
                             @else
-                            <button class="btn btn-danger" type="submit" name="enableRate">
+                            <button class="btn btn-danger" type="submit" name="enable">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <span class="d-none d-md-block">Disabled&nbsp;</span>
                                     <i class="bi bi-toggle-off"></i>
@@ -133,7 +133,7 @@ Rates - Manager
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="addRate">Add Rate</button>
+                    <button type="submit" class="btn btn-primary" name="add">Add Rate</button>
                 </div>
             </form>
         </div>
@@ -168,7 +168,7 @@ Rates - Manager
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" name="editRate">Submit changes</button>
+                    <button type="submit" class="btn btn-primary" name="edit">Submit changes</button>
                 </div>
             </form>
         </div>
@@ -191,7 +191,7 @@ Rates - Manager
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger" name="archiveRate">Submit changes</button>
+                    <button type="submit" class="btn btn-danger" name="archive">Submit changes</button>
                 </div>
             </form>
         </div>

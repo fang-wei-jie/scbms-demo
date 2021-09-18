@@ -28,19 +28,19 @@ class AdminRatesController extends Controller
     function process(Request $request)
     {
 
-        if (isset($_POST['enableRate'])) {
+        if (isset($_POST['enable'])) {
 
             DB::table('rates')
                 ->where('id', $request->id)
                 ->update(['rateStatus' => 1]);
 
-        } else if (isset($_POST['disableRate'])) {
+        } else if (isset($_POST['disable'])) {
 
             DB::table('rates')
                 ->where('id', $request->id)
                 ->update(['rateStatus' => 0]);
 
-        } else if (isset($_POST['editRate'])) {
+        } else if (isset($_POST['edit'])) {
 
             if ($request->oldRateName == $request->rateName) {
 
@@ -74,13 +74,13 @@ class AdminRatesController extends Controller
 
             }
 
-        } else if (isset($_POST['archiveRate'])) {
+        } else if (isset($_POST['archive'])) {
 
             DB::table('rates')
                 ->where('id', '=', $request->id)
                 ->update(['rateStatus' => 2]);
 
-        } else if (isset($_POST['addRate'])) {
+        } else if (isset($_POST['add'])) {
 
             $this -> validate($request, [
 
