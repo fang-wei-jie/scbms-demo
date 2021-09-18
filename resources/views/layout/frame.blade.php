@@ -173,12 +173,6 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/accounts')) ? 'active fw-bold' : '' }}" href="{{ route('admin.customer_accounts') }}">
-                                <i class="bi bi-person-circle"></i>
-                                Accounts
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myadminaccount') }}">
                                 <i class="bi bi-person-badge"></i>
                                 {{ Auth::user()->name }}
