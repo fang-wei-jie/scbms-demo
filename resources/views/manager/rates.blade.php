@@ -180,14 +180,14 @@ Rates - Manager
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="archiveLabel">Confirm archive rate</h5>
+                <h5 class="modal-title" id="archiveLabel">Confirm Archive Rate</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="post">
                 @csrf
                 <div class="modal-body">
                     <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
-                    Are you sure to archive <b></b>? This act cannot be undone.
+                    Are you sure to archive <b><span class="modal-rateName"></span></b>? This act cannot be undone.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -261,7 +261,7 @@ Rates - Manager
 
     $(document).on("click", "#archiveRate", function() {
         $(".modal-id").prop("value", $(this).data('id'))
-        $(".modal-rateName").prop("value", $(this).data('name'))
+        $(".modal-rateName").text($(this).data('name'))
     })
 </script>
 @endsection
