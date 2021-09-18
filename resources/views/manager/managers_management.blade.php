@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Managers - Manager
+Managers Account - Manager
 @endsection
 
 @section('extra-dependencies')
