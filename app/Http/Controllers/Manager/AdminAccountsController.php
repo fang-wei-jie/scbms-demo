@@ -22,10 +22,8 @@ class AdminAccountsController extends Controller
     {
 
         $admins = DB::table('admins')->get();
-        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
-        $adminDomain = '@'.$domain->value;
 
-        return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain]);
+        return view('manager.admins_management', ['admins' => $admins]);
 
     }
 
@@ -35,32 +33,30 @@ class AdminAccountsController extends Controller
         $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
         $adminDomain = '@'.$domain->value;
 
-        if (isset($_POST['addAdmin'])){
+        if (isset($_POST['add'])){
 
             // input validation
             $this -> validate($request, [
 
                 'email' => 'required | max:25 | unique:admins',
                 'name' => 'required | max:255',
+                'password' => 'required | min:8 | max:255 | confirmed',
 
             ]);
-
-            // generate a random password
-            $password = Str::random(25);
 
             // create admin
             Admin::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($password),
-                ]);
+                'password' => Hash::make($request->password),
+            ]);
 
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain, 'info' => "Successfully created ".$request->name." with password ".$password]);
+            return view('manager.admins_management', ['admins' => $admins, 'info' => "Successfully created ".$request->name." with Admin ID ".$request->email.$adminDomain]);
 
-        } else if (isset($_POST['editAdmin'])){
+        } else if (isset($_POST['edit'])){
 
             // input validation
             $this -> validate($request, [
@@ -74,17 +70,12 @@ class AdminAccountsController extends Controller
             $admin->email = $request->email;
             $admin->save();
 
-
-            // DB::table('admins')
-            //     ->where('id', $request->id)
-            //     ->update(['email' => $request->email]);
-
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'domain' => $adminDomain, 'info' => "Admin ID for ".$request->name." was updated."]);
+            return view('manager.admins_management', ['admins' => $admins, 'info' => "Admin ID for ".$admin->name." was updated."]);
 
-        } else if (isset($_POST['deleteAdmin'])){
+        } else if (isset($_POST['delete'])){
 
             // input validation
             $this -> validate($request, [
@@ -94,6 +85,26 @@ class AdminAccountsController extends Controller
             ]);
 
             Admin::where('id', $request->id)->delete();
+
+        } else if (isset($_POST['reset'])) {
+
+            // input validation
+            $this -> validate($request, [
+
+                'id' => 'required',
+
+            ]);
+
+            $randomPassword = Str::random(10);
+
+            $admin = Admin::find($request->id);
+            $admin->password = Hash::make($randomPassword);
+            $admin->save();
+
+            // fetches new list of admins
+            $admins = DB::table('admins')->get();
+
+            return view('manager.admins_management', ['admins' => $admins, 'info' => "Password for ".$admin->name." was resetted to ".$randomPassword]);
 
         }
 

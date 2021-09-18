@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Manager;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class ManagerAccountsController extends Controller
@@ -32,7 +33,7 @@ class ManagerAccountsController extends Controller
         $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
         $managerDomain = '@'.$domain->value.'m';
 
-        if(isset($_POST['addManager'])) {
+        if(isset($_POST['add'])) {
 
             // input validation
             $this -> validate($request, [
@@ -55,9 +56,9 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
 
-        } else if (isset($_POST['editManager'])){
+        } else if (isset($_POST['edit'])){
 
             // input validation
             $this -> validate($request, [
@@ -74,9 +75,9 @@ class ManagerAccountsController extends Controller
             // fetches new list of managers
             $managers = DB::table('managers')->get();
 
-            return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
 
-        } else if (isset($_POST['deleteManager'])){
+        } else if (isset($_POST['delete'])){
 
             // input validation
             $this -> validate($request, [
@@ -86,6 +87,26 @@ class ManagerAccountsController extends Controller
             ]);
 
             Manager::where('id', $request->id)->delete();
+
+        } else if (isset($_POST['reset'])) {
+
+            // input validation
+            $this -> validate($request, [
+
+                'id' => 'required',
+
+            ]);
+
+            $randomPassword = Str::random(10);
+
+            $admin = Manager::find($request->id);
+            $admin->password = Hash::make($randomPassword);
+            $admin->save();
+
+            // fetches new list of managers
+            $managers = DB::table('managers')->get();
+
+            return view('manager.managers_management', ['managers' => $managers, 'info' => "Password for ".$admin->name." was resetted to ".$randomPassword]);
 
         }
 
