@@ -35,7 +35,7 @@ Admins Account - Manager
 
     <br>
 
-    <table id="rates-list" class="table" data-sortable>
+    <table id="rates-list" class="table align-middle" data-sortable>
         <thead>
             <tr>
                 <th scope="col">Name</th>

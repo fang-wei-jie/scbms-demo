@@ -35,7 +35,7 @@ Managers Account - Manager
 
     <br>
 
-    <table class="table" data-sortable>
+    <table class="table align-middle" data-sortable>
         <thead>
             <tr>
                 <th scope="col">Name</th>
