@@ -109,9 +109,9 @@ My Account -
                 <form action="{{ route('myaccount') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Enter your new name</label>
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="name" maxlength="255" placeholder="Maximum 255 characters" required>
+                            <label>Enter your new name</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -135,11 +135,13 @@ My Account -
                 <form action="{{ route('myaccount') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Enter new phone number</label>
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="phone" minlength="10" maxlength="11" placeholder="Example: 01234567890" required>
-                            <label>Enter password to confirm changes</label>
+                            <label>Enter new phone number</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="password" class="form-control" name="phone-update-password" placeholder="Enter current password" required>
+                            <label>Enter password to confirm changes</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -163,11 +165,13 @@ My Account -
                 <form action="{{ route('myaccount') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label>Enter new email address</label>
+                        <div class="form-floating mb-3">
                             <input type="email" class="form-control" name="email" maxlength="255" placeholder="example@email.com" required>
-                            <label>Enter password to confirm changes</label>
+                            <label>Enter new email address</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input type="password" class="form-control" name="email-update-password" placeholder="Enter current password" required>
+                            <label>Enter password to confirm changes</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -191,13 +195,17 @@ My Account -
                 <form action="{{ route('myaccount') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-floating mb-3">
+                            <input id="old-password" class="form-control" type="password" name="old-password" placeholder="Enter current password" required>
                             <label>Enter current password</label>
-                            <input id="old-password" class="form-control" type="password" name="old-password" placeholder="Enter current password" required><br>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input id="new-password" class="form-control" type="password" name="new-password" minlength=8 placeholder="Minimum of 8 characters" required>
                             <label>Enter new password</label>
-                            <input id="new-password" class="form-control" type="password" name="new-password" minlength=8 placeholder="Minimum of 8 characters" required><br>
-                            <label>Confirm new password</label>
+                        </div>
+                        <div class="form-floating mb-3">
                             <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype new password" required>
+                            <label>Confirm new password</label>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -221,11 +229,13 @@ My Account -
                 <form action="{{ route('myaccount') }}" method="post">
                     @csrf
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-floating mb-3">
                             <span>Are you sure? This action is <b>irreversible</b> for your privacy. </span><br><br>
                             <span>All your data will be removed from our database, except the custID (randomized, can't be used to identify you) and the booking history as we need it for bookkeeping and legal reasons. All unused bookings will be forfitted with no refund (since we can't refer back to the record). </span><br><br>
-                            <label>Retype password to confirm deletion</label>
-                            <input type="password" class="form-control" name="delete-password" placeholder="Retype your password" required>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" name="delete-password" placeholder="Retype your password" required>
+                                <label>Retype password to confirm deletion</label>
+                            </div>
                             <input type="text" class="form-control" name="custID" value="{{ Auth::user()->id }}" style="display: none;">
                             <input type="text" class="form-control" name="custName" value="{{ Auth::user()->name }}" style="display: none;">
                         </div>
