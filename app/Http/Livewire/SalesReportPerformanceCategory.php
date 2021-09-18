@@ -55,53 +55,63 @@ class SalesReportPerformanceCategory extends Component
             ->orderByDesc("created_at")
             ->first();
 
-        // used to handle when the type is changed
-        // date will be automatically set to the first row result of dates list
-        if ($this->date == ""
-            || (Str::length($this->date) == 4 && $this->type =="m"
-            || (Str::length($this->date) == 7 && $this->type =="y"))) {
-            $condition = 'LIKE "' . $dates->date .'%';
+        if ($dates != null) {
+
+            // used to handle when the type is changed
+            // date will be automatically set to the first row result of dates list
+            if ($this->date == ""
+                || (Str::length($this->date) == 4 && $this->type =="m"
+                || (Str::length($this->date) == 7 && $this->type =="y"))) {
+                $condition = 'LIKE "' . $dates->date .'%';
+            }
+
+            $ratesPerf = DB::table('bookings')
+                ->join('rates', 'rates.id', '=', 'bookings.rateID')
+                ->selectRaw('rates.rateName as rate, SUM(timeLength*bookingPrice) as total')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->groupBy('rates.rateName')
+                ->orderBy('rates.rateName')
+                ->get();
+
+            $timeslotPerf = DB::table('bookings')
+                ->selectRaw('timeSlot as slot, SUM(timeLength*bookingPrice) as total')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->groupBy('bookings.timeSlot')
+                ->orderBy('bookings.timeSlot')
+                ->get();
+
+            $timelengthPerf = DB::table('bookings')
+                ->selectRaw('bookings.timeLength as length, SUM(timeLength*bookingPrice) as total')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->groupBy('bookings.timelength')
+                ->orderBy('bookings.timelength')
+                ->get();
+
+            $dates = DB::table('bookings')
+                ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
+                ->orderByDesc("created_at")
+                ->get();
+
+            return view('livewire.sales-report-performance-category', [
+                'hasData' => true,
+                'type' => $type,
+                'rates' => $ratesPerf,
+                'ratesMax' => $ratesPerf->max("total"),
+                'ratesSum' => $ratesPerf->sum("total"),
+                'length' => $timelengthPerf,
+                'lengthMax' => $timelengthPerf->max("total"),
+                'lengthSum' => $timelengthPerf->sum("total"),
+                'slot' => $timeslotPerf,
+                'slotMax' => $timeslotPerf->max("total"),
+                'slotSum' => $timeslotPerf->sum("total"),
+                'dates' => $dates,
+            ]);
+
+        } else {
+            return view('livewire.sales-report-performance-category', [
+                'hasData' => false,
+            ]);
         }
 
-        $ratesPerf = DB::table('bookings')
-            ->join('rates', 'rates.id', '=', 'bookings.rateID')
-            ->selectRaw('rates.rateName as rate, SUM(timeLength*bookingPrice) as total')
-            ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
-            ->groupBy('rates.rateName')
-            ->orderBy('rates.rateName')
-            ->get();
-
-        $timeslotPerf = DB::table('bookings')
-            ->selectRaw('timeSlot as slot, SUM(timeLength*bookingPrice) as total')
-            ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
-            ->groupBy('bookings.timeSlot')
-            ->orderBy('bookings.timeSlot')
-            ->get();
-
-        $timelengthPerf = DB::table('bookings')
-            ->selectRaw('bookings.timeLength as length, SUM(timeLength*bookingPrice) as total')
-            ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
-            ->groupBy('bookings.timelength')
-            ->orderBy('bookings.timelength')
-            ->get();
-
-        $dates = DB::table('bookings')
-            ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
-            ->orderByDesc("created_at")
-            ->get();
-
-        return view('livewire.sales-report-performance-category', [
-            'type' => $type,
-            'rates' => $ratesPerf,
-            'ratesMax' => $ratesPerf->max("total"),
-            'ratesSum' => $ratesPerf->sum("total"),
-            'length' => $timelengthPerf,
-            'lengthMax' => $timelengthPerf->max("total"),
-            'lengthSum' => $timelengthPerf->sum("total"),
-            'slot' => $timeslotPerf,
-            'slotMax' => $timeslotPerf->max("total"),
-            'slotSum' => $timeslotPerf->sum("total"),
-            'dates' => $dates,
-        ]);
     }
 }
