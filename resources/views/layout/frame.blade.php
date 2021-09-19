@@ -8,7 +8,8 @@
         $side = "manager";
     } else { $side = ""; }
 
-    $logoQuery = DB::table("ui_preferences")->where('side', $side)->first()->logo;
+    $ui_preferences = DB::table("ui_preferences")->where('side', $side)->first();
+    $logoQuery = $ui_preferences->logo;
 
     if ($logoQuery != "") {
         $logo = $logoQuery;
@@ -81,15 +82,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg
-        @if (request()->is('admin/*'))
-            bg-danger navbar-dark
-        @elseif (request()->is('manager/*'))
-            bg-dark navbar-dark
-        @else
-            bg-light navbar-light
-        @endif
-        fixed-top hide-from-print">
+    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_class }} {{ "navbar-".$ui_preferences->navbar_text_class }} fixed-top hide-from-print">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
