@@ -21,7 +21,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-auto">
+                                <div class="col-auto selection">
                                     <select class="form-select" wire:model="type">
                                         <option value="y">Year</option>
                                         <option value="m">Month</option>
@@ -30,9 +30,16 @@
                                     </select>
                                 </div>
 
-                                <div class="col-auto">
-                                    <select id="date" class="form-select" wire:model="date">
-                                        {{-- <option value="" hidden>Please select</option> --}}
+                                <div class="col-auto selection">
+                                    @if (count($dates) == 1)
+                                        @foreach ($dates as $date)
+                                            <b>
+                                                @if (Str::length($date->date) == 7){{ substr(date('F', mktime(0, 0, 0, substr($date->date, 5, 2))), 0, 3) }} @endif
+                                                {{ substr($date->date, 0, 4) }}
+                                            </b>
+                                        @endforeach
+                                    @else
+                                    <select class="form-select" wire:model="date">
                                         @foreach ($dates as $date)
                                             <option value="{{ $date->date }}">
                                                 @if (Str::length($date->date) == 7){{ substr(date('F', mktime(0, 0, 0, substr($date->date, 5, 2))), 0, 3) }} @endif
@@ -40,6 +47,7 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @endif
                                 </div>
 
                                 <div class="col-auto d-block d-md-block d-lg-none">

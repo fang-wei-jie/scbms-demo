@@ -50,19 +50,19 @@ class SalesReportPerformanceCategory extends Component
                 break;
         }
 
-        $dates = DB::table('bookings')
+        $firstDate = DB::table('bookings')
             ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
             ->orderByDesc("created_at")
             ->first();
 
-        if ($dates != null) {
+        if ($firstDate != null) {
 
             // used to handle when the type is changed
             // date will be automatically set to the first row result of dates list
             if ($this->date == ""
                 || (Str::length($this->date) == 4 && $this->type =="m"
                 || (Str::length($this->date) == 7 && $this->type =="y"))) {
-                $condition = 'LIKE "' . $dates->date .'%';
+                $condition = 'LIKE "' . $firstDate->date .'%';
             }
 
             $ratesPerf = DB::table('bookings')

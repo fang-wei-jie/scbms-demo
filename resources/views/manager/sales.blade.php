@@ -28,6 +28,10 @@
             line-height: 0;
             margin-top: 0;
         }
+
+        .selection {
+            align-self: baseline;
+        }
     </style>
 @endsection
 
