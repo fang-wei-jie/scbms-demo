@@ -7,6 +7,10 @@
                         <h3 class="card-title">Performance by Category</h3>
                     </div>
 
+                    <div class="col-auto d-block d-md-block d-lg-none">
+                        <div class="my-2"></div>
+                    </div>
+
                     @if($hasData == true)
 
                         <div class="col-auto">
