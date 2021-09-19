@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptController extends Controller
 {
@@ -43,25 +44,32 @@ class ReceiptController extends Controller
             -> join('users', 'bookings.custID', '=', 'users.id')
             -> join('rates', 'bookings.rateID', '=', 'rates.id')
             -> where('bookings.bookingID', $request->input('bookID'))
+            -> where('bookings.custID', Auth::user()->id)
             -> select('bookingID', 'custID', 'bookings.created_at as bookingDateTime', 'name', 'phone', 'email', 'dateSlot', 'timeSlot', 'timeLength', 'courtID', 'bookingPrice', 'rateName')
             -> first();
 
-        return view('customer.invoice', [
-            'invoiceDetail' => $invoiceDetail,
-            'bookID' => str_pad($invoiceDetail->bookingID, 7, 0, STR_PAD_LEFT).str_pad($invoiceDetail->custID, 7, 0, STR_PAD_LEFT),
-            'createdOn' => $invoiceDetail->bookingDateTime,
-            'custName' => $invoiceDetail->name,
-            'custPhone' => $invoiceDetail->phone,
-            'custEmail' => $invoiceDetail->email,
-            'bookingDateTimeSlot' => substr($invoiceDetail->dateSlot, 6, 2) . "/" . substr($invoiceDetail->dateSlot, 4, 2) . "/" . substr($invoiceDetail->dateSlot, 0, 4) . " " . $invoiceDetail->timeSlot . ":00 - " . ($invoiceDetail->timeSlot + $invoiceDetail->timeLength) . ":00",
-            'courtID' => $invoiceDetail->courtID,
-            'rateName' => $invoiceDetail->rateName,
-            'companyName' => $companyName->value,
-            'ratePrice' => $invoiceDetail->bookingPrice,
-            'timeLength' => $invoiceDetail->timeLength,
-            'logo' => $logo,
-        ]);
+        if ($invoiceDetail != null) {
 
+            return view('customer.invoice', [
+                'invoiceDetail' => $invoiceDetail,
+                'bookID' => str_pad($invoiceDetail->bookingID, 7, 0, STR_PAD_LEFT).str_pad($invoiceDetail->custID, 7, 0, STR_PAD_LEFT),
+                'createdOn' => $invoiceDetail->bookingDateTime,
+                'custName' => $invoiceDetail->name,
+                'custPhone' => $invoiceDetail->phone,
+                'custEmail' => $invoiceDetail->email,
+                'bookingDateTimeSlot' => substr($invoiceDetail->dateSlot, 6, 2) . "/" . substr($invoiceDetail->dateSlot, 4, 2) . "/" . substr($invoiceDetail->dateSlot, 0, 4) . " " . $invoiceDetail->timeSlot . ":00 - " . ($invoiceDetail->timeSlot + $invoiceDetail->timeLength) . ":00",
+                'courtID' => $invoiceDetail->courtID,
+                'rateName' => $invoiceDetail->rateName,
+                'companyName' => $companyName->value,
+                'ratePrice' => $invoiceDetail->bookingPrice,
+                'timeLength' => $invoiceDetail->timeLength,
+                'logo' => $logo,
+            ]);
+
+        } else {
+
+            return redirect() -> route('mybookings');
+
+        }
     }
-
 }
