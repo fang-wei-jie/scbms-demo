@@ -20,8 +20,8 @@ class MakeBookingsController extends Controller
     {
 
         // get operation hours
-        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first();
-        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first();
+        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first() -> value;
+        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first() -> value;
 
         return view ('customer.book-court', ['selectedDate' => 0, 'start_time' => $start_time, 'end_time' => $end_time]);
 
@@ -31,8 +31,8 @@ class MakeBookingsController extends Controller
     {
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
-        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first();
-        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first();
+        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first() -> value;
+        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first() -> value;
 
         if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
         {
@@ -51,7 +51,7 @@ class MakeBookingsController extends Controller
             $timeSlot = $request->input('timeSlot');
             $timeLength = $request->input('timeLength');
 
-            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time->value))
+            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time))
             {
 
                 // if selected date is today
@@ -62,7 +62,7 @@ class MakeBookingsController extends Controller
                     ->count();
 
 
-            } else if ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time->value) {
+            } else if ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time) {
 
                 // if selected date is after today
 
@@ -132,8 +132,15 @@ class MakeBookingsController extends Controller
             $rateID = $request->input('rateID');
             $bookingPrice = $request->input('bookingPrice');
 
-            // verify once again the booking details before storing in database
-            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time->value) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time->value)) {
+            $count = DB::table('bookings')
+                ->where('dateSlot', $dateSlot)
+                ->where('timeSlot', $timeSlot)
+                ->where('courtID', $courtID)
+                ->count();
+
+            if ($count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
+
+                // verify once again the booking details before storing in database
                 DB::table('bookings')->insert([
                     'created_at' => date('Y-m-d H:m:s'),
                     'custID' => Auth::user()->id,
@@ -149,8 +156,36 @@ class MakeBookingsController extends Controller
 
             } else {
 
+                $rates = DB::table('rates')
+                    ->where('rateStatus', 1)
+                    ->get();
+
+                $courts = array();
+                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                    $booked = DB::table('bookings')
+                        ->where('dateSlot', $dateSlot)
+                        ->where('courtID', $courtNo)
+                        ->where(
+                            function($query) use ($timeSlot, $timeLength){
+                                $query
+                                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
+                                    ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                        })
+                        ->count();
+
+                    array_push($courts, $booked);
+                }
+
                 return view ('customer.book-court', [
-                    'selectedDate' => 0,
+                    'selectedDate' => 1,
+                    'count' => $count,
+                    'courts' => $courts,
+                    'rates' => $rates,
+                    'dateSlot' => $request->input('dateSlot'),
+                    'timeSlot' => $timeSlot,
+                    'timeLength' => $timeLength,
+                    'endTime' => $timeSlot + $timeLength,
+                    'message' => "We are sorry. The court that you selected has been booked by other customer a moment ago. Please select another court. ",
                 ]);
 
             }

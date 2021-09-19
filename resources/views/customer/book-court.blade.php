@@ -40,7 +40,9 @@ Book Courts -
                 <label for="timeLength">Duration</label>
             </div>
 
-            <button class="btn btn-outline-primary" type="submit" name="searchForAvailability">Show available courts</button>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary" type="submit" name="searchForAvailability">Show available courts</button>
+            </div>
         </form>
 
         @elseif($selectedDate == 1)
@@ -59,6 +61,13 @@ Book Courts -
                     <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
                 </div>
             </div>
+
+            @if($message ?? '')
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-lg"></i>
+                {{ $message ?? '' }}
+            </div>
+            @endif
 
             <div class="form-floating mb-3">
                 <select class="form-select" id="courtID" name="courtID" required>
@@ -89,11 +98,12 @@ Book Courts -
             <input type="text" class="confirmed-fields" name="timeLength" value="{{ $timeLength }}">
             <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
 
-
-            <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
-                <i class="bi bi-journal-check"></i>
-                Confirm Booking for RM<span id="price"></span> in Cash
-            </button>
+            <div class="d-grid gap-2">
+                <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
+                    <i class="bi bi-journal-check"></i>
+                    Confirm Booking for RM<span id="price"></span> in Cash
+                </button>
+            </div>
         </form>
 
         @endif
@@ -148,9 +158,9 @@ $(document).ready(function() {
             // get today's hours
             var todayHours = today.getHours()
 
-            if (todayHours >= {{ $end_time->value }}) {
+            if (todayHours >= {{ $end_time }}) {
 
-                // if today's hours was over {{ $start_time->value }}pm, clear date selected and prompt user we were closed
+                // if today's hours was over {{ $start_time }}pm, clear date selected and prompt user we were closed
                 document.getElementById("dateSlot").valueAsDate = null;
                 $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
                 $("#dateSlot").addClass("is-invalid")
@@ -158,7 +168,7 @@ $(document).ready(function() {
             } else {
 
                 // inserts updated time slot select list based on the hours left today
-                for (i = todayHours; i < {{ $end_time->value }}; i++) {
+                for (i = todayHours; i < {{ $end_time }}; i++) {
                     $("#timeSlot").append(new Option(i + ":00", i))
                 }
 
@@ -171,7 +181,7 @@ $(document).ready(function() {
 
             // if selected time was tomorrow or future
             // inserts updated time slot select list based on the hours left today
-            for (i = {{ $start_time->value }}; i < {{ $end_time->value }}; i++) {
+            for (i = {{ $start_time }}; i < {{ $end_time }}; i++) {
                 $("#timeSlot").append(new Option(i + ":00", i))
             }
 
@@ -194,7 +204,7 @@ $(document).ready(function() {
         $("#timeLength").empty()
 
         // inserts updated time length select list based on the hours left today
-        for (i = 1; i <= ({{ $end_time->value }} - $("#timeSlot").val()); i++) {
+        for (i = 1; i <= ({{ $end_time }} - $("#timeSlot").val()); i++) {
 
             if (i != 1) {
                 $("#timeLength").append(new Option(i + " hours", i))
