@@ -80,7 +80,8 @@ Route::get('/book-court', [MakeBookingsController::class, 'view_court']) -> name
 Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
 
 // Receipt/Invoice
-Route::post('/receipt', [ReceiptController::class, 'view']) -> name('view-receipt');
+Route::get('/receipt', [ReceiptController::class, 'get_request']) -> name('view-receipt');
+Route::post('/receipt', [ReceiptController::class, 'view']);
 
 // END OF CUSTOMER PAGES
 
