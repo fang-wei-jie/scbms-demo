@@ -20,18 +20,13 @@ class ManagerAccountsController extends Controller
     {
 
         $managers = DB::table('managers')->get();
-        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
-        $managerDomain = '@'.$domain->value.'m';
 
-        return view('manager.managers_management', ['managers' => $managers, 'domain' => $managerDomain]);
+        return view('manager.managers_management', ['managers' => $managers]);
 
     }
 
     function process(Request $request)
     {
-
-        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
-        $managerDomain = '@'.$domain->value.'m';
 
         if(isset($_POST['add'])) {
 

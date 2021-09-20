@@ -30,9 +30,6 @@ class AdminAccountsController extends Controller
     function process(Request $request)
     {
 
-        $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
-        $adminDomain = '@'.$domain->value;
-
         if (isset($_POST['add'])){
 
             // input validation
