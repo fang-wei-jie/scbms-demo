@@ -22,14 +22,14 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
-use App\Http\Controllers\Admin\CustomerAccountManagementController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
+
 // Manager Controllers
-use App\Http\Controllers\Manager\DashboardViewController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
 use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\AdminAccountsController;
+use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
@@ -121,7 +121,7 @@ Route::prefix('manager')->group(function() {
     });
 
     // Dashboard
-    Route::get('/dashboard', [DashboardViewController::class, 'view']) -> name('manager.dashboard');
+    Route::get('/dashboard', [ManagerDashboardController::class, 'view']) -> name('manager.dashboard');
 
     // Check In
     Route::get('/checkin', [ManagerCheckInController::class, 'view']) -> name('manager.checkin');

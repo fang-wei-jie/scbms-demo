@@ -21,35 +21,7 @@ class DashboardController extends Controller
     function view ()
     {
 
-        $ratesEnabled = DB::table('rates')
-            -> select('rateName', 'ratePrice')
-            -> where('rateStatus', 1)
-            -> get();
-
-        $monthSales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as monthSales')
-            ->where('created_at', 'LIKE', date('Y-m').'%')
-            ->first();
-
-        $todaySales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as todaySales')
-            ->where('created_at', 'LIKE', date('Y-m-d').'%')
-            ->first();
-
-        $todayBookingSales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as todayBookingSales')
-            ->where('dateSlot', '=', date('Ymd'))
-            ->first();
-
-        $bookingRows = DB::table('bookings')
-            -> join('rates', 'bookings.rateID', '=', 'rates.id')
-            -> where('dateSlot', '=', date('Ymd'))
-            -> where('timeSlot', '<=', date('H'))
-            -> where(DB::raw('(timeSlot + timeLength - 1) '), '>=', date('H'))
-            -> orderBy('courtID', 'asc')
-            -> get();
-
-        return view ('admin.dashboard', ['ratesEnabled' => $ratesEnabled, 'monthSales' => $monthSales, 'todaySales' => $todaySales, 'todayBookingSales' => $todayBookingSales, 'bookings' => $bookingRows]);
+        return view('admin.dashboard');
 
     }
 
