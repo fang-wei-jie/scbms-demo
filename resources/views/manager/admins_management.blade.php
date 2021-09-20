@@ -240,6 +240,7 @@ Admins Account - Manager
                 @if($info ?? '') {{ $info ?? '' }}@endif
                 @error('email') {{ str_replace('email', 'admin ID', $message) }} @enderror
                 @error('name') {{ $message }} @enderror
+                @if(session('info')) {{ session('info') }} @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
@@ -266,6 +267,11 @@ Admins Account - Manager
         infoBox.show()
     </script>
 @enderror
+@if(session('info'))
+    <script>
+        infoBox.show()
+    </script>
+@endif
 <script>
     $(document).ready(function(){
         // if info were passed to infobox
