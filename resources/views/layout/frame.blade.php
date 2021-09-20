@@ -2,10 +2,10 @@
     $name = DB::table("operation_preferences")->where('attr', 'name')->first();
     $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
 
-    if (str_contains($_SERVER['REQUEST_URI'], "admin")) {
-        $side = "admin";
-    } else if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
+    if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
         $side = "manager";
+    } else if (str_contains($_SERVER['REQUEST_URI'], "admin")) {
+        $side = "admin";
     } else { $side = ""; }
 
     $ui_preferences = DB::table("ui_preferences")->where('side', $side)->first();
