@@ -48,10 +48,7 @@ class ManagerAccountsController extends Controller
                 'password' => $password,
             ]);
 
-            // fetches new list of managers
-            $managers = DB::table('managers')->get();
-
-            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return back()->with('info', "Manager ".$request->name." was added.");
 
         } else if (isset($_POST['edit'])){
 
@@ -62,15 +59,12 @@ class ManagerAccountsController extends Controller
 
             ]);
 
-            // update admin detail
+            // update manager detail
             $manager = Manager::find($request->id);
             $manager->email = $request->email;
             $manager->save();
 
-            // fetches new list of managers
-            $managers = DB::table('managers')->get();
-
-            return view('manager.managers_management', ['managers' => $managers, 'info' => "Manager ID for ".$request->name." was updated."]);
+            return back()->with('info', "Manager ID for ".$manager->name." was updated.");
 
         } else if (isset($_POST['delete'])){
 
@@ -81,7 +75,10 @@ class ManagerAccountsController extends Controller
 
             ]);
 
+            $manager = Manager::find($request->id);
             Manager::where('id', $request->id)->delete();
+
+            return back()->with('info', "Manager ".$manager->name." was deleted.");
 
         } else if (isset($_POST['reset'])) {
 
@@ -94,14 +91,11 @@ class ManagerAccountsController extends Controller
 
             $randomPassword = Str::random(10);
 
-            $admin = Manager::find($request->id);
-            $admin->password = Hash::make($randomPassword);
-            $admin->save();
+            $manager = Manager::find($request->id);
+            $manager->password = Hash::make($randomPassword);
+            $manager->save();
 
-            // fetches new list of managers
-            $managers = DB::table('managers')->get();
-
-            return view('manager.managers_management', ['managers' => $managers, 'info' => "Password for ".$admin->name." was resetted to ".$randomPassword]);
+            return back()->with('info', "Password for ".$manager->name." was resetted to ".$randomPassword);
 
         }
 

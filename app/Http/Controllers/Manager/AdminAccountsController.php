@@ -51,7 +51,7 @@ class AdminAccountsController extends Controller
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'info' => "Successfully created ".$request->name." with Admin ID ".$request->email.$adminDomain]);
+            return back()->with("info", "Successfully created ".$request->name.". ");
 
         } else if (isset($_POST['edit'])){
 
@@ -70,7 +70,7 @@ class AdminAccountsController extends Controller
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'info' => "Admin ID for ".$admin->name." was updated."]);
+            return back()->with('info', "Admin ID for ".$admin->name." was updated.");
 
         } else if (isset($_POST['delete'])){
 
@@ -81,7 +81,10 @@ class AdminAccountsController extends Controller
 
             ]);
 
+            $admin = Admin::find($request->id);
             Admin::where('id', $request->id)->delete();
+
+            return back()->with('info', "Admin ".$admin->name." was deleted.");
 
         } else if (isset($_POST['reset'])) {
 
@@ -101,7 +104,7 @@ class AdminAccountsController extends Controller
             // fetches new list of admins
             $admins = DB::table('admins')->get();
 
-            return view('manager.admins_management', ['admins' => $admins, 'info' => "Password for ".$admin->name." was resetted to ".$randomPassword]);
+            return back()->with('info', "Password for ".$admin->name." was resetted to ".$randomPassword);
 
         }
 
