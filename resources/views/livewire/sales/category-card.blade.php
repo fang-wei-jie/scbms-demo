@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" wire:poll.10000ms>
     <div class="col">
         <div class="card border border-#dfdfdf">
             <div class="card-body">

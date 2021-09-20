@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Sales;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class SalesReportPerformanceCategory extends Component
+class CategoryCard extends Component
 {
-
     public $type = "y";
     public $date = "";
     public $month = "";
@@ -92,7 +91,7 @@ class SalesReportPerformanceCategory extends Component
                 ->orderByDesc("created_at")
                 ->get();
 
-            return view('livewire.sales-report-performance-category', [
+            return view('livewire.sales.category-card', [
                 'hasData' => true,
                 'type' => $type,
                 'rates' => $ratesPerf,
@@ -108,10 +107,9 @@ class SalesReportPerformanceCategory extends Component
             ]);
 
         } else {
-            return view('livewire.sales-report-performance-category', [
+            return view('livewire.sales.category-card', [
                 'hasData' => false,
             ]);
         }
-
     }
 }
