@@ -24,7 +24,7 @@ class ManagerBookingsController extends Controller
             ->orderBy('timeSlot')
             ->get();
 
-            $futureBookings = DB::table('bookings')
+        $futureBookings = DB::table('bookings')
             ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '>', date('Ymd'))
