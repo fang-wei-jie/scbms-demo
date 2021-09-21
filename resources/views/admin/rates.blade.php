@@ -23,6 +23,8 @@ Rates - Admin
         <div class="col">
             <input type="text" id="rates-search" class="form-control" placeholder="Search anything in the table ...">
         </div>
+
+        @if($editable == 1)
         <div class="col-auto">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRate">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
@@ -31,6 +33,7 @@ Rates - Admin
                 </span>
             </button>
         </div>
+        @endif
     </div>
 
     <br>
@@ -41,65 +44,104 @@ Rates - Admin
                 <th scope="col">Name</th>
                 <th scope="col">Status</th>
                 <th scope="col">Price (RM)</th>
+
+                @if($editable == 1)
                 <th scope="col" data-sortable="false">Actions</th>
+                @endif
             </tr>
         </thead>
         <tbody>
-            @foreach ($rates as $rateDetail)
-            <tr>
-                <form action="{{ route('admin.rates') }}" method="post">
-                    @csrf
-                    <td>{{$rateDetail->rateName}}</td>
-                    <td>
-                        @if($rateDetail->id == 1 || $rateDetail->id == 2)
-                            <button class="btn btn-success" type="button" disabled>
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span class="d-none d-md-block">Enabled&nbsp;</span>
-                                    <i class="bi bi-toggle-on"></i>
-                                </span>
-                            </button>
-                        @else
-                            @if($rateDetail->rateStatus == 1)
-                            <button class="btn btn-success" type="submit" name="disable">
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span class="d-none d-md-block">Enabled&nbsp;</span>
-                                    <i class="bi bi-toggle-on"></i>
-                                </span>
-                            </button>
+            <form action="{{ route('admin.rates') }}" method="post">
+                @csrf
+
+                @if($editable == 1)
+                    @foreach ($rates as $rateDetail)
+                    <tr>
+                        <td>{{$rateDetail->rateName}}</td>
+                        <td>
+                            @if($rateDetail->id == 1 || $rateDetail->id == 2)
+                                <button class="btn btn-success" type="button" disabled>
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                        <i class="bi bi-toggle-on"></i>
+                                    </span>
+                                </button>
                             @else
-                            <button class="btn btn-danger" type="submit" name="enable">
+                                @if($rateDetail->rateStatus == 1)
+                                <button class="btn btn-success" type="submit" name="disable">
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                        <i class="bi bi-toggle-on"></i>
+                                    </span>
+                                </button>
+                                @else
+                                <button class="btn btn-danger" type="submit" name="enable">
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Disabled&nbsp;</span>
+                                        <i class="bi bi-toggle-off"></i>
+                                    </span>
+                                </button>
+                                @endif
+                            @endif
+                        </td>
+                        <td>{{$rateDetail->ratePrice}}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{$rateDetail->id}}">
+
+                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
+                            data-bs-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span class="d-none d-md-block">Disabled&nbsp;</span>
-                                    <i class="bi bi-toggle-off"></i>
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span class="d-none d-md-block">&nbsp;Edit</span>
+                                </span>
+                            </button>
+
+                            @if($rateDetail->id == 1 || $rateDetail->id == 2) @else
+                            <button class="btn btn-danger" type="button" id="archiveRate" data-bs-toggle="modal" data-bs-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
+                                <span style="display: flex; justify-content: space-between; align-items: center;">
+                                    <i class="bi bi-archive-fill"></i>
+                                    <span class="d-none d-md-block">&nbsp;Archive</span>
                                 </span>
                             </button>
                             @endif
-                        @endif
-                    </td>
-                    <td>{{$rateDetail->ratePrice}}</td>
-                    <td>
-                        <input type="hidden" name="id" value="{{$rateDetail->id}}">
-
-                        <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
-                        data-bs-target="#edit" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}" data-price="{{$rateDetail->ratePrice}}">
-                            <span style="display: flex; justify-content: space-between; align-items: center;">
-                                <i class="bi bi-pencil-square"></i>
-                                <span class="d-none d-md-block">&nbsp;Edit</span>
-                            </span>
-                        </button>
-
-                        @if($rateDetail->id == 1 || $rateDetail->id == 2) @else
-                        <button class="btn btn-danger" type="button" id="archiveRate" data-bs-toggle="modal" data-bs-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
-                            <span style="display: flex; justify-content: space-between; align-items: center;">
-                                <i class="bi bi-archive-fill"></i>
-                                <span class="d-none d-md-block">&nbsp;Archive</span>
-                            </span>
-                        </button>
-                        @endif
-                    </td>
-                </form>
-            </tr>
-            @endforeach
+                        </td>
+                    </tr>
+                    @endforeach
+                @else
+                @foreach ($rates as $rateDetail)
+                    <tr>
+                        <td>{{$rateDetail->rateName}}</td>
+                        <td>
+                            @if($rateDetail->id == 1 || $rateDetail->id == 2)
+                                <button class="btn btn-success" type="button" disabled>
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                        <i class="bi bi-toggle-on"></i>
+                                    </span>
+                                </button>
+                            @else
+                                @if($rateDetail->rateStatus == 1)
+                                <button class="btn btn-success" type="button" name="disable">
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Enabled&nbsp;</span>
+                                        <i class="bi bi-toggle-on"></i>
+                                    </span>
+                                </button>
+                                @else
+                                <button class="btn btn-danger" type="submit" name="enable">
+                                    <span style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span class="d-none d-md-block">Disabled&nbsp;</span>
+                                        <i class="bi bi-toggle-off"></i>
+                                    </span>
+                                </button>
+                                @endif
+                            @endif
+                        </td>
+                        <td>{{$rateDetail->ratePrice}}</td>
+                    </tr>
+                    @endforeach
+                @endif
+            </form>
         </tbody>
     </table>
 </div>

@@ -7,6 +7,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 // Customer Controllers
 use App\Http\Controllers\Auth\LoginController;

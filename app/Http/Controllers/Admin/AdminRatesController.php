@@ -22,11 +22,17 @@ class AdminRatesController extends Controller
             ->where('rateStatus', '!=', 2)
             ->get();
 
-        return view('admin.rates', ['rates' => $rates]);
+        $editable = DB::table('features_preferences')->where('name', 'rates_editable_admin')->first()->value;
+
+        return view('admin.rates', ['rates' => $rates, 'editable' => $editable]);
     }
 
     function process(Request $request)
     {
+
+        if (DB::table('features_preferences')->where('name', 'rates_editable_admin')->first()->value != 1) {
+            return back();
+        }
 
         if (isset($_POST['enable'])) {
 
