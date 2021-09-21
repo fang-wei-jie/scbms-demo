@@ -54,7 +54,8 @@ Book Courts -
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <b>Selected Date and Time</b> <br>
-                    {{ $dateSlot }} {{ $timeSlot }}:00-{{ $endTime }}:00
+                    {{ date_format(date_create($dateSlot), 'd/m/Y') }}, {{ date_format(date_create($dateSlot), 'l') }} <br>
+                    {{ $timeSlot }}:00-{{ $endTime }}:00
                     <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
                 </div>
                 <div>
