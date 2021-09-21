@@ -19,12 +19,21 @@ Dashboard - Admin
 
             <br>
 
-            <!-- rates card -->
+            {{-- rates card --}}
             <div class="card bg-light">
                 @livewire('dashboard.rates-card')
             </div>
 
-            
+            {{-- sales report card --}}
+            @if ($sales_report == 1)
+
+            <br>
+
+            <div class="card bg-light">
+                @livewire('dashboard.sales-card')
+            </div>
+            @endif
+
         </div>
     </div>
 </div>

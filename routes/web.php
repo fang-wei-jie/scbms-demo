@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
+use App\Http\Controllers\Admin\SalesController as AdminSalesController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
 
 // Manager Controllers
@@ -106,6 +107,9 @@ Route::prefix('admin')->group(function() {
     // Rates Management
     Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
     Route::post('/rates', [AdminRatesController::class, 'process']);
+
+    // Sales Report
+    Route::get('/sales', [AdminSalesController::class, 'view']) -> name('admin.sales');
 
     // My Account
     Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myaccount');

@@ -169,6 +169,16 @@
                                 Rates
                             </a>
                         </li>
+
+                        @if(DB::table('features_preferences')->where('name', 'admin_sales_report')->first()->value == 1)
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('admin/sales')) ? 'active fw-bold' : '' }}" href="{{ route('admin.sales') }}">
+                                <i class="bi bi-cash-stack"></i>
+                                Sales Report
+                            </a>
+                        </li>
+                        @endif
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myaccount') }}">
                                 <i class="bi bi-person-badge"></i>

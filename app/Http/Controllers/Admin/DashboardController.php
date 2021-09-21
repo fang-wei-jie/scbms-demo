@@ -21,7 +21,11 @@ class DashboardController extends Controller
     function view ()
     {
 
-        return view('admin.dashboard');
+        $admin_sales_report = DB::table('features_preferences')->where('name', 'admin_sales_report')->first();
+
+        return view('admin.dashboard', [
+            'sales_report' => $admin_sales_report->value,
+        ]);
 
     }
 
