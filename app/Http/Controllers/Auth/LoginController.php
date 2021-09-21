@@ -47,7 +47,7 @@ class LoginController extends Controller
                 }
 
                 return redirect()->route('manager.dashboard');
-            } else if (str_ends_with($request->email, $adminDomain)) {
+            } else if (str_ends_with($request->email, $adminDomain) && DB::table('features_preferences')->where('name', 'admin_role')->first()->value == 1) {
 
                 // login verification for admin
                 if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain->value, "", $request->email), 'password' => $request->password])) {

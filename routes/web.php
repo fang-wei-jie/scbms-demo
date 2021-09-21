@@ -89,6 +89,10 @@ Route::post('/receipt', [ReceiptController::class, 'view']);
 // ADMIN PAGES
 Route::prefix('admin')->group(function() {
 
+    if (DB::table('features_preferences')->where('name', 'admin_role')->first()->value != 1) {
+        Auth::guard('admin')->logout();
+    }
+
     Route::get('/', function () {
         return redirect() -> route('admin.dashboard');
     });
