@@ -73,6 +73,10 @@
         .modal-footer {
             border-top: none;
         }
+
+        .disabled-label {
+            opacity: 0.5;
+        }
     </style>
     @yield('extra-css')
 
