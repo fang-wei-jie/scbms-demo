@@ -151,18 +151,21 @@
                                 Dashboard
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('admin.checkin') }}">
                                 <i class="bi bi-person-check-fill"></i>
                                 Check In
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('admin.bookings') }}">
                                 <i class="bi bi-journal-album"></i>
                                 Bookings
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/rates')) ? 'active fw-bold' : '' }}" href="{{ route('admin.rates') }}">
                                 <i class="bi bi-tags"></i>
@@ -200,42 +203,49 @@
                                 Check In
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.bookings') }}">
                                 <i class="bi bi-journal-album"></i>
                                 Bookings
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/rates')) ? 'active fw-bold' : '' }}" href="{{ route('manager.rates') }}">
                                 <i class="bi bi-tags"></i>
                                 Rates
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/managers')) ? 'active fw-bold' : '' }}" href="{{ route('manager.managers_management') }}">
                                 <i class="bi bi-file-person"></i>
                                 Managers
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/admins')) ? 'active fw-bold' : '' }}" href="{{ route('manager.admins_management') }}">
                                 <i class="bi bi-person-badge"></i>
                                 Admins
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/sales')) ? 'active fw-bold' : '' }}" href="{{ route('manager.sales') }}">
                                 <i class="bi bi-cash-stack"></i>
                                 Sales Report
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('manager.myaccount') }}">
                                 <i class="bi bi-person-square"></i>
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/preferences')) ? 'active fw-bold' : '' }}" href="{{ route('manager.preferences') }}">
                                 <i class="bi bi-gear-fill"></i>
@@ -251,12 +261,14 @@
                                 Book Courts
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('mybookings')) ? 'active fw-bold' : '' }}" href="{{ route('mybookings') }}">
                                 <i class="bi bi-journal-album"></i>
                                 My Bookings
                             </a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('myaccount') }}">
                                 <i class="bi bi-person-circle"></i>
