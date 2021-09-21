@@ -61,7 +61,6 @@ class MakeBookingsController extends Controller
                     ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength)])
                     ->count();
 
-
             } else if ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time) {
 
                 // if selected date is after today
@@ -93,9 +92,18 @@ class MakeBookingsController extends Controller
                         array_push($courts, $booked);
                     }
 
+                    $dayOfWeek = date_format(date_create($dateSlot), 'N');
+                    if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                        $excludeRate = "Weekend";
+                    } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                        $excludeRate = "Weekdays";
+                    }
+
                     $rates = DB::table('rates')
                         ->where('rateStatus', 1)
-                        ->get();
+                        ->get()
+                        ->where('rateName', '!=', $excludeRate);
+
                 }
 
                 return view ('customer.book-court', [
@@ -120,7 +128,8 @@ class MakeBookingsController extends Controller
 
                 'timeSlot' => 'required | digits_between:1,2',
                 'timeLength' => 'required | digits_between:1,2',
-                'dateSlot' => 'required | date_format:Y-m-d'
+                'dateSlot' => 'required | date_format:Y-m-d',
+                'rateID' => 'required | numeric',
 
             ]);
 
@@ -138,7 +147,14 @@ class MakeBookingsController extends Controller
                 ->where('courtID', $courtID)
                 ->count();
 
-            if ($count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
+            $dayOfWeek = date_format(date_create($dateSlot), 'N');
+            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                $excludeRate = "Weekend";
+            } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                $excludeRate = "Weekdays";
+            }
+
+            if (DB::table('rates')->where('id', $rateID)->first()->rateName != $excludeRate && $count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
 
                 // verify once again the booking details before storing in database
                 DB::table('bookings')->insert([
@@ -156,9 +172,17 @@ class MakeBookingsController extends Controller
 
             } else {
 
+                $dayOfWeek = date_format(date_create($dateSlot), 'N');
+                if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                    $excludeRate = "Weekend";
+                } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                    $excludeRate = "Weekdays";
+                }
+
                 $rates = DB::table('rates')
                     ->where('rateStatus', 1)
-                    ->get();
+                    ->get()
+                    ->where('rateName', '!=', $excludeRate);
 
                 $courts = array();
                 for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
