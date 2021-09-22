@@ -79,7 +79,7 @@
 
                     <hr>
 
-                    <h5>Operations</h5>
+                    <h5>Delete Booking</h5>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="deleteBooking" name="deleteBooking" @if($deleteBooking == 1){{ "checked" }}@endif>
