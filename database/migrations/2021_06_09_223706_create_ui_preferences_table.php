@@ -27,19 +27,19 @@ class CreateUiPreferencesTable extends Migration
             [
                 'side' => 'manager',
                 'navbar_class' => 'bg-dark',
-                'navbar_text_class' => 'dark',
+                'navbar_text_class' => 'navbar-dark',
                 'logo' => 'file-person'
             ],
             [
                 'side' => 'admin',
                 'navbar_class' => 'bg-danger',
-                'navbar_text_class' => 'dark',
+                'navbar_text_class' => 'navbar-dark',
                 'logo' => 'person-badge'
             ],
             [
                 'side' => '',
                 'navbar_class' => 'bg-light',
-                'navbar_text_class' => 'light',
+                'navbar_text_class' => 'navbar-light',
                 'logo' => ''
             ]
         ));

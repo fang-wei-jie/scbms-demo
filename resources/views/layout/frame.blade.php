@@ -86,7 +86,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_class }} {{ "navbar-".$ui_preferences->navbar_text_class }} fixed-top hide-from-print">
+    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_class }} {{ $ui_preferences->navbar_text_class }} fixed-top hide-from-print">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
@@ -268,7 +268,7 @@
                                 My Bookings
                             </a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('myaccount') }}">
                                 <i class="bi bi-person-circle"></i>
