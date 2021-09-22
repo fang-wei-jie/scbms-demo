@@ -28,19 +28,19 @@ class CreateUiPreferencesTable extends Migration
                 'side' => 'manager',
                 'navbar_class' => 'bg-dark',
                 'navbar_text_class' => 'navbar-dark',
-                'logo' => 'file-person'
+                'logo' => 'https://icons.getbootstrap.com/assets/icons/file-person.svg'
             ],
             [
                 'side' => 'admin',
                 'navbar_class' => 'bg-danger',
                 'navbar_text_class' => 'navbar-dark',
-                'logo' => 'person-badge'
+                'logo' => 'https://icons.getbootstrap.com/assets/icons/person-badge.svg'
             ],
             [
                 'side' => '',
                 'navbar_class' => 'bg-light',
                 'navbar_text_class' => 'navbar-light',
-                'logo' => ''
+                'logo' => 'https://icons.getbootstrap.com/assets/icons/hexagon-half.svg'
             ]
         ));
     }
