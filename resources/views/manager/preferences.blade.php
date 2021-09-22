@@ -36,13 +36,21 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" name="start_time" id="start_time"></select>
+                                <select class="form-select" name="start_time" id="start_time">
+                                    @for ($hour = 0; $hour <= 23; $hour++)
+                                    <option value="{{ $hour }}" @if($start_time == $hour){{ "selected" }}@endif>{{ $hour.":00" }}</option>
+                                    @endfor
+                                </select>
                                 <label for="start_time">Start Time</label>
                             </div>
                         </div>
                         <div class="col">
                             <div class="form-floating mb-3">
-                                <select class="form-select" name="end_time" id="end_time"></select>
+                                <select class="form-select" name="end_time" id="end_time">
+                                    @for ($hour = 0; $hour <= 23; $hour++)
+                                    <option value="{{ $hour }}" @if($end_time == $hour){{ "selected" }}@endif>{{ $hour.":00" }}</option>
+                                    @endfor
+                                </select>
                                 <label for="end_time">End Time</label>
                             </div>
                         </div>
@@ -148,14 +156,6 @@
 @section('bottom-js')
     <script>
         $(document).ready(function() {
-            for (i = 0; i < 24; i++) {
-                $("#start_time").append(new Option(i + ":00", i))
-                $("#end_time").append(new Option(i + ":00", i))
-            }
-
-            $("#start_time option[value=" + {{ $start_time }} + "]").prop("selected", true)
-            $("#end_time option[value=" + {{ $end_time }} + "]").prop("selected", true)
-
             new bootstrap.Tooltip($("#bookingDeletableCustomer"))
             new bootstrap.Tooltip($("#bookingDeletableAdmin"))
             new bootstrap.Tooltip($("#adminSalesReport"))
