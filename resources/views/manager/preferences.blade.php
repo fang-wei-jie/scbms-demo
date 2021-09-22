@@ -4,6 +4,14 @@
     Preferences - Manager
 @endsection
 
+@section('extra-css')
+<style>
+    .preview {
+        border-radius: 10px;
+    }
+</style>
+@endsection
+
 @section('body')
     <div class="container">
 
@@ -55,19 +63,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="form-control mb-3">
-                        <label for="logo">Logo</label>
-                        <input id="logo" class="form-control form-control-file" type="file" name="logo">
-                        <small>Best uploaded in SVG format, or PNG format between 64x64 till 512x512 resolution</small>
-                    </div>
-
-                    {{-- <div class="d-grid gap-2 mb-3">
-                    <button class="btn btn-primary" type="submit" id="save" name="save">
-                        Save
-                    </button>
-                </div> --}}
 
                 </div>
 
@@ -147,6 +142,145 @@
 
                 </div>
 
+                <div class="col-sm">
+
+                    <h3>User Interface</h3>
+
+                    <hr>
+
+                    <h5>Customer</h5>
+
+                    <nav id="customer-header" class="navbar navbar-expand-lg preview {{ $customerUI->navbar_class }} {{ $customerUI->navbar_text_class }}">
+                        <div class="container-fluid">
+                            <a class="navbar-brand">
+                                <img id="customer-logo" src="{{ $customerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                {{ $name }}
+                            </a>
+                        </div>
+                    </nav>
+
+                    <div class="form-control mb-3 mt-3 disabled-label">
+                        <label for="logo">Logo</label>
+                        <input id="logo" class="form-control form-control-file" type="file" name="logo" disabled>
+                        <small>Best uploaded in SVG format, or PNG format between 64x64 till 512x512 resolution</small>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="customer_navbar" id="customer_navbar">
+                                    {{-- @foreach ($navbar_theme as $theme)
+                                    <option value="{{ $theme }}" class="{{ $theme }}" @if($customerUI->navbar_class == $theme){{ "selected" }}@endif>
+                                        {{ ucwords(substr($theme, 3)) }}
+                                    </option>
+                                    @endforeach --}}
+                                    <option value="bg-primary" @if($customerUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
+                                    <option value="bg-secondary" @if($customerUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
+                                    <option value="bg-success" @if($customerUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
+                                    <option value="bg-info" @if($customerUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
+                                    <option value="bg-warning" @if($customerUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
+                                    <option value="bg-danger" @if($customerUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
+                                    <option value="bg-light" @if($customerUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
+                                    <option value="bg-dark" @if($customerUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
+                                </select>
+                                <label for="customer_navbar">Navbar Theme</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="customer_navtext" id="customer_navtext">
+                                    <option value="navbar-dark" @if($customerUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
+                                    <option value="navbar-light" @if($customerUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
+                                </select>
+                                <label for="customer_navtext">Navbar Text</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Admin</h5>
+
+                    <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $adminUI->navbar_class }} {{ $adminUI->navbar_text_class }}">
+                        <div class="container-fluid">
+                            <a class="navbar-brand">
+                                <img id="admin-logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                {{ $name }} Admin
+                            </a>
+                        </div>
+                    </nav>
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="admin_navbar" id="admin_navbar">
+                                    {{-- @foreach ($navbar_theme as $theme)
+                                    <option value="{{ $theme }}" @if($adminUI->navbar_class == $theme){{ "selected" }}@endif>{{ ucwords(substr($theme, 3)) }}</option>
+                                    @endforeach --}}
+                                    <option value="bg-primary" @if($adminUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
+                                    <option value="bg-secondary" @if($adminUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
+                                    <option value="bg-success" @if($adminUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
+                                    <option value="bg-info" @if($adminUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
+                                    <option value="bg-warning" @if($adminUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
+                                    <option value="bg-danger" @if($adminUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
+                                    <option value="bg-light" @if($adminUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
+                                    <option value="bg-dark" @if($adminUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
+                                </select>
+                                <label for="admin_navbar">Navbar Theme</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="admin_navtext" id="admin_navtext">
+                                    <option value="navbar-dark" @if($adminUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
+                                    <option value="navbar-light" @if($adminUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
+                                </select>
+                                <label for="admin_navtext">Navbar Text</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h5>Manager</h5>
+
+                    <nav id="manager-header" class="navbar navbar-expand-lg preview {{ $managerUI->navbar_class }} {{ $managerUI->navbar_text_class }}">
+                        <div class="container-fluid">
+                            <a class="navbar-brand">
+                                <img id="manager-logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                {{ $name }} Manager
+                            </a>
+                        </div>
+                    </nav>
+
+                    <div class="row mt-3">
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="manager_navbar" id="manager_navbar">
+                                    {{-- @foreach ($navbar_theme as $theme)
+                                    <option value="{{ $theme }}" @if($managerUI->navbar_class == $theme){{ "selected" }}@endif>{{ ucwords(substr($theme, 3)) }}</option>
+                                    @endforeach --}}
+                                    <option value="bg-primary" @if($managerUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
+                                    <option value="bg-secondary" @if($managerUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
+                                    <option value="bg-success" @if($managerUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
+                                    <option value="bg-info" @if($managerUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
+                                    <option value="bg-warning" @if($managerUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
+                                    <option value="bg-danger" @if($managerUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
+                                    <option value="bg-light" @if($managerUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
+                                    <option value="bg-dark" @if($managerUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
+                                </select>
+                                <label for="manager_navbar">Navbar Theme</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="manager_navtext" id="manager_navtext">
+                                    <option value="navbar-dark" @if($managerUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
+                                    <option value="navbar-light" @if($managerUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
+                                </select>
+                                <label for="manager_navtext">Navbar Text</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </form>
 
@@ -161,6 +295,54 @@
             new bootstrap.Tooltip($("#adminSalesReport"))
             new bootstrap.Tooltip($("#weekdayWeekend"))
             new bootstrap.Tooltip($("#adminRates"))
+
+            $("#customer_navbar").change(function() {
+                customerHeaderPreview()
+            })
+
+            $("#customer_navtext").change(function() {
+                customerHeaderPreview()
+            })
+
+            $("#admin_navbar").change(function() {
+                adminHeaderPreview()
+            })
+
+            $("#admin_navtext").change(function() {
+                adminHeaderPreview()
+            })
+
+            $("#manager_navbar").change(function() {
+                managerHeaderPreview()
+            })
+
+            $("#manager_navtext").change(function() {
+                managerHeaderPreview()
+            })
+
+            function customerHeaderPreview() {
+                $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
+                $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
+                $("#customer-header").addClass($("#customer_navbar").val())
+                $("#customer-header").addClass($("#customer_navtext").val())
+                $("#customer_navtext").val() == "navbar-light" ? $("#customer-logo").removeClass('white-logo') : $("#customer-logo").addClass('white-logo')
+            }
+
+            function adminHeaderPreview() {
+                $("#admin-header").removeClass($('#admin-header').attr('class').split(' ').pop());
+                $("#admin-header").removeClass($('#admin-header').attr('class').split(' ').pop());
+                $("#admin-header").addClass($("#admin_navbar").val())
+                $("#admin-header").addClass($("#admin_navtext").val())
+                $("#admin_navtext").val() == "navbar-light" ? $("#admin-logo").removeClass('white-logo') : $("#admin-logo").addClass('white-logo')
+            }
+
+            function managerHeaderPreview() {
+                $("#manager-header").removeClass($('#manager-header').attr('class').split(' ').pop());
+                $("#manager-header").removeClass($('#manager-header').attr('class').split(' ').pop());
+                $("#manager-header").addClass($("#manager_navbar").val())
+                $("#manager-header").addClass($("#manager_navtext").val())
+                $("#manager_navtext").val() == "navbar-light" ? $("#manager-logo").removeClass('white-logo') : $("#manager-logo").addClass('white-logo')
+            }
         })
     </script>
 @endsection

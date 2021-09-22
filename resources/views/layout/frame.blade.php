@@ -77,6 +77,10 @@
         .disabled-label {
             opacity: 0.5;
         }
+
+        .white-logo {
+            filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%);
+        }
     </style>
     @yield('extra-css')
 
@@ -102,11 +106,7 @@
                 @endauth
             ">
 
-                <img src="{{ $logo }}" width="30" height="30" class="d-inline-block align-top"
-                    @if (request()->is('admin/*') | request()->is('manager/*'))
-                        style="filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(115deg) brightness(108%) contrast(102%); "
-                    @endif
-                alt="">
+                <img src="{{ $logo }}" width="30" height="30" class="d-inline-block align-top @if($ui_preferences->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
                 {{ $name->value }} @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
             </a>
 

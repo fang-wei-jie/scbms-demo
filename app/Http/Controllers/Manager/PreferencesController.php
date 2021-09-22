@@ -32,6 +32,11 @@ class PreferencesController extends Controller
         $weekdayWeekend = DB::table('features_preferences')->where('name', 'rates_weekend_weekday')->first();
         $adminRates = DB::table('features_preferences')->where('name', 'rates_editable_admin')->first();
 
+
+        $customerUI = DB::table('ui_preferences')->where('side', '')->first();
+        $adminUI = DB::table('ui_preferences')->where('side', 'admin')->first();
+        $managerUI = DB::table('ui_preferences')->where('side', 'manager')->first();
+
         return view ('manager.preferences', [
             "name" => $name->value,
             "domain" => $domain->value,
@@ -46,6 +51,10 @@ class PreferencesController extends Controller
             "rate" => $rate->value,
             "weekdayWeekend" => $weekdayWeekend->value,
             "adminRates" => $adminRates->value,
+
+            "customerUI" => $customerUI,
+            "adminUI" => $adminUI,
+            "managerUI" => $managerUI,
         ]);
 
     }
@@ -59,6 +68,12 @@ class PreferencesController extends Controller
                 "domain" => 'required | string | max:255',
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
+                "customer_navbar" => 'required | string',
+                "customer_navtext" => 'required | string',
+                "admin_navbar" => 'required | string',
+                "admin_navtext" => 'required | string',
+                "manager_navbar" => 'required | string',
+                "manager_navtext" => 'required | string',
             ]);
 
             DB::table('operation_preferences')->where('attr', 'name')->update(['value' => $request->name]);
@@ -74,6 +89,10 @@ class PreferencesController extends Controller
             DB::table('features_preferences')->where('name', 'rates')->update(['value' => $request->rate == null ? '0' : '1']);
             DB::table('features_preferences')->where('name', 'rates_weekend_weekday')->update(['value' => $request->weekdayWeekend == null ? '0' : '1']);
             DB::table('features_preferences')->where('name', 'rates_editable_admin')->update(['value' => $request->adminRates == null ? '0' : '1']);
+
+            DB::table('ui_preferences')->where('side', '')->update(['navbar_class' => $request->customer_navbar, 'navbar_text_class' => $request->customer_navtext]);
+            DB::table('ui_preferences')->where('side', 'admin')->update(['navbar_class' => $request->admin_navbar, 'navbar_text_class' => $request->admin_navtext]);
+            DB::table('ui_preferences')->where('side', 'manager')->update(['navbar_class' => $request->manager_navbar, 'navbar_text_class' => $request->manager_navtext]);
 
         }
 
