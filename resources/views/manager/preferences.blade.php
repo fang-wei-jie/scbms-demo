@@ -18,14 +18,8 @@
         <form action="{{ route('manager.preferences') }}" method="post">
             @csrf
 
-            <span style="display: flex; justify-content: flex-end; align-items: center;">
-                <button class="btn btn-primary" type="submit" id="save" name="save">
-                    Save
-                </button>
-            </span>
-
             <div class="row">
-                <div class="col-xl">
+                <div class="col-lg">
 
                     <h3 class="mb-3">General</h3>
 
@@ -66,9 +60,7 @@
 
                 </div>
 
-                <br>
-
-                <div class="col-sm">
+                <div class="col-lg">
 
                     <h3>Features</h3>
 
@@ -115,8 +107,6 @@
                         <small class="@if($adminRole != 1){{ 'disabled-label' }}@endif">Enable the admin to view sales report</small>
                     </div>
 
-                    <br>
-
                     <h5>Rates</h5>
 
                     <div class="form-check form-switch">
@@ -142,7 +132,7 @@
 
                 </div>
 
-                <div class="col-sm">
+                <div class="col-lg">
 
                     <h3>User Interface</h3>
 
@@ -281,6 +271,14 @@
 
                 </div>
 
+            </div>
+
+            <div class="row py-3">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="submit" id="save" name="save">
+                        Save
+                    </button>
+                </div>
             </div>
         </form>
 
