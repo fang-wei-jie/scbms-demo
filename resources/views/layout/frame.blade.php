@@ -239,12 +239,14 @@
                             </a>
                         </li>
 
+                        @if(Features::where('name', 'admin_role')->first()->value == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/admins')) ? 'active fw-bold' : '' }}" href="{{ route('manager.admins_management') }}">
                                 <i class="bi bi-person-badge"></i>
                                 Admins
                             </a>
                         </li>
+                        @endif
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/sales')) ? 'active fw-bold' : '' }}" href="{{ route('manager.sales') }}">
