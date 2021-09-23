@@ -29,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/jpg" href="{{ $logo }}" />
 
-    @if(request()->is('admin/*') || request()->is('manager/*')) {
+    @if(request()->is('admin/*') || request()->is('manager/*'))
         <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
     @else
         <title>@yield('title') - {{ $name }}</title>
