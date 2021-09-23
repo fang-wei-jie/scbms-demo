@@ -121,14 +121,14 @@ Rates
                                 </button>
                             @else
                                 @if($rateDetail->rateStatus == 1)
-                                <button class="btn btn-success" type="button" name="disable">
+                                <button class="btn btn-success" type="button" name="disable" disabled>
                                     <span style="display: flex; justify-content: space-between; align-items: center;">
                                         <span class="d-none d-md-block">Enabled&nbsp;</span>
                                         <i class="bi bi-toggle-on"></i>
                                     </span>
                                 </button>
                                 @else
-                                <button class="btn btn-danger" type="submit" name="enable">
+                                <button class="btn btn-danger" type="submit" name="enable" disabled>
                                     <span style="display: flex; justify-content: space-between; align-items: center;">
                                         <span class="d-none d-md-block">Disabled&nbsp;</span>
                                         <i class="bi bi-toggle-off"></i>
