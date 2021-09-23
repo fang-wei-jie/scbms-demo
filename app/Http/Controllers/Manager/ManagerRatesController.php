@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Rates;
 
 class ManagerRatesController extends Controller
 {
@@ -18,9 +19,7 @@ class ManagerRatesController extends Controller
     function view()
     {
 
-        $rates = DB::table('rates')
-            ->where('rateStatus', '!=', 2)
-            ->get();
+        $rates = Rates::where('rateStatus', '!=', 2)->get();
 
         return view('manager.rates', ['rates' => $rates]);
     }
@@ -30,15 +29,11 @@ class ManagerRatesController extends Controller
 
         if (isset($_POST['enable'])) {
 
-            DB::table('rates')
-                ->where('id', $request->id)
-                ->update(['rateStatus' => 1]);
+            Rates::where('id', $request->id)->update(['rateStatus' => 1]);
 
         } else if (isset($_POST['disable'])) {
 
-            DB::table('rates')
-                ->where('id', $request->id)
-                ->update(['rateStatus' => 0]);
+            Rates::where('id', $request->id)->update(['rateStatus' => 0]);
 
         } else if (isset($_POST['edit'])) {
 
@@ -50,9 +45,7 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                DB::table('rates')
-                    ->where('id', '=', $request->id)
-                    ->update(['ratePrice' => $request->ratePrice]);
+                Rates::where('id', '=', $request->id)->update(['ratePrice' => $request->ratePrice]);
 
             } else {
 
@@ -63,21 +56,17 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                DB::table('rates')
-                    ->where('id', '=', $request->id)
-                    ->update(
-                        [
-                            'rateName' => $request->input('rateName'),
-                            'ratePrice' => $request->input('ratePrice')
-                        ]);
+                Rates::where('id', '=', $request->id)->update(
+                    [
+                        'rateName' => $request->input('rateName'),
+                        'ratePrice' => $request->input('ratePrice')
+                    ]);
 
             }
 
         } else if (isset($_POST['archive'])) {
 
-            DB::table('rates')
-                ->where('id', '=', $request->id)
-                ->update(['rateStatus' => 2]);
+            Rates::where('id', '=', $request->id)->update(['rateStatus' => 2]);
 
         } else if (isset($_POST['add'])) {
 
@@ -89,7 +78,7 @@ class ManagerRatesController extends Controller
 
             ]);
 
-            DB::table('rates')->insert([
+            Rates::create([
 
                 'rateStatus' => $request->rateStatus,
                 'rateName' => $request->rateName,

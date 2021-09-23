@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Operation;
+use App\Models\Rates;
 
 class MakeBookingsController extends Controller
 {
@@ -100,8 +101,7 @@ class MakeBookingsController extends Controller
                         $excludeRate = "Weekdays";
                     }
 
-                    $rates = DB::table('rates')
-                        ->where('rateStatus', 1)
+                    $rates = Rates::where('rateStatus', 1)
                         ->get()
                         ->where('rateName', '!=', $excludeRate);
 
@@ -155,7 +155,7 @@ class MakeBookingsController extends Controller
                 $excludeRate = "Weekdays";
             }
 
-            if (DB::table('rates')->where('id', $rateID)->first()->rateName != $excludeRate && $count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
+            if (Rates::where('id', $rateID)->first()->rateName != $excludeRate && $count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
 
                 // verify once again the booking details before storing in database
                 DB::table('bookings')->insert([
@@ -180,10 +180,7 @@ class MakeBookingsController extends Controller
                     $excludeRate = "Weekdays";
                 }
 
-                $rates = DB::table('rates')
-                    ->where('rateStatus', 1)
-                    ->get()
-                    ->where('rateName', '!=', $excludeRate);
+                $rates = Rates::where('rateStatus', 1)->get()->where('rateName', '!=', $excludeRate);
 
                 $courts = array();
                 for ($courtNo = 1; $courtNo <= 9; $courtNo++) {

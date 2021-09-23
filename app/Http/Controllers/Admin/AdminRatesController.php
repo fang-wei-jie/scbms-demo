@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Features;
+use App\Models\Rates;
 
 class AdminRatesController extends Controller
 {
@@ -19,9 +20,7 @@ class AdminRatesController extends Controller
     function view()
     {
 
-        $rates = DB::table('rates')
-            ->where('rateStatus', '!=', 2)
-            ->get();
+        $rates = Rates::where('rateStatus', '!=', 2)->get();
 
         $editable = Features::where('name', 'rates_editable_admin')->first()->value;
 
@@ -37,15 +36,11 @@ class AdminRatesController extends Controller
 
         if (isset($_POST['enable'])) {
 
-            DB::table('rates')
-                ->where('id', $request->id)
-                ->update(['rateStatus' => 1]);
+            Rates::where('id', $request->id)->update(['rateStatus' => 1]);
 
         } else if (isset($_POST['disable'])) {
 
-            DB::table('rates')
-                ->where('id', $request->id)
-                ->update(['rateStatus' => 0]);
+            Rates::where('id', $request->id)->update(['rateStatus' => 0]);
 
         } else if (isset($_POST['edit'])) {
 
@@ -57,9 +52,7 @@ class AdminRatesController extends Controller
 
                 ]);
 
-                DB::table('rates')
-                    ->where('id', '=', $request->id)
-                    ->update(['ratePrice' => $request->ratePrice]);
+                Rates::where('id', $request->id)->update(['ratePrice' => $request->ratePrice]);
 
             } else {
 
@@ -70,8 +63,7 @@ class AdminRatesController extends Controller
 
                 ]);
 
-                DB::table('rates')
-                    ->where('id', '=', $request->id)
+                Rates::where('id', $request->id)
                     ->update(
                         [
                             'rateName' => $request->input('rateName'),
@@ -83,9 +75,7 @@ class AdminRatesController extends Controller
 
         } else if (isset($_POST['archive'])) {
 
-            DB::table('rates')
-                ->where('id', '=', $request->id)
-                ->update(['rateStatus' => 2]);
+            Rates::where('id', $request->id)->update(['rateStatus' => 2]);
 
         } else if (isset($_POST['add'])) {
 
@@ -97,7 +87,7 @@ class AdminRatesController extends Controller
 
             ]);
 
-            DB::table('rates')->insert([
+            Rates::create([
 
                 'rateStatus' => $request->rateStatus,
                 'rateName' => $request->rateName,
