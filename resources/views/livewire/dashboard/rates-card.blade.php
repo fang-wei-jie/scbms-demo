@@ -5,7 +5,7 @@
             Updated on {{ date('H:i:s') }}
         </div>
         <div class="col-auto">
-            <a href="{{ route('manager.rates') }}" class="btn btn-primary">
+            <a href="rates" class="btn btn-primary">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-tags-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Rates</span>

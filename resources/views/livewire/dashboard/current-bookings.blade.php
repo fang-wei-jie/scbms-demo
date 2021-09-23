@@ -5,13 +5,13 @@
             Updated on {{ date('H:i:s') }}
         </div>
         <div class="col-auto">
-            <a href="{{ route('manager.checkin') }}" class="btn btn-primary">
+            <a href="checkin" class="btn btn-primary">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-person-check-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Check-in</span>
                 </span>
             </a>
-            <a href="{{ route('manager.bookings') }}" class="btn btn-primary">
+            <a href="bookings" class="btn btn-primary">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-journal-album"></i>
                     <span class="d-none d-md-block">&nbsp;Bookings</span>

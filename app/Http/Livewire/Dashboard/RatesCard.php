@@ -3,16 +3,14 @@
 namespace App\Http\Livewire\Dashboard;
 
 use Livewire\Component;
-use Illuminate\Support\Facades\DB;
+use App\Models\Rates;
 
 class RatesCard extends Component
 {
     public function render()
     {
 
-        $ratesEnabled = DB::table('rates')
-            -> where('rateStatus', 1)
-            -> get();
+        $ratesEnabled = Rates::where('rateStatus', 1)-> get();
 
         return view('livewire.dashboard.rates-card', ['ratesEnabled' => $ratesEnabled]);
     }
