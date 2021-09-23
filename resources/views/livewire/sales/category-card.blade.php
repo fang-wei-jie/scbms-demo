@@ -54,7 +54,7 @@
                                     @endif
                                 </div>
 
-                                <div class="col-auto d-block d-md-block d-lg-none">
+                                <div class="col-auto d-block d-md-none">
                                     <div class="col-auto">
                                         <div wire:loading>
                                             <div class="spinner-border" role="status">
