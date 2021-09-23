@@ -1,5 +1,9 @@
 @php
-    $name = DB::table("operation_preferences")->where('attr', 'name')->first();
+    use App\Models\Operation;
+    use App\Models\Features;
+    use App\Models\UI;
+
+    $name = Operation::where('attr', 'name')->first();
     $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
 
     if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
@@ -8,7 +12,7 @@
         $side = "admin";
     } else { $side = ""; }
 
-    $ui_preferences = DB::table("ui_preferences")->where('side', $side)->first();
+    $ui_preferences = UI::where('side', $side)->first();
     $logoQuery = $ui_preferences->logo;
 
     if ($logoQuery != "") {
@@ -173,7 +177,7 @@
                             </a>
                         </li>
 
-                        @if(DB::table('features_preferences')->where('name', 'admin_sales_report')->first()->value == 1)
+                        @if(Features::where('name', 'admin_sales_report')->first()->value == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/sales')) ? 'active fw-bold' : '' }}" href="{{ route('admin.sales') }}">
                                 <i class="bi bi-cash-stack"></i>

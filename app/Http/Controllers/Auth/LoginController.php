@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Models\Operation;
+use App\Models\Features;
 
 class LoginController extends Controller
 {
@@ -34,7 +35,7 @@ class LoginController extends Controller
 
             ]);
 
-            $domain = DB::table('operation_preferences') -> where('attr', 'domain') -> first();
+            $domain = Operation::where('attr', 'domain') -> first();
 
             $managerDomain = '@'.$domain->value.'m';
             $adminDomain = '@'.$domain->value;
@@ -47,7 +48,7 @@ class LoginController extends Controller
                 }
 
                 return redirect()->route('manager.dashboard');
-            } else if (str_ends_with($request->email, $adminDomain) && DB::table('features_preferences')->where('name', 'admin_role')->first()->value == 1) {
+            } else if (str_ends_with($request->email, $adminDomain) && Features::where('name', 'admin_role')->first()->value == 1) {
 
                 // login verification for admin
                 if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain->value, "", $request->email), 'password' => $request->password])) {

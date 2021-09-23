@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Operation;
 
 class MakeBookingsController extends Controller
 {
@@ -20,8 +21,8 @@ class MakeBookingsController extends Controller
     {
 
         // get operation hours
-        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first() -> value;
-        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first() -> value;
+        $start_time = Operation::where('attr', 'start_time') -> first() -> value;
+        $end_time = Operation::where('attr', 'end_time') -> first() -> value;
 
         return view ('customer.book-court', ['selectedDate' => 0, 'start_time' => $start_time, 'end_time' => $end_time]);
 
@@ -31,8 +32,8 @@ class MakeBookingsController extends Controller
     {
 
         date_default_timezone_set("Asia/Kuala_Lumpur");
-        $start_time = DB::table('operation_preferences') -> where('attr', 'start_time') -> first() -> value;
-        $end_time = DB::table('operation_preferences') -> where('attr', 'end_time') -> first() -> value;
+        $start_time = Operation::where('attr', 'start_time') -> first() -> value;
+        $end_time = Operation::where('attr', 'end_time') -> first() -> value;
 
         if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
         {

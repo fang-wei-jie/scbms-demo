@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Features;
 
 class SalesController extends Controller
 {
@@ -17,7 +16,7 @@ class SalesController extends Controller
     function view()
     {
 
-        if (DB::table('features_preferences')->where('name', 'admin_sales_report')->first()->value == 1) {
+        if (Features::where('name', 'admin_sales_report')->first()->value == 1) {
 
             return view('admin.sales');
 
