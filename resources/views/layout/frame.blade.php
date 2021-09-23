@@ -151,7 +151,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('admin.dashboard') }}">
-                                <i class="bi bi-kanban"></i>
+                                <i class="bi bi-columns-gap"></i>
                                 Dashboard
                             </a>
                         </li>
@@ -197,7 +197,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('manager.dashboard') }}">
-                                <i class="bi bi-kanban"></i>
+                                <i class="bi bi-columns-gap"></i>
                                 Dashboard
                             </a>
                         </li>
