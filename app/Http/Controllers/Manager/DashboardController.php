@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\Features;
 
 class DashboardController extends Controller
 {
@@ -16,7 +17,11 @@ class DashboardController extends Controller
     function view ()
     {
 
-        return view ('manager.dashboard');
+        $rates = Features::where('name', 'rates')->first()->value;
+
+        return view ('manager.dashboard', [
+            'rates' => $rates,
+        ]);
 
     }
 }

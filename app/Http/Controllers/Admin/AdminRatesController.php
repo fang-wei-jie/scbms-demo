@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Features;
 use App\Models\Rates;
 
@@ -20,7 +19,11 @@ class AdminRatesController extends Controller
     function view()
     {
 
-        $rates = Rates::where('rateStatus', '!=', 2)->get();
+        if (Features::where('name', 'rates')->first()->value != 1) {
+            return back();
+        }
+
+        $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 3);
 
         $editable = Features::where('name', 'rates_editable_admin')->first()->value;
 
@@ -29,6 +32,10 @@ class AdminRatesController extends Controller
 
     function process(Request $request)
     {
+
+        if (Features::where('name', 'rates')->first()->value != 1) {
+            return back();
+        }
 
         if (Features::where('name', 'rates_editable_admin')->first()->value != 1) {
             return back();

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Rates;
+use App\Models\Features;
 
 class ManagerRatesController extends Controller
 {
@@ -19,13 +19,21 @@ class ManagerRatesController extends Controller
     function view()
     {
 
-        $rates = Rates::where('rateStatus', '!=', 2)->get();
+        if (Features::where('name', 'rates')->first()->value != 1) {
+            return back();
+        }
+
+        $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 3);
 
         return view('manager.rates', ['rates' => $rates]);
     }
 
     function process(Request $request)
     {
+
+        if (Features::where('name', 'rates')->first()->value != 1) {
+            return back();
+        }
 
         if (isset($_POST['enable'])) {
 

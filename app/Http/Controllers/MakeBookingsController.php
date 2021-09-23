@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Features;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -49,9 +50,9 @@ class MakeBookingsController extends Controller
             ]);
 
             // importing variable
-            $dateSlot = str_replace("-", "", $request->input('dateSlot'));
-            $timeSlot = $request->input('timeSlot');
-            $timeLength = $request->input('timeLength');
+            $dateSlot = str_replace("-", "", $request->dateSlot);
+            $timeSlot = $request->timeSlot;
+            $timeLength = $request->timeLength;
 
             if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time))
             {
@@ -101,9 +102,12 @@ class MakeBookingsController extends Controller
                         $excludeRate = "Weekdays";
                     }
 
-                    $rates = Rates::where('rateStatus', 1)
-                        ->get()
-                        ->where('rateName', '!=', $excludeRate);
+                    if (Features::where('name', 'rates')->first()->value == 1) {
+                        $rates = Rates::where('rateStatus', 1)->get()->where('rateName', '!=', $excludeRate)->where('id', '!=', 3);
+                    } else {
+                        $rates = Rates::where('id', 3)->get();
+                    }
+
 
                 }
 
@@ -112,7 +116,7 @@ class MakeBookingsController extends Controller
                     'courts' => $courts,
                     'rates' => $rates,
                     'selectedDate' => 1,
-                    'dateSlot' => $request->input('dateSlot'),
+                    'dateSlot' => $request->dateSlot,
                     'timeSlot' => $timeSlot,
                     'timeLength' => $timeLength,
                     'endTime' => $timeSlot + $timeLength,
@@ -124,54 +128,32 @@ class MakeBookingsController extends Controller
 
         } else if (isset($_POST['confirm-booking'])) {
 
-            // input validation
-            $this->validate($request, [
+            if (Features::where('name', 'rates')->first()->value == 1) {
+            // rates is enabled
 
-                'timeSlot' => 'required | digits_between:1,2',
-                'timeLength' => 'required | digits_between:1,2',
-                'dateSlot' => 'required | date_format:Y-m-d',
-                'rateID' => 'required | numeric',
+                // input validation
+                $this->validate($request, [
 
-            ]);
+                    'timeSlot' => 'required | digits_between:1,2',
+                    'timeLength' => 'required | digits_between:1,2',
+                    'dateSlot' => 'required | date_format:Y-m-d',
+                    'rateID' => 'required | numeric',
 
-            // importing variable
-            $dateSlot = str_replace("-", "", $request->input('dateSlot'));
-            $timeSlot = $request->input('timeSlot');
-            $timeLength = $request->input('timeLength');
-            $courtID = $request->input('courtID');
-            $rateID = $request->input('rateID');
-            $bookingPrice = $request->input('bookingPrice');
-
-            $count = DB::table('bookings')
-                ->where('dateSlot', $dateSlot)
-                ->where('timeSlot', $timeSlot)
-                ->where('courtID', $courtID)
-                ->count();
-
-            $dayOfWeek = date_format(date_create($dateSlot), 'N');
-            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                $excludeRate = "Weekend";
-            } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                $excludeRate = "Weekdays";
-            }
-
-            if (Rates::where('id', $rateID)->first()->rateName != $excludeRate && $count == 0 && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))) {
-
-                // verify once again the booking details before storing in database
-                DB::table('bookings')->insert([
-                    'created_at' => date('Y-m-d H:m:s'),
-                    'custID' => Auth::user()->id,
-                    'courtID' => $courtID,
-                    'dateSlot' => $dateSlot,
-                    'timeSlot' => $timeSlot,
-                    'timeLength' => $timeLength,
-                    'rateID' => $rateID,
-                    'bookingPrice' => $bookingPrice,
                 ]);
 
-                return redirect() -> route('mybookings');
+                // importing variable
+                $dateSlot = str_replace("-", "", $request->dateSlot);
+                $timeSlot = $request->timeSlot;
+                $timeLength = $request->timeLength;
+                $courtID = $request->courtID;
+                $rateID = $request->rateID;
+                $bookingPrice = $request->bookingPrice;
 
-            } else {
+                $count = DB::table('bookings')
+                    ->where('dateSlot', $dateSlot)
+                    ->where('timeSlot', $timeSlot)
+                    ->where('courtID', $courtID)
+                    ->count();
 
                 $dayOfWeek = date_format(date_create($dateSlot), 'N');
                 if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
@@ -180,35 +162,158 @@ class MakeBookingsController extends Controller
                     $excludeRate = "Weekdays";
                 }
 
-                $rates = Rates::where('rateStatus', 1)->get()->where('rateName', '!=', $excludeRate);
+                if ($rateID != 3 // not standard rate
+                    && Rates::where('id', $rateID)->first()->rateName != $excludeRate // does not include excluded rate for the selected date
+                    && Rates::where('id', $rateID)->first()->rateStatus == 1 // does not include rates that are disabled/archived
+                    && $count == 0
+                    && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H")
+                    && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d")
+                    && ($timeLength + $timeSlot) <= $end_time))) {
 
-                $courts = array();
-                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
-                    $booked = DB::table('bookings')
-                        ->where('dateSlot', $dateSlot)
-                        ->where('courtID', $courtNo)
-                        ->where(
-                            function($query) use ($timeSlot, $timeLength){
-                                $query
-                                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                                    ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
-                        })
-                        ->count();
+                    // verify once again the booking details before storing in database
+                    DB::table('bookings')->insert([
+                        'created_at' => date('Y-m-d H:m:s'),
+                        'custID' => Auth::user()->id,
+                        'courtID' => $courtID,
+                        'dateSlot' => $dateSlot,
+                        'timeSlot' => $timeSlot,
+                        'timeLength' => $timeLength,
+                        'rateID' => $rateID,
+                        'bookingPrice' => $bookingPrice,
+                    ]);
 
-                    array_push($courts, $booked);
+                    return redirect() -> route('mybookings');
+
+                } else {
+
+                    $dayOfWeek = date_format(date_create($dateSlot), 'N');
+                    if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                        $excludeRate = "Weekend";
+                    } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                        $excludeRate = "Weekdays";
+                    }
+
+                    $rates = Rates::where('rateStatus', 1)->get()->where('rateName', '!=', $excludeRate)->where('id', '!=', 3);
+
+                    $courts = array();
+                    for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                        $booked = DB::table('bookings')
+                            ->where('dateSlot', $dateSlot)
+                            ->where('courtID', $courtNo)
+                            ->where(
+                                function($query) use ($timeSlot, $timeLength){
+                                    $query
+                                        ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
+                                        ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                            })
+                            ->count();
+
+                        array_push($courts, $booked);
+                    }
+
+                    // not standard rate || does not include excluded rate for the selected date || does not include rates that are disabled/archived
+                    if ($rateID == 3 || Rates::where('id', $rateID)->first()->rateName == $excludeRate || Rates::where('id', $rateID)->first()->rateStatus == 1){
+                        $message = "We are sorry. The rate selected was no longer available. ";
+                    } else {
+                        $message = "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
+                    }
+
+                    return view ('customer.book-court', [
+                        'selectedDate' => 1,
+                        'count' => $count,
+                        'courts' => $courts,
+                        'rates' => $rates,
+                        'dateSlot' => $request->dateSlot,
+                        'timeSlot' => $timeSlot,
+                        'timeLength' => $timeLength,
+                        'endTime' => $timeSlot + $timeLength,
+                        'message' => $message,
+                    ]);
+
                 }
 
-                return view ('customer.book-court', [
-                    'selectedDate' => 1,
-                    'count' => $count,
-                    'courts' => $courts,
-                    'rates' => $rates,
-                    'dateSlot' => $request->input('dateSlot'),
-                    'timeSlot' => $timeSlot,
-                    'timeLength' => $timeLength,
-                    'endTime' => $timeSlot + $timeLength,
-                    'message' => "We are sorry. The court that you selected has been booked by other customer a moment ago. Please select another court. ",
+            } else {
+            // rates is disabled
+
+                // input validation
+                $this->validate($request, [
+
+                    'timeSlot' => 'required | digits_between:1,2',
+                    'timeLength' => 'required | digits_between:1,2',
+                    'dateSlot' => 'required | date_format:Y-m-d',
+
                 ]);
+
+                // importing variable
+                $dateSlot = str_replace("-", "", $request->dateSlot);
+                $timeSlot = $request->timeSlot;
+                $timeLength = $request->timeLength;
+                $courtID = $request->courtID;
+
+                $count = DB::table('bookings')
+                    ->where('dateSlot', $dateSlot)
+                    ->where('timeSlot', $timeSlot)
+                    ->where('courtID', $courtID)
+                    ->count();
+
+                $rateID = Rates::where('id', 3)->first()->id;
+                $bookingPrice = Rates::where('id', 3)->first()->ratePrice;
+
+                if ($request->rateID == null // no rate is selected prior to submission
+                    && $count == 0
+                    && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H")
+                    && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d")
+                    && ($timeLength + $timeSlot) <= $end_time))) {
+
+                    // verify once again the booking details before storing in database
+                    DB::table('bookings')->insert([
+                        'created_at' => date('Y-m-d H:m:s'),
+                        'custID' => Auth::user()->id,
+                        'courtID' => $courtID,
+                        'dateSlot' => $dateSlot,
+                        'timeSlot' => $timeSlot,
+                        'timeLength' => $timeLength,
+                        'rateID' => $rateID,
+                        'bookingPrice' => $bookingPrice,
+                    ]);
+
+                    return redirect() -> route('mybookings');
+
+                } else {
+
+                    $rates = Rates::where('id', 3)->get();
+
+                    $courts = array();
+                    for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                        $booked = DB::table('bookings')
+                            ->where('dateSlot', $dateSlot)
+                            ->where('courtID', $courtNo)
+                            ->where(
+                                function($query) use ($timeSlot, $timeLength){
+                                    $query
+                                        ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
+                                        ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                            })
+                            ->count();
+
+                        array_push($courts, $booked);
+                    }
+
+                    $message = ($request->rateID != null) ? "We are sorry. We had moved to a single rate policy. Please review the new rate below. " : "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
+
+                    return view ('customer.book-court', [
+                        'selectedDate' => 1,
+                        'count' => $count,
+                        'courts' => $courts,
+                        'rates' => $rates,
+                        'dateSlot' => $request->dateSlot,
+                        'timeSlot' => $timeSlot,
+                        'timeLength' => $timeLength,
+                        'endTime' => $timeSlot + $timeLength,
+                        'message' => $message,
+                    ]);
+
+                }
 
             }
 

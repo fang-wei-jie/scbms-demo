@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Operation;
 use App\Models\Features;
 use App\Models\UI;
+use App\Models\Rates;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
@@ -35,6 +36,8 @@ class PreferencesController extends Controller
         $weekdayWeekend = Features::where('name', 'rates_weekend_weekday')->first();
         $adminRates = Features::where('name', 'rates_editable_admin')->first();
 
+        $ratePerHour = Rates::where('id', 3)->first()->ratePrice;
+
         $customerUI = UI::where('side', '')->first();
         $adminUI = UI::where('side', 'admin')->first();
         $managerUI = UI::where('side', 'manager')->first();
@@ -53,6 +56,8 @@ class PreferencesController extends Controller
             "rate" => $rate->value,
             "weekdayWeekend" => $weekdayWeekend->value,
             "adminRates" => $adminRates->value,
+
+            "ratePerHour" => $ratePerHour,
 
             "customerUI" => $customerUI,
             "adminUI" => $adminUI,
@@ -77,6 +82,14 @@ class PreferencesController extends Controller
                 "manager_navbar" => 'required | string',
                 "manager_navtext" => 'required | string',
             ]);
+
+            if ($request->rate == null) {
+                $this -> validate($request, [
+                    "ratePerHour"  => 'required | numeric | digits_between:1,2',
+                ]);
+
+                Rates::where('id', 3)->update(['ratePrice' => $request->ratePerHour]);
+            }
 
             Operation::where('attr', 'name')->update(['value' => $request->name]);
             Operation::where('attr', 'domain')->update(['value' => $request->domain]);

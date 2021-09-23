@@ -113,7 +113,15 @@
                         <input class="form-check-input" type="checkbox" id="rate" name="rate" @if($rate == 1){{ "checked" }}@endif>
                         <label class="form-check-label" for="rate">Use Rates</label>
                         <br>
-                        <small>Let customer enjoy different price rate for your specified conditions</small>
+                        <small id="smallUseRates"></small>
+
+                        <div class="my-2"></div>
+
+                        <div id="rph" class="form-floating mb-3">
+                            <input id="ratePerHour" class="form-control" type="text" name="ratePerHour" maxlength="2" value="{{ $ratePerHour }}">
+                            <label for="ratePerHour">Rate Per Hour (RM)</label>
+                            <small>Integer only</small>
+                        </div>
                     </div>
 
                     <div class="form-check form-switch" id="weekdayWeekend" @if($rate != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif>
@@ -288,6 +296,8 @@
 @section('bottom-js')
     <script>
         $(document).ready(function() {
+            useRates()
+
             new bootstrap.Tooltip($("#bookingDeletableCustomer"))
             new bootstrap.Tooltip($("#bookingDeletableAdmin"))
             new bootstrap.Tooltip($("#adminSalesReport"))
@@ -318,6 +328,26 @@
                 managerHeaderPreview()
             })
 
+            $("#rate").change(function() {
+                useRates()
+            })
+
+            $("#ratePerHour").keyup(function() {
+                validateRate()
+            })
+
+            function validateRate() {
+                if ($("#ratePerHour").val() >= 1 && $("#ratePerHour").val() < 100 && $.isNumeric($("#ratePerHour").val()) ) {
+                    $("#ratePerHour").removeClass('is-invalid')
+                    $("#ratePerHour").addClass('is-valid')
+                    $("#save").prop('disabled', false)
+                } else {
+                    $("#ratePerHour").addClass('is-invalid')
+                    $("#ratePerHour").removeClass('is-valid')
+                    $("#save").prop('disabled', true)
+                }
+            }
+
             function customerHeaderPreview() {
                 $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
                 $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
@@ -340,6 +370,19 @@
                 $("#manager-header").addClass($("#manager_navbar").val())
                 $("#manager-header").addClass($("#manager_navtext").val())
                 $("#manager_navtext").val() == "navbar-light" ? $("#manager-logo").removeClass('white-logo') : $("#manager-logo").addClass('white-logo')
+            }
+
+            function useRates() {
+                if ($("#rate").prop('checked')) {
+                    $("#rph").hide()
+                    $("#smallUseRates").text("Let customer enjoy different price rate for your specified conditions")
+                    $("#save").prop('disabled', false)
+                } else {
+                    $("#rph").show()
+                    $("#smallUseRates").text("Use a single price rate for all bookings")
+                    $("#ratePerHour").focus()
+                    validateRate()
+                }
             }
         })
     </script>

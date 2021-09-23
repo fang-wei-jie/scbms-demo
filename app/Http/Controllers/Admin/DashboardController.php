@@ -18,10 +18,13 @@ class DashboardController extends Controller
     function view ()
     {
 
+        $rates = Features::where('name', 'rates')->first()->value;
+
         $admin_sales_report = Features::where('name', 'admin_sales_report')->first();
 
         return view('admin.dashboard', [
             'sales_report' => $admin_sales_report->value,
+            'rates' => $rates,
         ]);
 
     }

@@ -64,7 +64,7 @@ Book Courts
             </div>
 
             @if($message ?? '')
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-warning" role="alert">
                 <i class="bi bi-exclamation-lg"></i>
                 {{ $message ?? '' }}
             </div>
@@ -84,7 +84,7 @@ Book Courts
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" name="rateID" id="rateID">
+                <select class="form-select" name="rateID" id="rateID" @if(DB::table('features_preferences')->where('name', 'rates')->first()->value != 1){{ "disabled" }}@endif>
                     @foreach ($rates as $rateDetail)
                         <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->ratePrice }}>
                             {{ $rateDetail->rateName }} @ RM{{ $rateDetail->ratePrice }}/hour
