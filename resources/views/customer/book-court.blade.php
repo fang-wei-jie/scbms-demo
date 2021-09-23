@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Book Courts -
+Book Courts
 @endsection
 
 @section('extra-css')

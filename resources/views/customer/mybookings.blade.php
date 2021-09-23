@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-My Bookings -
+My Bookings
 @endsection
 
 @section('body')

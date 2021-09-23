@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-    Sales Report - Manager
+    Sales Report
 @endsection
 
 @section('extra-dependencies')

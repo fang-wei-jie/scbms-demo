@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Check In - Admin
+Check In
 @endsection
 
 @section('extra-dependencies')

@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
-@section('name')
-Register -
+@section('title')
+Register
 @endsection
 
 @section('body')

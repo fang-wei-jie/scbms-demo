@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-My Account - Manager
+My Account
 @endsection
 
 @section('body')

@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-    Preferences - Manager
+    Preferences
 @endsection
 
 @section('extra-css')

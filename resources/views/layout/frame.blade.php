@@ -3,7 +3,8 @@
     use App\Models\Features;
     use App\Models\UI;
 
-    $name = Operation::where('attr', 'name')->first();
+    $name = Operation::where('attr', 'name')->first()->value;
+    $domain = Operation::where('attr', 'domain')->first()->value;
     $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
 
     if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
@@ -26,8 +27,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title'){{ $name->value }}</title>
     <link rel="shortcut icon" type="image/jpg" href="{{ $logo }}" />
+
+    @if(request()->is('admin/*') || request()->is('manager/*')) {
+        <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
+    @else
+        <title>@yield('title') - {{ $name }}</title>
+    @endif
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -111,7 +117,7 @@
             ">
 
                 <img src="{{ $logo }}" width="30" height="30" class="d-inline-block align-top @if($ui_preferences->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
-                {{ $name->value }} @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
+                {{ $name }} @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">

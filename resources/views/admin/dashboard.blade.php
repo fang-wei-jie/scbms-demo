@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Dashboard - Admin
+Dashboard
 @endsection
 
 @section('body')

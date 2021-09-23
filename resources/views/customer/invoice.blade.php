@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Receipt -
+Receipt
 @endsection
 
 @section('body')

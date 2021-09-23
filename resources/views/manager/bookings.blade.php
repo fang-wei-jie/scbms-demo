@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Bookings - Manager
+Bookings
 @endsection
 
 @section('extra-dependencies')

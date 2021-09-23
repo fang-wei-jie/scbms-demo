@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Rates - Admin
+Rates
 @endsection
 
 @section('extra-dependencies')

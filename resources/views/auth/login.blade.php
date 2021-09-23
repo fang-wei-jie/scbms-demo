@@ -1,7 +1,7 @@
 @extends('layout.frame')
 
 @section('title')
-Login -
+Login
 @endsection
 
 @section('body')
