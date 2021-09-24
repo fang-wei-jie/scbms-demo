@@ -20,14 +20,13 @@ Dashboard
             <br>
 
             {{-- rates card --}}
+            @if($rates == 1)
             <div class="card bg-light">
                 @livewire('dashboard.rates-card')
             </div>
 
-            {{-- sales report card --}}
-            @if ($sales_report == 1)
-
             <br>
+            @endif
 
             <div class="card bg-light">
                 @livewire('dashboard.sales-card')

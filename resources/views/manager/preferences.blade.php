@@ -386,6 +386,8 @@
                     validateRate()
                     $("#weekdayWeekend").prop('disabled', true)
                     $("#adminRates").prop('disabled', true)
+                    $("#weekdayWeekend").prop('checked', false)
+                    $("#adminRates").prop('checked', false)
                 }
             }
         })

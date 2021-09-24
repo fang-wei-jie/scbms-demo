@@ -99,8 +99,10 @@ class PreferencesController extends Controller
             Features::where('name', 'delete_booking')->update(['value' => $request->deleteBooking == null ? '0' : '1']);
             Features::where('name', 'customer_delete')->update(['value' => $request->customerDeleteBooking == null ? '0' : '1']);
             Features::where('name', 'admin_delete')->update(['value' => $request->adminDeleteBooking == null ? '0' : '1']);
+
             Features::where('name', 'admin_role')->update(['value' => $request->adminRole == null ? '0' : '1']);
             Features::where('name', 'admin_sales_report')->update(['value' => $request->adminSalesReport == null ? '0' : '1']);
+
             Features::where('name', 'rates')->update(['value' => $request->rate == null ? '0' : '1']);
             Features::where('name', 'rates_weekend_weekday')->update(['value' => $request->weekdayWeekend == null ? '0' : '1']);
             Features::where('name', 'rates_editable_admin')->update(['value' => $request->adminRates == null ? '0' : '1']);

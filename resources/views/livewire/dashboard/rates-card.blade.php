@@ -1,4 +1,6 @@
 <div class="card-body" wire:poll.10000ms>
+
+    @if ($enabled)
     <div class="row">
         <div class="col">
             <h3 class="card-title">Rates Enabled</h3>
@@ -16,7 +18,7 @@
 
     <div class="my-2"></div>
 
-    @foreach ($ratesEnabled as $ratesDetail)
+    @foreach ($rates as $ratesDetail)
         <div class="card py-2">
             <div class="mx-3 my-1">
                 <div class="row no-gutters align-items-center">
@@ -34,4 +36,10 @@
 
         <div class="my-2"></div>
     @endforeach
+
+    @else
+    <div class="row" style="height: 200px;">
+        <h3 class="card-title" style="display: flex; justify-content: center; align-items: center;">Feature Disabled</h3>
+    </div>
+    @endif
 </div>

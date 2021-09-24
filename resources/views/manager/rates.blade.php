@@ -51,7 +51,7 @@ Rates
                     @csrf
                     <td>{{$rateDetail->rateName}}</td>
                     <td>
-                        @if($rateDetail->id == 1 || $rateDetail->id == 2)
+                        @if($rateDetail->id == 1 || $rateDetail->id == 2 || $rateDetail->id == 3)
                             <button class="btn btn-success" type="button" disabled>
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <span class="d-none d-md-block">Enabled&nbsp;</span>
@@ -88,7 +88,7 @@ Rates
                             </span>
                         </button>
 
-                        @if($rateDetail->id == 1 || $rateDetail->id == 2) @else
+                        @if($rateDetail->id == 1 || $rateDetail->id == 2 || $rateDetail->id == 3) @else
                         <button class="btn btn-danger" type="button" id="archiveRate" data-bs-toggle="modal" data-bs-target="#archive" data-id="{{$rateDetail->id}}" data-name="{{$rateDetail->rateName}}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-archive-fill"></i>
@@ -252,7 +252,7 @@ Rates
         $(".modal-rateName").prop("value", $(this).data('name'))
         $("#modal-ratePrice").prop("value", $(this).data('price'))
 
-        if ($(this).data('name') == 'Weekdays' || $(this).data('name') == 'Weekend') {
+        if ($(this).data('id') == 1 || $(this).data('id') == 2 || $(this).data('id') == 3) {
             $("#editRateNameSection").css("display", "none");
         } else {
             $("#editRateNameSection").css("display", "");
