@@ -100,11 +100,11 @@
                         <small>Enable the admin role</small>
                     </div>
 
-                    <div class="form-check form-switch" id="adminSalesReport" @if($adminRole != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($adminSalesReport == 1){{ "checked" }}@endif @if($adminRole != 1){{ "disabled" }}@endif>
+                    <div class="form-check form-switch" id="adminSalesReport">
+                        <input class="form-check-input" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($adminSalesReport == 1){{ "checked" }}@endif>
                         <label class="form-check-label" for="adminSalesReport">View Sales Report</label>
                         <br>
-                        <small class="@if($adminRole != 1){{ 'disabled-label' }}@endif">Enable the admin to view sales report</small>
+                        <small>Enable the admin to view sales report</small>
                     </div>
 
                     <h5>Rates</h5>
@@ -124,14 +124,14 @@
                         </div>
                     </div>
 
-                    <div class="form-check form-switch" id="weekdayWeekend" @if($rate != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif>
+                    <div class="form-check form-switch" @if($rate != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif>
                         <input class="form-check-input" type="checkbox" id="weekdayWeekend" name="weekdayWeekend" @if($weekdayWeekend == 1){{ "checked" }}@endif  @if($rate != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="weekdayWeekend">Weekday Weekend Rate</label>
                         <br>
-                        <small class="@if($rate != 1){{ 'disabled-label' }}@endif">Enable different rate on weekdays and weekends</small>
+                        <small class="@if($rate != 1){{ 'disabled-label' }}@endif">Enable different rate on weekdays and weekends. This feature does not apply to custom rates. </small>
                     </div>
 
-                    <div class="form-check form-switch" id="adminRates" @if($rate != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif  @if($adminRole != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
+                    <div class="form-check form-switch" @if($rate != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif  @if($adminRole != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
                         <input class="form-check-input" type="checkbox" id="adminRates" name="adminRates" @if($adminRates == 1){{ "checked" }}@endif  @if($rate != 1){{ "disabled" }}@endif  @if($adminRole != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="adminRates">Rates Editable by Admin</label>
                         <br>
@@ -377,11 +377,15 @@
                     $("#rph").hide()
                     $("#smallUseRates").text("Let customer enjoy different price rate for your specified conditions")
                     $("#save").prop('disabled', false)
+                    $("#weekdayWeekend").prop('disabled', false)
+                    $("#adminRates").prop('disabled', false)
                 } else {
                     $("#rph").show()
                     $("#smallUseRates").text("Use a single price rate for all bookings")
                     $("#ratePerHour").focus()
                     validateRate()
+                    $("#weekdayWeekend").prop('disabled', true)
+                    $("#adminRates").prop('disabled', true)
                 }
             }
         })
