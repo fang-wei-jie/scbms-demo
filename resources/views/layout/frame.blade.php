@@ -32,7 +32,11 @@
     @if(request()->is('admin/*') || request()->is('manager/*'))
         <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
     @else
-        <title>@yield('title') - {{ $name }}</title>
+        @if($_SERVER['REQUEST_URI'] == "/")
+            <title>{{ $name }}</title>
+        @else
+            <title>@yield('title') - {{ $name }}</title>
+        @endif
     @endif
 
     <!-- CSRF Token -->
