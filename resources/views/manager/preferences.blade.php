@@ -15,7 +15,7 @@
 @section('body')
     <div class="container">
 
-        <form action="{{ route('manager.preferences') }}" method="post">
+        <form action="{{ route('manager.preferences') }}" enctype="multipart/form-data" method="post">
             @csrf
 
             <div class="row">
@@ -151,16 +151,36 @@
                     <nav id="customer-header" class="navbar navbar-expand-lg preview {{ $customerUI->navbar_class }} {{ $customerUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="customer-logo" src="{{ $customerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                <img id="customer-logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 {{ $name }}
                             </a>
                         </div>
                     </nav>
 
-                    <div class="form-control mb-3 mt-3 disabled-label">
-                        <label for="logo">Logo</label>
-                        <input id="logo" class="form-control form-control-file" type="file" name="logo" disabled>
-                        <small>Best uploaded in SVG format, or PNG format between 64x64 till 512x512 resolution</small>
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Logo Options
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="form-control mb-3">
+                                    <label for="logo">Logo</label>
+                                    <input id="logo" class="form-control form-control-file" type="file" name="logo">
+                                    <small>SVG, PNG, JPEG format between 16x16 till 512x512 resolution</small>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" name="customer_invert_logo" id="customer_invert_logo">
+                                        <option value="normal" @if($customerUI->logo_invert == "normal"){{ "selected" }}@endif>Normal</option>
+                                        <option value="invert" @if($customerUI->logo_invert != "normal"){{ "selected" }}@endif>Invert</option>
+                                    </select>
+                                    <label for="customer_invert_logo">Invert Logo Color</label>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -200,7 +220,7 @@
                     <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $adminUI->navbar_class }} {{ $adminUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="admin-logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                <img id="admin-logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 {{ $name }} Admin
                             </a>
                         </div>
@@ -241,7 +261,7 @@
                     <nav id="manager-header" class="navbar navbar-expand-lg preview {{ $managerUI->navbar_class }} {{ $managerUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="manager-logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->navbar_text_class == "navbar-dark") white-logo @endif" alt="">
+                                <img id="manager-logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 {{ $name }} Manager
                             </a>
                         </div>
@@ -312,6 +332,10 @@
                 customerHeaderPreview()
             })
 
+            $("#customer_invert_logo").change(function() {
+                customerHeaderPreview()
+            })
+
             $("#admin_navbar").change(function() {
                 adminHeaderPreview()
             })
@@ -353,7 +377,7 @@
                 $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
                 $("#customer-header").addClass($("#customer_navbar").val())
                 $("#customer-header").addClass($("#customer_navtext").val())
-                $("#customer_navtext").val() == "navbar-light" ? $("#customer-logo").removeClass('white-logo') : $("#customer-logo").addClass('white-logo')
+                $("#customer_invert_logo").val() == "normal" ? $("#customer-logo").removeClass('invert-logo') : $("#customer-logo").addClass('invert-logo')
             }
 
             function adminHeaderPreview() {
@@ -361,7 +385,7 @@
                 $("#admin-header").removeClass($('#admin-header').attr('class').split(' ').pop());
                 $("#admin-header").addClass($("#admin_navbar").val())
                 $("#admin-header").addClass($("#admin_navtext").val())
-                $("#admin_navtext").val() == "navbar-light" ? $("#admin-logo").removeClass('white-logo') : $("#admin-logo").addClass('white-logo')
+                $("#admin_navtext").val() == "navbar-light" ? $("#admin-logo").removeClass('invert-logo') : $("#admin-logo").addClass('invert-logo')
             }
 
             function managerHeaderPreview() {
@@ -369,7 +393,7 @@
                 $("#manager-header").removeClass($('#manager-header').attr('class').split(' ').pop());
                 $("#manager-header").addClass($("#manager_navbar").val())
                 $("#manager-header").addClass($("#manager_navtext").val())
-                $("#manager_navtext").val() == "navbar-light" ? $("#manager-logo").removeClass('white-logo') : $("#manager-logo").addClass('white-logo')
+                $("#manager_navtext").val() == "navbar-light" ? $("#manager-logo").removeClass('invert-logo') : $("#manager-logo").addClass('invert-logo')
             }
 
             function useRates() {

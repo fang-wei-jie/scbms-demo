@@ -9,7 +9,6 @@ use App\Models\Features;
 use App\Models\UI;
 use App\Models\Rates;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 
 class PreferencesController extends Controller
 {
@@ -107,9 +106,30 @@ class PreferencesController extends Controller
             Features::where('name', 'rates_weekend_weekday')->update(['value' => $request->weekdayWeekend == null ? '0' : '1']);
             Features::where('name', 'rates_editable_admin')->update(['value' => $request->adminRates == null ? '0' : '1']);
 
-            UI::where('side', '')->update(['navbar_class' => $request->customer_navbar, 'navbar_text_class' => $request->customer_navtext]);
-            UI::where('side', 'admin')->update(['navbar_class' => $request->admin_navbar, 'navbar_text_class' => $request->admin_navtext]);
-            UI::where('side', 'manager')->update(['navbar_class' => $request->manager_navbar, 'navbar_text_class' => $request->manager_navtext]);
+            if ($request->hasFile('logo')) {
+                $this -> validate($request, ["logo" => 'mimes:jpg,jpeg,png,svg']);
+
+                $file_name = "customer_favicon." . $request->logo->extension();
+                $request->logo->move(public_path('favicon'), $file_name);
+
+                UI::where('side', '')->update(['logo' => "favicon/".$file_name]);
+            }
+
+            UI::where('side', '')->update([
+                'navbar_class' => $request->customer_navbar,
+                'navbar_text_class' => $request->customer_navtext,
+                'logo_invert' => $request->customer_invert_logo,
+            ]);
+            UI::where('side', 'admin')->update([
+                'navbar_class' => $request->admin_navbar,
+                'navbar_text_class' => $request->admin_navtext,
+                'logo_invert' => (($request->admin_navtext == "navbar-dark") ? "invert" : "normal"),
+            ]);
+            UI::where('side', 'manager')->update([
+                'navbar_class' => $request->manager_navbar,
+                'navbar_text_class' => $request->manager_navtext,
+                'logo_invert' => (($request->manager_navtext == "navbar-dark") ? "invert" : "normal"),
+            ]);
 
         }
 
