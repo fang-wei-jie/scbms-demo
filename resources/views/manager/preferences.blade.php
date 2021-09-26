@@ -318,6 +318,29 @@
         $(document).ready(function() {
             useRates()
 
+            $("#name").keyup(function() {
+                if ($("#name").val() == "") {
+                    $("#name").addClass("is-invalid")
+                    $("#name").removeClass("is-valid")
+                    $("#save").prop("disabled", true)
+                } else {
+                    $("#name").addClass("is-valid")
+                    $("#name").removeClass("is-invalid")
+                    $("#save").prop("disabled", false)
+                }
+            })
+
+            $("#domain").keyup(function() {
+                if ($("#domain").val() == "") {
+                    $("#domain").addClass("is-invalid")
+                    $("#domain").removeClass("is-valid")
+                    $("#save").prop("disabled", true)
+                } else {
+                    $("#domain").addClass("is-valid")
+                    $("#domain").removeClass("is-invalid")
+                    $("#save").prop("disabled", false)
+                }
+            })
 
             $("#start_time").change(function() {
                 validateHours()
