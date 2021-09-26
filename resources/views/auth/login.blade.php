@@ -30,11 +30,9 @@ Login
         <button class="btn btn-primary" type="submit" name="login">
             Login
         </button>
-    </div>
-
-
-    <div class="form-floating mb-3">
-        Don't have an account? <a href="{{ route('register') }}"> Register now</a>
+        <a class="btn btn-secondary" href="{{ route('register') }}">
+                Don't have an account? Register now
+        </a>
     </div>
 </form>
 @endsection

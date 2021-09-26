@@ -36,10 +36,7 @@ Register
 
     <div class="d-grid gap-2 mb-3">
         <button class="btn btn-primary" type="submit" name="register">Register</button>
-    </div>
-
-    <div class="form-floating mb-3">
-        Already have an account? <a href="{{ route('login') }}">Login now</a>
+        <a class="btn btn-secondary" href="{{ route('login') }}">Already have an account? Back to login</a>
     </div>
 </form>
 @endsection
