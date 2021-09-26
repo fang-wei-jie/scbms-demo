@@ -318,6 +318,15 @@
         $(document).ready(function() {
             useRates()
 
+
+            $("#start_time").change(function() {
+                validateHours()
+            })
+
+            $("#end_time").change(function() {
+                validateHours()
+            })
+
             new bootstrap.Tooltip($("#bookingDeletableCustomer"))
             new bootstrap.Tooltip($("#bookingDeletableAdmin"))
             new bootstrap.Tooltip($("#adminSalesReport"))
@@ -412,6 +421,38 @@
                     $("#adminRates").prop('disabled', true)
                     $("#weekdayWeekend").prop('checked', false)
                     $("#adminRates").prop('checked', false)
+                }
+            }
+
+            function validateHours() {
+
+                var starttime = Number($("#start_time").val())
+                var endtime = Number($("#end_time").val())
+
+                if (endtime > starttime) {
+
+                    $("#save").prop("disabled", false)
+                    $("#start_time").addClass("is-valid")
+                    $("#start_time").removeClass("is-invalid")
+                    $("#end_time").addClass("is-valid")
+                    $("#end_time").removeClass("is-invalid")
+
+                } else if (endtime < starttime) {
+
+                    $("#save").prop("disabled", true)
+                    $("#start_time").removeClass("is-invalid")
+                    $("#start_time").addClass("is-valid")
+                    $("#end_time").addClass("is-invalid")
+                    $("#end_time").removeClass("is-valid")
+
+                } else if (endtime = starttime) {
+
+                    $("#save").prop("disabled", true)
+                    $("#start_time").addClass("is-invalid")
+                    $("#start_time").removeClass("is-valid")
+                    $("#end_time").addClass("is-invalid")
+                    $("#end_time").removeClass("is-valid")
+
                 }
             }
         })

@@ -92,8 +92,11 @@ class PreferencesController extends Controller
 
             Operation::where('attr', 'name')->update(['value' => $request->name]);
             Operation::where('attr', 'domain')->update(['value' => $request->domain]);
-            Operation::where('attr', 'start_time')->update(['value' => $request->start_time]);
-            Operation::where('attr', 'end_time')->update(['value' => $request->end_time]);
+
+            if (($request->end_time - $request->start_time) > 0) {
+                Operation::where('attr', 'start_time')->update(['value' => $request->start_time]);
+                Operation::where('attr', 'end_time')->update(['value' => $request->end_time]);
+            }
 
             Features::where('name', 'delete_booking')->update(['value' => $request->deleteBooking == null ? '0' : '1']);
             Features::where('name', 'customer_delete')->update(['value' => $request->customerDeleteBooking == null ? '0' : '1']);
