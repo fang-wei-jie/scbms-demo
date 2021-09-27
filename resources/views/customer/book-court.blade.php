@@ -51,6 +51,8 @@ Book Courts
         <form class="form-resize" action="{{ route('book-court') }}" method="post">
             @csrf
 
+            @if($count < 9)
+
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <b>Selected Date and Time</b> <br>
@@ -59,7 +61,7 @@ Book Courts
                     <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
                 </div>
                 <div>
-                    <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset time</a>
+                    <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset date time</a>
                 </div>
             </div>
 
@@ -105,6 +107,28 @@ Book Courts
                     Confirm Booking for RM<span id="price"></span> in Cash
                 </button>
             </div>
+
+            @else
+
+            <div class="mb-3">
+                <b>Selected Date and Time</b> <br>
+                {{ date_format(date_create($dateSlot), 'd/m/Y') }}, {{ date_format(date_create($dateSlot), 'l') }} <br>
+                {{ $timeSlot }}:00-{{ $endTime }}:00
+                <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
+            </div>
+
+            <div class="alert alert-danger" role="alert">
+                <i class="bi bi-exclamation-lg"></i>
+                No courts were available for the date time combination selected. Please select another date time combination.
+            </div>
+
+            <div class="d-grid gap-2">
+                <a href="{{ route('book-court') }}" class="btn btn-outline-primary">Reset date time selected</a>
+            </div>
+
+            @endif
+
+
         </form>
 
         @endif

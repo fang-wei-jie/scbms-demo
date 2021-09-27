@@ -78,47 +78,43 @@ class MakeBookingsController extends Controller
                         })
                     ->count();
 
-                if ($count != 9) {
-                    $courts = array();
-                    for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
-                        $booked = DB::table('bookings')
-                            ->where('dateSlot', $dateSlot)
-                            ->where('courtID', $courtNo)
-                            ->where(
-                                function($query) use ($timeSlot, $timeLength){
-                                    $query
-                                        ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                                        ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
-                            })
-                            ->count();
+                $courts = array();
+                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                    $booked = DB::table('bookings')
+                        ->where('dateSlot', $dateSlot)
+                        ->where('courtID', $courtNo)
+                        ->where(
+                            function($query) use ($timeSlot, $timeLength){
+                                $query
+                                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
+                                    ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                        })
+                        ->count();
 
-                        array_push($courts, $booked);
-                    }
+                    array_push($courts, $booked);
+                }
 
-                    if (Features::where('name', 'rates')->first()->value == 1) {
-                        // if rates was enabled
+                if (Features::where('name', 'rates')->first()->value == 1) {
+                    // if rates was enabled
 
-                        if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
-                            $dayOfWeek = date_format(date_create($dateSlot), 'N');
-                            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                                $excludeRateID = 2; // weekend
-                            } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                                $excludeRateID = 1; // weekdays
-                            }
-
-                            // if weekend and weekday is in use, disable normal rate
-                            $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
-                        } else {
-                            // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                            $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                    if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                        $dayOfWeek = date_format(date_create($dateSlot), 'N');
+                        if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                            $excludeRateID = 2; // weekend
+                        } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                            $excludeRateID = 1; // weekdays
                         }
 
+                        // if weekend and weekday is in use, disable normal rate
+                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                     } else {
-                        // if rates was disabled
-                        $rates = Rates::where('id', 3)->get();
+                        // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
+                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
                     }
 
-
+                } else {
+                    // if rates was disabled
+                    $rates = Rates::where('id', 3)->get();
                 }
 
                 return view ('customer.book-court', [
