@@ -193,7 +193,7 @@ $(document).ready(function() {
             } else {
 
                 // inserts updated time slot select list based on the hours left today
-                for (i = todayHours; i < {{ $end_time }}; i++) {
+                for (i = (todayHours > {{ $start_time }} ? todayHours : {{ $start_time }}); i < {{ $end_time }}; i++) {
                     $("#timeSlot").append(new Option(i + ":00", i))
                 }
 
