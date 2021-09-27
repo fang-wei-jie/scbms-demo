@@ -36,6 +36,7 @@ class MakeBookingsController extends Controller
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $start_time = Operation::where('attr', 'start_time') -> first() -> value;
         $end_time = Operation::where('attr', 'end_time') -> first() -> value;
+        $courts_count = Operation::where('attr', 'courts_count')->first()->value;
 
         if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
         {
@@ -79,7 +80,7 @@ class MakeBookingsController extends Controller
                     ->count();
 
                 $courts = array();
-                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                     $booked = DB::table('bookings')
                         ->where('dateSlot', $dateSlot)
                         ->where('courtID', $courtNo)
@@ -181,7 +182,7 @@ class MakeBookingsController extends Controller
                     ->count();
 
                 $courts = array();
-                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                     $booked = DB::table('bookings')
                         ->where('dateSlot', $dateSlot)
                         ->where('courtID', $courtNo)
@@ -315,7 +316,7 @@ class MakeBookingsController extends Controller
                 }
 
                 $courts = array();
-                for ($courtNo = 1; $courtNo <= 9; $courtNo++) {
+                for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                     $booked = DB::table('bookings')
                         ->where('dateSlot', $dateSlot)
                         ->where('courtID', $courtNo)

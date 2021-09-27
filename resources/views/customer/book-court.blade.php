@@ -51,7 +51,7 @@ Book Courts
         <form class="form-resize" action="{{ route('book-court') }}" method="post">
             @csrf
 
-            @if($count < 9)
+            @if($count < DB::table('operation_preferences')->where('attr', 'courts_count')->first()->value)
 
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>

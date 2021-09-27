@@ -58,6 +58,11 @@
                         </div>
                     </div>
 
+                    <div class="form-floating mb-3">
+                        <input id="courts_count" class="form-control" type="text" name="courts_count" maxlength="255" value="{{ $courts_count }}">
+                        <label for="courts_count">Number of Courts</label>
+                    </div>
+
                 </div>
 
                 <div class="col-lg">
@@ -348,6 +353,18 @@
 
             $("#end_time").change(function() {
                 validateHours()
+            })
+
+            $("#courts_count").keyup(function() {
+                if ($("#courts_count").val() == "") {
+                    $("#courts_count").addClass("is-invalid")
+                    $("#courts_count").removeClass("is-valid")
+                    $("#save").prop("disabled", true)
+                } else {
+                    $("#courts_count").addClass("is-valid")
+                    $("#courts_count").removeClass("is-invalid")
+                    $("#save").prop("disabled", false)
+                }
             })
 
             new bootstrap.Tooltip($("#bookingDeletableCustomer"))
