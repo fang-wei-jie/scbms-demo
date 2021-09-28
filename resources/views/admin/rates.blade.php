@@ -269,20 +269,28 @@ Rates
 @endsection
 
 @section('bottom-js')
+<script>
+    var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
+</script>
 
 @error('rateStatus')
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @enderror
 @error('rateName')
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
 </script>
 @enderror
 @error('ratePrice')
 <script>
-    $('#infoBox').modal()
+    infoBox.show()
+</script>
+@enderror
+@if(session('alert') || session('info'))
+<script>
+    infoBox.show()
 </script>
 @enderror
 

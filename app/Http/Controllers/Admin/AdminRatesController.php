@@ -86,9 +86,13 @@ class AdminRatesController extends Controller
 
             }
 
+            return back()->with('info', 'Rate detail for '.$request->rateName.' is updated. ');
+
         } else if (isset($_POST['archive'])) {
 
             Rates::where('id', $request->id)->update(['rateStatus' => 2]);
+
+            return back()->with('info', 'Rate was archived. ');
 
         } else if (isset($_POST['add'])) {
 
