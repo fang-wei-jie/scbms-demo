@@ -17,11 +17,7 @@ class DashboardController extends Controller
     function view ()
     {
 
-        $rates = Features::where('name', 'rates')->first()->value;
-
-        return view ('manager.dashboard', [
-            'rates' => $rates,
-        ]);
-
+        return view ('manager.dashboard');
+        
     }
 }
