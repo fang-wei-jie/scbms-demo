@@ -55,7 +55,7 @@ class ManagerRatesController extends Controller
 
                 $this -> validate($request, [
 
-                    'ratePrice' => 'required | numeric | max:99'
+                    'ratePrice' => 'required | numeric | max:99',
 
                 ]);
 
@@ -66,21 +66,25 @@ class ManagerRatesController extends Controller
                 $this -> validate($request, [
 
                     'rateName' => 'required | string | max:255 | unique:rates,rateName',
-                    'ratePrice' => 'required | numeric | max:99'
+                    'ratePrice' => 'required | numeric | max:99',
 
                 ]);
 
                 Rates::where('id', '=', $request->id)->update(
                     [
                         'rateName' => $request->input('rateName'),
-                        'ratePrice' => $request->input('ratePrice')
+                        'ratePrice' => $request->input('ratePrice'),
                     ]);
 
             }
 
+            return back()->with('info', 'Rate detail for '.$request->rateName.' is updated. ');
+
         } else if (isset($_POST['archive'])) {
 
             Rates::where('id', '=', $request->id)->update(['rateStatus' => 2]);
+
+            return back()->with('info', 'Rate was archived. ');
 
         } else if (isset($_POST['add'])) {
 
