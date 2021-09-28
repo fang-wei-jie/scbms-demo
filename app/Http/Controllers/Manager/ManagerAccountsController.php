@@ -35,17 +35,15 @@ class ManagerAccountsController extends Controller
 
                 'email' => 'required | max:25 | unique:managers',
                 'name' => 'required | max:255',
+                'password' => 'required | min:8 | max:255 | confirmed',
 
             ]);
-
-            // generate password
-            $password = Str::random(25);
 
             // create manager
             Manager::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => $password,
+                'password' => Hash::make($request->password),
             ]);
 
             return back()->with('info', "Manager ".$request->name." was added.");
