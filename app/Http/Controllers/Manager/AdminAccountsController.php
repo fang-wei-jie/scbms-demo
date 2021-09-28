@@ -48,9 +48,6 @@ class AdminAccountsController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            // fetches new list of admins
-            $admins = DB::table('admins')->get();
-
             return back()->with("info", "Successfully created ".$request->name.". ");
 
         } else if (isset($_POST['edit'])){
@@ -66,9 +63,6 @@ class AdminAccountsController extends Controller
             $admin = Admin::find($request->id);
             $admin->email = $request->email;
             $admin->save();
-
-            // fetches new list of admins
-            $admins = DB::table('admins')->get();
 
             return back()->with('info', "Admin ID for ".$admin->name." was updated.");
 
@@ -100,9 +94,6 @@ class AdminAccountsController extends Controller
             $admin = Admin::find($request->id);
             $admin->password = Hash::make($randomPassword);
             $admin->save();
-
-            // fetches new list of admins
-            $admins = DB::table('admins')->get();
 
             return back()->with('info', "Password for ".$admin->name." was resetted to ".$randomPassword);
 
