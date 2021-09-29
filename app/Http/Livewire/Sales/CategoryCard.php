@@ -65,11 +65,10 @@ class CategoryCard extends Component
             }
 
             $ratesPerf = DB::table('bookings')
-                ->join('rates', 'rates.id', '=', 'bookings.rateID')
-                ->selectRaw('rates.rateName as rate, SUM(timeLength*bookingPrice) as total')
+                ->selectRaw('bookingRateName as rate, SUM(timeLength*bookingPrice) as total')
                 ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
-                ->groupBy('rates.rateName')
-                ->orderBy('rates.rateName')
+                ->groupBy('bookingRateName')
+                ->orderBy('bookingRateName')
                 ->get();
 
             $timeslotPerf = DB::table('bookings')

@@ -25,13 +25,18 @@ class ManagerRatesController extends Controller
 
         if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
             // if weekend and weekday is in use, disable normal rate
-            $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 3);
+            $default = Rates::get()->where('id', '<=', 2);
         } else {
             // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+            $default = Rates::where('id', 3)->get();
         }
 
-        return view('manager.rates', ['rates' => $rates]);
+        $custom = Rates::where('id', '>', 3)->get();
+
+        return view('manager.rates', [
+            'default' => $default,
+            'custom' => $custom,
+        ]);
     }
 
     function process(Request $request)
@@ -59,7 +64,7 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                Rates::where('id', '=', $request->id)->update(['ratePrice' => $request->ratePrice]);
+                Rates::where('id', $request->id)->update(['ratePrice' => $request->ratePrice]);
 
             } else {
 
@@ -70,21 +75,22 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                Rates::where('id', '=', $request->id)->update(
-                    [
-                        'rateName' => $request->input('rateName'),
-                        'ratePrice' => $request->input('ratePrice'),
-                    ]);
+                Rates::where('id', $request->id)->update([
+                    
+                    'rateName' => $request->rateName,
+                    'ratePrice' => $request->ratePrice,
+
+                ]);
 
             }
 
             return back()->with('info', 'Rate detail for '.$request->rateName.' is updated. ');
 
-        } else if (isset($_POST['archive'])) {
+        } else if (isset($_POST['delete'])) {
 
-            Rates::where('id', '=', $request->id)->update(['rateStatus' => 2]);
+            Rates::where('id', $request->id)->delete();
 
-            return back()->with('info', 'Rate was archived. ');
+            return back()->with('info', 'Rate was deleted. ');
 
         } else if (isset($_POST['add'])) {
 

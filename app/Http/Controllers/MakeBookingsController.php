@@ -223,6 +223,7 @@ class MakeBookingsController extends Controller
 
             if ($ratesEnabled) {
                 $rateID = $request->rateID;
+                $bookingRateName = Rates::where('id', $rateID)->first()->rateName;
                 $bookingPrice = $request->bookingPrice;
             }
 
@@ -263,7 +264,7 @@ class MakeBookingsController extends Controller
             } else {
 
                 // inject the one and only rate
-                $rateID = Rates::where('id', 3)->first()->id;
+                $bookingRateName = Rates::where('id', 3)->first()->rateName;
                 $bookingPrice = Rates::where('id', 3)->first()->ratePrice;
 
                 $validBooking = ($validCourtDateTime && $request->rateID == null) ? true : false;
@@ -280,8 +281,8 @@ class MakeBookingsController extends Controller
                     'dateSlot' => $dateSlot,
                     'timeSlot' => $timeSlot,
                     'timeLength' => $timeLength,
-                    'rateID' => $rateID,
                     'bookingPrice' => $bookingPrice,
+                    'bookingRateName' => $bookingRateName,
                 ]);
 
                 return redirect() -> route('mybookings');

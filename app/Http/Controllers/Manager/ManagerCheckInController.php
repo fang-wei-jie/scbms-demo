@@ -31,7 +31,6 @@ class ManagerCheckInController extends Controller
         ]);
 
         $result = DB::table('bookings')
-            ->join('rates', 'rates.id', '=', 'bookings.rateID')
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('bookingID', '=', substr($request->input('resultToQuery'), 0, 7))
             ->where('custID', '=', substr($request->input('resultToQuery'), 8, 7))

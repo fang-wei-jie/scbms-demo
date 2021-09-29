@@ -43,7 +43,7 @@ My Bookings
                     <div>
                         {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                         {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                        Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
                     </div>
                     <div>
                         <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
@@ -64,7 +64,7 @@ My Bookings
                                     <span class="d-none d-md-block">&nbsp;Receipt</span>
                                 </span>
                             </button>
-                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-bs-toggle="modal" data-bs-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->rateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
+                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-bs-toggle="modal" data-bs-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->bookingRateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-journal-x"></i>
                                     <span class="d-none d-md-block">&nbsp;Delete Booking</span>
@@ -96,7 +96,7 @@ My Bookings
                     <div>
                         {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                         {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                        Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
                     </div>
                     <div>
                         <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>

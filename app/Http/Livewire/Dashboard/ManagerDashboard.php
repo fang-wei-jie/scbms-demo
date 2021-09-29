@@ -17,7 +17,6 @@ class ManagerDashboard extends Component
         $courts_count = Operation::where('attr', 'courts_count')->first()->value;
 
         $bookingRows = DB::table('bookings')
-            ->join('rates', 'bookings.rateID', '=', 'rates.id')
             ->where('dateSlot', '=', date('Ymd'))
             ->where('timeSlot', '<=', date('H'))
             ->where(DB::raw('(timeSlot + timeLength - 1) '), '>=', date('H'))
@@ -64,7 +63,7 @@ class ManagerDashboard extends Component
             'bookings' => $bookingRows,
 
             'rates' => $rates,
-            
+
             'yearSales' => $yearSales->yearSales,
             'monthSales' => $monthSales->monthSales,
             // 'weekSales' => $weekSales->weekSales,

@@ -175,10 +175,10 @@ Check In
                         <td>Length</td>
                         <td>{{ $result -> timeLength }} hours</td>
                     </tr>
-                    <tr class=" @if($result -> rateID == '3') {{ 'table-warning' }} @endif ">
+                    <tr>
                         <td>Rate</td>
                         <td>
-                            {{ $result -> rateName }}
+                            {{ $result -> bookingRateName }}
                         </td>
                     </tr>
                     <tr>

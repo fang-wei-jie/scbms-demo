@@ -75,7 +75,7 @@ Bookings
                         <td>{{ $todayBookingsData->timeLength }} hours</td>
                         <td>{{ ($todayBookingsData->timeSlot + $todayBookingsData->timeLength) }}:00</td>
                         <td>Court {{ $todayBookingsData->courtID }}</td>
-                        <td>{{ $todayBookingsData->rateName }}</td>
+                        <td>{{ $todayBookingsData->bookingRateName }}</td>
                     </tr>
                     @endforeach
                     <tr class="today-notfound" style="display:none">
@@ -131,7 +131,7 @@ Bookings
                         <td>{{ $futureBookingsData->timeLength }} hours</td>
                         <td>{{ ($futureBookingsData->timeSlot + $futureBookingsData->timeLength) }}:00</td>
                         <td>Court {{ $futureBookingsData->courtID }}</td>
-                        <td>{{ $futureBookingsData->rateName }}</td>
+                        <td>{{ $futureBookingsData->bookingRateName }}</td>
                         <td>
                             <button type="button" class="btn btn-danger" id="removeFutureBookingButton" data-bs-toggle="modal" data-bs-target="#removeFutureBooking" data-id="{{ $futureBookingsData->bookingID }}" data-custid="{{ $futureBookingsData->custID }}" data-name="{{ $futureBookingsData->name }}" data-date="{{ substr($futureBookingsData->dateSlot, 6, 2) }}/{{ substr($futureBookingsData->dateSlot, 4, 2) }}/{{ substr($futureBookingsData->dateSlot, 0, 4) }}" data-time="{{ $futureBookingsData->timeSlot }}:00" data-length="{{ $futureBookingsData->timeLength }}" data-court="{{ $futureBookingsData->courtID }}" data-phone="{{ $futureBookingsData->phone }}" data-email="{{ $futureBookingsData->email }}">Delete Booking</button>
                         </td>
@@ -189,7 +189,7 @@ Bookings
                         <td>{{ $previousBookingsData->timeLength }} hours</td>
                         <td>{{ ($previousBookingsData->timeSlot + $previousBookingsData->timeLength) }}:00</td>
                         <td>Court {{ $previousBookingsData->courtID }}</td>
-                        <td>{{ $previousBookingsData->rateName }}</td>
+                        <td>{{ $previousBookingsData->bookingRateName }}</td>
                     </tr>
                     @endforeach
                     <tr class="previous-notfound" style="display:none">
@@ -244,7 +244,7 @@ Bookings
                         <td>{{ $allBookingsData->timeLength }} hours</td>
                         <td>{{ ($allBookingsData->timeSlot + $allBookingsData->timeLength) }}:00</td>
                         <td>Court {{ $allBookingsData->courtID }}</td>
-                        <td>{{ $allBookingsData->rateName }}</td>
+                        <td>{{ $allBookingsData->bookingRateName }}</td>
                     </tr>
                     @endforeach
                     <tr class="all-notfound" style="display:none">

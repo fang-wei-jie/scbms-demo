@@ -36,12 +36,12 @@
                     @else
 
                         @for ($i = 1; $i <= $courts_count; $i++)
-                            @foreach ($bookings as $bookingDetails)
-                                @if ($i == $bookingDetails->courtID)
-                                    <h5>Court {{ $i }}</h5><span>{{ $bookingDetails->rateName }} rate</span> <br>
-                                    <span>{{ $bookingDetails->timeLength }} hours, {{ $bookingDetails->timeSlot }}:00 -
-                                        {{ $bookingDetails->timeSlot + $bookingDetails->timeLength }}:00</span>
-                                    <hr>
+                            @foreach ($bookings as $booking)
+                                @if ($i == $booking->courtID)
+                                    <h5>Court {{ $i }}</h5><span>{{ $booking->bookingRateName }} rate</span> <br>
+                                    <span>{{ $booking->timeLength }} hours, {{ $booking->timeSlot }}:00 -
+                                        {{ $booking->timeSlot + $booking->timeLength }}:00</span>
+                                    <div class="my-2"></div>
                                 @endif
                             @endforeach
                         @endfor

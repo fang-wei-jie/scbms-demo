@@ -1,5 +1,5 @@
 <div class="container" wire:poll.10000ms>
-    <span style="display: flex; justify-content: flex-end; align-items: center; ">Updated on {{ date("H:i:s") }}</span>
+    <span style="display: flex; justify-content: flex-end; align-items: center;">Updated on {{ date("H:i:s") }}</span>
 
     <div class="my-2"></div>
 
@@ -36,12 +36,12 @@
                     @else
 
                         @for ($i = 1; $i <= $courts_count; $i++)
-                            @foreach ($bookings as $bookingDetails)
-                                @if ($i == $bookingDetails->courtID)
-                                    <h5>Court {{ $i }}</h5><span>{{ $bookingDetails->rateName }} rate</span> <br>
-                                    <span>{{ $bookingDetails->timeLength }} hours, {{ $bookingDetails->timeSlot }}:00 -
-                                        {{ $bookingDetails->timeSlot + $bookingDetails->timeLength }}:00</span>
-                                    <hr>
+                            @foreach ($bookings as $booking)
+                                @if ($i == $booking->courtID)
+                                    <h5>Court {{ $i }}</h5><span>{{ $booking->bookingRateName }} rate</span> <br>
+                                    <span>{{ $booking->timeLength }} hours, {{ $booking->timeSlot }}:00 -
+                                        {{ $booking->timeSlot + $booking->timeLength }}:00</span>
+                                    <div class="my-2"></div>
                                 @endif
                             @endforeach
                         @endfor

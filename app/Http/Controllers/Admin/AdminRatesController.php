@@ -25,15 +25,21 @@ class AdminRatesController extends Controller
 
         if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
             // if weekend and weekday is in use, disable normal rate
-            $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 3);
+            $default = Rates::get()->where('id', '<=', 2);
         } else {
             // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $rates = Rates::where('rateStatus', '!=', 2)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+            $default = Rates::where('id', 3)->get();
         }
+
+        $custom = Rates::where('id', '>', 3)->get();
 
         $editable = Features::where('name', 'rates_editable_admin')->first()->value;
 
-        return view('admin.rates', ['rates' => $rates, 'editable' => $editable]);
+        return view('admin.rates', [
+            'default' => $default,
+            'custom' => $custom,
+            'editable' => $editable,
+        ]);
     }
 
     function process(Request $request)
@@ -61,7 +67,7 @@ class AdminRatesController extends Controller
 
                 $this -> validate($request, [
 
-                    'ratePrice' => 'required | numeric | max:99'
+                    'ratePrice' => 'required | numeric | max:99',
 
                 ]);
 
@@ -72,27 +78,26 @@ class AdminRatesController extends Controller
                 $this -> validate($request, [
 
                     'rateName' => 'required | string | max:255 | unique:rates,rateName',
-                    'ratePrice' => 'required | numeric | max:99'
+                    'ratePrice' => 'required | numeric | max:99',
 
                 ]);
 
-                Rates::where('id', $request->id)
-                    ->update(
-                        [
-                            'rateName' => $request->input('rateName'),
-                            'ratePrice' => $request->input('ratePrice')
-                        ],
-                    );
+                Rates::where('id', $request->id)->update([
+
+                    'rateName' => $request->rateName,
+                    'ratePrice' => $request->ratePrice,
+                    
+                ]);
 
             }
 
             return back()->with('info', 'Rate detail for '.$request->rateName.' is updated. ');
 
-        } else if (isset($_POST['archive'])) {
+        } else if (isset($_POST['delete'])) {
 
-            Rates::where('id', $request->id)->update(['rateStatus' => 2]);
+            Rates::where('id', $request->id)->delete();
 
-            return back()->with('info', 'Rate was archived. ');
+            return back()->with('info', 'Rate was deleted. ');
 
         } else if (isset($_POST['add'])) {
 
@@ -115,5 +120,6 @@ class AdminRatesController extends Controller
         }
 
         return back();
+
     }
 }
