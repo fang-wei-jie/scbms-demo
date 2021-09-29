@@ -84,6 +84,8 @@ class ManagerRatesController extends Controller
 
             }
 
+            Rates::where('id', $request->id)->update(['condition' => $request->condition]);
+
             return back()->with('info', 'Rate detail for '.$request->name.' is updated. ');
 
         } else if (isset($_POST['delete'])) {
@@ -99,6 +101,7 @@ class ManagerRatesController extends Controller
                 'name' => 'required | string | max:255 | unique:rates,name',
                 'status' => 'required | regex:/^[0-1]{1}/u',
                 'price' => 'required | max:99 | numeric',
+                'condition' => 'string | nullable',
 
             ]);
 
@@ -107,6 +110,7 @@ class ManagerRatesController extends Controller
                 'name' => $request->name,
                 'status' => $request->status,
                 'price' => $request->price,
+                'condition' => $request->condition,
 
             ]);
 

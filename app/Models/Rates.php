@@ -13,7 +13,7 @@ class Rates extends Model
         'name',
         'status',
         'price',
-        // 'condition',
+        'condition',
     ];
 
     public $timestamps = false;

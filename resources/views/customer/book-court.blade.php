@@ -88,7 +88,7 @@ Book Courts
             <div class="form-floating mb-3">
                 <select class="form-select" name="rateID" id="rateID" @if(DB::table('features_preferences')->where('name', 'rates')->first()->value != 1){{ "disabled" }}@endif>
                     @foreach ($rates as $rateDetail)
-                        <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->price }}>
+                        <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->price }} data-condition='{{ $rateDetail->condition }}''>
                             {{ $rateDetail->name }} @ RM{{ $rateDetail->price }}/hour
                         </option>
                     @endforeach
@@ -96,12 +96,16 @@ Book Courts
                 <label for="rateID">Rate</label>
             </div>
 
+            <b><p id="condition"></p></b>
+
+            <p>I understand by clicking the confirm booking button below, I will follow the condition specified for the rate selected (if any). Any violations may result in my booking be forfitted without refund. </p>
+
             <input type="date" class="confirmed-fields" name="dateSlot" value="{{ $dateSlot }}">
             <input type="text" class="confirmed-fields" name="timeSlot" value="{{ $timeSlot }}">
             <input type="text" class="confirmed-fields" name="timeLength" value="{{ $timeLength }}">
             <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
 
-            <div class="d-grid gap-2">
+            <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
                     <i class="bi bi-journal-check"></i>
                     Confirm Booking for RM<span id="price"></span> in Cash
@@ -259,10 +263,14 @@ $(document).ready(function() {
     // initialize the price displayed on the pay button
     priceButtonUpdate()
 
+    // initialize the condition
+    rateConditionUpdate()
+
     // if the rate selection was changed
     $("#rateID").change(function () {
         // update the price displayed on the pay button
         priceButtonUpdate()
+        rateConditionUpdate()
     })
 
     // FUNCTIONS SECTION
@@ -280,6 +288,17 @@ $(document).ready(function() {
 
         // inserts the updated price into the hidden field of inputs for calculation
         $("#bookingPrice").val(price)
+    }
+
+    // update the condition for the selected rate, if available
+    function rateConditionUpdate() {
+
+        // obtains condition data of the rate selected
+        var condition = $("#rateID option:selected").data('condition')
+
+        // injects the condition into the span
+        $("#condition").text(condition)
+
     }
 
     @endif

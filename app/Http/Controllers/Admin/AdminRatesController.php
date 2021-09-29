@@ -90,6 +90,8 @@ class AdminRatesController extends Controller
                 ]);
 
             }
+            
+            Rates::where('id', $request->id)->update(['condition' => $request->condition]);
 
             return back()->with('info', 'Rate detail for '.$request->name.' is updated. ');
 
@@ -100,12 +102,13 @@ class AdminRatesController extends Controller
             return back()->with('info', 'Rate was deleted. ');
 
         } else if (isset($_POST['add'])) {
-            
+
             $this -> validate($request, [
 
                 'name' => 'required | string | max:255 | unique:rates,name',
                 'status' => 'required | regex:/^[0-1]{1}/u',
                 'price' => 'required | max:99 | numeric',
+                'condition' => 'string | nullable',
 
             ]);
 
@@ -114,6 +117,7 @@ class AdminRatesController extends Controller
                 'name' => $request->name,
                 'status' => $request->status,
                 'price' => $request->price,
+                'condition' => $request->condition,
 
             ]);
 

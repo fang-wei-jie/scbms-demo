@@ -34,7 +34,7 @@ Rates
                         </div>
                         @if($editable == 1)
                         <div class="col-auto">
-                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}">
+                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}" data-condition='{{ $rates->condition }}'>
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-pencil-square"></i>
                                     <span class="d-none d-md-block">&nbsp;Edit</span>
@@ -111,7 +111,7 @@ Rates
                 @if($editable == 1)
                 <td>
                     <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
-                    data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}">
+                    data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}" data-condition='{{ $rates->condition }}'>
                         <span style="display: flex; justify-content: space-between; align-items: center;">
                             <i class="bi bi-pencil-square"></i>
                             <span class="d-none d-md-block">&nbsp;Edit</span>
@@ -157,6 +157,10 @@ Rates
                         <input type="text" class="form-control" name="price" placeholder="Enter rate price (RM)" minlength="1" maxlength="2" required>
                         <label for="price">Rate Price (RM)</label>
                     </div>
+                    <div class="form-floating mb-3">
+                        <textarea type="text" class="form-control" name="condition" placeholder="Enter rate condition (Optional)" style="height: 150px"></textarea>
+                        <label for="condition">Rate Condition (Optional)</label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -189,6 +193,10 @@ Rates
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="modal-price" name="price" placeholder="Enter new rate price (RM)" minlength="1" maxlength="2">
                         <label for="price">Rate Price (RM)</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea type="text" class="form-control" id="modal-condition" name="condition" placeholder="Enter rate condition (Optional)" style="height: 150px"></textarea>
+                        <label for="condition">Rate Condition (Optional)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -284,6 +292,7 @@ Rates
         $(".modal-id").prop("value", $(this).data('id'))
         $(".modal-name").prop("value", $(this).data('name'))
         $("#modal-price").prop("value", $(this).data('price'))
+        $("#modal-condition").prop("value", $(this).data('condition'))
 
         if (Number($(this).data('id')) <= 3) {
             $(".hide-from-default").css("display", "none");
