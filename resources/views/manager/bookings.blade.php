@@ -18,9 +18,6 @@ Bookings
 @endsection
 
 @section('body')
-
-@livewire('dashboard.bookings-dashboard')
-
 <div class="container-fluid">
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
