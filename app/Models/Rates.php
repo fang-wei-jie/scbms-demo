@@ -10,9 +10,10 @@ class Rates extends Model
     use HasFactory;
 
     protected $fillable = [
-        'rateName',
-        'rateStatus',
-        'ratePrice',
+        'name',
+        'status',
+        'price',
+        // 'condition',
     ];
 
     public $timestamps = false;

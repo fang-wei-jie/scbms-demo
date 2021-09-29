@@ -26,10 +26,10 @@ class AdminDashboard extends Component
 
         if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
             // if weekend and weekday is in use, disable normal rate
-            $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3);
+            $rates = Rates::where('status', 1)->get()->where('id', '!=', 3);
         } else {
             // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+            $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
         }
 
         $yearSales = DB::table('bookings')

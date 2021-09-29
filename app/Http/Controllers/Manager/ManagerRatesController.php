@@ -48,43 +48,43 @@ class ManagerRatesController extends Controller
 
         if (isset($_POST['enable'])) {
 
-            Rates::where('id', $request->id)->update(['rateStatus' => 1]);
+            Rates::where('id', $request->id)->update(['status' => 1]);
 
         } else if (isset($_POST['disable'])) {
 
-            Rates::where('id', $request->id)->update(['rateStatus' => 0]);
+            Rates::where('id', $request->id)->update(['status' => 0]);
 
         } else if (isset($_POST['edit'])) {
 
-            if ($request->oldRateName == $request->rateName) {
+            if (Rates::where('id', $request->id)->first()->name == $request->name || $request->id <= 3) {
 
                 $this -> validate($request, [
 
-                    'ratePrice' => 'required | numeric | max:99',
+                    'price' => 'required | numeric | max:99',
 
                 ]);
 
-                Rates::where('id', $request->id)->update(['ratePrice' => $request->ratePrice]);
+                Rates::where('id', $request->id)->update(['price' => $request->price]);
 
             } else {
 
                 $this -> validate($request, [
 
-                    'rateName' => 'required | string | max:255 | unique:rates,rateName',
-                    'ratePrice' => 'required | numeric | max:99',
+                    'name' => 'required | string | max:255 | unique:rates,name',
+                    'price' => 'required | numeric | max:99',
 
                 ]);
 
                 Rates::where('id', $request->id)->update([
-                    
-                    'rateName' => $request->rateName,
-                    'ratePrice' => $request->ratePrice,
+
+                    'name' => $request->name,
+                    'price' => $request->price,
 
                 ]);
 
             }
 
-            return back()->with('info', 'Rate detail for '.$request->rateName.' is updated. ');
+            return back()->with('info', 'Rate detail for '.$request->name.' is updated. ');
 
         } else if (isset($_POST['delete'])) {
 
@@ -96,17 +96,17 @@ class ManagerRatesController extends Controller
 
             $this -> validate($request, [
 
-                'rateStatus' => 'required | regex:/^[0-1]{1}/u',
-                'rateName' => 'required | max:255 | unique:rates,rateName',
-                'ratePrice' => 'required | max:99 | numeric',
+                'name' => 'required | string | max:255 | unique:rates,name',
+                'status' => 'required | regex:/^[0-1]{1}/u',
+                'price' => 'required | max:99 | numeric',
 
             ]);
 
             Rates::create([
 
-                'rateStatus' => $request->rateStatus,
-                'rateName' => $request->rateName,
-                'ratePrice' => $request->ratePrice,
+                'name' => $request->name,
+                'status' => $request->status,
+                'price' => $request->price,
 
             ]);
 

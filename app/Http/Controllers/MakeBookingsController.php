@@ -19,7 +19,7 @@ class MakeBookingsController extends Controller
 
     }
 
-    function view_court ()
+    function view ()
     {
 
         // get operation hours
@@ -107,10 +107,10 @@ class MakeBookingsController extends Controller
                         }
 
                         // if weekend and weekday is in use, disable normal rate
-                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
+                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                     } else {
                         // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
                     }
 
                 } else {
@@ -167,10 +167,10 @@ class MakeBookingsController extends Controller
 
                 if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
                     // if weekend and weekday is in use, disable normal rate
-                    $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
+                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                 } else {
                     // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                    $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
                 }
 
                 $message = "We are sorry. We had moved away from single rate policy. Please review the new rate below. ";
@@ -252,11 +252,11 @@ class MakeBookingsController extends Controller
 
                     // if weekend and weekday IS in use
                     // check if normal rate is NOT selected, then if rate selected is enabled, then if rate selected is NOT excluded rate for the date
-                    $validRate = ($rateID != 3 && Rates::where('id', $rateID)->first()->rateStatus == 1 && $rateID != $excludeRateID) ? true : false;
+                    $validRate = ($rateID != 3 && Rates::where('id', $rateID)->first()->status == 1 && $rateID != $excludeRateID) ? true : false;
                 } else {
                     // if weekend and weekday is NOT in use
                     // check if weekend/weekday rate is NOT selected, then if rate selected is enabled
-                    $validRate = ($rateID != 1 && $rateID != 2 && Rates::where('id', $rateID)->first()->rateStatus == 1) ? true : false;
+                    $validRate = ($rateID != 1 && $rateID != 2 && Rates::where('id', $rateID)->first()->status == 1) ? true : false;
                 }
 
                 $validBooking = ($validCourtDateTime && $validRate) ? true : false;
@@ -300,10 +300,10 @@ class MakeBookingsController extends Controller
 
                     if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
                         // if weekend and weekday is in use, disable normal rate
-                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
+                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                     } else {
                         // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                        $rates = Rates::where('rateStatus', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
                     }
 
                     $message = ($validRate == false) ? "We are sorry. The rate selected was no longer available. " : "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";

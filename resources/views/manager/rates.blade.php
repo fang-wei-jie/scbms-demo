@@ -29,11 +29,11 @@ Rates
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h5 class="card-title">{{ $rates->rateName }}</h5>
-                            <p class="card-text">RM {{ $rates->ratePrice }}</p>
+                            <h5 class="card-title">{{ $rates->name }}</h5>
+                            <p class="card-text">RM {{ $rates->price }}</p>
                         </div>
                         <div class="col-auto">
-                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->rateName}}" data-price="{{$rates->ratePrice}}">
+                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-pencil-square"></i>
                                     <span class="d-none d-md-block">&nbsp;Edit</span>
@@ -77,11 +77,11 @@ Rates
         <tbody>
             @foreach ($custom as $rates)
             <tr>
-                <td>{{$rates->rateName}}</td>
+                <td>{{$rates->name}}</td>
                 <td>
                     <form action="{{ route('manager.rates') }}" method="post">
                         @csrf
-                        @if($rates->rateStatus == 1)
+                        @if($rates->status == 1)
                         <button class="btn btn-success" type="submit" name="disable">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <span class="d-none d-md-block">Enabled&nbsp;</span>
@@ -99,13 +99,19 @@ Rates
                         <input type="hidden" name="id" value="{{$rates->id}}">
                     </form>
                 </td>
-                <td>{{$rates->ratePrice}}</td>
+                <td>{{$rates->price}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
-                    data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->rateName}}" data-price="{{$rates->ratePrice}}">
+                    data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}">
                         <span style="display: flex; justify-content: space-between; align-items: center;">
                             <i class="bi bi-pencil-square"></i>
                             <span class="d-none d-md-block">&nbsp;Edit</span>
+                        </span>
+                    </button>
+                    <button class="btn btn-danger" type="button" id="deleteRate" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{$rates->id}}" data-name="{{$rates->name}}">
+                        <span style="display: flex; justify-content: space-between; align-items: center;">
+                            <i class="bi bi-trash-fill"></i>
+                            <span class="d-none d-md-block">&nbsp;Delete</span>
                         </span>
                     </button>
                 </td>
@@ -127,19 +133,19 @@ Rates
                 @csrf
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="rateName" placeholder="Enter rate name" maxlength="255" required>
-                        <label for="rateName">Rate Name</label>
+                        <input type="text" class="form-control" name="name" placeholder="Enter rate name" maxlength="255" required>
+                        <label for="name">Rate Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select class="form-select" name="rateStatus" id="rateStatus">
+                        <select class="form-select" name="status" id="status">
                             <option value="1">Enabled</option>
                             <option value="0">Disabled</option>
                         </select>
-                        <label for="rateStatus">Rate Status</label>
+                        <label for="status">Rate Status</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="ratePrice" placeholder="Enter rate price (RM)" minlength="1" maxlength="2" required>
-                        <label for="ratePrice">Rate Price (RM)</label>
+                        <input type="text" class="form-control" name="price" placeholder="Enter rate price (RM)" minlength="1" maxlength="2" required>
+                        <label for="price">Rate Price (RM)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -157,7 +163,7 @@ Rates
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editLabel">
-                    Edit <b><span id="rateName"></span></b>
+                    Edit <b><span id="name"></span></b>
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -167,37 +173,40 @@ Rates
                     <input type="text" class="form-control modal-id" name="id" style="display: none;">
 
                     <div class="form-floating mb-3 hide-from-default">
-                        <input type="text" class="modal-rateName" name="oldRateName" minlength="1" maxlength="25" style="display: none;">
-                        <input type="text" class="form-control modal-rateName" name="rateName" placeholder="Enter new rate name" minlength="1" maxlength="25">
-                        <label for="rateName">Rate Name</label>
+                        <input type="text" class="form-control modal-name" name="name" placeholder="Enter new rate name" minlength="1" maxlength="25">
+                        <label for="name">Rate Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="modal-ratePrice" name="ratePrice" placeholder="Enter new rate price (RM)" minlength="1" maxlength="2">
-                        <label for="ratePrice">Rate Price (RM)</label>
-                    </div>
-                    <div class="accordion accordion-flush hide-from-default" id="accordionFlushExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Delete Rate
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <div class="d-grid gap-2">
-                                        Are you sure you want to delete this rate? This action cannot be undone.
-                                        <button class="btn btn-danger" type="submit" name="delete">
-                                            <i class="bi bi-trash-fill"></i>&nbsp;Delete this rate
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control" id="modal-price" name="price" placeholder="Enter new rate price (RM)" minlength="1" maxlength="2">
+                        <label for="price">Rate Price (RM)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" name="edit">Submit changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- delete rate modal view -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteLabel">Confirm delete rate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="post">
+                @csrf
+                <div class="modal-body">
+                    <input type="text" class="form-control modal-id" name="id" minlength="1" maxlength="1" style="display: none;">
+                    Are you sure to delete <b><span class="modal-name"></span></b>? This act cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger" name="delete">Submit changes</button>
                 </div>
             </form>
         </div>
@@ -214,9 +223,9 @@ Rates
             </div>
             <div class="modal-body">
                 @if(session('info')) {{ session('info') }} @endif
-                @error('rateStatus') {{ $message }} @enderror
-                @error('rateName') {{ $message }} @enderror
-                @error('ratePrice') {{ $message }} @enderror
+                @error('status') {{ $message }} @enderror
+                @error('name') {{ $message }} @enderror
+                @error('price') {{ $message }} @enderror
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
@@ -237,17 +246,17 @@ Rates
     var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
 </script>
 
-@error('rateStatus')
+@error('status')
 <script>
     infoBox.show()
 </script>
 @enderror
-@error('rateName')
+@error('name')
 <script>
     infoBox.show()
 </script>
 @enderror
-@error('ratePrice')
+@error('price')
 <script>
     infoBox.show()
 </script>
@@ -261,13 +270,10 @@ Rates
 <script>
     // feed data into the modal dialog
     $(document).on("click", "#editRate", function() {
-        $("#rateName").text($(this).data('name'))
+        $("#name").text($(this).data('name'))
         $(".modal-id").prop("value", $(this).data('id'))
-        $(".modal-rateName").prop("value", $(this).data('name'))
-        $("#modal-ratePrice").prop("value", $(this).data('price'))
-        if (!($(".accordion-button").hasClass("collapsed"))) {
-            $(".accordion-button").click()
-        }
+        $(".modal-name").prop("value", $(this).data('name'))
+        $("#modal-price").prop("value", $(this).data('price'))
 
         if (Number($(this).data('id')) <= 3) {
             $(".hide-from-default").css("display", "none");
@@ -276,9 +282,9 @@ Rates
         }
     })
 
-    $(document).on("click", "#archiveRate", function() {
+    $(document).on("click", "#deleteRate", function() {
         $(".modal-id").prop("value", $(this).data('id'))
-        $(".modal-rateName").text($(this).data('name'))
+        $(".modal-name").text($(this).data('name'))
     })
 </script>
 @endsection

@@ -82,10 +82,10 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col d-flex justify-content-between">
                                         <div class="text-xs fw-bold text-primary mb-1">
-                                            {{ $ratesDetail->rateName }}
+                                            {{ $ratesDetail->name }}
                                         </div>
                                         <div class="h5 mb-0 fw-bold text-gray-800">
-                                            RM {{ $ratesDetail->ratePrice }}
+                                            RM {{ $ratesDetail->price }}
                                         </div>
                                     </div>
                                 </div>

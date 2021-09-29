@@ -78,7 +78,7 @@ Route::post('/myaccount', [CustomerMyAccountController::class, 'update']);
 Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
 
 // Book Courts
-Route::get('/book-court', [MakeBookingsController::class, 'view_court']) -> name('book-court');
+Route::get('/book-court', [MakeBookingsController::class, 'view']) -> name('book-court');
 Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
 
 // Receipt/Invoice
