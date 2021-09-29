@@ -8,18 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Auth\LogoutController;
 
 // Customer Controllers
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\CustomerMyAccountController;
 use App\Http\Controllers\ViewBookingsController;
 use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
 
 // Admin Controllers
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
@@ -27,13 +27,13 @@ use App\Http\Controllers\Admin\SalesController as AdminSalesController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
 
 // Manager Controllers
+use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
-use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\AdminAccountsController;
-use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
-use App\Http\Controllers\Manager\SalesController;
+use App\Http\Controllers\Manager\SalesController as ManagerSalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
 use App\Http\Controllers\Manager\PreferencesController;
 
@@ -99,7 +99,7 @@ Route::prefix('admin')->group(function() {
     });
 
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'view']) -> name('admin.dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'view']) -> name('admin.dashboard');
 
     // Check In
     Route::get('/checkin', [AdminCheckInController::class, 'view']) -> name('admin.checkin');
@@ -153,7 +153,7 @@ Route::prefix('manager')->group(function() {
     Route::post('/rates', [ManagerRatesController::class, 'process']);
 
     // Sales Report
-    Route::get('/sales', [SalesController::class, 'view']) -> name('manager.sales');
+    Route::get('/sales', [ManagerSalesController::class, 'view']) -> name('manager.sales');
 
     // My Account
     Route::get('/myaccount', [ManagerMyAccountController::class, 'view']) -> name('manager.myaccount');
