@@ -43,7 +43,14 @@ My Bookings
                     <div>
                         {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                         {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                        Court {{ $list->courtID }} -
+                        <span @if($list->condition)data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $list->condition }}"@endif>
+                            @if($list->condition)
+                                <mark>{{ $list->bookingRateName }} rate&nbsp;<i class="bi bi-info-circle"></i></mark>
+                            @else
+                                {{ $list->bookingRateName }} rate
+                            @endif
+                        </span>
                     </div>
                     <div>
                         <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
@@ -96,7 +103,14 @@ My Bookings
                     <div>
                         {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                         {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                        Court {{ $list->courtID }} -
+                        <span @if($list->condition)data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $list->condition }}"@endif>
+                            @if($list->condition)
+                                <mark>{{ $list->bookingRateName }} rate&nbsp;<i class="bi bi-info-circle"></i></mark>
+                            @else
+                                {{ $list->bookingRateName }} rate
+                            @endif
+                        </span>
                     </div>
                     <div>
                         <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
@@ -114,7 +128,7 @@ My Bookings
                         </form>
                     </div>
                 </div>
-
+                
                 <br>
 
                 @endforeach
@@ -181,6 +195,12 @@ My Bookings
 
 @section('bottom-js')
 <script>
+    // activate all tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
     // fetches QR code when users clicks show check in code
     $(document).on("click", "#show-qrcode", function() {
         var data=$(this).data('code')
