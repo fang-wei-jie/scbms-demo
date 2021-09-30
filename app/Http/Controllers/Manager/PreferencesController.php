@@ -8,7 +8,6 @@ use App\Models\Operation;
 use App\Models\Features;
 use App\Models\UI;
 use App\Models\Rates;
-use Illuminate\Support\Facades\Storage;
 
 class PreferencesController extends Controller
 {
@@ -26,6 +25,8 @@ class PreferencesController extends Controller
         $start_time = Operation::where('attr', 'start_time')->first();
         $end_time = Operation::where('attr', 'end_time')->first();
         $courts_count = Operation::where('attr', 'courts_count')->first();
+        $phone = Operation::where('attr', 'phone')->first();
+        $address = Operation::where('attr', 'address')->first();
 
         $deleteBooking = Features::where('name', 'delete_booking')->first();
         $customerDeleteBooking = Features::where('name', 'customer_delete')->first();
@@ -48,6 +49,8 @@ class PreferencesController extends Controller
             "start_time" => $start_time->value,
             "end_time" => $end_time->value,
             "courts_count" => $courts_count->value,
+            "phone" => $phone->value,
+            "address" => $address->value,
 
             "deleteBooking" => $deleteBooking->value,
             "customerDeleteBooking" => $customerDeleteBooking->value,
@@ -77,6 +80,8 @@ class PreferencesController extends Controller
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
                 "courts_count" => 'required | numeric',
+                "phone" => 'required | string',
+                "address" => 'required | string',
                 "customer_navbar" => 'required | string',
                 "customer_navtext" => 'required | string',
                 "admin_navbar" => 'required | string',
@@ -96,6 +101,8 @@ class PreferencesController extends Controller
             Operation::where('attr', 'name')->update(['value' => $request->name]);
             Operation::where('attr', 'domain')->update(['value' => $request->domain]);
             Operation::where('attr', 'courts_count')->update(['value' => $request->courts_count]);
+            Operation::where('attr', 'phone')->update(['value' => $request->phone]);
+            Operation::where('attr', 'address')->update(['value' => $request->address]);
 
             if (($request->end_time - $request->start_time) > 0) {
                 Operation::where('attr', 'start_time')->update(['value' => $request->start_time]);

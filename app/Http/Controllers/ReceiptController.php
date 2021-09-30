@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Operation;
+use App\Models\UI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -29,16 +31,10 @@ class ReceiptController extends Controller
 
         ]);
 
-        $companyName = DB::table('operation_preferences')
-            ->where('attr', 'name')
-            ->first();
-
-        $logo = DB::table('ui_preferences')
-            ->where('side', '')
-            ->first()
-            ->logo;
-
-        if ($logo == null) { $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg"; }
+        $companyName = Operation::where('attr', 'name')->first();
+        $companyPhone = Operation::where('attr', 'phone')->first();
+        $companyAddress = Operation::where('attr', 'address')->first();
+        $logo = UI::where('side', '')->first()->logo;
 
         $invoiceDetail = DB::table('bookings')
             -> join('users', 'bookings.custID', '=', 'users.id')
@@ -59,6 +55,8 @@ class ReceiptController extends Controller
                 'courtID' => $invoiceDetail->courtID,
                 'rateName' => $invoiceDetail->bookingRateName,
                 'companyName' => $companyName->value,
+                'companyPhone' => $companyPhone->value,
+                'companyAddress' => $companyAddress->value,
                 'ratePrice' => $invoiceDetail->bookingPrice,
                 'timeLength' => $invoiceDetail->timeLength,
                 'logo' => $logo,

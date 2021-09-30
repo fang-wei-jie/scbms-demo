@@ -25,10 +25,11 @@ Receipt
                         </div>
                     </div>
                     <div class="row">
+                        <div class="my-2"></div>
                         <div class="col">
-                            <span>Blok B & C, Lot 5, Seksyen 10, Jalan Bukit, 43000 Kajang, Selangor.</span><br>
-            <span>Tel: 03-8765 4321</span><br>
-            <span>Email: badmintoncourt@email.my</span>
+                            <span style="white-space: pre;">{{ $companyAddress }}</span>
+                            <div class="my-2"></div>
+                            <span>Tel: {{ $companyPhone }}</span>
                         </div>
                     </div>
                 </div>

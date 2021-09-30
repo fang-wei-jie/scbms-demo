@@ -63,6 +63,16 @@
                         <label for="courts_count">Number of Courts</label>
                     </div>
 
+                    <div class="form-floating mb-3">
+                        <input id="phone" class="form-control" type="text" name="phone" maxlength="11" value="{{ $phone }}">
+                        <label for="phone">Phone Number</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea id="address" class="form-control" name="address" style="height: 100px">{{ $address }}</textarea>
+                        <label for="address">Physical Address</label>
+                    </div>
+
                 </div>
 
                 <div class="col-lg">
@@ -363,6 +373,30 @@
                 } else {
                     $("#courts_count").addClass("is-valid")
                     $("#courts_count").removeClass("is-invalid")
+                    $("#save").prop("disabled", false)
+                }
+            })
+
+            $("#phone").keyup(function() {
+                if ($("#phone").val() == "") {
+                    $("#phone").addClass("is-invalid")
+                    $("#phone").removeClass("is-valid")
+                    $("#save").prop("disabled", true)
+                } else {
+                    $("#phone").addClass("is-valid")
+                    $("#phone").removeClass("is-invalid")
+                    $("#save").prop("disabled", false)
+                }
+            })
+
+            $("#address").keyup(function() {
+                if ($("#address").val() == "") {
+                    $("#address").addClass("is-invalid")
+                    $("#address").removeClass("is-valid")
+                    $("#save").prop("disabled", true)
+                } else {
+                    $("#address").addClass("is-valid")
+                    $("#address").removeClass("is-invalid")
                     $("#save").prop("disabled", false)
                 }
             })
