@@ -179,6 +179,9 @@ Check In
                         <td>Rate</td>
                         <td>
                             {{ $result -> bookingRateName }}
+                            @if($result->condition)
+                                <br> <p class="h4">{{ $result->condition }}</p>
+                            @endif
                         </td>
                     </tr>
                     <tr>
