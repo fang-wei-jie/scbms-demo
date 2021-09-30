@@ -28,16 +28,18 @@
                     <div class="form-floating mb-3">
                         <input id="name" class="form-control" type="text" name="name" maxlength="255" value="{{ $name }}">
                         <label for="name">Name</label>
+                        <small>Name will be displayed across the whole website and receipt. </small>
                     </div>
 
                     <div class="form-floating mb-3">
                         <input id="domain" class="form-control" type="text" name="domain" maxlength="255" value="{{ $domain }}">
                         <label for="domain">Domain</label>
+                        <small>Domain will be used for log in of admin and manager accounts. </small>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col">
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <select class="form-select" name="start_time" id="start_time">
                                     @for ($hour = 0; $hour <= 23; $hour++)
                                     <option value="{{ $hour }}" @if($start_time == $hour){{ "selected" }}@endif>{{ $hour.":00" }}</option>
@@ -47,7 +49,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <div class="form-floating mb-3">
+                            <div class="form-floating">
                                 <select class="form-select" name="end_time" id="end_time">
                                     @for ($hour = 0; $hour <= 23; $hour++)
                                     <option value="{{ $hour }}" @if($end_time == $hour){{ "selected" }}@endif>{{ $hour.":00" }}</option>
@@ -56,21 +58,25 @@
                                 <label for="end_time">End Time</label>
                             </div>
                         </div>
+                        <small>Start and end time will be used to guide the bookings' time slot. </small>
                     </div>
 
                     <div class="form-floating mb-3">
                         <input id="courts_count" class="form-control" type="text" name="courts_count" maxlength="255" value="{{ $courts_count }}">
                         <label for="courts_count">Number of Courts</label>
+                        <small>Number of courts available for the customer to book. </small>
                     </div>
 
                     <div class="form-floating mb-3">
                         <input id="phone" class="form-control" type="text" name="phone" maxlength="11" value="{{ $phone }}">
                         <label for="phone">Phone Number</label>
+                        <small>Phone number will be used on receipt and about us. </small>
                     </div>
 
                     <div class="form-floating mb-3">
                         <textarea id="address" class="form-control" name="address" style="height: 100px">{{ $address }}</textarea>
                         <label for="address">Physical Address</label>
+                        <small>Address will be used on receipt and about us. </small>
                     </div>
 
                 </div>
