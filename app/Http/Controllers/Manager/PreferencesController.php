@@ -37,7 +37,7 @@ class PreferencesController extends Controller
         $weekdayWeekend = Features::where('name', 'rates_weekend_weekday')->first();
         $adminRates = Features::where('name', 'rates_editable_admin')->first();
 
-        $ratePerHour = Rates::where('id', 3)->first()->ratePrice;
+        $ratePerHour = Rates::where('id', 3)->first()->price;
 
         $customerUI = UI::where('side', '')->first();
         $adminUI = UI::where('side', 'admin')->first();
