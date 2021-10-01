@@ -4,51 +4,19 @@ $(document).ready(function() {
 
     // General
     $("#name").keyup(function() {
-        if ($("#name").val() == "") {
-            $("#name").addClass("is-invalid")
-            $("#name").removeClass("is-valid")
-            $("#save").prop("disabled", true)
-        } else {
-            $("#name").addClass("is-valid")
-            $("#name").removeClass("is-invalid")
-            $("#save").prop("disabled", false)
-        }
+        validationClassAddRemove("#name")
     })
 
     $("#domain").keyup(function() {
-        if ($("#domain").val() == "") {
-            $("#domain").addClass("is-invalid")
-            $("#domain").removeClass("is-valid")
-            $("#save").prop("disabled", true)
-        } else {
-            $("#domain").addClass("is-valid")
-            $("#domain").removeClass("is-invalid")
-            $("#save").prop("disabled", false)
-        }
+        validationClassAddRemove("#domain")
     })
 
     $("#phone").keyup(function() {
-        if ($("#phone").val() == "") {
-            $("#phone").addClass("is-invalid")
-            $("#phone").removeClass("is-valid")
-            $("#save").prop("disabled", true)
-        } else {
-            $("#phone").addClass("is-valid")
-            $("#phone").removeClass("is-invalid")
-            $("#save").prop("disabled", false)
-        }
+        validationClassAddRemove("#phone")
     })
 
     $("#address").keyup(function() {
-        if ($("#address").val() == "") {
-            $("#address").addClass("is-invalid")
-            $("#address").removeClass("is-valid")
-            $("#save").prop("disabled", true)
-        } else {
-            $("#address").addClass("is-valid")
-            $("#address").removeClass("is-invalid")
-            $("#save").prop("disabled", false)
-        }
+        validationClassAddRemove("#address")
     })
 
     $("#start_time").change(function() {
@@ -60,15 +28,7 @@ $(document).ready(function() {
     })
 
     $("#courts_count").keyup(function() {
-        if ($("#courts_count").val() == "") {
-            $("#courts_count").addClass("is-invalid")
-            $("#courts_count").removeClass("is-valid")
-            $("#save").prop("disabled", true)
-        } else {
-            $("#courts_count").addClass("is-valid")
-            $("#courts_count").removeClass("is-invalid")
-            $("#save").prop("disabled", false)
-        }
+        validationClassAddRemove("#courts_count")
     })
 
     // Rate Toggles
@@ -200,6 +160,18 @@ $(document).ready(function() {
             $("#end_time").addClass("is-invalid")
             $("#end_time").removeClass("is-valid")
 
+        }
+    }
+
+    function validationClassAddRemove(objectID) {
+        if ($(objectID).val() == "") {
+            $(objectID).addClass("is-invalid")
+            $(objectID).removeClass("is-valid")
+            $("#save").prop("disabled", true)
+        } else {
+            $(objectID).addClass("is-valid")
+            $(objectID).removeClass("is-invalid")
+            $("#save").prop("disabled", false)
         }
     }
 })
