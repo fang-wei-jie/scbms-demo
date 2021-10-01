@@ -38,7 +38,11 @@
                     <div class="form-floating mb-3">
                         <input id="domain" class="form-control" type="text" name="domain" maxlength="255" value="{{ $domain }}">
                         <label for="domain">Domain</label>
-                        <small>Domain will be used for log in of admin and manager accounts. </small>
+                        <small>
+                            Domain used for log in of admin and manager accounts. <br>
+                            @<span class="company-domain">{{ $domain }}</span> for admin, @<span class="company-domain">{{ $domain }}</span>m for manager accounts
+                        </small>
+                    </div>
                     </div>
 
                     <div class="row mb-3">
@@ -177,7 +181,7 @@
                         <div class="container-fluid">
                             <a class="navbar-brand">
                                 <img id="customer-logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                {{ $name }}
+                                <span class="company-name">{{ $name }}</span>
                             </a>
                         </div>
                     </nav>
@@ -246,7 +250,7 @@
                         <div class="container-fluid">
                             <a class="navbar-brand">
                                 <img id="admin-logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                {{ $name }} Admin
+                                <span class="company-name">{{ $name }}</span> Admin
                             </a>
                         </div>
                     </nav>
@@ -287,7 +291,7 @@
                         <div class="container-fluid">
                             <a class="navbar-brand">
                                 <img id="manager-logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                {{ $name }} Manager
+                                <span class="company-name">{{ $name }}</span> Manager
                             </a>
                         </div>
                     </nav>
