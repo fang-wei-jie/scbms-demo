@@ -5,10 +5,12 @@ $(document).ready(function() {
     // General
     $("#name").keyup(function() {
         validationClassAddRemove("#name")
+        $(".company-name").text($("#name").val())
     })
 
     $("#domain").keyup(function() {
         validationClassAddRemove("#domain")
+        $(".company-domain").text($("#domain").val())
     })
 
     $("#phone").keyup(function() {
