@@ -4,21 +4,21 @@ $(document).ready(function() {
 
     // General
     $("#name").keyup(function() {
-        validationClassAddRemove("#name")
+        validateIsEmpty("#name")
         $(".company-name").text($("#name").val())
     })
 
     $("#domain").keyup(function() {
-        validationClassAddRemove("#domain")
+        validateIsEmpty("#domain")
         $(".company-domain").text($("#domain").val())
     })
 
     $("#phone").keyup(function() {
-        validationClassAddRemove("#phone")
+        validateIsEmpty("#phone")
     })
 
     $("#address").keyup(function() {
-        validationClassAddRemove("#address")
+        validateIsEmpty("#address")
     })
 
     $("#start_time").change(function() {
@@ -30,7 +30,7 @@ $(document).ready(function() {
     })
 
     $("#courts_count").keyup(function() {
-        validationClassAddRemove("#courts_count")
+        validateIsEmpty("#courts_count")
     })
 
     // Rate Toggles
@@ -165,7 +165,7 @@ $(document).ready(function() {
         }
     }
 
-    function validationClassAddRemove(objectID) {
+    function validateIsEmpty(objectID) {
         if ($(objectID).val() == "") {
             $(objectID).addClass("is-invalid")
             $(objectID).removeClass("is-valid")
