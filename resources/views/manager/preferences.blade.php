@@ -40,7 +40,7 @@
                         <label for="domain">Domain</label>
                         <small>
                             Domain used for log in of admin and manager accounts. <br>
-                            @<span class="company-domain">{{ $domain }}</span> for admin, @<span class="company-domain">{{ $domain }}</span>m for manager accounts
+                            <mark>@<span class="company-domain">{{ $domain }}</span></mark> for admin, <mark>@<span class="company-domain">{{ $domain }}</span>m</mark> for manager accounts
                         </small>
                     </div>
                     </div>
