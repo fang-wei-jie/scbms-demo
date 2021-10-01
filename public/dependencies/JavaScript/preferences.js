@@ -91,27 +91,15 @@ $(document).ready(function() {
     }
 
     function customerHeaderPreview() {
-        $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
-        $("#customer-header").removeClass($('#customer-header').attr('class').split(' ').pop());
-        $("#customer-header").addClass($("#customer_navbar").val())
-        $("#customer-header").addClass($("#customer_navtext").val())
-        $("#customer_invert_logo").val() == "normal" ? $("#customer-logo").removeClass('invert-logo') : $("#customer-logo").addClass('invert-logo')
+        updateHeaderPreview("#customer-header", "#customer_navbar", "#customer_navtext", "#customer_logo", "#customer_invert_logo")
     }
 
     function adminHeaderPreview() {
-        $("#admin-header").removeClass($('#admin-header').attr('class').split(' ').pop());
-        $("#admin-header").removeClass($('#admin-header').attr('class').split(' ').pop());
-        $("#admin-header").addClass($("#admin_navbar").val())
-        $("#admin-header").addClass($("#admin_navtext").val())
-        $("#admin_navtext").val() == "navbar-light" ? $("#admin-logo").removeClass('invert-logo') : $("#admin-logo").addClass('invert-logo')
+        updateHeaderPreview("#admin-header", "#admin_navbar", "#admin_navtext", "#admin_logo", "#admin_invert_logo")
     }
 
     function managerHeaderPreview() {
-        $("#manager-header").removeClass($('#manager-header').attr('class').split(' ').pop());
-        $("#manager-header").removeClass($('#manager-header').attr('class').split(' ').pop());
-        $("#manager-header").addClass($("#manager_navbar").val())
-        $("#manager-header").addClass($("#manager_navtext").val())
-        $("#manager_navtext").val() == "navbar-light" ? $("#manager-logo").removeClass('invert-logo') : $("#manager-logo").addClass('invert-logo')
+        updateHeaderPreview("#manager-header", "#manager_navbar", "#manager_navtext", "#manager_logo", "#manager_invert_logo")
     }
 
     function useRates() {
@@ -175,5 +163,19 @@ $(document).ready(function() {
             $(objectID).removeClass("is-invalid")
             $("#save").prop("disabled", false)
         }
+    }
+
+    function updateHeaderPreview(header, navbar, navtext, logo, invert) {
+        $(header).removeClass($(header).attr('class').split(' ').pop());
+        $(header).removeClass($(header).attr('class').split(' ').pop());
+        $(header).addClass($(navbar).val())
+        $(header).addClass($(navtext).val())
+
+        if (header.includes("customer")) {
+            invert = $(invert).val()
+        } else {
+            invert = ($(navtext).val() == "navbar-light") ? "normal" : "invert"
+        }
+        invert == "normal" ? $(logo).removeClass('invert-logo') : $(logo).addClass('invert-logo')
     }
 })
