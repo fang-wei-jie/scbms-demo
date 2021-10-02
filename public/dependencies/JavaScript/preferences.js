@@ -42,33 +42,23 @@ $(document).ready(function() {
         validateRate()
     })
 
+    })
+
+    })
+
+    })
+
     // UI Preview
-    $("#customer_navbar").change(function() {
-        customerHeaderPreview()
+    $("#customer_navbar, #customer_navtext, #customer_invert_logo").change(function() {
+        updateHeaderPreview("#customer-header", "#customer_navbar", "#customer_navtext", "#customer_logo", "#customer_invert_logo")
     })
 
-    $("#customer_navtext").change(function() {
-        customerHeaderPreview()
+    $("#admin_navbar, #admin_navtext").change(function() {
+        updateHeaderPreview("#admin-header", "#admin_navbar", "#admin_navtext", "#admin_logo", null)
     })
 
-    $("#customer_invert_logo").change(function() {
-        customerHeaderPreview()
-    })
-
-    $("#admin_navbar").change(function() {
-        adminHeaderPreview()
-    })
-
-    $("#admin_navtext").change(function() {
-        adminHeaderPreview()
-    })
-
-    $("#manager_navbar").change(function() {
-        managerHeaderPreview()
-    })
-
-    $("#manager_navtext").change(function() {
-        managerHeaderPreview()
+    $("#manager_navbar, #manager_navtext").change(function() {
+        updateHeaderPreview("#manager-header", "#manager_navbar", "#manager_navtext", "#manager_logo", null)
     })
 
     // enable tooltip everywhere
@@ -88,18 +78,6 @@ $(document).ready(function() {
             $("#ratePerHour").removeClass('is-valid')
             $("#save").prop('disabled', true)
         }
-    }
-
-    function customerHeaderPreview() {
-        updateHeaderPreview("#customer-header", "#customer_navbar", "#customer_navtext", "#customer_logo", "#customer_invert_logo")
-    }
-
-    function adminHeaderPreview() {
-        updateHeaderPreview("#admin-header", "#admin_navbar", "#admin_navtext", "#admin_logo", "#admin_invert_logo")
-    }
-
-    function managerHeaderPreview() {
-        updateHeaderPreview("#manager-header", "#manager_navbar", "#manager_navtext", "#manager_logo", "#manager_invert_logo")
     }
 
     function useRates() {
