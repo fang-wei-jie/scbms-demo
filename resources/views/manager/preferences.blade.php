@@ -43,6 +43,17 @@
                             <mark>@<span class="company-domain">{{ $domain }}</span></mark> for admin, <mark>@<span class="company-domain">{{ $domain }}</span>m</mark> for manager accounts
                         </small>
                     </div>
+
+                    <div class="form-floating mb-3">
+                        <input id="phone" class="form-control" type="tel" name="phone" maxlength="11" value="{{ $phone }}">
+                        <label for="phone">Phone Number</label>
+                        <small>Phone number will be used on receipt and about us. </small>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea id="address" class="form-control" name="address" style="height: 100px">{{ $address }}</textarea>
+                        <label for="address">Physical Address</label>
+                        <small>Address will be used on receipt and about us. </small>
                     </div>
 
                     <div class="row mb-3">
