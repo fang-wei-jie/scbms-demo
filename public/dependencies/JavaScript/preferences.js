@@ -2,6 +2,11 @@ $(document).ready(function() {
     // run when the page is first loaded
     useRates()
 
+    // inject e.g. <small>s
+    $("#prebook_days").text($(prebook_days_ahead).val() + ($(prebook_days_ahead).val() > 1 ? " days" : " day"))
+    $("#cut_off_minutes").text($(booking_cut_off_time).val() + ($(booking_cut_off_time).val() > 1 ? " minutes" : " minute"))
+    $("#precheckin_minutes").text($(precheckin_duration).val() + ($(precheckin_duration).val() > 1 ? " minutes" : " minute"))
+
     // General
     $("#name").keyup(function() {
         validateIsEmpty("#name")
@@ -29,10 +34,22 @@ $(document).ready(function() {
         validateNumber("#courts_count", 1, null)
     })
 
+    $("#prebook_days_ahead").on("keyup change", function() {
+        validateNumber("#prebook_days_ahead", 1, null)
+        var text = $(this).val() > 1 ? " days" : " day"
+        $("#prebook_days").text($(this).val() + text)
     })
 
+    $("#booking_cut_off_time").on("keyup change", function() {
+        validateNumber("#booking_cut_off_time", 0, 30)
+        var text = $(this).val() > 1 ? " minutes" : " minute"
+        $("#cut_off_minutes").text($(this).val() + text)
     })
 
+    $("#precheckin_duration").on("keyup change", function() {
+        validateNumber("#precheckin_duration", 0, 30)
+        var text = $(this).val() > 1 ? " minutes" : " minute"
+        $("#precheckin_minutes").text($(this).val() + text)
     })
 
     // Rate Toggles

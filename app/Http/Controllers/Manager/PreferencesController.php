@@ -29,6 +29,10 @@ class PreferencesController extends Controller
         $end_time = Operation::where('attr', 'end_time')->first();
         $courts_count = Operation::where('attr', 'courts_count')->first();
 
+        $prebook_days_ahead = Operation::where('attr', 'prebook_days_ahead')->first();
+        $booking_cut_off_time = Operation::where('attr', 'booking_cut_off_time')->first();
+        $precheckin_duration = Operation::where('attr', 'precheckin_duration')->first();
+
         $deleteBooking = Features::where('name', 'delete_booking')->first();
         $customerDeleteBooking = Features::where('name', 'customer_delete')->first();
         $adminDeleteBooking = Features::where('name', 'admin_delete')->first();
@@ -53,6 +57,10 @@ class PreferencesController extends Controller
             "start_time" => $start_time->value,
             "end_time" => $end_time->value,
             "courts_count" => $courts_count->value,
+
+            "prebook_days_ahead" => $prebook_days_ahead->value,
+            "booking_cut_off_time" => $booking_cut_off_time->value,
+            "precheckin_duration" => $precheckin_duration->value,
 
             "deleteBooking" => $deleteBooking->value,
             "customerDeleteBooking" => $customerDeleteBooking->value,
@@ -85,6 +93,11 @@ class PreferencesController extends Controller
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
                 "courts_count" => 'required | numeric',
+
+                "prebook_days_ahead" => 'required | numeric | min:1',
+                "booking_cut_off_time" => 'required | numeric | min:0 | max:30',
+                "precheckin_duration" => 'required | numeric | min:0 | max:30',
+
                 "customer_navbar" => 'required | string',
                 "customer_navtext" => 'required | string',
                 "admin_navbar" => 'required | string',
@@ -111,6 +124,10 @@ class PreferencesController extends Controller
                 Operation::where('attr', 'end_time')->update(['value' => $request->end_time]);
             }
             Operation::where('attr', 'courts_count')->update(['value' => $request->courts_count]);
+
+            Operation::where('attr', 'prebook_days_ahead')->update(['value' => $request->prebook_days_ahead]);
+            Operation::where('attr', 'booking_cut_off_time')->update(['value' => $request->booking_cut_off_time]);
+            Operation::where('attr', 'precheckin_duration')->update(['value' => $request->precheckin_duration]);
 
             Features::where('name', 'delete_booking')->update(['value' => $request->deleteBooking == null ? '0' : '1']);
             Features::where('name', 'customer_delete')->update(['value' => $request->customerDeleteBooking == null ? '0' : '1']);

@@ -87,11 +87,31 @@
                     </div>
 
                     <div class="form-floating mb-3">
+                        <input class="form-control" type="number" name="prebook_days_ahead" id="prebook_days_ahead" value="{{ $prebook_days_ahead }}" pattern="[0-9]*" step="1" min="1">
+                        <label for="prebook_days_ahead">Allowed Days Ahead to Book (Days)</label>
+                        <small>
+                            Determines how many days ahead that the court can be booked. Recommended value is at least 7 days or more, but can be reduced to 1 days ahead. <br>
+                            E.g. Customers are able to make bookings that are <mark><span id="prebook_days"></span></mark> from today's date (today does not count as 1 day).
+                        </small>
                     </div>
 
                     <div class="form-floating mb-3">
+                        <input class="form-control" type="number" name="booking_cut_off_time" id="booking_cut_off_time" value="{{ $booking_cut_off_time }}" pattern="[0-9]*" step="1" min="0" max="30">
+                        <label for="booking_cut_off_time">Booking Cut Off Time (Minutes)</label>
+                        <small>
+                            Duration before booking the current hour court is not allowed. Do note that the price of the booking will stay afixed. Minimum allowed is 0 minutes. Maximum allowed is 30 minutes. <br>
+                            E.g. Booking of 07h to 08h can be made between <mark><span id="cut_off_minutes"></span></mark> the session had started.
+                        </small>
                     </div>
 
+                    <div class="form-floating mb-3">
+                        <input class="form-control" type="number" name="precheckin_duration" id="precheckin_duration" value="{{ $precheckin_duration }}" pattern="[0-9]*" step="1" min="0" max="30">
+                        <label for="precheckin_duration">Pre Checkin Duration</label>
+                        <small>
+                            Duration before the customer is allowed to checkin early. Minimum allowed is 0 minutes. Maximum allowed is 30 minutes. <br>
+                            E.g. Booking of 07h is able to checkin <mark><span id="precheckin_minutes"></span></mark> before the session starts.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="col-lg">
