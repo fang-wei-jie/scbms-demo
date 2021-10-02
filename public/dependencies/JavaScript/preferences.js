@@ -21,11 +21,7 @@ $(document).ready(function() {
         validateIsEmpty("#address")
     })
 
-    $("#start_time").change(function() {
-        validateHours()
-    })
-
-    $("#end_time").change(function() {
+    $("#start_time, #end_time").change(function() {
         validateHours()
     })
 
@@ -120,7 +116,7 @@ $(document).ready(function() {
             $("#end_time").addClass("is-invalid")
             $("#end_time").removeClass("is-valid")
 
-        } else if (endtime = starttime) {
+        } else if (endtime == starttime) {
 
             $("#save").prop("disabled", true)
             $("#start_time").addClass("is-invalid")
