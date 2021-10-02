@@ -22,11 +22,12 @@ class PreferencesController extends Controller
 
         $name = Operation::where('attr', 'name')->first();
         $domain = Operation::where('attr', 'domain')->first();
+        $phone = Operation::where('attr', 'phone')->first();
+        $address = Operation::where('attr', 'address')->first();
+
         $start_time = Operation::where('attr', 'start_time')->first();
         $end_time = Operation::where('attr', 'end_time')->first();
         $courts_count = Operation::where('attr', 'courts_count')->first();
-        $phone = Operation::where('attr', 'phone')->first();
-        $address = Operation::where('attr', 'address')->first();
 
         $deleteBooking = Features::where('name', 'delete_booking')->first();
         $customerDeleteBooking = Features::where('name', 'customer_delete')->first();
@@ -46,11 +47,12 @@ class PreferencesController extends Controller
         return view ('manager.preferences', [
             "name" => $name->value,
             "domain" => $domain->value,
+            "phone" => $phone->value,
+            "address" => $address->value,
+
             "start_time" => $start_time->value,
             "end_time" => $end_time->value,
             "courts_count" => $courts_count->value,
-            "phone" => $phone->value,
-            "address" => $address->value,
 
             "deleteBooking" => $deleteBooking->value,
             "customerDeleteBooking" => $customerDeleteBooking->value,
@@ -77,11 +79,12 @@ class PreferencesController extends Controller
             $this -> validate($request, [
                 "name" => 'required | string | max:255',
                 "domain" => 'required | string | max:255',
+                "phone" => 'required | string',
+                "address" => 'required | string',
+
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
                 "courts_count" => 'required | numeric',
-                "phone" => 'required | string',
-                "address" => 'required | string',
                 "customer_navbar" => 'required | string',
                 "customer_navtext" => 'required | string',
                 "admin_navbar" => 'required | string',
@@ -100,7 +103,6 @@ class PreferencesController extends Controller
 
             Operation::where('attr', 'name')->update(['value' => $request->name]);
             Operation::where('attr', 'domain')->update(['value' => $request->domain]);
-            Operation::where('attr', 'courts_count')->update(['value' => $request->courts_count]);
             Operation::where('attr', 'phone')->update(['value' => $request->phone]);
             Operation::where('attr', 'address')->update(['value' => $request->address]);
 
@@ -108,6 +110,7 @@ class PreferencesController extends Controller
                 Operation::where('attr', 'start_time')->update(['value' => $request->start_time]);
                 Operation::where('attr', 'end_time')->update(['value' => $request->end_time]);
             }
+            Operation::where('attr', 'courts_count')->update(['value' => $request->courts_count]);
 
             Features::where('name', 'delete_booking')->update(['value' => $request->deleteBooking == null ? '0' : '1']);
             Features::where('name', 'customer_delete')->update(['value' => $request->customerDeleteBooking == null ? '0' : '1']);
