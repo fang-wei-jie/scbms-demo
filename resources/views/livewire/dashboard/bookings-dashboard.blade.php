@@ -189,10 +189,10 @@
 
                 <!-- Events -->
                 @foreach ($bookings as $booking)
-                    <div style="display: flex; justify-content: center; align-items: center;" class="event @if($booking->timeSlot > date('H') && $booking->dateSlot >= date('Ymd')){{ 'amandable' }}@endif
+                    <div style="display: flex; justify-content: center; align-items: center;" class="event @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
                      {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }}">
                         {{ $booking->bookingRateName }}
-                        @if($booking->timeSlot > date('H') && $booking->dateSlot >= date('Ymd'))
+                        @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
                         <span class="indicator">&nbsp<i class="bi bi-arrow-up-right-circle"></i></span>
                         @endif
                     </div>
