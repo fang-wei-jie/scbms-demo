@@ -26,17 +26,34 @@ class MakeBookingsController extends Controller
         $start_time = Operation::where('attr', 'start_time') -> first() -> value;
         $end_time = Operation::where('attr', 'end_time') -> first() -> value;
 
-        return view ('customer.book-court', ['selectedDate' => 0, 'start_time' => $start_time, 'end_time' => $end_time]);
+        // get calendar date range that the bookings can be made
+        $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
+        $minDate = date('Y-m-d');
+        $maxDate = date('Y-m-d', strtotime("+".$prebook_days_ahead." days"));
+
+        return view ('customer.book-court', [
+            'selectedDate' => 0,
+            'start_time' => $start_time,
+            'end_time' => $end_time,
+            'min_date' => $minDate,
+            'max_date' => $maxDate,
+        ]);
 
     }
 
     function book_court (Request $request)
     {
 
+        // get operation hours
         date_default_timezone_set("Asia/Kuala_Lumpur");
         $start_time = Operation::where('attr', 'start_time') -> first() -> value;
         $end_time = Operation::where('attr', 'end_time') -> first() -> value;
         $courts_count = Operation::where('attr', 'courts_count')->first()->value;
+
+        // get calendar date range that the bookings can be made
+        $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
+        $minDate = date('Ymd');
+        $maxDate = date('Ymd', strtotime("+".$prebook_days_ahead." days"));
 
         if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
         {
@@ -65,7 +82,7 @@ class MakeBookingsController extends Controller
                     ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength)])
                     ->count();
 
-            } else if ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time) {
+            } else if ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time) {
 
                 // if selected date is after today
 
@@ -213,20 +230,6 @@ class MakeBookingsController extends Controller
             // get day of the week
             $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-            if ($ratesEnabled) {
-                $this->validate($request, [
-
-                    'rateID' => 'required | numeric',
-
-                ]);
-            }
-
-            if ($ratesEnabled) {
-                $rateID = $request->rateID;
-                $bookingRateName = Rates::where('id', $rateID)->first()->rateName;
-                $bookingPrice = $request->bookingPrice;
-            }
-
             $count = DB::table('bookings')
                 ->where('dateSlot', $dateSlot)
                 ->where('timeSlot', $timeSlot)
@@ -234,12 +237,23 @@ class MakeBookingsController extends Controller
                 ->count();
 
             $validCourtDateTime = ($count == 0 // court is not taken
-            && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H")
-            && ($timeLength + $timeSlot) <= $end_time) || ($dateSlot > date("Y-m-d")
-            && ($timeLength + $timeSlot) <= $end_time))
-            ) ? true : false;
+                                    && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) ||
+                                    // ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))
+                                    ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time))
+                                    ) ? true : false;
 
             if ($ratesEnabled) {
+
+                $this->validate($request, [
+                    'rateID' => 'required | numeric',
+                ]);
+
+                // obtain rates detail
+                $rateID = $request->rateID;
+                $rate = Rates::where('id', $rateID)->first();
+                $bookingRateName = $rate->name;
+                $bookingPrice = $rate->price;
+                $bookingCondition = $rate->condition;
 
                 // validate rate validity
                 if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
@@ -263,9 +277,11 @@ class MakeBookingsController extends Controller
 
             } else {
 
-                // inject the one and only rate
-                $bookingRateName = Rates::where('id', 3)->first()->rateName;
-                $bookingPrice = Rates::where('id', 3)->first()->ratePrice;
+                // inject the one and only rate and get details
+                $rate = Rates::where('id', 3)->first();
+                $bookingRateName = $rate->name;
+                $bookingPrice = $rate->price;
+                $bookingCondition = $rate->condition;
 
                 $validBooking = ($validCourtDateTime && $request->rateID == null) ? true : false;
 
@@ -283,6 +299,7 @@ class MakeBookingsController extends Controller
                     'timeLength' => $timeLength,
                     'bookingPrice' => $bookingPrice,
                     'bookingRateName' => $bookingRateName,
+                    'condition' => $bookingCondition,
                 ]);
 
                 return redirect() -> route('mybookings');

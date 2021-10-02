@@ -26,7 +26,7 @@ Book Courts
             </span>
 
             <div class="form-floating mb-3">
-                <input type="date" class="form-control" id="dateSlot" name="dateSlot" required>
+                <input type="date" class="form-control" id="dateSlot" name="dateSlot" min="{{ $min_date }}" max="{{ $max_date }}" required>
                 <label for="dateSlot" id="dateLabel">Date</label>
             </div>
 
