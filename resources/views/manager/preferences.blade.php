@@ -45,7 +45,7 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input id="phone" class="form-control" type="tel" name="phone" maxlength="11" value="{{ $phone }}">
+                        <input id="phone" class="form-control" type="tel" name="phone" maxlength="15" value="{{ $phone }}">
                         <label for="phone">Phone Number</label>
                         <small>Phone number will be used on receipt and about us. </small>
                     </div>
@@ -81,21 +81,15 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input id="courts_count" class="form-control" type="text" name="courts_count" maxlength="255" value="{{ $courts_count }}">
+                        <input id="courts_count" class="form-control" type="number" name="courts_count" value="{{ $courts_count }}" pattern="[0-9]*" step="1" min="1">
                         <label for="courts_count">Number of Courts</label>
                         <small>Number of courts available for the customer to book. </small>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input id="phone" class="form-control" type="text" name="phone" maxlength="11" value="{{ $phone }}">
-                        <label for="phone">Phone Number</label>
-                        <small>Phone number will be used on receipt and about us. </small>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <textarea id="address" class="form-control" name="address" style="height: 100px">{{ $address }}</textarea>
-                        <label for="address">Physical Address</label>
-                        <small>Address will be used on receipt and about us. </small>
                     </div>
 
                 </div>
@@ -191,7 +185,7 @@
                     <nav id="customer-header" class="navbar navbar-expand-lg preview {{ $customerUI->navbar_class }} {{ $customerUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="customer-logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->logo_invert != "normal") invert-logo @endif" alt="">
+                                <img id="customer_logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 <span class="company-name">{{ $name }}</span>
                             </a>
                         </div>
@@ -260,7 +254,7 @@
                     <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $adminUI->navbar_class }} {{ $adminUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="admin-logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
+                                <img id="admin_logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 <span class="company-name">{{ $name }}</span> Admin
                             </a>
                         </div>
@@ -301,7 +295,7 @@
                     <nav id="manager-header" class="navbar navbar-expand-lg preview {{ $managerUI->navbar_class }} {{ $managerUI->navbar_text_class }}">
                         <div class="container-fluid">
                             <a class="navbar-brand">
-                                <img id="manager-logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
+                                <img id="manager_logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
                                 <span class="company-name">{{ $name }}</span> Manager
                             </a>
                         </div>

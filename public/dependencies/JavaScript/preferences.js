@@ -29,8 +29,14 @@ $(document).ready(function() {
         validateHours()
     })
 
-    $("#courts_count").keyup(function() {
-        validateIsEmpty("#courts_count")
+    $("#courts_count").on("keyup change", function() {
+        validateNumber("#courts_count", 1, null)
+    })
+
+    })
+
+    })
+
     })
 
     // Rate Toggles
@@ -40,12 +46,6 @@ $(document).ready(function() {
 
     $("#ratePerHour").keyup(function() {
         validateRate()
-    })
-
-    })
-
-    })
-
     })
 
     // UI Preview
@@ -140,6 +140,34 @@ $(document).ready(function() {
             $(objectID).addClass("is-valid")
             $(objectID).removeClass("is-invalid")
             $("#save").prop("disabled", false)
+        }
+    }
+
+    function validateNumber(objectID, min, max) {
+        if ($(objectID).val() != "") {
+            var number = $(objectID).val()
+
+            if (max == null) {
+                var maxValidate = true
+                var minValidate = (number >= min) ? true : false
+            } else {
+                var maxValidate = (number <= max) ? true : false
+                var minValidate = (number >= min) ? true : false
+            }
+
+            if (minValidate && maxValidate) {
+                $(objectID).addClass("is-valid")
+                $(objectID).removeClass("is-invalid")
+                $("#save").prop("disabled", false)
+            } else {
+                $(objectID).addClass("is-invalid")
+                $(objectID).removeClass("is-valid")
+                $("#save").prop("disabled", true)
+            }
+        } else {
+            $(objectID).addClass("is-invalid")
+            $(objectID).removeClass("is-valid")
+            $("#save").prop("disabled", true)
         }
     }
 
