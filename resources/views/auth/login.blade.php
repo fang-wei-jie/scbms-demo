@@ -10,10 +10,29 @@ Login
     <h3 class="mb-3">Login</h3>
 
     @if (session('status'))
-    <div class="alert alert-danger" role="alert">
-        <i class="bi bi-exclamation-lg"></i>
-        {{ session('status') }}
-    </div>
+        @if(str_contains(session('status'), 'password has been reset'))
+            <div class="alert alert-success" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-check-lg"></i>
+                    </div>
+                    <div class="col">
+                        {{ session('status') }} Login with your new password now!
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="alert alert-danger" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        {{ session('status') }}
+                    </div>
+                </div>
+            </div>
+        @endif
     @endif
 
     <div class="form-floating mb-3">
@@ -32,6 +51,9 @@ Login
         </button>
         <a class="btn btn-secondary" href="{{ route('register') }}">
                 Don't have an account? Register now
+        </a>
+        <a class="btn btn-secondary" href="{{ route('password.request') }}">
+            Forgot password? Reset your password here
         </a>
     </div>
 </form>
