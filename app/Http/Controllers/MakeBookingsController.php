@@ -29,11 +29,13 @@ class MakeBookingsController extends Controller
         // get calendar date range that the bookings can be made
         $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
         $minDate = date('Y-m-d');
+        $tomorrowDate = date('Y-m-d', strtotime($minDate."+ 1 days"));
         $maxDate = date('Y-m-d', strtotime("+".$prebook_days_ahead." days"));
 
         return view ('customer.book-court', [
             'selectedDate' => 0,
             'start_time' => $start_time,
+            'tomorrow_date' => $tomorrowDate,
             'end_time' => $end_time,
             'min_date' => $minDate,
             'max_date' => $maxDate,

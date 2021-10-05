@@ -151,6 +151,11 @@ $(document).ready(function() {
     // clear date selection upon page load
     document.getElementById("dateSlot").valueAsDate = null
 
+    // if the end time was reached, increase start date by 1
+    if ({{ date('H') }} >= {{ $end_time }}) {
+        $("#dateSlot").prop('min', '{{ $tomorrow_date }}')
+    }
+
     // if date was selected or changed
     $("#dateSlot").change(function(){
 
@@ -174,13 +179,12 @@ $(document).ready(function() {
 
             // clear date slot selected date
             {{-- PROBLEM: WHEN CLEARED, THE ONCHANGE FUNCTION OF DATESLOT WILL GO THROUGH AGAIN, DOUBLING THE ERROR DETECTION --}}
-            document.getElementById("dateSlot").valueAsDate = null
 
             // prompts user about invalid selection of date
             $("#dateLabel").text("Select date that was today or future. ")
             $("#dateSlot").addClass("is-invalid")
 
-        } else if (isSameTime(todayDate, selectedDate)) {
+        } else if (isSameDate(todayDate, selectedDate)) {
             // js date comparasion guide: https://css-tricks.com/everything-you-need-to-know-about-date-in-javascript/
 
             // if today's date was selected
@@ -190,7 +194,6 @@ $(document).ready(function() {
             if (todayHours >= {{ $end_time }}) {
 
                 // if today's hours was over {{ $start_time }}pm, clear date selected and prompt user we were closed
-                document.getElementById("dateSlot").valueAsDate = null;
                 $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
                 $("#dateSlot").addClass("is-invalid")
 
@@ -253,7 +256,7 @@ $(document).ready(function() {
     }
 
     // functino to compare date
-    const isSameTime = (a, b) => {
+    const isSameDate = (a, b) => {
         return a.getTime() === b.getTime()
     }
 
