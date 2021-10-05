@@ -5,7 +5,7 @@ Forgot Password
 @endsection
 
 @section('body')
-<form class="form-auth" method="post">
+<form class="form-auth" method="post" autocomplete="off">
     @csrf
     <h3 class="mb-3">Forgot Password</h3>
 

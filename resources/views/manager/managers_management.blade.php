@@ -95,7 +95,7 @@ Managers Account
                 <h5 class="modal-title" id="newManagerLabel">Add Manager Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('manager.managers_management') }}" method="post">
+            <form action="{{ route('manager.managers_management') }}" method="post" autocomplete="off">
                 @csrf
 
                 <div class="modal-body">
@@ -135,7 +135,7 @@ Managers Account
                 <h5 class="modal-title" id="editLabel">Edit Manager Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post">
+            <form action="" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
 

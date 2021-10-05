@@ -5,7 +5,7 @@ Reset Password
 @endsection
 
 @section('body')
-<form class="form-auth" method="post" action="{{ route('password.update') }}">
+<form class="form-auth" method="post" action="{{ route('password.update') }}" autocomplete="off">
     @csrf
     <h3 class="mb-3">Reset Password</h3>
 

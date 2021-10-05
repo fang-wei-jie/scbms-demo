@@ -48,7 +48,7 @@ My Account
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="" method="post">
+                <form action="" method="post" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">

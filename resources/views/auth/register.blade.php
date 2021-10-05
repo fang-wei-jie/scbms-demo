@@ -5,7 +5,7 @@ Register
 @endsection
 
 @section('body')
-<form class="form-auth" method="post" action="{{ route('register') }}">
+<form class="form-auth" method="post" action="{{ route('register') }}" autocomplete="off">
     @csrf
     <h3 class="mb-3">Register</h3>
 

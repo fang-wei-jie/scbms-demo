@@ -106,7 +106,7 @@ My Account
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('myaccount') }}" method="post">
+                <form action="{{ route('myaccount') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
@@ -132,7 +132,7 @@ My Account
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('myaccount') }}" method="post">
+                <form action="{{ route('myaccount') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
@@ -162,7 +162,7 @@ My Account
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <form action="{{ route('myaccount') }}" method="post">
+                <form action="{{ route('myaccount') }}" method="post" autocomplete="off">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">

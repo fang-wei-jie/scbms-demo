@@ -95,7 +95,7 @@ Admins Account
                 <h5 class="modal-title" id="newAdminLabel">Add Admin Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('manager.admins_management') }}" method="post">
+            <form action="{{ route('manager.admins_management') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
                     <div class="form-floating mb-3">
@@ -145,7 +145,7 @@ Admins Account
                 <h5 class="modal-title" id="editLabel">Edit Admin Account</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="" method="post">
+            <form action="" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
 

@@ -19,7 +19,7 @@
 @section('body')
     <div class="container">
 
-        <form action="{{ route('manager.preferences') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('manager.preferences') }}" enctype="multipart/form-data" method="post" autocomplete="off">
             @csrf
 
             <div class="row">
