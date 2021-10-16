@@ -25,6 +25,31 @@ Book Courts
                 <h3>Book Courts</h3>
             </span>
 
+            @if(session("notify"))
+            <div class="alert alert-warning" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        {{ session("notify") ?? '' }}
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <div id="booking-cut-off-time-alert" class="alert alert-warning hidden" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        This time slot's booking will be available for booking until {{ date("H").":".str_pad($booking_cut_off_time, 2, "0", STR_PAD_LEFT) }}.
+                        The end time will not be extended, and the rate will be charged in full.
+                    </div>
+                </div>
+            </div>
+
             <div class="form-floating mb-3">
                 <input type="date" class="form-control" id="dateSlot" name="dateSlot" min="{{ $min_date }}" max="{{ $max_date }}" required>
                 <label for="dateSlot" id="dateLabel">Date</label>
@@ -51,7 +76,21 @@ Book Courts
         <form class="form-resize" action="{{ route('book-court') }}" method="post">
             @csrf
 
-            @if($count < DB::table('operation_preferences')->where('attr', 'courts_count')->first()->value)
+            @if($dateSlot == date('Y-m-d') && $timeSlot == date("H") && date("i") <= $booking_cut_off_time)
+            <div class="alert alert-warning" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        This time slot's booking will be available for booking until {{ date("H").":".str_pad($booking_cut_off_time, 2, "0", STR_PAD_LEFT) }}.
+                        The end time will not be extended, and the rate will be charged in full.
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            @if($count < DB::table("operation_preferences")->where('attr', 'courts_count')->first()->value)
 
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -151,13 +190,16 @@ $(document).ready(function() {
     // clear date selection upon page load
     document.getElementById("dateSlot").valueAsDate = null
 
-    // if the end time was reached, increase start date by 1
-    if ({{ date('H') }} >= {{ $end_time }}) {
-        $("#dateSlot").prop('min', '{{ $tomorrow_date }}')
+    // obtains today's date with and without time
+    var today = new Date()
+
+    // if the end time was reached, or when reached last hour of the day and after the cut off time, increase start date by 1
+    if ({{ date("H") }} >= {{ $end_time }} || ({{ $end_time }} - {{ date("H") }} <= 1 && today.getMinutes() >= {{ $booking_cut_off_time }})) {
+        $("#dateSlot").prop("min", "{{ $tomorrow_date }}")
     }
 
     // if date was selected or changed
-    $("#dateSlot").change(function(){
+    $("#dateSlot").on("change keyup", function(){
 
         // empties the time slot and time length select list before filling in
         $("#timeSlot").empty()
@@ -165,8 +207,7 @@ $(document).ready(function() {
         $("#dateLabel").text("Date")
         $("#dateSlot").removeClass("is-invalid")
 
-        // obtains today's date with and without time
-        var today = new Date()
+        // obtains today's date without time
         var todayDate = today.withoutTime()
 
         // obtains selected date and format it to be comparable by integer
@@ -185,6 +226,7 @@ $(document).ready(function() {
             $("#dateSlot").addClass("is-invalid")
 
         } else if (isSameDate(todayDate, selectedDate)) {
+
             // js date comparasion guide: https://css-tricks.com/everything-you-need-to-know-about-date-in-javascript/
 
             // if today's date was selected
@@ -199,8 +241,21 @@ $(document).ready(function() {
 
             } else {
 
+                // if the current time is later than the actual start time, display the actual start time
+                var start = (todayHours > {{ $start_time }}) ? todayHours : {{ $start_time }}
+
+                // if the current hour had passed the booking cut off time, increase start time by an hour
+                if (today.getMinutes() > {{ $booking_cut_off_time }}) { start += 1 }
+
+                // show booking cut off time alert
+                if (today.getMinutes() < {{ $booking_cut_off_time }}) {
+                    $("#booking-cut-off-time-alert").show()
+                } else {
+                    $("#booking-cut-off-time-alert").hide()
+                }
+
                 // inserts updated time slot select list based on the hours left today
-                for (i = (todayHours > {{ $start_time }} ? todayHours : {{ $start_time }}); i < {{ $end_time }}; i++) {
+                for (i = start; i < {{ $end_time }}; i++) {
                     $("#timeSlot").append(new Option(i + ":00", i))
                 }
 
@@ -212,6 +267,8 @@ $(document).ready(function() {
         } else {
 
             // if selected time was tomorrow or future
+            $("#booking-cut-off-time-alert").hide()
+
             // inserts updated time slot select list based on the hours left today
             for (i = {{ $start_time }}; i < {{ $end_time }}; i++) {
                 $("#timeSlot").append(new Option(i + ":00", i))
@@ -226,6 +283,15 @@ $(document).ready(function() {
     $("#timeSlot").change(function () {
         // updates the time length available to the user based on the selected time slot
         timeLengthUpdate()
+
+        // obtains selected date and format it to be comparable by integer
+        var selectedDate = new Date($("#dateSlot").val()).withoutTime()
+
+        if (today.withoutTime() == selectedDate && todayHours == $("#timeSlot").val() && today.getMinutes() < {{ $booking_cut_off_time }}) {
+            $("#booking-cut-off-time-alert").show()
+        } else {
+            $("#booking-cut-off-time-alert").hide()
+        }
     })
 
     // FUNCTIONS SECTION

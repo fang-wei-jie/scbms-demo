@@ -26,6 +26,9 @@ class MakeBookingsController extends Controller
         $start_time = Operation::where('attr', 'start_time') -> first() -> value;
         $end_time = Operation::where('attr', 'end_time') -> first() -> value;
 
+        // get booking grace period
+        $booking_cut_off_time = Operation::where('attr', 'booking_cut_off_time')->first()->value;
+
         // get calendar date range that the bookings can be made
         $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
         $minDate = date('Y-m-d');
@@ -37,6 +40,7 @@ class MakeBookingsController extends Controller
             'start_time' => $start_time,
             'tomorrow_date' => $tomorrowDate,
             'end_time' => $end_time,
+            'booking_cut_off_time' => $booking_cut_off_time,
             'min_date' => $minDate,
             'max_date' => $maxDate,
         ]);
@@ -52,13 +56,16 @@ class MakeBookingsController extends Controller
         $end_time = Operation::where('attr', 'end_time') -> first() -> value;
         $courts_count = Operation::where('attr', 'courts_count')->first()->value;
 
+        // get booking grace period
+        $booking_cut_off_time = Operation::where('attr', 'booking_cut_off_time')->first()->value;
+
         // get calendar date range that the bookings can be made
         $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
         $minDate = date('Ymd');
+        $tomorrowDate = date('Ymd', strtotime($minDate."+ 1 days"));
         $maxDate = date('Ymd', strtotime("+".$prebook_days_ahead." days"));
 
-        if (isset($_POST["searchForAvailability"]) && isset($_POST["dateSlot"]) && isset($_POST["timeSlot"]) && isset($_POST["timeLength"]))
-        {
+        if (isset($_POST["searchForAvailability"])) {
 
             // input validation
             $this->validate($request, [
@@ -74,15 +81,22 @@ class MakeBookingsController extends Controller
             $timeSlot = $request->timeSlot;
             $timeLength = $request->timeLength;
 
-            if (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time))
-            {
-
+            // same day && time slot bigger or equals to current hour && end time is same or lesser than end time
+            if (($dateSlot == date("Ymd") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time)) {
                 // if selected date is today
 
-                $count = DB::table('bookings')
-                    ->where('dateSlot', date('Ymd'))
-                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength)])
-                    ->count();
+                if ($timeSlot == date("H") && date("i") > $booking_cut_off_time) {
+
+                    return back()->with(['selectedDate' => 0, 'notify' => "We are sorry. You had exceed the last allowed time of booking the court for the selected time. Please choose another time. "]);
+
+                } else {
+
+                    $count = DB::table('bookings')
+                        ->where('dateSlot', date('Ymd'))
+                        ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength)])
+                        ->count();
+
+                }
 
             } else if ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time) {
 
@@ -98,59 +112,60 @@ class MakeBookingsController extends Controller
                         })
                     ->count();
 
-                $courts = array();
-                for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
-                    $booked = DB::table('bookings')
-                        ->where('dateSlot', $dateSlot)
-                        ->where('courtID', $courtNo)
-                        ->where(
-                            function($query) use ($timeSlot, $timeLength){
-                                $query
-                                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                                    ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
-                        })
-                        ->count();
+            }
 
-                    array_push($courts, $booked);
-                }
+            $courts = array();
+            for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
+                $booked = DB::table('bookings')
+                    ->where('dateSlot', $dateSlot)
+                    ->where('courtID', $courtNo)
+                    ->where(
+                        function($query) use ($timeSlot, $timeLength){
+                            $query
+                                ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
+                                ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                    })
+                    ->count();
 
-                if (Features::where('name', 'rates')->first()->value == 1) {
-                    // if rates was enabled
+                array_push($courts, $booked);
+            }
 
-                    if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
-                        $dayOfWeek = date_format(date_create($dateSlot), 'N');
-                        if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                            $excludeRateID = 2; // weekend
-                        } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                            $excludeRateID = 1; // weekdays
-                        }
+            if (Features::where('name', 'rates')->first()->value == 1) {
+                // if rates was enabled
 
-                        // if weekend and weekday is in use, disable normal rate
-                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
-                    } else {
-                        // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                        $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                    $dayOfWeek = date_format(date_create($dateSlot), 'N');
+                    if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                        $excludeRateID = 2; // weekend
+                    } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
+                        $excludeRateID = 1; // weekdays
                     }
 
+                    // if weekend and weekday is in use, disable normal rate
+                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                 } else {
-                    // if rates was disabled
-                    $rates = Rates::where('id', 3)->get();
+                    // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
+                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
                 }
 
-                return view ('customer.book-court', [
-                    'count' => $count,
-                    'courts' => $courts,
-                    'rates' => $rates,
-                    'selectedDate' => 1,
-                    'dateSlot' => $request->dateSlot,
-                    'timeSlot' => $timeSlot,
-                    'timeLength' => $timeLength,
-                    'endTime' => $timeSlot + $timeLength,
-                ]);
-
             } else {
-                return redirect() -> route('book-court');
+                // if rates was disabled
+                $rates = Rates::where('id', 3)->get();
             }
+
+            return view ('customer.book-court', [
+                'count' => $count,
+                'courts' => $courts,
+                'rates' => $rates,
+                'selectedDate' => 1,
+                'dateSlot' => $request->dateSlot,
+                'timeSlot' => $timeSlot,
+                'timeLength' => $timeLength,
+                'endTime' => $timeSlot + $timeLength,
+                'booking_cut_off_time' => $booking_cut_off_time,
+            ]);
+
+            return redirect() -> route('book-court');
 
         } else if (isset($_POST['confirm-booking'])) {
 
@@ -171,6 +186,11 @@ class MakeBookingsController extends Controller
             $timeSlot = $request->timeSlot;
             $timeLength = $request->timeLength;
             $courtID = $request->courtID;
+
+            // check if user exceeded time for last booking
+            if ($timeSlot == date("H") && date("i") > $booking_cut_off_time) {
+                return back()->with(['selectedDate' => 0, 'notify' => "We are sorry. You had exceed the last allowed time of booking the court for the selected time. Please choose another time. "]);
+            }
 
             // if user come from rates disabled to rates enabled
             if ($ratesEnabled && $request->rateID == null) {
@@ -226,6 +246,7 @@ class MakeBookingsController extends Controller
                     'timeLength' => $timeLength,
                     'endTime' => $timeSlot + $timeLength,
                     'message' => $message,
+                    'booking_cut_off_time' => $booking_cut_off_time,
                 ]);
             }
 
@@ -238,9 +259,8 @@ class MakeBookingsController extends Controller
                 ->where('courtID', $courtID)
                 ->count();
 
-            $validCourtDateTime = ($count == 0 // court is not taken
-                                    && (($dateSlot == date("Y-m-d") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) ||
-                                    // ($dateSlot > date("Y-m-d") && ($timeLength + $timeSlot) <= $end_time))
+            $validCourtDateTime = ($count < $courts_count
+                                    && (($dateSlot == date("Ymd") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) ||
                                     ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time))
                                     ) ? true : false;
 
@@ -361,6 +381,7 @@ class MakeBookingsController extends Controller
                     'timeLength' => $timeLength,
                     'endTime' => $timeSlot + $timeLength,
                     'message' => $message,
+                    'booking_cut_off_time' => $booking_cut_off_time,
                 ]);
 
             }
