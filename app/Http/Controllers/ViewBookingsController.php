@@ -18,7 +18,7 @@ class ViewBookingsController extends Controller
     {
 
         // Query Bookings for current customer
-        $current_bookings = DB::table('bookings')
+        $today_bookings = DB::table('bookings')
             ->where('bookings.custID', '=', Auth::user()->id)
             ->where(function ($query) {
 
@@ -62,7 +62,9 @@ class ViewBookingsController extends Controller
             ->orderBy('bookings.timeSlot', 'desc')
             ->get();
 
-        return view('customer.mybookings', ['current_bookings' => $current_bookings, 'past_bookings' => $past_bookings]);
+        return view('customer.mybookings', ['today_bookings' => $today_bookings, 'past_bookings' => $past_bookings]);
+
+    }
 
     }
 

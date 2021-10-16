@@ -1,3 +1,8 @@
+@php
+// generate qrcode locally on the server
+use Da\QrCode\QrCode;
+@endphp
+
 @extends('layout.frame')
 
 @section('title')
@@ -7,23 +12,12 @@ My Bookings
 @section('body')
 <div class="container">
 
-    {{-- show title when items in navbar are invisible --}}
-    <span class="d-block d-md-block d-lg-none mb-3">
-        <h3>My Bookings</h3>
-    </span>
-
-    <div style="display: flex; justify-content: space-between;">
-        <div>
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="pills-current-bookings-tab" data-bs-toggle="pill" href="#pills-current-bookings" role="tab" aria-controls="pills-current-bookings" aria-selected="true">Current</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="pills-past-bookings-tab" data-bs-toggle="pill" href="#pills-past-bookings" role="tab" aria-controls="pills-past-bookings" aria-selected="false">Past</a>
-                </li>
-            </ul>
+    <div class="row justify-content-between">
+        <div class="col">
+            {{-- show title when items in navbar are invisible --}}
+            <h3 class="d-block d-md-block d-lg-none mb-3">My Bookings</h3>
         </div>
-        <div>
+        <div class="col-auto">
             <a href="{{ route('book-court') }}" class="btn btn-outline-primary">
                 <i class="bi bi-journal-plus"></i>
                 New Booking
@@ -31,136 +25,169 @@ My Bookings
         </div>
     </div>
 
-    <!-- lists today and future bookings -->
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-current-bookings" role="tabpanel" aria-labelledby="pills-current-bookings-tab">
+    <div class="my-2"></div>
 
-            @if ($current_bookings -> count() > 0)
-
-                @foreach ($current_bookings as $list)
-
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                        {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} -
-                        <span @if($list->condition)data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $list->condition }}"@endif>
-                            @if($list->condition)
-                                <mark>{{ $list->bookingRateName }} rate&nbsp;<i class="bi bi-info-circle"></i></mark>
-                            @else
-                                {{ $list->bookingRateName }} rate
-                            @endif
-                        </span>
-                    </div>
-                    <div>
-                        <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
-                    </div>
-                    <div>
-                        <form action="{{ route('view-receipt') }}" method="post">
-                            @csrf
-                            <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                            <button type="button" class="btn btn-outline-primary" id="show-qrcode" data-bs-toggle="modal" data-bs-target="#show-qrcode-dialog" data-code="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT) }}">
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-upc"></i>
-                                    <span class="d-none d-md-block">&nbsp;Check-in Code</span>
-                                </span>
-                            </button>
-                            <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-receipt"></i>
-                                    <span class="d-none d-md-block">&nbsp;Receipt</span>
-                                </span>
-                            </button>
-                            {{-- <button type="button" class="btn btn-outline-danger" id="delete-booking" data-bs-toggle="modal" data-bs-target="#delete-booking-dialog" data-id="{{ $list->bookingID }}" data-date="{{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}" data-time="{{ $list->timeSlot }}" data-length="{{ $list->timeLength }}" data-rate="{{ $list->bookingRateName }}" data-court="{{ $list->courtID }}" data-price="{{ $list->bookingPrice }}">
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-journal-x"></i>
-                                    <span class="d-none d-md-block">&nbsp;Delete Booking</span>
-                                </span>
-                            </button> --}}
-                        </form>
-                    </div>
-                </div>
-
-                <br>
-
-                @endforeach
-
-            @else
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <a href="{{ route('book-court') }}">Make a new booking? 🙃</a>
-            </div>
-            @endif
-        </div>
-
-        <!-- lists previous bookings (older than today) -->
-        <div class="tab-pane fade" id="pills-past-bookings" role="tabpanel" aria-labelledby="pills-past-bookings-tab">
-
-            @if ($past_bookings -> count() > 0)
-
-                @foreach ($past_bookings as $list)
-
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                        {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00 <br>
-                        Court {{ $list->courtID }} -
-                        <span @if($list->condition)data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ $list->condition }}"@endif>
-                            @if($list->condition)
-                                <mark>{{ $list->bookingRateName }} rate&nbsp;<i class="bi bi-info-circle"></i></mark>
-                            @else
-                                {{ $list->bookingRateName }} rate
-                            @endif
-                        </span>
-                    </div>
-                    <div>
-                        <b>RM {{ $list->bookingPrice * $list->timeLength }}</b>
-                    </div>
-                    <div>
-                        <form action="{{ route('view-receipt') }}" method="post">
-                            @csrf
-                            <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                            <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-receipt"></i>
-                                    <span class="d-none d-md-block">&nbsp;Receipt</span>
-                                </span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                
-                <br>
-
-                @endforeach
-
-            @else
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                Nothing Here 🙃
-            </div>
-            @endif
+    @if ($today_bookings -> count() == 0 && $past_bookings -> count() == 0)
+    <div class="row justify-content-center align-items-center">
+        <div class="col">
+            <h5>You had yet to make any booking. 😶</h5>
         </div>
     </div>
+    @endif
+    
+    @if ($today_bookings -> count() > 0)
 
-    <!-- show-qrcode-dialog modal view -->
-    <div class="modal fade" id="show-qrcode-dialog" tabindex="-1" role="dialog" aria-labelledby="show-qrcode-dialogLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="titleLabel">Check-in Code</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col" style="display: flex; flex-direction: column; align-items: center;">
-                        <div class="row" id="qrimage"></div>
-                        <div id="book-id-text" class="row"></div>
+    <h5>New Bookings</h5>
+    
+    <div class="accordion" id="accordian">
+
+        @foreach ($today_bookings as $list)
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-parent="accordian" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
+                        <div class="col">
+                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                            <br>
+                            Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                        </div>
+                        <div class="col-auto me-3">
+                            @if ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
+                                {{-- same date and same hour --}}
+                                <h4><span class="badge bg-primary">Current</span></h4>
+                            @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
+                                {{-- same date and happening in less than 2 hour --}}
+                                <h4><span class="badge bg-primary">Soon</span></h4>
+                            @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                {{-- same date but passed this hour, or older than today --}}
+                                <h4><span class="badge bg-secondary">Used</span></h4>
+                            @endif
+                                
+                        </div>
+                    </button>
+                </h2>
+                <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordian">
+                    <div class="accordion-body">
+                        <div class="row align-items-center">
+
+                            <div class="col">
+                                <div class="row">
+                                    <b>{{ $list->bookingRateName }} rate</b>
+                                </div>
+                                
+                                <div class="row">
+                                    @if($list->condition)
+                                        <span>{{ $list->condition }}</span>
+                                    @else
+                                        <span>No condition to follow. </span>
+                                    @endif
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <form action="{{ route('view-receipt') }}" method="post">
+                                    @csrf
+                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                        <span style="display: flex; justify-content: space-between; align-items: center;">
+                                            <i class="bi bi-receipt"></i>&nbsp;Receipt
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            {{-- if booking not expired yet, show QR code --}}
+                            @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                <div class="col-auto" style="margin: auto; display: block;">
+                                    <div class="row justify-content-center">
+                                        @php
+                                            $content = str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT);
+                                            $qrCode = (new QrCode($content))->setSize(300)->setMargin(5);
+                                        @endphp
+                                        <img src='{{ $qrCode->writeDataUri() }}'/>
+                                    </div>
+                                    <div class="row justify-content-center fw-bold">
+                                        {{ $content }}
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        @endforeach
+
+    </div>
+    
+    @endif
+
+    @if ($past_bookings -> count() > 0)
+
+    <h5 class="mt-3">Used Bookings</h5>
+
+    <div class="accordion" id="used_accordian">
+
+        @foreach ($past_bookings as $list)
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
+                        <div class="col">
+                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                            <br>
+                            Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                        </div>
+                        <div class="col-auto me-3">
+                            <h4><span class="badge bg-secondary">Used</span></h4>
+                        </div>
+                    </button>
+                </h2>
+                <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#used_accordian">
+                    <div class="accordion-body">
+                        <div class="row align-items-center">
+                            
+                            <div class="col">
+                                <div class="row">
+                                    <b>{{ $list->bookingRateName }} rate</b>
+                                </div>
+                                
+                                <div class="row">
+                                    @if($list->condition)
+                                        <span>{{ $list->condition }}</span>
+                                    @else
+                                        <span>No condition to follow. </span>
+                                    @endif
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <form action="{{ route('view-receipt') }}" method="post">
+                                    @csrf
+                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                        <span style="display: flex; justify-content: space-between; align-items: center;">
+                                            <i class="bi bi-receipt"></i>&nbsp;Receipt
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        @endforeach
+
     </div>
+
+    @endif
 
     <!-- delete-booking-dialog modal view -->
     <div class="modal fade" id="delete-booking-dialog" tabindex="-1" role="dialog" aria-labelledby="show-qrcode-dialogLabel" aria-hidden="true">
@@ -195,19 +222,6 @@ My Bookings
 
 @section('bottom-js')
 <script>
-    // activate all tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-
-    // fetches QR code when users clicks show check in code
-    $(document).on("click", "#show-qrcode", function() {
-        var data=$(this).data('code')
-        document.getElementById("qrimage").innerHTML="<img src='https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl="+encodeURIComponent(data)+"'/>"
-        document.getElementById("book-id-text").innerHTML="<h4>"+data+"</h4>"
-    })
-
     // injects data for delete booking dialog
     $(document).on("click", "#delete-booking", function(){
         $("#bookingID").prop('value', $(this).data('id'))
