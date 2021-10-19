@@ -2,6 +2,53 @@ $(document).ready(function() {
     // run when the page is first loaded
     useRates()
 
+    // Initialize Coloris  Color Picker
+    Coloris({
+      
+        // The bound input fields are wrapped in a div that adds a thumbnail showing the current color
+        // and a button to open the color picker (for accessibility only). If you wish to keep your 
+        // fields unaltered, set this to false, in which case you will lose the color thumbnail and 
+        // the accessible button (not recommended).
+        wrap: true,
+      
+        // Available themes: light, dark, polaroid, polaroid-dark.
+        // More themes might be added in the future.
+        theme: 'light',
+      
+        // The margin between the input fields and the color picker's dialog.
+        margin: 2,
+      
+        // Set the prefered color string format:
+        //  * hex: outputs #RRGGBB or #RRGGBBAA.
+        //  * rgb: outputs rgb(R,G,B) or rgba(R,G,B,A).
+        //  * mixed: defaults to #RRGGBB when alpha is 1, otherwise rgba(R,G,B,A).
+        format: 'rgb',
+
+        // Show an optional clear button and set its label
+        clearButton: {
+            show: false,
+            label: 'Clear'
+        },
+
+      
+        // An array of the desired color swatches to display. If omitted or the array is empty,
+        // the color swatches will be disabled.
+        swatches: [
+            "#0D6EFD",
+            "#6610F2",
+            "#6F42C1",
+            "#D63384",
+            "#DC3545",
+            "#FD7E14",
+            "#FFC107",
+            "#198754",
+            "#20C997",
+            "#F8F9FA",
+            "#6C757D",
+            "#212529",
+        ]
+    });
+
     // inject e.g. <small>s
     $("#prebook_days").text($(prebook_days_ahead).val() + ($(prebook_days_ahead).val() > 1 ? " days" : " day"))
     $("#cut_off_minutes").text($(booking_cut_off_time).val() + ($(booking_cut_off_time).val() > 1 ? " minutes" : " minute"))
@@ -15,7 +62,8 @@ $(document).ready(function() {
 
     $("#domain").keyup(function() {
         validateIsEmpty("#domain")
-        $(".company-domain").text($("#domain").val())
+        $(".company-login-domain").text($("#domain").val())
+        $(".company-display-domain").text($("#domain").val().toUpperCase())
     })
 
     $("#phone").keyup(function() {
@@ -62,16 +110,66 @@ $(document).ready(function() {
     })
 
     // UI Preview
-    $("#customer_navbar, #customer_navtext, #customer_invert_logo").change(function() {
-        updateHeaderPreview("#customer-header", "#customer_navbar", "#customer_navtext", "#customer_logo", "#customer_invert_logo")
+    // call the color picker when color palette icon clicked
+    $("#customer_navbar_toggle").click(function() {
+        $("#customer_navbar_color").click()
     })
 
-    $("#admin_navbar, #admin_navtext").change(function() {
-        updateHeaderPreview("#admin-header", "#admin_navbar", "#admin_navtext", "#admin_logo", null)
+    $("#admin_navbar_toggle").click(function() {
+        $("#admin_navbar_color").click()
     })
 
-    $("#manager_navbar, #manager_navtext").change(function() {
-        updateHeaderPreview("#manager-header", "#manager_navbar", "#manager_navtext", "#manager_logo", null)
+    $("#manager_navbar_toggle").click(function() {
+        $("#manager_navbar_color").click()
+    })
+
+    // change color of header preview as user changes the color on the color picker
+    $("#customer_navbar_color").on("input change", function() {
+        var value = $(this).val()
+        // var rgb = value.substring(4, value.length - 1)
+
+        $("#customer-header").css('background-color', value)
+    })
+    
+    $("#admin_navbar_color").on("input change", function() {
+        var value = $(this).val()
+        // var rgb = value.substring(4, value.length - 1)
+
+        $("#admin-header").css('background-color', value)
+    })
+
+    $("#manager_navbar_color").on("input change", function() {
+        var value = $(this).val()
+        // var rgb = value.substring(4, value.length - 1)
+
+        $("#manager-header").css('background-color', value)
+    })
+
+    // change text color (theme based off bootstrap navbar text class) when dark white round icon clicked
+    $("#customer_navtext_toggle").click(function() {
+        $("#customer-header").toggleClass("navbar-light navbar-dark")
+        var textColor = $("#customer-header").hasClass("navbar-light") ? "navbar-light" : "navbar-dark"
+
+        // inject text class into input field so server can save it
+        $("#customer_navtext").val(textColor)
+    })
+
+    $("#admin_navtext_toggle").click(function() {
+        $("#admin-header").toggleClass("navbar-light navbar-dark")
+        $("#admin_logo").toggleClass("invert-logo")
+        var textColor = $("#admin-header").hasClass("navbar-light") ? "navbar-light" : "navbar-dark"
+
+        // inject text class into input field so server can save it
+        $("#admin_navtext").val(textColor)
+    })
+
+    $("#manager_navtext_toggle").click(function() {
+        $("#manager-header").toggleClass("navbar-light navbar-dark")
+        $("#manager_logo").toggleClass("invert-logo")
+        var textColor = $("#manager-header").hasClass("navbar-light") ? "navbar-light" : "navbar-dark"
+
+        // inject text class into input field so server can save it
+        $("#manager_navtext").val(textColor)
     })
 
     // enable tooltip everywhere
@@ -182,19 +280,5 @@ $(document).ready(function() {
             $(objectID).removeClass("is-valid")
             $("#save").prop("disabled", true)
         }
-    }
-
-    function updateHeaderPreview(header, navbar, navtext, logo, invert) {
-        $(header).removeClass($(header).attr('class').split(' ').pop());
-        $(header).removeClass($(header).attr('class').split(' ').pop());
-        $(header).addClass($(navbar).val())
-        $(header).addClass($(navtext).val())
-
-        if (header.includes("customer")) {
-            invert = $(invert).val()
-        } else {
-            invert = ($(navtext).val() == "navbar-light") ? "normal" : "invert"
-        }
-        invert == "normal" ? $(logo).removeClass('invert-logo') : $(logo).addClass('invert-logo')
     }
 })

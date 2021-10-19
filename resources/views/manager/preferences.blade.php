@@ -6,14 +6,59 @@
 
 @section('extra-css')
 <style>
+    /* round navbar preview div */
     .preview {
         border-radius: 10px;
+    }
+
+    /* hide coloris alpha picker */
+    .clr-picker .clr-alpha {
+        display: none;
+    }
+
+    /* use circle style color input field */
+    .square .clr-field button,
+    .circle .clr-field button {
+        width: 22px;
+        height: 22px;
+        left: 5px;
+        right: auto;
+        border-radius: 5px;
+    }
+
+    .square .clr-field input,
+    .circle .clr-field input {
+        padding-left: 36px;
+    }
+
+    .circle .clr-field button {
+        border-radius: 50%;
+    }
+
+    .clr-field {
+        opacity: 0;
+        width: 1px;
+    }
+
+    /* show pointer on coloris */
+    .bi-palette-fill, .bi-circle-half {
+        cursor: pointer;
+    }
+
+    /* mimic floating labels style input fields */
+    .mimic-floating {
+        opacity: .65; 
+        transform: scale(.85) translateY(-.5rem);
     }
 </style>
 @endsection
 
 @section('extra-dependencies')
 <script src="{{ URL::asset('dependencies/JavaScript/preferences.js') }}"></script>
+
+{{-- Coloris Color Picker --}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
 @endsection
 
 @section('body')
@@ -40,7 +85,7 @@
                         <label for="domain">Domain</label>
                         <small>
                             Domain used for log in of admin and manager accounts. <br>
-                            <mark>@<span class="company-domain">{{ $domain }}</span></mark> for admin, <mark>@<span class="company-domain">{{ $domain }}</span>m</mark> for manager accounts
+                            <mark>@<span class="company-login-domain">{{ $domain }}</span></mark> for admin, <mark>@<span class="company-login-domain">{{ $domain }}</span>m</mark> for manager accounts
                         </small>
                     </div>
 
@@ -202,152 +247,74 @@
 
                     <h5>Customer</h5>
 
-                    <nav id="customer-header" class="navbar navbar-expand-lg preview {{ $customerUI->navbar_class }} {{ $customerUI->navbar_text_class }}">
-                        <div class="container-fluid">
-                            <a class="navbar-brand">
-                                <img id="customer_logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top @if($customerUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                <span class="company-name">{{ $name }}</span>
-                            </a>
-                        </div>
-                    </nav>
-
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                Logo Options
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
-                                <div class="form-control mb-3">
-                                    <label for="logo">Logo</label>
-                                    <input id="logo" class="form-control form-control-file" type="file" name="logo">
-                                    <small>SVG, PNG, JPEG format between 16x16 till 512x512 resolution</small>
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col">
+                            <nav id="customer-header" class="navbar navbar-expand-lg preview {{ $customerUI->navbar_text_class }}" style="background-color: {{ $customerUI->navbar_color }}">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand">
+                                        <img id="customer_logo" src="{{ url($customerUI->logo) }}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                        <span class="company-name">{{ $name }}</span>
+                                    </a>
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" name="customer_invert_logo" id="customer_invert_logo">
-                                        <option value="normal" @if($customerUI->logo_invert == "normal"){{ "selected" }}@endif>Normal</option>
-                                        <option value="invert" @if($customerUI->logo_invert != "normal"){{ "selected" }}@endif>Invert</option>
-                                    </select>
-                                    <label for="customer_invert_logo">Invert Logo Color</label>
+                            </nav>
+                        </div>
+                        <div class="col-auto">
+                            <i id="customer_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
+                            <input type="text" class="hidden" name="customer_navtext" id="customer_navtext" value="{{ $customerUI->navbar_text_class }}">
+                            &nbsp;
+                            <i id="customer_navbar_toggle" class="bi bi-palette-fill fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Open color picker to choose a new background color for the navbar"></i>
+                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="customer_navbar_color" id="customer_navbar_color" class="coloris" value="{{ $customerUI->navbar_color }}" data-coloris>
+                        </div>
+                    </div>
+
+                    <div class="form-control mt-3">
+                        <label class="mimic-floating mt-1" for="logo"">Logo</label>
+                        <input id="logo" class="form-control form-control-file mb-1" type="file" name="logo">
+                    </div>
+                    <small>Only SVG, PNG, and JPEG (JPG) file format between 16x16 till 512x512 resolution</small>
+
+
+                    <h5 class="mt-3">Admin</h5>
+
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col">
+                            <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $adminUI->navbar_text_class }}" style="background-color: {{ $adminUI->navbar_color }}">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand">
+                                        <img id="admin_logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
+                                        <span class="company-display-domain">{{ strtoupper($domain) }}</span> Admin
+                                    </a>
                                 </div>
-                            </div>
+                            </nav>
                         </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="customer_navbar" id="customer_navbar">
-                                    {{-- @foreach ($navbar_theme as $theme)
-                                    <option value="{{ $theme }}" class="{{ $theme }}" @if($customerUI->navbar_class == $theme){{ "selected" }}@endif>
-                                        {{ ucwords(substr($theme, 3)) }}
-                                    </option>
-                                    @endforeach --}}
-                                    <option value="bg-primary" @if($customerUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
-                                    <option value="bg-secondary" @if($customerUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
-                                    <option value="bg-success" @if($customerUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
-                                    <option value="bg-info" @if($customerUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
-                                    <option value="bg-warning" @if($customerUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
-                                    <option value="bg-danger" @if($customerUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
-                                    <option value="bg-light" @if($customerUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
-                                    <option value="bg-dark" @if($customerUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
-                                </select>
-                                <label for="customer_navbar">Navbar Theme</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="customer_navtext" id="customer_navtext">
-                                    <option value="navbar-dark" @if($customerUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
-                                    <option value="navbar-light" @if($customerUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
-                                </select>
-                                <label for="customer_navtext">Navbar Text</label>
-                            </div>
+                        <div class="col-auto">
+                            <i id="admin_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
+                            <input type="text" class="hidden" name="admin_navtext" id="admin_navtext" value="{{ $adminUI->navbar_text_class }}">
+                            &nbsp;
+                            <i id="admin_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
+                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="admin_navbar_color" id="admin_navbar_color" class="coloris" value="{{ $adminUI->navbar_color }}" data-coloris>
                         </div>
                     </div>
 
-                    <h5>Admin</h5>
+                    <h5 class="mt-3">Manager</h5>
 
-                    <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $adminUI->navbar_class }} {{ $adminUI->navbar_text_class }}">
-                        <div class="container-fluid">
-                            <a class="navbar-brand">
-                                <img id="admin_logo" src="{{ $adminUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($adminUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                <span class="company-name">{{ $name }}</span> Admin
-                            </a>
-                        </div>
-                    </nav>
-
-                    <div class="row mt-3">
+                    <div class="row align-items-center justify-content-center">
                         <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="admin_navbar" id="admin_navbar">
-                                    {{-- @foreach ($navbar_theme as $theme)
-                                    <option value="{{ $theme }}" @if($adminUI->navbar_class == $theme){{ "selected" }}@endif>{{ ucwords(substr($theme, 3)) }}</option>
-                                    @endforeach --}}
-                                    <option value="bg-primary" @if($adminUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
-                                    <option value="bg-secondary" @if($adminUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
-                                    <option value="bg-success" @if($adminUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
-                                    <option value="bg-info" @if($adminUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
-                                    <option value="bg-warning" @if($adminUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
-                                    <option value="bg-danger" @if($adminUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
-                                    <option value="bg-light" @if($adminUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
-                                    <option value="bg-dark" @if($adminUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
-                                </select>
-                                <label for="admin_navbar">Navbar Theme</label>
-                            </div>
+                            <nav id="manager-header" class="navbar navbar-expand-lg preview {{ $managerUI->navbar_text_class }}" style="background-color: {{ $managerUI->navbar_color }}">
+                                <div class="container-fluid">
+                                    <a class="navbar-brand">
+                                        <img id="manager_logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
+                                        <span class="company-display-domain">{{ strtoupper($domain) }}</span> Manager
+                                    </a>
+                                </div>
+                            </nav>
                         </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="admin_navtext" id="admin_navtext">
-                                    <option value="navbar-dark" @if($adminUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
-                                    <option value="navbar-light" @if($adminUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
-                                </select>
-                                <label for="admin_navtext">Navbar Text</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h5>Manager</h5>
-
-                    <nav id="manager-header" class="navbar navbar-expand-lg preview {{ $managerUI->navbar_class }} {{ $managerUI->navbar_text_class }}">
-                        <div class="container-fluid">
-                            <a class="navbar-brand">
-                                <img id="manager_logo" src="{{ $managerUI->logo }}" width="30" height="30" class="d-inline-block align-top @if($managerUI->logo_invert != "normal") invert-logo @endif" alt="">
-                                <span class="company-name">{{ $name }}</span> Manager
-                            </a>
-                        </div>
-                    </nav>
-
-                    <div class="row mt-3">
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="manager_navbar" id="manager_navbar">
-                                    {{-- @foreach ($navbar_theme as $theme)
-                                    <option value="{{ $theme }}" @if($managerUI->navbar_class == $theme){{ "selected" }}@endif>{{ ucwords(substr($theme, 3)) }}</option>
-                                    @endforeach --}}
-                                    <option value="bg-primary" @if($managerUI->navbar_class == "bg-primary"){{ "selected" }}@endif>Blue</option>
-                                    <option value="bg-secondary" @if($managerUI->navbar_class == "bg-secondary"){{ "selected" }}@endif>Grey</option>
-                                    <option value="bg-success" @if($managerUI->navbar_class == "bg-success"){{ "selected" }}@endif>Deep Green</option>
-                                    <option value="bg-info" @if($managerUI->navbar_class == "bg-info"){{ "selected" }}@endif>Light Blue</option>
-                                    <option value="bg-warning" @if($managerUI->navbar_class == "bg-warning"){{ "selected" }}@endif>Deep Yellow</option>
-                                    <option value="bg-danger" @if($managerUI->navbar_class == "bg-danger"){{ "selected" }}@endif>Deep Red</option>
-                                    <option value="bg-light" @if($managerUI->navbar_class == "bg-light"){{ "selected" }}@endif>Tint of Grey</option>
-                                    <option value="bg-dark" @if($managerUI->navbar_class == "bg-dark"){{ "selected" }}@endif>Deep Grey</option>
-                                </select>
-                                <label for="manager_navbar">Navbar Theme</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-floating mb-3">
-                                <select class="form-select" name="manager_navtext" id="manager_navtext">
-                                    <option value="navbar-dark" @if($managerUI->navbar_text_class == "navbar-dark"){{ "selected" }}@endif>Light</option>
-                                    <option value="navbar-light" @if($managerUI->navbar_text_class == "navbar-light"){{ "selected" }}@endif>Dark</option>
-                                </select>
-                                <label for="manager_navtext">Navbar Text</label>
-                            </div>
+                        <div class="col-auto">
+                            <i id="manager_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
+                            <input type="text" class="hidden" name="manager_navtext" id="manager_navtext" value="{{ $managerUI->navbar_text_class }}">
+                            &nbsp;
+                            <i id="manager_navbar_toggle" class="bi bi-palette-fill fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Open color picker to choose a new background color for the navbar"></i>
+                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="manager_navbar_color" id="manager_navbar_color" class="coloris" value="{{ $managerUI->navbar_color }}" data-coloris>
                         </div>
                     </div>
 

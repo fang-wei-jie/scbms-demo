@@ -98,11 +98,11 @@ class PreferencesController extends Controller
                 "booking_cut_off_time" => 'required | numeric | min:0 | max:30',
                 "precheckin_duration" => 'required | numeric | min:0 | max:30',
 
-                "customer_navbar" => 'required | string',
+                "customer_navbar_color" => 'required | string',
                 "customer_navtext" => 'required | string',
-                "admin_navbar" => 'required | string',
+                "admin_navbar_color" => 'required | string',
                 "admin_navtext" => 'required | string',
-                "manager_navbar" => 'required | string',
+                "manager_navbar_color" => 'required | string',
                 "manager_navtext" => 'required | string',
             ]);
 
@@ -150,17 +150,16 @@ class PreferencesController extends Controller
             }
 
             UI::where('side', '')->update([
-                'navbar_class' => $request->customer_navbar,
+                'navbar_color' => $request->customer_navbar_color,
                 'navbar_text_class' => $request->customer_navtext,
-                'logo_invert' => $request->customer_invert_logo,
             ]);
             UI::where('side', 'admin')->update([
-                'navbar_class' => $request->admin_navbar,
+                'navbar_color' => $request->admin_navbar_color,
                 'navbar_text_class' => $request->admin_navtext,
                 'logo_invert' => (($request->admin_navtext == "navbar-dark") ? "invert" : "normal"),
             ]);
             UI::where('side', 'manager')->update([
-                'navbar_class' => $request->manager_navbar,
+                'navbar_color' => $request->manager_navbar_color,
                 'navbar_text_class' => $request->manager_navtext,
                 'logo_invert' => (($request->manager_navtext == "navbar-dark") ? "invert" : "normal"),
             ]);

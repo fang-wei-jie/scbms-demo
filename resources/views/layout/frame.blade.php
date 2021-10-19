@@ -27,6 +27,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ $ui_preferences->navbar_color }}">
     <link rel="shortcut icon" type="image/jpg" href="{{ url($logo) }}" />
 
     @if(request()->is('admin/*') || request()->is('manager/*'))
@@ -117,7 +118,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_class }} {{ $ui_preferences->navbar_text_class }} fixed-top hide-from-print">
+    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $ui_preferences->navbar_color }}">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
@@ -134,7 +135,7 @@
             ">
 
                 <img src="{{ url($logo) }}" width="30" height="30" class="d-inline-block align-top @if($ui_preferences->navbar_text_class == "navbar-dark") invert-logo @endif" alt="">
-                {{ $name }} @if(request()->is('admin/*')) {{ 'Admin' }} @elseif(request()->is('manager/*')) {{ 'Manager' }} @endif
+                @if(request()->is('admin/*')) {{ strtoupper($domain).' Admin' }} @elseif(request()->is('manager/*')) {{ strtoupper($domain).' Manager' }} @else {{ $name }} @endif
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
