@@ -61,12 +61,12 @@ Book Courts
             </div>
 
             <div class="form-floating mb-3">
-                <select id="timeSlot" name="timeSlot" class="form-select" required></select>
+                <select id="timeSlot" name="timeSlot" class="form-select" required disabled></select>
                 <label for="timeSlot">Start Time</label>
             </div>
 
             <div class="form-floating mb-3">
-                <select id="timeLength" name="timeLength" class="form-select" required></select>
+                <select id="timeLength" name="timeLength" class="form-select" required disabled></select>
                 <label for="timeLength">Duration</label>
             </div>
 
@@ -229,6 +229,8 @@ $(document).ready(function() {
             // prompts user about invalid selection of date
             $("#dateLabel").text("Select date that was today or future. ")
             $("#dateSlot").addClass("is-invalid")
+            $("#timeSlot").prop("disabled", true)
+            $("#timeLength").prop("disabled", true)
 
         } else if (isSameDate(todayDate, selectedDate)) {
 
@@ -238,13 +240,24 @@ $(document).ready(function() {
             // get today's hours
             var todayHours = today.getHours()
 
+            console.log(todayHours)
+            console.log({{ $end_time }})
+            
             if (todayHours >= {{ $end_time }}) {
+                // if today's hours was over {{ $start_time }}pm, prompt user we were closed
 
-                // if today's hours was over {{ $start_time }}pm, clear date selected and prompt user we were closed
+                console.log("here")
+
+                $("#timeSlot").prop("disabled", true)
+                $("#timeLength").prop("disabled", true)
+
                 $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
                 $("#dateSlot").addClass("is-invalid")
 
             } else {
+
+                $("#timeSlot").prop("disabled", false)
+                $("#timeLength").prop("disabled", false)
 
                 // if the current time is later than the actual start time, display the actual start time
                 var start = (todayHours > {{ $start_time }}) ? todayHours : {{ $start_time }}
@@ -270,8 +283,11 @@ $(document).ready(function() {
             }
 
         } else {
-
             // if selected time was tomorrow or future
+
+            $("#timeSlot").prop("disabled", false)
+            $("#timeLength").prop("disabled", false)
+
             $("#booking-cut-off-time-alert").hide()
 
             // inserts updated time slot select list based on the hours left today
