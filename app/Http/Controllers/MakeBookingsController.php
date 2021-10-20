@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Features;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Operation;
 use App\Models\Rates;
+use Spatie\Valuestore\Valuestore;
 
 class MakeBookingsController extends Controller
 {
@@ -22,15 +21,17 @@ class MakeBookingsController extends Controller
     function view ()
     {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         // get operation hours
-        $start_time = Operation::where('attr', 'start_time') -> first() -> value;
-        $end_time = Operation::where('attr', 'end_time') -> first() -> value;
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
 
         // get booking grace period
-        $booking_cut_off_time = Operation::where('attr', 'booking_cut_off_time')->first()->value;
+        $booking_cut_off_time = $settings->get('booking_cut_off_time');
 
         // get calendar date range that the bookings can be made
-        $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
+        $prebook_days_ahead = (int) $settings->get('prebook_days_ahead');
         $minDate = date('Y-m-d');
         $tomorrowDate = date('Y-m-d', strtotime($minDate."+ 1 days"));
         $maxDate = date('Y-m-d', strtotime("+".$prebook_days_ahead." days"));
@@ -50,17 +51,19 @@ class MakeBookingsController extends Controller
     function book_court (Request $request)
     {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         // get operation hours
         date_default_timezone_set("Asia/Kuala_Lumpur");
-        $start_time = Operation::where('attr', 'start_time') -> first() -> value;
-        $end_time = Operation::where('attr', 'end_time') -> first() -> value;
-        $courts_count = Operation::where('attr', 'courts_count')->first()->value;
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
+        $courts_count = $settings->get('courts_count');
 
         // get booking grace period
-        $booking_cut_off_time = Operation::where('attr', 'booking_cut_off_time')->first()->value;
+        $booking_cut_off_time = $settings->get('booking_cut_off_time');
 
         // get calendar date range that the bookings can be made
-        $prebook_days_ahead = (int) Operation::where('attr', 'prebook_days_ahead')->first()->value;
+        $prebook_days_ahead = (int) $settings->get('prebook_days_ahead');
         $minDate = date('Ymd');
         $tomorrowDate = date('Ymd', strtotime($minDate."+ 1 days"));
         $maxDate = date('Ymd', strtotime("+".$prebook_days_ahead." days"));
@@ -130,10 +133,10 @@ class MakeBookingsController extends Controller
                 array_push($courts, $booked);
             }
 
-            if (Features::where('name', 'rates')->first()->value == 1) {
+            if ($settings->get('rates') == 1) {
                 // if rates was enabled
 
-                if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                if ($settings->get('rates_weekend_weekday') == 1) {
                     $dayOfWeek = date_format(date_create($dateSlot), 'N');
                     if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
                         $excludeRateID = 2; // weekend
@@ -170,7 +173,7 @@ class MakeBookingsController extends Controller
         } else if (isset($_POST['confirm-booking'])) {
 
             // check if rates is enabled
-            $ratesEnabled = Features::where('name', 'rates')->first()->value == 1 ? true : false;
+            $ratesEnabled = $settings->get('rates') == 1 ? true : false;
 
             // input validation
             $this->validate($request, [
@@ -204,7 +207,7 @@ class MakeBookingsController extends Controller
                     $excludeRateID = 1; // weekdays
                 }
 
-                if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                if ($settings->get('rates_weekend_weekday') == 1) {
                     // if weekend and weekday is in use, disable normal rate
                     $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                 } else {
@@ -278,7 +281,7 @@ class MakeBookingsController extends Controller
                 $bookingCondition = $rate->condition;
 
                 // validate rate validity
-                if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                if ($settings->get('rates_weekend_weekday') == 1) {
 
                     if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
                         $excludeRateID = 2; // weekend
@@ -337,7 +340,7 @@ class MakeBookingsController extends Controller
                         $excludeRateID = 1; // weekdays
                     }
 
-                    if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+                    if ($settings->get('rates_weekend_weekday') == 1) {
                         // if weekend and weekday is in use, disable normal rate
                         $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
                     } else {

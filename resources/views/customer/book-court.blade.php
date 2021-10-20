@@ -1,3 +1,8 @@
+@php
+use Spatie\Valuestore\Valuestore;
+$settings = Valuestore::make(storage_path('app/settings.json'));
+@endphp
+
 @extends('layout.frame')
 
 @section('title')
@@ -90,7 +95,7 @@ Book Courts
             </div>
             @endif
 
-            @if($count < DB::table("operation_preferences")->where('attr', 'courts_count')->first()->value)
+            @if($count < $settings->get('courts_count'))
 
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
@@ -125,7 +130,7 @@ Book Courts
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" name="rateID" id="rateID" @if(DB::table('features_preferences')->where('name', 'rates')->first()->value != 1){{ "disabled" }}@endif>
+                <select class="form-select" name="rateID" id="rateID" @if($settings->get('rates') != 1){{ "disabled" }}@endif>
                     @foreach ($rates as $rateDetail)
                         <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->price }} data-condition='{{ $rateDetail->condition }}''>
                             {{ $rateDetail->name }} @ RM{{ $rateDetail->price }}/hour

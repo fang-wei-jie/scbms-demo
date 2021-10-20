@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Operation;
-use App\Models\UI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Valuestore\Valuestore;
 
 class ReceiptController extends Controller
 {
@@ -25,16 +25,18 @@ class ReceiptController extends Controller
     function view (Request $request)
     {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         $this -> validate($request, [
 
             'bookID' => 'required | regex:/^[0-9]{7}/u',
 
         ]);
 
-        $companyName = Operation::where('attr', 'name')->first();
-        $companyPhone = Operation::where('attr', 'phone')->first();
-        $companyAddress = Operation::where('attr', 'address')->first();
-        $logo = UI::where('side', '')->first()->logo;
+        $companyName = $settings->get('name');
+        $companyPhone = $settings->get('phone');
+        $companyAddress = $settings->get('address');
+        $logo = $settings->get('navbar_customer_logo');
 
         $invoiceDetail = DB::table('bookings')
             -> join('users', 'bookings.custID', '=', 'users.id')
@@ -54,9 +56,9 @@ class ReceiptController extends Controller
                 'bookingDateTimeSlot' => substr($invoiceDetail->dateSlot, 6, 2) . "/" . substr($invoiceDetail->dateSlot, 4, 2) . "/" . substr($invoiceDetail->dateSlot, 0, 4) . " " . $invoiceDetail->timeSlot . ":00 - " . ($invoiceDetail->timeSlot + $invoiceDetail->timeLength) . ":00",
                 'courtID' => $invoiceDetail->courtID,
                 'rateName' => $invoiceDetail->bookingRateName,
-                'companyName' => $companyName->value,
-                'companyPhone' => $companyPhone->value,
-                'companyAddress' => $companyAddress->value,
+                'companyName' => $companyName,
+                'companyPhone' => $companyPhone,
+                'companyAddress' => $companyAddress,
                 'ratePrice' => $invoiceDetail->bookingPrice,
                 'timeLength' => $invoiceDetail->timeLength,
                 'logo' => $logo,

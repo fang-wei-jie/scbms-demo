@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Features;
+use Spatie\Valuestore\Valuestore;
 
 class SalesController extends Controller
 {
@@ -16,7 +16,9 @@ class SalesController extends Controller
     function view()
     {
 
-        if (Features::where('name', 'admin_sales_report')->first()->value == 1) {
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        if ($settings->get('admin_sales_report') == 1) {
 
             return view('admin.sales');
 

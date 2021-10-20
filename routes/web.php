@@ -7,8 +7,8 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth\LogoutController;
+use Spatie\Valuestore\Valuestore;
 
 // Customer Controllers
 use App\Http\Controllers\Auth\LoginController;
@@ -35,7 +35,7 @@ use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController as ManagerSalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
-use App\Http\Controllers\Manager\PreferencesController;
+use App\Http\Controllers\Manager\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,7 +139,9 @@ Route::post('/reset-password', function (Request $request) {
 // ADMIN PAGES
 Route::prefix('admin')->group(function() {
 
-    if (DB::table('features_preferences')->where('name', 'admin_role')->first()->value != 1) {
+    $settings = Valuestore::make(storage_path('app/settings.json'));
+
+    if ($settings->get('admin_role') != 1) {
         Auth::guard('admin')->logout();
     }
 
@@ -208,8 +210,8 @@ Route::prefix('manager')->group(function() {
     Route::get('/myaccount', [ManagerMyAccountController::class, 'view']) -> name('manager.myaccount');
     Route::post('/myaccount', [ManagerMyAccountController::class, 'update']);
 
-    // Prefernces
-    Route::get('/preferences', [PreferencesController::class, 'view']) -> name('manager.preferences');
-    Route::post('/preferences', [PreferencesController::class, 'update']);
+    // Settings
+    Route::get('/settings', [SettingsController::class, 'view']) -> name('manager.settings');
+    Route::post('/settings', [SettingsController::class, 'update']);
 
 });

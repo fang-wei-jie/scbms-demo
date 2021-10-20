@@ -1,24 +1,36 @@
 @php
-    use App\Models\Operation;
-    use App\Models\Features;
-    use App\Models\UI;
+    use Spatie\Valuestore\Valuestore;
 
-    $name = Operation::where('attr', 'name')->first()->value;
-    $domain = Operation::where('attr', 'domain')->first()->value;
-    $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
+    $settings = Valuestore::make(storage_path('app/settings.json'));
+    $name = $settings->get('name');
+    $domain = $settings->get('domain');
 
     if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
+
         $side = "manager";
+        $logo = $settings->get('navbar_manager_logo');
+        $navbar_color = $settings->get('navbar_manager_color');
+        $navbar_text_class = $settings->get('navbar_manager_text_class');
+        
     } else if (str_contains($_SERVER['REQUEST_URI'], "admin")) {
+        
         $side = "admin";
-    } else { $side = ""; }
+        $logo = $settings->get('navbar_admin_logo');
+        $navbar_color = $settings->get('navbar_admin_color');
+        $navbar_text_class = $settings->get('navbar_admin_text_class');
+        
+    } else { 
+        
+        $side = ""; 
+        $logo = $settings->get('navbar_customer_logo');
+        $navbar_color = $settings->get('navbar_customer_color');
+        $navbar_text_class = $settings->get('navbar_customer_text_class');
 
-    $ui_preferences = UI::where('side', $side)->first();
-    $logoQuery = $ui_preferences->logo;
-
-    if ($logoQuery != "") {
-        $logo = $logoQuery;
+        if ($logo == "") {
+            $logo = "https://icons.getbootstrap.com/assets/icons/hexagon-half.svg";
+        }
     }
+
 @endphp
 
 <!DOCTYPE html>
@@ -27,8 +39,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="{{ $ui_preferences->navbar_color }}">
-    <link rel="shortcut icon" type="image/jpg" href="{{ url($logo) }}" />
+    <meta name="theme-color" content="{{ $navbar_color }}">
+    <link rel="shortcut icon" type="image/jpg" href="{{ url(htmlspecialchars($logo)) }}" />
 
     @if(request()->is('admin/*') || request()->is('manager/*'))
         <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
@@ -118,7 +130,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg {{ $ui_preferences->navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $ui_preferences->navbar_color }}">
+    <nav id="header" class="navbar navbar-expand-lg {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
@@ -134,8 +146,8 @@
                 @endauth
             ">
 
-                <img src="{{ url($logo) }}" width="30" height="30" class="d-inline-block align-top @if($ui_preferences->navbar_text_class == "navbar-dark") invert-logo @endif" alt="">
-                @if(request()->is('admin/*')) {{ strtoupper($domain).' Admin' }} @elseif(request()->is('manager/*')) {{ strtoupper($domain).' Manager' }} @else {{ $name }} @endif
+                <img src="{{ url(htmlspecialchars($logo)) }}" width="30" height="30" class="d-inline-block align-top @if($navbar_text_class == "navbar-dark") invert-logo @endif" alt="">
+                @if($side == "") {{ $name }} @else {{ strtoupper($domain)." ".ucwords($side) }} @endif
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -194,7 +206,7 @@
                             </a>
                         </li>
 
-                        @if(Features::where('name', 'rates')->first()->value == 1)
+                        @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/rates')) ? 'active fw-bold' : '' }}" href="{{ route('admin.rates') }}">
                                 <i class="bi bi-tags"></i>
@@ -203,7 +215,7 @@
                         </li>
                         @endif
 
-                        @if(Features::where('name', 'admin_sales_report')->first()->value == 1)
+                        @if($settings->get('admin_sales_report') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/sales')) ? 'active fw-bold' : '' }}" href="{{ route('admin.sales') }}">
                                 <i class="bi bi-cash-stack"></i>
@@ -241,7 +253,7 @@
                             </a>
                         </li>
 
-                        @if(Features::where('name', 'rates')->first()->value == 1)
+                        @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/rates')) ? 'active fw-bold' : '' }}" href="{{ route('manager.rates') }}">
                                 <i class="bi bi-tags"></i>
@@ -257,7 +269,7 @@
                             </a>
                         </li>
 
-                        @if(Features::where('name', 'admin_role')->first()->value == 1)
+                        @if($settings->get('admin_role') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/admins')) ? 'active fw-bold' : '' }}" href="{{ route('manager.admins_management') }}">
                                 <i class="bi bi-person-badge"></i>
@@ -281,9 +293,9 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/preferences')) ? 'active fw-bold' : '' }}" href="{{ route('manager.preferences') }}">
+                            <a class="nav-link {{ (request()->is('manager/settings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.settings') }}">
                                 <i class="bi bi-gear-fill"></i>
-                                Preferences
+                                Settings
                             </a>
                         </li>
 
@@ -313,7 +325,7 @@
                     @endif
 
                     <li class="nav-item">
-                        <a class="nav-link" id="logout-button" style="color: @if (!(request()->is('admin/*'))) red @endif; " href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <a class="nav-link" id="logout-button" href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i id="logout-icon" class="bi bi-door-closed-fill"></i>
                             Logout
                         </a>
@@ -336,7 +348,7 @@
     </div>
 
     <!-- footer -->
-    @if (!(request()->is('admin/*') || request()->is('manager/*')))
+    @if ($side == "")
     <footer class="footer mt-auto py-3 bg-dark hide-from-print">
         <div class="container d-flex justify-content-between flex-wrap">
             <div>

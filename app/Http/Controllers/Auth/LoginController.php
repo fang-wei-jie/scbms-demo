@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Operation;
 use App\Models\Features;
+use Spatie\Valuestore\Valuestore;
 
 class LoginController extends Controller
 {
@@ -26,6 +26,8 @@ class LoginController extends Controller
     function auth(Request $request)
     {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         if (isset($_POST['login'])) {
 
             $this->validate($request, [
@@ -35,23 +37,23 @@ class LoginController extends Controller
 
             ]);
 
-            $domain = Operation::where('attr', 'domain') -> first();
+            $domain = $settings->get('domain');
 
-            $managerDomain = '@'.$domain->value.'m';
-            $adminDomain = '@'.$domain->value;
+            $managerDomain = '@'.$domain.'m';
+            $adminDomain = '@'.$domain;
 
             if (str_ends_with($request->email, $managerDomain)) {
 
                 // login verification for manager
-                if (!Auth::guard('manager')->attempt(['email' => str_replace('@'.$domain->value.'m', "", $request->email), 'password' => $request->password])) {
+                if (!Auth::guard('manager')->attempt(['email' => str_replace('@'.$domain.'m', "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 
                 return redirect()->route('manager.dashboard');
-            } else if (str_ends_with($request->email, $adminDomain) && Features::where('name', 'admin_role')->first()->value == 1) {
+            } else if (str_ends_with($request->email, $adminDomain) && $settings->get('admin_role') == 1) {
 
                 // login verification for admin
-                if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain->value, "", $request->email), 'password' => $request->password])) {
+                if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain, "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Invalid login details');
                 }
 

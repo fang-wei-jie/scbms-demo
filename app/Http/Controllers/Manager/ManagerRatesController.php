@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Rates;
-use App\Models\Features;
+use Spatie\Valuestore\Valuestore;
 
 class ManagerRatesController extends Controller
 {
@@ -19,11 +19,13 @@ class ManagerRatesController extends Controller
     function view()
     {
 
-        if (Features::where('name', 'rates')->first()->value != 1) {
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        if ($settings->get('rates') != 1) {
             return back();
         }
 
-        if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+        if ($settings->get('rates_weekend_weekday') == 1) {
             // if weekend and weekday is in use, disable normal rate
             $default = Rates::get()->where('id', '<=', 2);
         } else {
@@ -42,7 +44,9 @@ class ManagerRatesController extends Controller
     function process(Request $request)
     {
 
-        if (Features::where('name', 'rates')->first()->value != 1) {
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        if ($settings->get('rates') != 1) {
             return back();
         }
 

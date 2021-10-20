@@ -3,8 +3,8 @@
 namespace App\Http\Livewire\Dashboard;
 
 use Livewire\Component;
-use App\Models\Operation;
 use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
 
 class BookingsDashboard extends Component
 {
@@ -14,6 +14,8 @@ class BookingsDashboard extends Component
     public function render()
     {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
         $date = $this->date != "" ?  $this->date : date('Ymd');
 
         $bookings = DB::table('bookings')
@@ -22,8 +24,8 @@ class BookingsDashboard extends Component
             ->orderBy('timeSlot');
 
         // normal start end time
-        $start_time = Operation::where('attr', 'start_time')->first()->value;
-        $end_time = Operation::where('attr', 'end_time')->first()->value;
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
 
         // start end time of the day's booking (just in case if previous operation time was modified)
         $earliest_booking = $bookings->min('timeSlot');
@@ -46,7 +48,7 @@ class BookingsDashboard extends Component
 
         // if current court count is smaller than the previous booked court no, use the one in the bookings table
         $lastCourtIDinTable = DB::table('bookings')->max('courtID');
-        $courtCountInOperation = Operation::where('attr', 'courts_count')->first()->value;
+        $courtCountInOperation = $settings->get('courts_count');
         $courts = $lastCourtIDinTable > $courtCountInOperation ? $lastCourtIDinTable : $courtCountInOperation;
 
         return view('livewire.dashboard.bookings-dashboard', [

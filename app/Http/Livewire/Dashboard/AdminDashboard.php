@@ -3,19 +3,21 @@
 namespace App\Http\Livewire\Dashboard;
 
 use Livewire\Component;
-use App\Models\Features;
 use App\Models\Rates;
 use App\Models\Operation;
 use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
 
 class AdminDashboard extends Component
 {
     public function render()
     {
 
-        $ratesEnabled = (Features::where('name', 'rates')->first()->value == 1) ? true : false;
-        $adminSalesReportEnabled = (Features::where('name', 'admin_sales_report')->first()->value == 1) ? true : false;
-        $courts_count = Operation::where('attr', 'courts_count')->first()->value;
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        $ratesEnabled = ($settings->get('rates') == 1) ? true : false;
+        $adminSalesReportEnabled = ($settings->get('admin_sales_report') == 1) ? true : false;
+        $courts_count = $settings->get('courts_count');
 
         $bookingRows = DB::table('bookings')
             ->where('dateSlot', '=', date('Ymd'))
@@ -24,7 +26,7 @@ class AdminDashboard extends Component
             ->orderBy('courtID', 'asc')
             ->get();
 
-        if (Features::where('name', 'rates_weekend_weekday')->first()->value == 1) {
+        if ($settings->get('rates_weekend_weekday') == 1) {
             // if weekend and weekday is in use, disable normal rate
             $rates = Rates::where('status', 1)->get()->where('id', '!=', 3);
         } else {
