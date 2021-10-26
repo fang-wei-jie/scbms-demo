@@ -52,7 +52,8 @@ Managers Account
                     <td>{{ $managersDetail->email }}</td>
                     <td>
                         <input type="hidden" name="id" value="{{$managersDetail->id}}">
-
+                        
+                        @if (Auth::user()->id != $managersDetail->id)
                         <button type="button" class="btn btn-primary" id="edit" data-bs-toggle="modal"
                         data-bs-target="#editModal" data-id="{{$managersDetail->id}}" data-name="{{ $managersDetail->name }}" data-email="{{ $managersDetail->email }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
@@ -60,7 +61,16 @@ Managers Account
                                 <span class="d-none d-md-block">&nbsp;Edit</span>
                             </span>
                         </button>
-
+                        @else
+                        <a href="{{ route('manager.myaccount') }}" class="btn btn-primary">
+                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                <i class="bi bi-pencil-square"></i>
+                                <span class="d-none d-md-block">&nbsp;Edit</span>
+                            </span>
+                        </a>
+                        @endif
+                    
+                        @if (Auth::user()->id != $managersDetail->id)
                         <button class="btn btn-warning text-white" type="button" id="reset" data-bs-toggle="modal" data-bs-target="#resetModal" data-id="{{ $managersDetail->id }}" data-name="{{ $managersDetail->name }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-arrow-counterclockwise"></i>
@@ -74,6 +84,7 @@ Managers Account
                                 <span class="d-none d-md-block">&nbsp;Delete</span>
                             </span>
                         </button>
+                        @endif
                     </td>
                 </form>
             </tr>

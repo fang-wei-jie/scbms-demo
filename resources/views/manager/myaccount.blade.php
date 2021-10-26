@@ -9,6 +9,23 @@ My Account
 
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
+            <h3>Manager ID</h3>
+            <span>{{ Auth::user()->email }}</span>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" id="changeIDButton" data-bs-toggle="modal" data-bs-target="#changeID">
+                <span style="display: flex; justify-content: space-between; align-items: center;">
+                    <i class="bi bi-pencil-square"></i>
+                    <span class="d-none d-md-block">&nbsp;Change</span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <br>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
             <h3>Name</h3>
             <span>{{ Auth::user()->name }}</span>
         </div>
@@ -39,12 +56,38 @@ My Account
         </div>
     </div>
 
+    <!-- change ID modal view -->
+    <div class="modal fade" id="changeID" tabindex="-1" role="dialog" aria-labelledby="changeIDLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title" id="titleLabel"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form action="" method="post" autocomplete="off">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="email" maxlength="25" placeholder="Enter your new Manager ID" required>
+                            <label>Enter your new Manager ID</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" name="change-ID">Change Manager ID</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- change name modal view -->
     <div class="modal fade" id="changeName" tabindex="-1" role="dialog" aria-labelledby="changeNameLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="modal-title" id="titleLabel">Change name</span>
+                    <span class="modal-title" id="titleLabel"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -70,7 +113,7 @@ My Account
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="modal-title" id="titleLabel">Change Password</span>
+                    <span class="modal-title" id="titleLabel"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

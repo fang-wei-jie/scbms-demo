@@ -26,7 +26,23 @@ class ManagerMyAccountController extends Controller
 
         $manager = Auth::guard('manager') -> user();
 
-        if (isset ($_POST["change-name"]) ) {
+        if (isset ($_POST["change-ID"])) {
+
+            // validation
+            $this -> validate($request, [
+
+                'email' => 'required | max:25 | unique:managers',
+
+            ]);
+
+            // save changes
+            $manager->email = $request->email;
+            $manager->save();
+
+            // redirect back to page with info prompt
+            return back() -> with('info', 'Manager ID updated');
+
+        } else if (isset ($_POST["change-name"]) ) {
 
             // validation
             $this -> validate($request, [

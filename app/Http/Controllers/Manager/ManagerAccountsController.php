@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Manager;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ManagerAccountsController extends Controller
 {
@@ -27,6 +28,10 @@ class ManagerAccountsController extends Controller
 
     function process(Request $request)
     {
+
+        if ($request->id == Auth::user()->id) {
+            return back();
+        }
 
         if(isset($_POST['add'])) {
 
