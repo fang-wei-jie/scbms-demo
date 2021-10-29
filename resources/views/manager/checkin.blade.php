@@ -22,7 +22,7 @@ Check In
 <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/findpat.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/alignpat.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/databr.js') }}"></script>
-<script type="text/javascript" src="{{ URL::asset('dependencies/admin/checkin.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('dependencies/checkin.js') }}"></script>
 @endsection
 
 @section('extra-css')
@@ -42,7 +42,7 @@ Check In
 
         <div class="row align-items-center">
     
-            <div class="col">
+            <div class="col-sm">
     
                 <!-- scanner/camera preview window -->
                 <div class="video-container row justify-content-center">
@@ -54,7 +54,7 @@ Check In
 
                 <!-- submission field -->
                 <div class="row justify-content-center">
-                    @error('resultToQuery')
+                    @error('code')
                         <div class="alert alert-danger" role="alert">
                             {{ $message }}
                         </div>
@@ -65,7 +65,7 @@ Check In
                     <div class="col">
                         <form action="{{ route('manager.checkin') }}" method="post">
                             @csrf
-                            <input id="resultToQuery" class="form-control" name="resultToQuery" type="text"
+                            <input id="code" class="form-control" name="code" type="text"
                                 placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
                     </div>
                     <div class="col-auto">
@@ -81,7 +81,7 @@ Check In
     
             </div>
     
-            <div class="col-xl">
+            <div class="col-xxl">
     
                 @if ($result != '0')
                     <!-- result card -->

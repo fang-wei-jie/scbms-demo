@@ -48,6 +48,6 @@ function tick() {
 }
 
 function queryResult (result) {
-    $("#resultToQuery").val(result)
+    $("#code").val(result)
     $("#startQuery").click()
 }

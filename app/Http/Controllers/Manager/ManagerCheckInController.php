@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
 
 class ManagerCheckInController extends Controller
 {
@@ -26,21 +27,26 @@ class ManagerCheckInController extends Controller
 
         $this->validate($request, [
 
-            'resultToQuery' => 'required | numeric | regex:/^[0-9]{14}/u',
+            'code' => 'required | numeric | regex:/^[0-9]{14}/u',
 
         ]);
 
+        // query the booking details
         $result = DB::table('bookings')
             ->join('users', 'users.id', '=', 'bookings.custID')
-            ->where('bookingID', '=', substr($request->input('resultToQuery'), 0, 7))
-            ->where('custID', '=', substr($request->input('resultToQuery'), 8, 7))
+            ->where('bookingID', '=', substr($request->input('code'), 0, 7))
+            ->where('custID', '=', substr($request->input('code'), 8, 7))
             ->first();
 
+        // get current time and date
+        $currentMinute = date('i');
         $currentTime = date('H');
         $currentDate = date('Ymd');
 
+
         if ($result == null) {
 
+            // if no result was querried
             // invalid booking ID
             $cardColor = "danger";
             $cardIcon = "bi-x-circle-fill";
@@ -55,31 +61,49 @@ class ManagerCheckInController extends Controller
                 $cardColor = "success";
                 $cardIcon = "bi-check-circle-fill";
                 $cardText = "Valid Booking";
+
             } else if ($currentTime < $result->timeSlot) {
 
-                // the current check in came too early today
-                $cardColor = "info";
-                $cardText = "Future Book Slot, Came Too Early";
-                $cardIcon = "bi-brightness-alt-high";
+                // get pre-checkin duration set in settings
+                $settings = Valuestore::make(storage_path('app/settings.json'));
+                $precheckin = $settings->get('precheckin_duration');
+
+                if (60 - $currentMinute <= $precheckin) {
+
+                    // if customer reaches within the pre-checkin duration
+                    $cardColor = "success";
+                    $cardIcon = "bi-check-circle";
+                    $cardText = "Valid Booking on Next Session";
+                    
+                } else {
+    
+                    // if customer reaches before the pre-checkin duration
+                    // the current check in came too early today
+                    $cardColor = "info";
+                    $cardText = "Came Too Early";
+                    $cardIcon = "bi-brightness-alt-high";
+
+                }
+
             } else if ($currentTime > ($result->timeSlot + $result->timeLength)) {
 
                 // the current check in came too late today
                 $cardColor = "warning";
                 $cardIcon = "bi-watch";
-                $cardText = "Came Too Late, Book Slot Expired";
+                $cardText = "Expired Book Slot";
             } else {
 
                 // the current check in came too late today
                 $cardColor = "warning";
                 $cardIcon = "bi-watch";
-                $cardText = "Came Too Late, Book Slot Expired";
+                $cardText = "Expired Book Slot";
             }
         } else {
             if ($currentDate < $result->dateSlot) {
 
                 // the current check in came too early
                 $cardColor = "info";
-                $cardText = "Future Book Slot, Came Too Early";
+                $cardText = "Future Book Slot";
                 $cardIcon = "bi-brightness-alt-high";
             } else if ($currentDate > $result->dateSlot) {
 
@@ -97,7 +121,7 @@ class ManagerCheckInController extends Controller
         }
 
         return view('manager.checkin', [
-            'resultToQuery' => $request->resultToQuery,
+            'code' => $request->code,
             'result' => $result,
             'cardColor' => $cardColor,
             'cardIcon' => $cardIcon,
