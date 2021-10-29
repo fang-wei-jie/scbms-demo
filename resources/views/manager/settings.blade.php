@@ -37,11 +37,12 @@
 
     .clr-field {
         opacity: 0;
-        width: 1px;
+        width: 0px;
+        height: 0px;
     }
 
     /* show pointer on coloris */
-    .bi-palette-fill, .bi-circle-half {
+    .bi-palette-fill, .bi-circle-half, #customer_navbar_color, #admin_navbar_color, #manager_navbar_color {
         cursor: pointer;
     }
 
@@ -259,11 +260,12 @@
                             </nav>
                         </div>
                         <div class="col-auto">
-                            <i id="customer_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
-                            <input type="text" class="hidden" name="customer_navtext" id="customer_navtext" value="{{ $settings->get('navbar_customer_text_class') }}">
+                            <input style="width: 0px; opacity: 0;" class="form-control" type="text" name="customer_navbar_color" id="customer_navbar_color" class="coloris" value="{{ $settings->get('navbar_customer_color') }}" data-coloris>
+                            <i id="customer_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
                             &nbsp;
-                            <i id="customer_navbar_toggle" class="bi bi-palette-fill fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Open color picker to choose a new background color for the navbar"></i>
-                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="customer_navbar_color" id="customer_navbar_color" class="coloris" value="{{ $settings->get('navbar_customer_color') }}" data-coloris>
+                            <input type="text" class="hidden" name="customer_navtext" id="customer_navtext" value="{{ $settings->get('navbar_customer_text_class') }}">
+                            <i id="customer_navtext_toggle" class="bi bi-circle-half fs-5"></i>
+                            &nbsp;
                         </div>
                     </div>
 
@@ -288,11 +290,12 @@
                             </nav>
                         </div>
                         <div class="col-auto">
-                            <i id="admin_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
-                            <input type="text" class="hidden" name="admin_navtext" id="admin_navtext" value="{{ $settings->get('navbar_admin_text_class') }}">
-                            &nbsp;
+                            <input style="width: 0px; opacity: 0;" class="form-control" type="text" name="admin_navbar_color" id="admin_navbar_color" class="coloris" value="{{ $settings->get('navbar_admin_color') }}" data-coloris>
                             <i id="admin_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
-                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="admin_navbar_color" id="admin_navbar_color" class="coloris" value="{{ $settings->get('navbar_admin_color') }}" data-coloris>
+                            &nbsp;
+                            <input type="text" class="hidden" name="admin_navtext" id="admin_navtext" value="{{ $settings->get('navbar_admin_text_class') }}">
+                            <i id="admin_navtext_toggle" class="bi bi-circle-half fs-5"></i>
+                            &nbsp;
                         </div>
                     </div>
 
@@ -310,11 +313,12 @@
                             </nav>
                         </div>
                         <div class="col-auto">
-                            <i id="manager_navtext_toggle" class="bi bi-circle-half fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Switch between black and white text color"></i>
-                            <input type="text" class="hidden" name="manager_navtext" id="manager_navtext" value="{{ $settings->get('navbar_manager_text_class') }}">
+                            <input style="width: 0px; opacity: 0;" class="form-control" type="text" name="manager_navbar_color" id="manager_navbar_color" class="coloris" value="{{ $settings->get('navbar_manager_color') }}" data-coloris>
+                            <i id="manager_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
                             &nbsp;
-                            <i id="manager_navbar_toggle" class="bi bi-palette-fill fs-5" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Open color picker to choose a new background color for the navbar"></i>
-                            <input style="width: 1px; opacity: 0;" class="form-control" type="text" name="manager_navbar_color" id="manager_navbar_color" class="coloris" value="{{ $settings->get('navbar_manager_color') }}" data-coloris>
+                            <input type="text" class="hidden" name="manager_navtext" id="manager_navtext" value="{{ $settings->get('navbar_manager_text_class') }}">
+                            <i id="manager_navtext_toggle" class="bi bi-circle-half fs-5"></i>
+                            &nbsp;
                         </div>
                     </div>
 
@@ -332,4 +336,14 @@
         </form>
 
     </div>
+@endsection
+
+@section('bottom-js')
+<script>
+    $(document).ready(function() {
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+            $('#customer_navbar_toggle, #customer_navtext_toggle, #admin_navbar_toggle, #admin_navtext_toggle, #manager_navbar_toggle, #manager_navtext_toggle').popover('disable');
+        }
+    })
+</script>
 @endsection
