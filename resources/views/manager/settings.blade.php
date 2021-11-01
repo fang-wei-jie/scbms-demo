@@ -260,7 +260,7 @@
                                 <div class="container-fluid">
                                     <a class="navbar-brand">
                                         <img id="customer_logo" src="{{ url(htmlspecialchars($settings->get('navbar_customer_logo'))) }}" width="30" height="30" class="d-inline-block align-top" alt="">
-                                        <span class="company-name">{{ $settings->get('name') }}</span>
+                                        <span class="company-name">&nbsp;{{ $settings->get('name') }}</span>
                                     </a>
                                 </div>
                             </nav>
@@ -290,7 +290,7 @@
                                 <div class="container-fluid">
                                     <a class="navbar-brand">
                                         <img id="admin_logo" src="{{ url(htmlspecialchars($settings->get('navbar_admin_logo'))) }}" width="30" height="30" class="d-inline-block align-top @if($settings->get('navbar_admin_text_class') != "navbar-light") invert-logo @endif" alt="">
-                                        <span class="company-display-domain">{{ strtoupper($settings->get('domain')) }}</span> Admin
+                                        <span class="company-display-domain">&nbsp;{{ strtoupper($settings->get('domain')) }}</span> Admin
                                     </a>
                                 </div>
                             </nav>
@@ -313,7 +313,7 @@
                                 <div class="container-fluid">
                                     <a class="navbar-brand">
                                         <img id="manager_logo" src="{{ url(htmlspecialchars($settings->get('navbar_manager_logo'))) }}" width="30" height="30" class="d-inline-block align-top @if($settings->get('navbar_manager_text_class') != "navbar-light") invert-logo @endif" alt="">
-                                        <span class="company-display-domain">{{ strtoupper($settings->get('domain')) }}</span> Manager
+                                        <span class="company-display-domain">&nbsp;{{ strtoupper($settings->get('domain')) }}</span> Manager
                                     </a>
                                 </div>
                             </nav>
