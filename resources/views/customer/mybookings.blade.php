@@ -71,7 +71,7 @@ My Bookings
                     <div class="accordion-body">
                         <div class="row align-items-center">
 
-                            <div class="col">
+                            <div class="col mb-4">
                                 <div class="row">
                                     <b>{{ $list->bookingRateName }} rate</b>
                                 </div>
@@ -86,7 +86,7 @@ My Bookings
 
                             </div>
 
-                            <div class="col-auto">
+                            <div class="col-auto mb-4">
                                 <form action="{{ route('view-receipt') }}" method="post">
                                     @csrf
                                     <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
