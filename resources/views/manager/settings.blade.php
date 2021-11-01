@@ -91,6 +91,12 @@
                     </div>
 
                     <div class="form-floating mb-3">
+                        <input id="registration" class="form-control" type="text" name="registration" maxlength="255" value="{{ $settings->get('registration') }}">
+                        <label for="registration">Business Registration Number</label>
+                        <small>Business registration number will only be shown on receipt. This field is optional if you do not have business registration number. </small>
+                    </div>
+
+                    <div class="form-floating mb-3">
                         <input id="phone" class="form-control" type="tel" name="phone" maxlength="15" value="{{ $settings->get('phone') }}">
                         <label for="phone">Phone Number</label>
                         <small>Phone number will be used on receipt and about us. </small>
