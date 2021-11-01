@@ -90,7 +90,7 @@ class SettingsController extends Controller
             $settings->put('rates_editable_admin', $request->adminRates == null ? '0' : '1');
 
             if ($request->hasFile('logo')) {
-                $this -> validate($request, ["logo" => 'mimes:jpg,jpeg,png,svg']);
+                $this -> validate($request, ["logo" => 'mimes:jpg,jpeg,png']);
 
                 $file_name = "customer_favicon." . $request->logo->extension();
                 $request->logo->move(public_path('favicon'), $file_name);

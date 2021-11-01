@@ -279,7 +279,7 @@
                         <label class="mimic-floating mt-1" for="logo"">Logo</label>
                         <input id="logo" class="form-control form-control-file mb-1" type="file" name="logo">
                     </div>
-                    <small>Only SVG, PNG, and JPEG (JPG) file format between 16x16 till 512x512 resolution</small>
+                    <small>Only PNG and JPEG (JPG) file format with 128x128 resolution</small>
 
 
                     <h5 class="mt-3">Admin</h5>
