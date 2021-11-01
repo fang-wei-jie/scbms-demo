@@ -46,7 +46,7 @@ class LoginController extends Controller
 
                 // login verification for manager
                 if (!Auth::guard('manager')->attempt(['email' => str_replace('@'.$domain.'m', "", $request->email), 'password' => $request->password])) {
-                    return back()->with('status', 'Invalid login details');
+                    return back()->with('status', 'Incorrect login credentials');
                 }
 
                 return redirect()->route('manager.dashboard');
@@ -54,14 +54,14 @@ class LoginController extends Controller
 
                 // login verification for admin
                 if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain, "", $request->email), 'password' => $request->password])) {
-                    return back()->with('status', 'Invalid login details');
+                    return back()->with('status', 'Incorrect login credentials');
                 }
 
                 return redirect()->route('admin.dashboard');
             } else {
 
                 if (!Auth::attempt($request->only('email', 'password'))) {
-                    return back()->with('status', 'Invalid login details');
+                    return back()->with('status', 'Incorrect login credentials');
                 }
 
                 return redirect()->route('mybookings');

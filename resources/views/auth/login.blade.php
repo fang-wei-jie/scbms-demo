@@ -37,24 +37,73 @@ Login
 
     <div class="form-floating mb-3">
         <input id="email" class="form-control @error('email') is-invalid @enderror @if(old('email')) is-valid @endif" type="text" name="email" value="{{ old('email') }}" maxlength=255 placeholder="Email address">
-        <label for="email">Email @error('email')({{ $message }})@enderror</label>
+        <label for="email">Email</label>
     </div>
 
     <div class="form-floating mb-3">
         <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
-        <label for="password">Password @error('password')({{ $message }})@enderror</label>
+        <label for="password">Password</label>
     </div>
 
     <div class="d-grid gap-2 mb-3">
         <button class="btn btn-primary" type="submit" name="login">
             Login
         </button>
-        <a class="btn btn-secondary" href="{{ route('register') }}">
-                Don't have an account? Register now
-        </a>
-        <a class="btn btn-secondary" href="{{ route('password.request') }}">
-            Forgot password? Reset your password here
-        </a>
+        <div class="row">
+            <div class="col d-grid gap-2 mb-3">
+                <a class="btn btn-outline-secondary" href="{{ route('register') }}">
+                    Register Account
+                </a>
+            </div>
+            <div class="col d-grid gap-2 mb-3">
+                <a class="btn btn-outline-secondary" href="{{ route('password.request') }}">
+                    Reset Password
+                </a>
+            </div>
+        </div>
     </div>
 </form>
+@endsection
+
+@section('bottom-js')
+<script>
+    $(document).ready(function() {
+        @error('email')
+            @if (str_contains($message, 'required'))
+                $("label[for = 'email']").text("Email is required")
+            @endif
+        @enderror
+
+        @error('password')
+            @if (str_contains($message, 'required'))
+                $("label[for = 'password']").text("Password is required")
+            @endif
+        @enderror
+
+        $("#email").on("keyup change", function() {
+            if ($(this).val().length == 0) {
+                $(this).removeClass("is-valid")
+                $(this).addClass("is-invalid")
+                $("label[for = 'email']").text("Email is required")
+            } else {
+                $(this).removeClass("is-invalid")
+                $(this).addClass("is-valid")
+                $("label[for = 'email']").text("Email")
+            }
+        })
+
+        $("#password").on("keyup change", function() {
+            if ($(this).val().length == 0) {
+                $(this).removeClass("is-valid")
+                $(this).addClass("is-invalid")
+                $("label[for = 'password']").text("Password is required")
+            } else {
+                $(this).removeClass("is-invalid")
+                $(this).addClass("is-valid")
+                $("label[for = 'password']").text("Password")
+            }
+        })
+    })
+</script>
+
 @endsection

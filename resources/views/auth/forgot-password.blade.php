@@ -47,8 +47,8 @@ Forgot Password
         <button class="btn btn-primary" type="submit" id="request" name="request">
             Request password reset
         </button>
-        <a class="btn btn-secondary" href="{{ route('login') }}">
-            Have an account? Back to login page
+        <a class="btn btn-outline-secondary" href="{{ route('login') }}">
+            Back to Login
         </a>
     </div>
     @endif
