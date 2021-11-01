@@ -33,7 +33,7 @@ Reset Password
     </div>
     @else
     <div class="form-floating mb-3">
-        <input id="email" class="form-control" type="text" name="email" value="{{ old('email') }}" maxlength=255 placeholder="Email address">
+        <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" maxlength=255 placeholder="Email address">
         <label for="email">Email</label>
     </div>
 

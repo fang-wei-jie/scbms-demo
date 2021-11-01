@@ -39,7 +39,7 @@ Forgot Password
 
     @if(!(session('status') || str_contains($errors->first('email'), "user with that email address")))
     <div class="form-floating mb-3">
-        <input id="email" class="form-control" type="text" name="email" maxlength=255 placeholder="Email address">
+        <input id="email" class="form-control" type="email" name="email" maxlength=255 placeholder="Email address">
         <label for="email">Email</label>
     </div>
 

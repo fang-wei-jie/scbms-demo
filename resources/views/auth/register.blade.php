@@ -22,7 +22,7 @@ Register
     </div>
 
     <div class="form-floating mb-3">
-        <input id="email" class="form-control @error('email') is-invalid @enderror @if(old('email')) is-valid @endif" type="text" name="email" value="{{ old('email') }}" maxlength=75 placeholder="Email">
+        <input id="email" class="form-control @error('email') is-invalid @enderror @if(old('email')) is-valid @endif" type="email" name="email" value="{{ old('email') }}" maxlength=75 placeholder="Email">
         <label for="email">Email</label>
         <small>To reset password and identify your account</small>
     </div>
