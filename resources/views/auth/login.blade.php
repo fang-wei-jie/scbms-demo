@@ -87,7 +87,6 @@ Login
                 $("label[for = 'email']").text("Email is required")
             } else {
                 $(this).removeClass("is-invalid")
-                $(this).addClass("is-valid")
                 $("label[for = 'email']").text("Email")
             }
         })
@@ -99,7 +98,6 @@ Login
                 $("label[for = 'password']").text("Password is required")
             } else {
                 $(this).removeClass("is-invalid")
-                $(this).addClass("is-valid")
                 $("label[for = 'password']").text("Password")
             }
         })
