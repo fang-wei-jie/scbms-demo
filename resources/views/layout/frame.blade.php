@@ -40,7 +40,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="{{ $navbar_color }}">
-    <link rel="shortcut icon" type="image/jpg" href="{{ url(htmlspecialchars($logo)) }}" />
+    <link rel="shortcut icon" href="{{ url(htmlspecialchars($logo)) }}" />
 
     @if(request()->is('admin/*') || request()->is('manager/*'))
         <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
