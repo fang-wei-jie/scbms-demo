@@ -19,13 +19,8 @@ class ReceiptController extends Controller
 
     }
 
-    function get_request () {
-        return redirect() -> route('mybookings');
-    }
-
-    function view (Request $request)
-    {
-
+    function get_request (Request $request) {
+        
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
         $this -> validate($request, [
@@ -139,5 +134,6 @@ class ReceiptController extends Controller
             return redirect() -> route('mybookings');
 
         }
+
     }
 }
