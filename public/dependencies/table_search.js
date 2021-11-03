@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     // Search all columns
-    $('#rates-search').keyup(function(){
+    $('#search').keyup(function(){
         // Search Text
         var search = $(this).val()
 

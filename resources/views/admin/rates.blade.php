@@ -5,7 +5,7 @@ Rates
 @endsection
 
 @section('extra-dependencies')
-<script src="{{ URL::asset('dependencies/admin/ratesTableSearch.js') }}"></script>
+<script src="{{ URL::asset('dependencies/table_search.js') }}"></script>
 <script src="{{ URL::asset('dependencies/sortable-0.8.0/js/sortable.min.js') }}"></script>
 @endsection
 
@@ -53,7 +53,7 @@ Rates
 
     <div class="row">
         <div class="col">
-            <input type="text" id="rates-search" class="form-control" placeholder="Search anything in the table ...">
+            <input type="text" id="search" class="form-control" placeholder="Search anything in the table ...">
         </div>
 
         @if($editable == 1)
@@ -127,6 +127,11 @@ Rates
                 @endif
             </tr>
             @endforeach
+            <tr class="notfound" style="display: none">
+                <td colspan="3">
+                    <i class="bi bi-question-lg"></i> Nothing found
+                </td>
+            </tr>
         </tbody>
     </table>
 </div>
