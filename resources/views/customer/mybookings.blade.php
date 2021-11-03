@@ -27,163 +27,111 @@ My Bookings
 
     <div class="my-2"></div>
 
-    @if ($today_bookings -> count() == 0 && $past_bookings -> count() == 0)
+    @if ($bookings_count == 0)
+    
     <div class="row justify-content-center align-items-center">
         <div class="col">
             <h5>You had yet to make any booking. 😶</h5>
         </div>
     </div>
-    @endif
     
-    @if ($today_bookings -> count() > 0)
-
-    <h5>New Bookings</h5>
+    @else
     
     <div class="accordion" id="accordian">
 
-        @foreach ($today_bookings as $list)
-
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-parent="accordian" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
-                        <div class="col">
-                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                            <br>
-                            Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
-                        </div>
-                        <div class="col-auto me-3">
-                            @if ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
-                                {{-- same date and same hour --}}
-                                <h4><span class="badge bg-primary">Current</span></h4>
-                            @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
-                                {{-- same date and happening in less than 2 hour --}}
-                                <h4><span class="badge bg-primary">Soon</span></h4>
-                            @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
-                                {{-- same date but passed this hour, or older than today --}}
-                                <h4><span class="badge bg-secondary">Used</span></h4>
-                            @endif
-                                
-                        </div>
-                    </button>
-                </h2>
-                <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordian">
-                    <div class="accordion-body">
-                        <div class="row align-items-center">
-
-                            <div class="col mb-4">
-                                <div class="row">
-                                    <b>{{ $list->bookingRateName }} rate</b>
-                                </div>
-                                
-                                <div class="row">
-                                    @if($list->condition)
-                                        <span>{{ $list->condition }}</span>
-                                    @else
-                                        <span>No condition to follow. </span>
-                                    @endif
-                                </div>
-
-                            </div>
-
-                            <div class="col-auto mb-4">
-                                <form action="{{ route('view-receipt') }}" method="post">
-                                    @csrf
-                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                        <span style="display: flex; justify-content: space-between; align-items: center;">
-                                            <i class="bi bi-receipt"></i>&nbsp;Receipt
-                                        </span>
-                                    </button>
-                                </form>
-                            </div>
-                            
-                            {{-- if booking not expired yet, show QR code --}}
-                            @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
-                                <div class="col-auto" style="margin: auto; display: block;">
-                                    <div class="row justify-content-center">
-                                        @php
-                                            $content = str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT);
-                                            $qrCode = (new QrCode($content))->setSize(300)->setMargin(5);
-                                        @endphp
-                                        <img src='{{ $qrCode->writeDataUri() }}'/>
-                                    </div>
-                                    <div class="row justify-content-center fw-bold">
-                                        {{ $content }}
-                                    </div>
-                                </div>
-                            @endif
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-
-        @endforeach
-
-    </div>
+        <div id="data-wrapper">
     
-    @endif
-
-    @if ($past_bookings -> count() > 0)
-
-    <h5 class="mt-3">Used Bookings</h5>
-
-    <div class="accordion" id="used_accordian">
-
-        @foreach ($past_bookings as $list)
-
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
-                        <div class="col">
-                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                            <br>
-                            Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
-                        </div>
-                        <div class="col-auto me-3">
-                            <h4><span class="badge bg-secondary">Used</span></h4>
-                        </div>
-                    </button>
-                </h2>
-                <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#used_accordian">
-                    <div class="accordion-body">
-                        <div class="row align-items-center">
-                            
+            @foreach ($today_bookings as $list)
+    
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-parent="accordian" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
                             <div class="col">
-                                <div class="row">
-                                    <b>{{ $list->bookingRateName }} rate</b>
+                                {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                                {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                                <br>
+                                Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                            </div>
+                            <div class="col-auto me-3">
+                                @if ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
+                                    {{-- same date and same hour --}}
+                                    <h4><span class="badge bg-primary">Current</span></h4>
+                                @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
+                                    {{-- same date and happening in less than 2 hour --}}
+                                    <h4><span class="badge bg-primary">Soon</span></h4>
+                                @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                    {{-- same date but passed this hour, or older than today --}}
+                                    <h4><span class="badge bg-secondary">Used</span></h4>
+                                @endif
+                                    
+                            </div>
+                        </button>
+                    </h2>
+                    <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordian">
+                        <div class="accordion-body">
+                            <div class="row align-items-center">
+    
+                                <div class="col mb-4">
+                                    <div class="row">
+                                        <b>{{ $list->bookingRateName }} rate</b>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        @if($list->condition)
+                                            <span>{{ $list->condition }}</span>
+                                        @else
+                                            <span>No condition to follow. </span>
+                                        @endif
+                                    </div>
+    
+                                </div>
+    
+                                <div class="col-auto mb-4">
+                                    <form action="{{ route('view-receipt') }}" method="get">
+                                        <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                        <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
+                                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                                <i class="bi bi-receipt"></i>&nbsp;Receipt
+                                            </span>
+                                        </button>
+                                    </form>
                                 </div>
                                 
-                                <div class="row">
-                                    @if($list->condition)
-                                        <span>{{ $list->condition }}</span>
-                                    @else
-                                        <span>No condition to follow. </span>
-                                    @endif
-                                </div>
-
+                                {{-- if booking not expired yet, show QR code --}}
+                                @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                    <div class="col-auto" style="margin: auto; display: block;">
+                                        <div class="row justify-content-center">
+                                            @php
+                                                $content = str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT);
+                                                $qrCode = (new QrCode($content))->setSize(300)->setMargin(5);
+                                            @endphp
+                                            <img src='{{ $qrCode->writeDataUri() }}'/>
+                                        </div>
+                                        <div class="row justify-content-center fw-bold">
+                                            {{ $content }}
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
-
-                            <div class="col-auto">
-                                <form action="{{ route('view-receipt') }}" method="post">
-                                    @csrf
-                                    <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                    <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
-                                        <span style="display: flex; justify-content: space-between; align-items: center;">
-                                            <i class="bi bi-receipt"></i>&nbsp;Receipt
-                                        </span>
-                                    </button>
-                                </form>
-                            </div>
-
+                            
                         </div>
                     </div>
                 </div>
-            </div>
+    
+            @endforeach
 
-        @endforeach
+        </div>
+
+        <div id="list-bottom"></div>
+
+        <!-- Data Loader -->
+        <div class="auto-load mt-3">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -233,6 +181,50 @@ My Bookings
         $("#length").text($(this).data('length'))
         $("#bookingPrice").text($(this).data('price'))
         $("#totalPrice").text($(this).data('length') * $(this).data('price'))
+    })
+
+    $(document).ready(function() {
+    
+        var ENDPOINT = "{{ url('/') }}"
+        var page = 1
+        loadNextBatch(page)
+
+        // observe if the defined element is visible
+        var observer = new IntersectionObserver(function(entries) {
+	    if(entries[0].isIntersecting === true)
+            getNextBatch()
+        }, {threshold: [1] }); 
+        // threshold 1 means when the element is fully visible in the browser viewport
+
+        observer.observe(document.querySelector("#list-bottom"));
+
+        function getNextBatch() {
+            page++
+            loadNextBatch(page)
+        }
+
+        function loadNextBatch(page) {
+            $.ajax({
+                url: ENDPOINT + "/mybookings?page=" + page,
+                datatype: "html",
+                type: "get",
+                beforeSend: function () {
+                    $('.auto-load').show()
+                }
+            })
+            .done(function (response) {
+                if (response.length == 0) {
+                    $('.auto-load').html("That's all of your bookings. ")
+                    return
+                }
+                $('.auto-load').hide()
+                $("#data-wrapper").append(response)
+            })
+            .fail(function (jqXHR, ajaxOptions, thrownError) {
+                console.log('Server error occured')
+            });
+        }
+
     })
 </script>
 @endsection
