@@ -260,6 +260,7 @@ My Account
                 <div class="modal-body">
                     @if(session('info')) {{ session('info') }} @endif
                     @if(session('alert')) {{ session('alert') }} @endif
+                    @error('email') {{ $message }} @enderror
                     @error('password') {{ $message }} @enderror
                 </div>
                 <div class="modal-footer">
@@ -289,6 +290,12 @@ My Account
     infoBox.show()
 </script>
 @endif
+
+@error('email')
+<script>
+    infoBox.show()
+</script>
+@enderror
 
 @error('password')
 <script>

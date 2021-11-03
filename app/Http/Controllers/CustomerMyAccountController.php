@@ -76,7 +76,7 @@ class CustomerMyAccountController extends Controller
             $this -> validate($request, [
 
                 'email-update-password' => 'required',
-                'email' => 'required | email | max:255',
+                'email' => 'required | email | max:255 | unique:users',
 
             ]);
 
