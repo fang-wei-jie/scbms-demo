@@ -14,7 +14,7 @@ use Spatie\Valuestore\Valuestore;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CustomerMyAccountController;
-use App\Http\Controllers\ViewBookingsController;
+use App\Http\Controllers\MyBookingsController;
 use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
 
@@ -75,7 +75,8 @@ Route::get('/myaccount', [CustomerMyAccountController::class, 'view']) -> name('
 Route::post('/myaccount', [CustomerMyAccountController::class, 'update']);
 
 // My Bookings
-Route::get('/mybookings', [ViewBookingsController::class, 'view_bookings']) -> name('mybookings');
+Route::get('/mybookings', [MyBookingsController::class, 'view_bookings']) -> name('mybookings');
+Route::post('/mybookings', [MyBookingsController::class, 'delete_bookings']);
 
 // Book Courts
 Route::get('/book-court', [MakeBookingsController::class, 'view']) -> name('book-court');
