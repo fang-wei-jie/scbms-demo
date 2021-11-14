@@ -13,9 +13,9 @@ My Account
             <span>{{ Auth::user()->email }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" id="changeIDButton" data-bs-toggle="modal" data-bs-target="#changeID">
+            <button type="button" class="btn btn-outline-primary" id="changeIDButton" data-bs-toggle="modal" data-bs-target="#changeID">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -30,9 +30,9 @@ My Account
             <span>{{ Auth::user()->name }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
+            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -47,9 +47,9 @@ My Account
             <span>Change often to improve security</span>
         </div>
         <div>
-            <button class="btn btn-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
+            <button class="btn btn-outline-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -61,7 +61,7 @@ My Account
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="modal-title" id="titleLabel"></span>
+                    <span class="modal-title" id="titleLabel">Change Manager ID</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -87,7 +87,7 @@ My Account
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="modal-title" id="titleLabel"></span>
+                    <span class="modal-title" id="titleLabel">Change Name</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -113,7 +113,7 @@ My Account
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <span class="modal-title" id="titleLabel"></span>
+                    <span class="modal-title" id="titleLabel">Change Password</span>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 

@@ -13,9 +13,9 @@ My Account
             <span>{{ Auth::user()->name }}</span>
         </div>
         <div>
-            <button type="button" class="btn btn-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
+            <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -30,9 +30,9 @@ My Account
             <span>Change often to improve security</span>
         </div>
         <div>
-            <button class="btn btn-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
+            <button class="btn btn-outline-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>

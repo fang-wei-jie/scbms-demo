@@ -33,9 +33,9 @@ Rates
                             <p class="card-text">RM {{ $rates->price }}</p>
                         </div>
                         <div class="col-auto">
-                            <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}" data-condition='{{ $rates->condition }}'>
+                            <button type="button" class="btn btn-outline-primary" id="editRate" data-bs-toggle="modal" data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}" data-condition='{{ $rates->condition }}'>
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-pencil-square"></i>
+                                    <i class="bi bi-pencil-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Edit</span>
                                 </span>
                             </button>
@@ -54,7 +54,7 @@ Rates
             <input type="text" id="search" class="form-control" placeholder="Search anything in the table ...">
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newRate">
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newRate">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-plus-circle-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Add Rate</span>
@@ -89,7 +89,7 @@ Rates
                             </span>
                         </button>
                         @else
-                        <button class="btn btn-danger" type="submit" name="enable">
+                        <button class="btn btn-outline-danger" type="submit" name="enable">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <span class="d-none d-md-block">Disabled&nbsp;</span>
                                 <i class="bi bi-toggle-off"></i>
@@ -101,16 +101,16 @@ Rates
                 </td>
                 <td>{{$rates->price}}</td>
                 <td>
-                    <button type="button" class="btn btn-primary" id="editRate" data-bs-toggle="modal"
+                    <button type="button" class="btn btn-outline-primary" id="editRate" data-bs-toggle="modal"
                     data-bs-target="#edit" data-id="{{$rates->id}}" data-name="{{$rates->name}}" data-price="{{$rates->price}}" data-condition='{{ $rates->condition }}'>
                         <span style="display: flex; justify-content: space-between; align-items: center;">
-                            <i class="bi bi-pencil-square"></i>
+                            <i class="bi bi-pencil-fill"></i>
                             <span class="d-none d-md-block">&nbsp;Edit</span>
                         </span>
                     </button>
-                    <button class="btn btn-danger" type="button" id="deleteRate" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{$rates->id}}" data-name="{{$rates->name}}">
+                    <button class="btn btn-outline-danger" type="button" id="deleteRate" data-bs-toggle="modal" data-bs-target="#delete" data-id="{{$rates->id}}" data-name="{{$rates->name}}">
                         <span style="display: flex; justify-content: space-between; align-items: center;">
-                            <i class="bi bi-trash-fill"></i>
+                            <i class="bi bi-x-circle-fill"></i>
                             <span class="d-none d-md-block">&nbsp;Delete</span>
                         </span>
                     </button>

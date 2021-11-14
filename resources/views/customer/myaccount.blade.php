@@ -20,7 +20,7 @@ My Account
         <div>
             <button type="button" class="btn btn-outline-primary" id="changeNameButton" data-bs-toggle="modal" data-bs-target="#changeName">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -37,7 +37,7 @@ My Account
         <div>
             <button class="btn btn-outline-primary" id="change-phone-button" data-bs-toggle="modal" data-bs-target="#changePhone">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -54,7 +54,7 @@ My Account
         <div>
             <button class="btn btn-outline-primary" id="change-email-button" data-bs-toggle="modal" data-bs-target="#changeEmail">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -71,7 +71,7 @@ My Account
         <div>
             <button class="btn btn-outline-primary" id="change-password-button" data-bs-toggle="modal" data-bs-target="#changePassword">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-pencil-square"></i>
+                    <i class="bi bi-pencil"></i>
                     <span class="d-none d-md-block">&nbsp;Change</span>
                 </span>
             </button>
@@ -88,7 +88,7 @@ My Account
         <div>
             <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-bs-toggle="modal" data-bs-target="#accountDeleteConfirmation">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-trash-fill"></i>
+                    <i class="bi bi-person-x"></i>
                     <span class="d-none d-md-block">&nbsp;DELETE</span>
                 </span>
             </button>

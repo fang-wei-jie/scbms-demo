@@ -69,7 +69,7 @@ Check In
                                 placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-primary" type="submit" id="startQuery" name="startQuery">
+                        <button class="btn btn-outline-primary" type="submit" id="startQuery" name="startQuery">
                             <i class="bi bi-person-check-fill"></i>
                             Check-in
                         </button>

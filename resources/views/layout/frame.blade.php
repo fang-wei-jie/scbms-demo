@@ -61,7 +61,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     @yield('extra-dependencies')
 
     <!-- custom styles -->
@@ -162,19 +162,19 @@
 
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('about-us')) ? 'active fw-bold' : '' }}" href="{{ ('about-us') }}">
-                            <i class="bi bi-info-circle"></i>
+                            <i class="bi bi-{{ (request()->is('about-us')) ? 'info-circle-fill' : 'info-circle' }}"></i>
                             About Us
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('login')) ? 'active fw-bold' : '' }}" href="{{ route('login') }}">
-                            <i class="bi bi-person-circle"></i>
+                            <i class="bi bi-{{ (request()->is('login')) ? 'person-fill' : 'person' }}"></i>
                             Login
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('register')) ? 'active fw-bold' : '' }}" href="{{ route('register') }}">
-                            <i class="bi bi-person-plus"></i>
+                            <i class="bi bi-{{ (request()->is('register')) ? 'person-plus-fill' : 'person-plus' }}"></i>
                             Register
                         </a>
                     </li>
@@ -187,21 +187,21 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('admin.dashboard') }}">
-                                <i class="bi bi-columns-gap"></i>
+                                <i class="bi bi-{{ (request()->is('admin/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
                                 Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('admin.checkin') }}">
-                                <i class="bi bi-person-check-fill"></i>
+                                <i class="bi bi-{{ (request()->is('admin/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('admin.bookings') }}">
-                                <i class="bi bi-journal-album"></i>
+                                <i class="bi bi-{{ (request()->is('admin/bookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
                                 Bookings
                             </a>
                         </li>
@@ -209,7 +209,7 @@
                         @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/rates')) ? 'active fw-bold' : '' }}" href="{{ route('admin.rates') }}">
-                                <i class="bi bi-tags"></i>
+                                <i class="bi bi-{{ (request()->is('admin/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
@@ -218,7 +218,7 @@
                         @if($settings->get('admin_sales_report') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/sales')) ? 'active fw-bold' : '' }}" href="{{ route('admin.sales') }}">
-                                <i class="bi bi-cash-stack"></i>
+                                <i class="bi bi-{{ (request()->is('admin/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
                                 Sales Report
                             </a>
                         </li>
@@ -226,7 +226,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myaccount') }}">
-                                <i class="bi bi-person-badge"></i>
+                                <i class="bi bi-{{ (request()->is('admin/myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
@@ -235,20 +235,20 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('manager.dashboard') }}">
-                                <i class="bi bi-columns-gap"></i>
+                                <i class="bi bi-{{ (request()->is('manager/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
                                 Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('manager.checkin') }}">
-                                <i class="bi bi-person-check-fill"></i>
+                                <i class="bi bi-{{ (request()->is('manager/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.bookings') }}">
-                                <i class="bi bi-journal-album"></i>
+                                <i class="bi bi-{{ (request()->is('manager/bookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
                                 Bookings
                             </a>
                         </li>
@@ -256,7 +256,7 @@
                         @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/rates')) ? 'active fw-bold' : '' }}" href="{{ route('manager.rates') }}">
-                                <i class="bi bi-tags"></i>
+                                <i class="bi bi-{{ (request()->is('manager/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
@@ -264,7 +264,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/managers')) ? 'active fw-bold' : '' }}" href="{{ route('manager.managers_management') }}">
-                                <i class="bi bi-file-person"></i>
+                                <i class="bi bi-{{ (request()->is('manager/managers')) ? 'file-person-fill' : 'file-person' }}"></i>
                                 Managers
                             </a>
                         </li>
@@ -272,7 +272,7 @@
                         @if($settings->get('admin_role') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/admins')) ? 'active fw-bold' : '' }}" href="{{ route('manager.admins_management') }}">
-                                <i class="bi bi-person-badge"></i>
+                                <i class="bi bi-{{ (request()->is('manager/admins')) ? 'person-badge-fill' : 'person-badge' }}"></i>
                                 Admins
                             </a>
                         </li>
@@ -280,22 +280,22 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/sales')) ? 'active fw-bold' : '' }}" href="{{ route('manager.sales') }}">
-                                <i class="bi bi-cash-stack"></i>
+                                <i class="bi bi-{{ (request()->is('manager/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
                                 Sales Report
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('manager/settings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.settings') }}">
+                                <i class="bi bi-{{ (request()->is('manager/settings')) ? 'gear-fill' : 'gear' }}"></i>
+                                Settings
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('manager.myaccount') }}">
-                                <i class="bi bi-person-square"></i>
+                                <i class="bi bi-{{ (request()->is('manager/myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/settings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.settings') }}">
-                                <i class="bi bi-gear-fill"></i>
-                                Settings
                             </a>
                         </li>
 
@@ -303,21 +303,21 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('book-court')) ? 'active fw-bold' : '' }}" href="{{ route('book-court') }}">
-                                <i class="bi bi-journal-plus"></i>
+                                <i class="bi bi-{{ (request()->is('book-court')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
                                 Book Courts
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('mybookings')) ? 'active fw-bold' : '' }}" href="{{ route('mybookings') }}">
-                                <i class="bi bi-journal-album"></i>
+                                <i class="bi bi-{{ (request()->is('mybookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
                                 My Bookings
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('myaccount') }}">
-                                <i class="bi bi-person-circle"></i>
+                                <i class="bi bi-{{ (request()->is('myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
@@ -326,7 +326,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link" id="logout-button" href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            <i id="logout-icon" class="bi bi-door-closed-fill"></i>
+                            <i id="logout-icon" class="bi bi-door-closed"></i>
                             Logout
                         </a>
 
@@ -380,11 +380,11 @@
 
     // open the door when hover on logout button
     $("#logout-button").hover(function(){
-        $("#logout-icon").removeClass("bi-door-closed-fill")
-        $("#logout-icon").addClass("bi-door-open-fill")
+        $("#logout-icon").removeClass("bi-door-closed")
+        $("#logout-icon").addClass("bi-door-open")
     }, function(){
-        $("#logout-icon").addClass("bi-door-closed-fill")
-        $("#logout-icon").removeClass("bi-door-open-fill")
+        $("#logout-icon").addClass("bi-door-closed")
+        $("#logout-icon").removeClass("bi-door-open")
     })
 </script>
 

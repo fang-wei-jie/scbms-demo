@@ -24,9 +24,9 @@ Admins Account
             <input type="text" id="search" class="form-control" placeholder="Search anything in the table ...">
         </div>
         <div class="col-auto">
-            <button type="button" id="add" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+            <button type="button" id="add" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                    <i class="bi bi-plus-circle-fill"></i>
+                    <i class="bi bi-person-plus-fill"></i>
                     <span class="d-none d-md-block">&nbsp;Add Admin</span>
                 </span>
             </button>
@@ -53,24 +53,24 @@ Admins Account
                     <td>
                         <input type="hidden" name="id" value="{{$adminsDetail->id}}">
 
-                        <button type="button" class="btn btn-primary" id="edit" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-outline-primary" id="edit" data-bs-toggle="modal"
                         data-bs-target="#editModal" data-id="{{$adminsDetail->id}}" data-name="{{ $adminsDetail->name }}" data-email="{{ $adminsDetail->email }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
-                                <i class="bi bi-pencil-square"></i>
+                                <i class="bi bi-person-lines-fill"></i>
                                 <span class="d-none d-md-block">&nbsp;Edit</span>
                             </span>
                         </button>
 
-                        <button class="btn btn-warning text-white" type="button" id="reset" data-bs-toggle="modal" data-bs-target="#resetModal" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
+                        <button class="btn btn-outline-warning" type="button" id="reset" data-bs-toggle="modal" data-bs-target="#resetModal" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-arrow-counterclockwise"></i>
                                 <span class="d-none d-md-block">&nbsp;Reset Password</span>
                             </span>
                         </button>
 
-                        <button class="btn btn-danger" type="button" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
+                        <button class="btn btn-outline-danger" type="button" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $adminsDetail->id }}" data-name="{{ $adminsDetail->name }}">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
-                                <i class="bi bi-trash"></i>
+                                <i class="bi bi-person-x-fill"></i>
                                 <span class="d-none d-md-block">&nbsp;Delete</span>
                             </span>
                         </button>

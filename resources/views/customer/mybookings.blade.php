@@ -19,7 +19,7 @@ My Bookings
         </div>
         <div class="col-auto">
             <a href="{{ route('book-court') }}" class="btn btn-outline-primary">
-                <i class="bi bi-journal-plus"></i>
+                <i class="bi bi-bookmark-plus"></i>
                 New Booking
             </a>
         </div>
@@ -91,7 +91,7 @@ My Bookings
                                         <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
                                         <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
                                             <span style="display: flex; justify-content: space-between; align-items: center;">
-                                                <i class="bi bi-receipt"></i>&nbsp;Receipt
+                                                <i class="bi bi-receipt-cutoff"></i>&nbsp;Receipt
                                             </span>
                                         </button>
                                     </form>

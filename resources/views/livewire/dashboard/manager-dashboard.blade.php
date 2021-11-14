@@ -13,15 +13,15 @@
                             <h3 class="card-title">Bookings</h3>
                         </div>
                         <div class="col-auto">
-                            <a href="checkin" class="btn btn-primary">
+                            <a href="checkin" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
                                     <i class="bi bi-person-check-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Check-in</span>
                                 </span>
                             </a>
-                            <a href="bookings" class="btn btn-primary">
+                            <a href="bookings" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-journal-album"></i>
+                                    <i class="bi bi-bookmark-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Bookings</span>
                                 </span>
                             </a>
@@ -65,9 +65,9 @@
                             <h3 class="card-title">Rates Enabled</h3>
                         </div>
                         <div class="col-auto">
-                            <a href="rates" class="btn btn-primary">
+                            <a href="rates" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-tags-fill"></i>
+                                    <i class="bi bi-ticket-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Rates</span>
                                 </span>
                             </a>
@@ -108,9 +108,9 @@
                             <h3 class="card-title">Sales Performance</h3>
                         </div>
                         <div class="col-auto">
-                            <a href="sales" class="btn btn-primary">
+                            <a href="sales" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-cash-stack"></i>
+                                    <i class="bi bi-file-earmark-bar-graph-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Sales Report</span>
                                 </span>
                             </a>
