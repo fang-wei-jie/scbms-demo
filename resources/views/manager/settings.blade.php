@@ -69,7 +69,7 @@
             @csrf
 
             <div class="row">
-                <div class="col-lg">
+                <div class="col-lg mb-4">
 
                     <h3 class="mb-3">General</h3>
 
@@ -166,7 +166,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg">
+                <div class="col-lg mb-4">
 
                     <h3>Features</h3>
 
@@ -246,7 +246,7 @@
 
                 </div>
 
-                <div class="col-lg">
+                <div class="col-lg mb-4">
 
                     <h3>User Interface</h3>
 
@@ -332,7 +332,7 @@
 
             </div>
 
-            <div class="row py-3">
+            <div class="row mb-3">
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary" type="submit" id="save" name="save">
                         Save
