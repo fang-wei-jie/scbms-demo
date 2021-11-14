@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Rates;
+use App\Models\RateRecords;
 use Spatie\Valuestore\Valuestore;
 
 class AdminRatesController extends Controller
@@ -75,7 +76,19 @@ class AdminRatesController extends Controller
 
                 ]);
 
-                Rates::where('id', $request->id)->update(['price' => $request->price]);
+                Rates::where('id', $request->id)->update([
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+                ]);
+
+                RateRecords::create([
+                
+                    'name' => $request->name,
+                    'rateID' => $request->id,
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+    
+                ]);
 
             } else {
 
@@ -90,7 +103,17 @@ class AdminRatesController extends Controller
 
                     'name' => $request->name,
                     'price' => $request->price,
+                    'condition' => $request->condition,
 
+                ]);
+
+                RateRecords::create([
+                
+                    'name' => $request->name,
+                    'rateID' => $request->id,
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+    
                 ]);
 
             }
@@ -116,10 +139,19 @@ class AdminRatesController extends Controller
 
             ]);
 
-            Rates::create([
+            $rate = Rates::create([
 
                 'name' => $request->name,
                 'status' => $request->status,
+                'price' => $request->price,
+                'condition' => $request->condition,
+
+            ]);
+
+            RateRecords::create([
+                
+                'name' => $request->name,
+                'rateID' => $rate->id,
                 'price' => $request->price,
                 'condition' => $request->condition,
 

@@ -65,21 +65,24 @@ class CategoryCard extends Component
             }
 
             $ratesPerf = DB::table('bookings')
-                ->selectRaw('bookingRateName as rate, SUM(timeLength*bookingPrice) as total')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->selectRaw('rate_records.name as rate, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
-                ->groupBy('bookingRateName')
-                ->orderBy('bookingRateName')
+                ->groupBy('rate')
+                ->orderBy('rate')
                 ->get();
 
             $timeslotPerf = DB::table('bookings')
-                ->selectRaw('timeSlot as slot, SUM(timeLength*bookingPrice) as total')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->selectRaw('timeSlot as slot, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->groupBy('bookings.timeSlot')
                 ->orderBy('bookings.timeSlot')
                 ->get();
 
             $timelengthPerf = DB::table('bookings')
-                ->selectRaw('bookings.timeLength as length, SUM(timeLength*bookingPrice) as total')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->selectRaw('bookings.timeLength as length, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->groupBy('bookings.timelength')
                 ->orderBy('bookings.timelength')

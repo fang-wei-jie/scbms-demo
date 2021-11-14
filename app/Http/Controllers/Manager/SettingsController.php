@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\RateRecords;
 use Illuminate\Http\Request;
 use App\Models\Rates;
 use Spatie\Valuestore\Valuestore;
@@ -65,7 +66,19 @@ class SettingsController extends Controller
                     "ratePerHour"  => 'required | numeric | digits_between:1,2',
                 ]);
 
-                Rates::where('id', 3)->update(['price' => $request->ratePerHour]);
+                if (Rates::where('id', 3)->first()->price != $request->ratePerHour) {
+                    
+                    Rates::where('id', 3)->update(['price' => $request->ratePerHour]);
+
+                    RateRecords::create([
+                
+                        'name' => "Standard",
+                        'rateID' => 3,
+                        'price' => $request->ratePerHour,
+        
+                    ]);
+                }
+
             }
 
             if (($request->end_time - $request->start_time) > 0) {

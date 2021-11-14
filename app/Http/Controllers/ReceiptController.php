@@ -31,6 +31,8 @@ class ReceiptController extends Controller
 
         $receiptDetail = DB::table('bookings')
             -> join('users', 'bookings.custID', '=', 'users.id')
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->select('bookings.*', 'users.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
             -> where('bookings.bookingID', $request->input('bookID'))
             -> where('bookings.custID', Auth::user()->id)
             -> first();
@@ -44,8 +46,8 @@ class ReceiptController extends Controller
             $custEmail = $receiptDetail->email;
             $bookingDateTimeSlot = substr($receiptDetail->dateSlot, 6, 2) . "/" . substr($receiptDetail->dateSlot, 4, 2) . "/" . substr($receiptDetail->dateSlot, 0, 4) . " " . $receiptDetail->timeSlot . ":00 - " . ($receiptDetail->timeSlot + $receiptDetail->timeLength) . ":00";
             $courtID = $receiptDetail->courtID;
-            $rateName = $receiptDetail->bookingRateName;
-            $ratePrice = $receiptDetail->bookingPrice;
+            $rateName = $receiptDetail->rateName;
+            $ratePrice = $receiptDetail->price;
             $timeLength = $receiptDetail->timeLength;
 
             // initialize and add first page for pdf

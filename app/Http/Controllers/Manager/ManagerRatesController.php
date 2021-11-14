@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\RateRecords;
 use Illuminate\Http\Request;
 use App\Models\Rates;
 use Spatie\Valuestore\Valuestore;
@@ -68,7 +69,19 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                Rates::where('id', $request->id)->update(['price' => $request->price]);
+                Rates::where('id', $request->id)->update([
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+                ]);
+
+                RateRecords::create([
+                
+                    'name' => $request->name,
+                    'rateID' => $request->id,
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+    
+                ]);
 
             } else {
 
@@ -79,11 +92,21 @@ class ManagerRatesController extends Controller
 
                 ]);
 
-                Rates::where('id', $request->id)->update([
+                $rate = Rates::where('id', $request->id)->update([
 
                     'name' => $request->name,
                     'price' => $request->price,
+                    'condition' => $request->condition,
 
+                ]);
+
+                RateRecords::create([
+                
+                    'name' => $request->name,
+                    'rateID' => $$rate->id,
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+    
                 ]);
 
             }
@@ -113,6 +136,15 @@ class ManagerRatesController extends Controller
 
                 'name' => $request->name,
                 'status' => $request->status,
+                'price' => $request->price,
+                'condition' => $request->condition,
+
+            ]);
+
+            RateRecords::create([
+                
+                'name' => $request->name,
+                'rateID' => $request->id,
                 'price' => $request->price,
                 'condition' => $request->condition,
 

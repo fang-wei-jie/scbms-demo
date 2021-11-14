@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Validator;
-use Redirect;
-use Response;
 
 class MyBookingsController extends Controller
 {
@@ -49,6 +46,8 @@ class MyBookingsController extends Controller
                 })
                 ->orderBy('bookings.dateSlot', 'asc')
                 ->orderBy('bookings.timeSlot', 'asc')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition')
                 ->get();
             
             // Assynchronously get data for past bookings
@@ -73,6 +72,8 @@ class MyBookingsController extends Controller
                 })
                 ->orderBy('bookings.dateSlot', 'desc')
                 ->orderBy('bookings.timeSlot', 'desc')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition')
                 ->paginate(25);
     
             $past = '';
@@ -88,7 +89,7 @@ class MyBookingsController extends Controller
                                     '.substr($result->dateSlot, 6, 2).'/'.substr($result->dateSlot, 4, 2).'/'.substr($result->dateSlot, 0, 4).'
                                     '.$result->timeSlot.':00 - '.($result->timeSlot + $result->timeLength).':00
                                     <br>
-                                    Court '.$result->courtID.' - '.$result->bookingRateName.' rate
+                                    Court '.$result->courtID.' - '.$result->rateName.' rate
                                 </div>
                                 <div class="col-auto me-3">
                                     <h4><span class="badge bg-secondary">Used</span></h4>
@@ -101,7 +102,7 @@ class MyBookingsController extends Controller
                                     
                                     <div class="col">
                                         <div class="row">
-                                            <b>'.$result->bookingRateName.' rate</b>
+                                            <b>'.$result->rateName.' rate</b>
                                         </div>
                                         
                                         <div class="row">

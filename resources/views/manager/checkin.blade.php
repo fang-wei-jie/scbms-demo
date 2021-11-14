@@ -115,7 +115,7 @@ Check In
                                 <tr>
                                     <td>Rate</td>
                                     <td>
-                                        {{ $result->bookingRateName }}
+                                        {{ $result->rateName }}
                                         @if ($result->condition)
                                             <br>
                                             {{ $result->condition }}

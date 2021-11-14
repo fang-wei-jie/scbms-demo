@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Rates;
+use App\Models\RateRecords;
 use Spatie\Valuestore\Valuestore;
 
 class MakeBookingsController extends Controller
@@ -275,10 +276,6 @@ class MakeBookingsController extends Controller
 
                 // obtain rates detail
                 $rateID = $request->rateID;
-                $rate = Rates::where('id', $rateID)->first();
-                $bookingRateName = $rate->name;
-                $bookingPrice = $rate->price;
-                $bookingCondition = $rate->condition;
 
                 // validate rate validity
                 if ($settings->get('rates_weekend_weekday') == 1) {
@@ -303,10 +300,7 @@ class MakeBookingsController extends Controller
             } else {
 
                 // inject the one and only rate and get details
-                $rate = Rates::where('id', 3)->first();
-                $bookingRateName = $rate->name;
-                $bookingPrice = $rate->price;
-                $bookingCondition = $rate->condition;
+                $rateID = 3;
 
                 $validBooking = ($validCourtDateTime && $request->rateID == null) ? true : false;
 
@@ -314,17 +308,21 @@ class MakeBookingsController extends Controller
 
             if ($validBooking) {
 
+                // save created at date temporarily
+                $created_at = date('Y-m-d H:m:s');
+
+                // find the id of the selected rate in rate_records table
+                $rateRecordID = RateRecords::orderBy('id', 'DESC')->where('rateID', $rateID)->first()->id;
+
                 // insert booking data
                 DB::table('bookings')->insert([
-                    'created_at' => date('Y-m-d H:m:s'),
+                    'created_at' => $created_at,
                     'custID' => Auth::user()->id,
                     'courtID' => $courtID,
                     'dateSlot' => $dateSlot,
                     'timeSlot' => $timeSlot,
                     'timeLength' => $timeLength,
-                    'bookingPrice' => $bookingPrice,
-                    'bookingRateName' => $bookingRateName,
-                    'condition' => $bookingCondition,
+                    'rateRecordID' => $rateRecordID,
                 ]);
 
                 return redirect() -> route('mybookings');

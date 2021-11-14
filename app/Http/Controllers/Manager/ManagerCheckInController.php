@@ -36,6 +36,8 @@ class ManagerCheckInController extends Controller
             ->join('users', 'users.id', '=', 'bookings.custID')
             ->where('bookingID', '=', substr($request->input('code'), 0, 7))
             ->where('custID', '=', substr($request->input('code'), 8, 7))
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->select('bookings.*', 'users.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
             ->first();
 
         // get current time and date

@@ -79,12 +79,16 @@
                 @foreach ($bookings as $booking)
                     <div style="display: flex; justify-content: center; align-items: center;" class="event @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
                      {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }}"
-                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot.':00' }}" data-price="{{ $booking->bookingPrice * $booking->timeLength }}"
+
+                     @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
+                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot.':00' }}" data-price="{{ $booking->price * $booking->timeLength }}"
+                     @endif
                      >
-                        {{ $booking->bookingRateName }}
+                        {{ $booking->rateName }}
                         @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
                         <span class="indicator">&nbsp<i class="bi bi-arrow-up-right-circle"></i></span>
                         @endif
+                        
                     </div>
                 @endforeach
 

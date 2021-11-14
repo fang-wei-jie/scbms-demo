@@ -22,6 +22,8 @@ class ManagerDashboard extends Component
             ->where('timeSlot', '<=', date('H'))
             ->where(DB::raw('(timeSlot + timeLength - 1) '), '>=', date('H'))
             ->orderBy('courtID', 'asc')
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
             ->get();
 
         if ($settings->get('rates_weekend_weekday') == 1) {
@@ -33,13 +35,15 @@ class ManagerDashboard extends Component
         }
 
         $yearSales = DB::table('bookings')
-                ->selectRaw('SUM(timeLength*bookingPrice) as yearSales')
-                ->where('created_at', 'LIKE', date('Y').'%')
-                ->first();
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->selectRaw('SUM(timeLength*price) as yearSales')
+            ->where('bookings.created_at', 'LIKE', date('Y').'%')
+            ->first();
 
         $monthSales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as monthSales')
-            ->where('created_at', 'LIKE', date('Y-m').'%')
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->selectRaw('SUM(timeLength*price) as monthSales')
+            ->where('bookings.created_at', 'LIKE', date('Y-m').'%')
             ->first();
 
         // $dayOfWeek = date("w");
@@ -53,8 +57,9 @@ class ManagerDashboard extends Component
         //     ->first();
 
         $todaySales = DB::table('bookings')
-            ->selectRaw('SUM(timeLength*bookingPrice) as todaySales')
-            ->where('created_at', 'LIKE', date('Y-m-d').'%')
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->selectRaw('SUM(timeLength*price) as todaySales')
+            ->where('bookings.created_at', 'LIKE', date('Y-m-d').'%')
             ->first();
 
         return view('livewire.dashboard.manager-dashboard', [

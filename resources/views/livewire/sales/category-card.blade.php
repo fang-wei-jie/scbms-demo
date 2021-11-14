@@ -95,8 +95,11 @@
                                         <tr>
                                             <th scope="row"> {{ $rates->rate }} </th>
                                             <td style="--size: calc( {{ $rates->total }} / {{ $ratesMax }} )">
-                                                <span class="data">RM {{ $rates->total }} &nbsp;</span>
-                                                <span class="tooltip">{{ round(($rates->total / $ratesSum) * 100) }}% of total</span>
+                                                &nbsp;
+                                                <span class="tooltip">
+                                                    RM {{ $rates->total }} <br>
+                                                    {{ round(($rates->total / $ratesSum) * 100) }}% of total
+                                                </span>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -123,8 +126,11 @@
                                         <tr>
                                             <th scope="row"> {{ $length->length }} @if($length->length != 1){{ "hours" }}@else{{ "hour" }}@endif</th>
                                             <td style="--size: calc( {{ $length->total }} / {{ $lengthMax }} )">
-                                                <span class="data">RM {{ $length->total }} &nbsp;</span>
-                                                <span class="tooltip">{{ round(($length->total / $lengthSum) * 100) }}% of total</span>
+                                                &nbsp;
+                                                <span class="tooltip">
+                                                    RM {{ $length->total }} <br>
+                                                    {{ round(($length->total / $lengthSum) * 100) }}% of total
+                                                </span>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -154,8 +160,11 @@
                                         <tr>
                                             <th scope="row"> {{ $slot->slot }}:00 </th>
                                             <td style="--size: calc( {{ $slot->total }} / {{ $slotMax }} )">
-                                                <span class="data">RM {{ $slot->total }} &nbsp;</span>
-                                                <span class="tooltip">{{ round(($slot->total / $slotSum) * 100) }}% of total</span>
+                                                &nbsp;
+                                                <span class="tooltip">
+                                                    RM {{ $slot->total }} <br>
+                                                    {{ round(($slot->total / $slotSum) * 100) }}% of total
+                                                </span>
                                             </td>
                                         </tr>
                                         @endforeach

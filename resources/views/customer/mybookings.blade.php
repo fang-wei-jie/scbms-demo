@@ -50,7 +50,7 @@ My Bookings
                                 {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
                                 {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
                                 <br>
-                                Court {{ $list->courtID }} - {{ $list->bookingRateName }} rate
+                                Court {{ $list->courtID }} - {{ $list->rateName }} rate
                             </div>
                             <div class="col-auto me-3">
                                 @if ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
@@ -73,7 +73,7 @@ My Bookings
     
                                 <div class="col mb-4">
                                     <div class="row">
-                                        <b>{{ $list->bookingRateName }} rate</b>
+                                        <b>{{ $list->rateName }} rate</b>
                                     </div>
                                     
                                     <div class="row">
