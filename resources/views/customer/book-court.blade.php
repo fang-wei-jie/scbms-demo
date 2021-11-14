@@ -140,9 +140,20 @@ Book Courts
                 <label for="rateID">Rate</label>
             </div>
 
-            <b><p id="condition"></p></b>
+            <div class="form-check ctick mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="ctick" required>
+                <label class="form-check-label" for="ctick">
+                    I agree to the terms and condition of this rate. <br>
+                    <b><span id="condition"></span></b>
+                </label>
+            </div>
 
-            <p>I understand by clicking the confirm booking button below, I will follow the condition specified for the rate selected (if any). Any violations may result in my booking be forfitted without refund. </p>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="tctick" required>
+                <label class="form-check-label" for="tctick">
+                    I understand that my booking is not refundable, and I confirm to pay the displayed amount to complete the booking. 
+                </label>
+            </div>
 
             <input type="date" class="confirmed-fields" name="dateSlot" value="{{ $dateSlot }}">
             <input type="text" class="confirmed-fields" name="timeSlot" value="{{ $timeSlot }}">
@@ -150,7 +161,7 @@ Book Courts
             <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
 
             <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-outline-primary" type="submit" name="confirm-booking">
+                <button class="btn btn-outline-primary" type="submit" id="confirm-booking" name="confirm-booking">
                     <i class="bi bi-journal-check"></i>
                     Confirm Booking for RM<span id="price"></span> in Cash
                 </button>
@@ -387,7 +398,14 @@ $(document).ready(function() {
         var condition = $("#rateID option:selected").data('condition')
 
         // injects the condition into the span
-        $("#condition").text(condition)
+        if (condition != "") {
+            $("#ctick").prop('disabled', false)
+            $("#condition").text(condition)
+            $(".ctick").show()
+        } else {
+            $("#ctick").prop('disabled', true)
+            $(".ctick").hide()
+        }
 
     }
 

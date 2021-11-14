@@ -163,8 +163,8 @@ Rates
                         <label for="price">Rate Price (RM)</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea type="text" class="form-control" name="condition" placeholder="Enter rate condition (Optional)" style="height: 150px"></textarea>
-                        <label for="condition">Rate Condition (Optional)</label>
+                        <textarea type="text" class="form-control" name="condition" placeholder="Enter rate terms and condition (optional)" style="height: 150px"></textarea>
+                        <label for="condition">Rate Terms and Condition (Optional)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -200,8 +200,8 @@ Rates
                         <label for="price">Rate Price (RM)</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea type="text" class="form-control" id="modal-condition" name="condition" placeholder="Enter rate condition (Optional)" style="height: 150px"></textarea>
-                        <label for="condition">Rate Condition (Optional)</label>
+                        <textarea type="text" class="form-control" id="modal-condition" name="condition" placeholder="Enter rate terms and condition (optional)" style="height: 150px"></textarea>
+                        <label for="condition">Rate Terms and Condition (Optional)</label>
                     </div>
                 </div>
                 <div class="modal-footer">
