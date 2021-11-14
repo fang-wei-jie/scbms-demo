@@ -136,25 +136,6 @@
 
                     <div class="my-2"></div>
 
-                    {{-- <div class="card py-2">
-                        <div class="mx-3 my-1">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col d-flex justify-content-between">
-                                    <div class="text-xs fw-bold text-info mb-1">
-                                        This Week
-                                    </div>
-                                    <div class="h5 mb-0 fw-bold text-gray-800">
-                                        <div class="h5 mb-0 fw-bold text-gray-800">
-                                            RM @if($weekSales != 0){{ $weekSales }} @else {{ '0' }} @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="my-2"></div> --}}
-
                     <div class="card py-2">
                         <div class="mx-3 my-1">
                             <div class="row no-gutters align-items-center">
