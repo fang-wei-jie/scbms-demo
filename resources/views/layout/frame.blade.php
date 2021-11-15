@@ -66,8 +66,8 @@
 
     <!-- custom styles -->
     <style>
-        .white {
-            color: white;
+        footer {
+            background-color: #f5f5f5;
         }
 
         @media print {
@@ -349,13 +349,60 @@
 
     <!-- footer -->
     @if ($side == "")
-    <footer class="footer mt-auto py-3 bg-dark hide-from-print">
-        <div class="container d-flex justify-content-between flex-wrap">
-            <div>
-                <span class="white">&#169; {{ date('Y') }} X Badminton Court Sdn Bhd</span>
-                </a>
+    <footer class="footer mt-auto py-3 hide-from-print">
+        
+        <div class="container">
+
+            @guest
+            <div class="row justify-content-around">
+
+                <div class="col-md">
+
+                    <h2>{{ $name }}</h2>
+                    
+                    <div class="my-3"></div>
+
+                    <h5>Address</h5>
+                    <a>{{ $settings->get('address') }}</a>
+
+                </div>
+
+                <div class="col-md">
+        
+                    <h5 class="mt-2">Phone</h5>
+                    <a class="link-dark" href="tel:{{ $settings->get('phone') }}">{{ $settings->get('phone') }}</a>
+
+                    <h5 class="mt-2">
+                        Operation Hours
+                    </h5>
+                    <a>{{ str_pad($settings->get('start_time'), 2, 0, STR_PAD_LEFT) . ":00 - " . str_pad($settings->get('end_time'), 2, 0, STR_PAD_LEFT) . ":00" }}</a>
+
+                </div>
+
             </div>
+
+            <hr>
+            @endguest
+
+            <div class="row justify-content-between">
+                <div class="col-sm">
+                    <span>&#169; {{ date('Y') }} {{ $name }}</span>
+                    </a>
+                </div>
+
+                <div class="col-auto">
+                    <a class="link-dark" href="">Privacy Notice</a> &nbsp;
+                    <a class="link-dark" href="">Terms of Use</a> &nbsp;
+                    <a class="link-dark" href="">Payment Methods</a> &nbsp;
+                    
+                    @auth
+                        <a class="link-dark" href="">Address and Contact</a> &nbsp;
+                    @endauth
+                </div>
+            </div>
+
         </div>
+
     </footer>
     @endif
 
