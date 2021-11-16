@@ -103,7 +103,7 @@ class ManagerRatesController extends Controller
                 RateRecords::create([
                 
                     'name' => $request->name,
-                    'rateID' => $$rate->id,
+                    'rateID' => $rate->id,
                     'price' => $request->price,
                     'condition' => $request->condition,
     
