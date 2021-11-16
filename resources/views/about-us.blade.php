@@ -23,7 +23,7 @@ About Us
         </div>
 
         <div class="col mb-3">
-            <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=101.79093450307847%2C2.986110430675759%2C101.79338067770006%2C2.9880202473514195&amp;layer=mapnik&amp;marker=2.9870653394288107%2C101.79215759038925" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=2.98707&amp;mlon=101.79216#map=19/2.98707/101.79216">View Larger Map</a></small>
+            <iframe width="350" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=101.79093450307847%2C2.986110430675759%2C101.79338067770006%2C2.9880202473514195&amp;layer=mapnik&amp;marker=2.9870653394288107%2C101.79215759038925" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=2.98707&amp;mlon=101.79216#map=19/2.98707/101.79216">View Larger Map</a></small>
             
             <h5 class="mt-3" id="addcon">Address</h5>
             <a>{{ $settings->get('address') }}</a>
