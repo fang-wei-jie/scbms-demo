@@ -21,6 +21,7 @@ use App\Http\Controllers\ReceiptController;
 // Admin Controllers
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
+use App\Http\Controllers\Admin\AdminCounterBookingController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\SalesController as AdminSalesController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Admin\AdminMyAccountController;
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
+use App\Http\Controllers\Manager\ManagerCounterBookingController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
 use App\Http\Controllers\Manager\AdminAccountsController;
 use App\Http\Controllers\Manager\ManagerAccountsController;
@@ -173,6 +175,14 @@ Route::prefix('admin')->group(function() {
     // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'view']) -> name('admin.dashboard');
 
+    // Make Booking
+    Route::get('/book-court', [AdminCounterBookingController::class, 'view']) -> name('admin.book-court');
+    Route::post('/book-court', [AdminCounterBookingController::class, 'book_court']);
+
+    // Receipt Generator
+    Route::get('/receipt', [AdminCounterBookingController::class, 'preview']) -> name('admin.receipt');
+    Route::post('/receipt', [AdminCounterBookingController::class, 'receipt']);
+
     // Check In
     Route::get('/checkin', [AdminCheckInController::class, 'view']) -> name('admin.checkin');
     Route::post('/checkin', [AdminCheckInController::class, 'check']);
@@ -204,6 +214,14 @@ Route::prefix('manager')->group(function() {
     // Dashboard
     Route::get('/dashboard', [ManagerDashboardController::class, 'view']) -> name('manager.dashboard');
 
+    // Make Booking
+    Route::get('/book-court', [ManagerCounterBookingController::class, 'view']) -> name('manager.book-court');
+    Route::post('/book-court', [ManagerCounterBookingController::class, 'book_court']);
+
+    // Receipt Generator
+    Route::get('/receipt', [ManagerCounterBookingController::class, 'preview']) -> name('manager.receipt');
+    Route::post('/receipt', [ManagerCounterBookingController::class, 'receipt']);
+    
     // Check In
     Route::get('/checkin', [ManagerCheckInController::class, 'view']) -> name('manager.checkin');
     Route::post('/checkin', [ManagerCheckInController::class, 'check']);

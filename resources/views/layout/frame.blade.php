@@ -200,6 +200,13 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('admin/book-court') || request()->is('admin/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('admin.book-court') }}">
+                                <i class="bi bi-{{ (request()->is('admin/book-court') || request()->is('admin/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
+                                Book Court
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('admin.bookings') }}">
                                 <i class="bi bi-{{ (request()->is('admin/bookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
                                 Bookings
@@ -239,10 +246,18 @@
                                 Dashboard
                             </a>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('manager.checkin') }}">
                                 <i class="bi bi-{{ (request()->is('manager/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link {{ (request()->is('manager/book-court') || request()->is('manager/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('manager.book-court') }}">
+                                <i class="bi bi-{{ (request()->is('manager/book-court') || request()->is('manager/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
+                                Book Court
                             </a>
                         </li>
 
