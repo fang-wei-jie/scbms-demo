@@ -9,6 +9,7 @@ use App\Models\Manager;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Valuestore\Valuestore;
 
 class ManagerAccountsController extends Controller
 {
@@ -22,7 +23,10 @@ class ManagerAccountsController extends Controller
 
         $managers = DB::table('managers')->get();
 
-        return view('manager.managers_management', ['managers' => $managers]);
+        return view('manager.managers_management', [
+            'managers' => $managers,            
+            'domain' => Valuestore::make(storage_path('app/settings.json'))->get('domain')
+        ]);
 
     }
 

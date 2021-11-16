@@ -61,9 +61,9 @@ $(document).ready(function() {
     })
 
     $("#domain").keyup(function() {
-        validateIsEmpty("#domain")
-        $(".company-login-domain").text($("#domain").val())
-        $(".company-display-domain").text($("#domain").val().toUpperCase())
+        validateIsEmpty(this)
+        $(".company-login-domain").text($(this).val().toLowerCase())
+        $(".company-display-domain").text($(this).val().toUpperCase())
     })
 
     $("#phone").keyup(function() {

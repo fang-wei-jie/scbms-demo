@@ -49,7 +49,7 @@ Admins Account
                 <form action="{{ route('manager.admins_management') }}" method="post">
                     @csrf
                     <td>{{ $adminsDetail->name }}</td>
-                    <td>{{ $adminsDetail->email }}</td>
+                    <td>{{ $adminsDetail->email .'@'. $domain }}</td>
                     <td>
                         <input type="hidden" name="id" value="{{$adminsDetail->id}}">
 

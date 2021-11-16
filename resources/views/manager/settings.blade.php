@@ -51,6 +51,10 @@
         opacity: .65; 
         transform: scale(.85) translateY(-.5rem);
     }
+
+    #domain {
+        text-transform: lowercase;
+    }
 </style>
 @endsection
 

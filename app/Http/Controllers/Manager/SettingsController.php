@@ -56,7 +56,7 @@ class SettingsController extends Controller
 
             $settings = Valuestore::make(storage_path('app/settings.json'));
             $settings->put('name', $request->name);
-            $settings->put('domain', $request->domain);
+            $settings->put('domain', strtolower($request->domain));
             $settings->put('registration', $request->registration);
             $settings->put('phone', $request->phone);
             $settings->put('address', $request->address);
