@@ -86,6 +86,26 @@ Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
 Route::get('/receipt', [ReceiptController::class, 'get_request']) -> name('view-receipt');
 Route::post('/receipt', [ReceiptController::class, 'view']);
 
+// About Us
+Route::get('/about-us', function() {
+    return view('about-us', ['settings' => Valuestore::make(storage_path('app/settings.json'))]);
+}) -> name('about-us');
+
+// Privacy Notice
+Route::get('/privacy', function() {
+    return view('privacy');
+}) -> name('privacy');
+
+// Terms of Use
+Route::get('/terms', function() {
+    return view('terms');
+}) -> name('terms');
+
+// Payment Methods
+Route::get('/payment-methods', function() {
+    return view('payment-methods');
+}) -> name('payment-methods');
+
 // Password Reset Request Form
 Route::get('/forgot-password', function () {
     return view('auth.forgot-password');

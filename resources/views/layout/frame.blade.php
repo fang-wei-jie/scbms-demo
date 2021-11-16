@@ -161,7 +161,7 @@
                     @guest
 
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('about-us')) ? 'active fw-bold' : '' }}" href="{{ ('about-us') }}">
+                        <a class="nav-link {{ (request()->is('about-us')) ? 'active fw-bold' : '' }}" href="{{ route('about-us') }}">
                             <i class="bi bi-{{ (request()->is('about-us')) ? 'info-circle-fill' : 'info-circle' }}"></i>
                             About Us
                         </a>
@@ -353,6 +353,8 @@
         
         <div class="container">
 
+            @yield('footer-addition')
+
             @guest
             <div class="row justify-content-around">
 
@@ -391,12 +393,12 @@
                 </div>
 
                 <div class="col-auto">
-                    <a class="link-dark" href="">Privacy Notice</a> &nbsp;
-                    <a class="link-dark" href="">Terms of Use</a> &nbsp;
-                    <a class="link-dark" href="">Payment Methods</a> &nbsp;
+                    <a class="link-dark" href="{{ route('privacy') }}">Privacy Notice</a> &nbsp;
+                    <a class="link-dark" href="{{ route('terms') }}">Terms of Use</a> &nbsp;
+                    <a class="link-dark" href="{{ route('payment-methods') }}">Payment Methods</a> &nbsp;
                     
                     @auth
-                        <a class="link-dark" href="">Address and Contact</a> &nbsp;
+                        <a class="link-dark" href="about-us/#addcon">Address and Contact</a> &nbsp;
                     @endauth
                 </div>
             </div>
