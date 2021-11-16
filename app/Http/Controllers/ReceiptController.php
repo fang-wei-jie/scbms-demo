@@ -49,6 +49,7 @@ class ReceiptController extends Controller
             $rateName = $receiptDetail->rateName;
             $ratePrice = $receiptDetail->price;
             $timeLength = $receiptDetail->timeLength;
+            $condition = $receiptDetail->condition;
 
             // initialize and add first page for pdf
             $fpdf = new Fpdf('L', 'mm', 'A5');
@@ -125,7 +126,26 @@ class ReceiptController extends Controller
             // display qrcode
             $qrCode = (new QrCode($bookID))->setSize(250)->setMargin(5)->setLabel($bookID);
             $html = $qrCode->writeDataUri();
-            $fpdf->Image($html,80,88,50,0,'PNG');
+            
+            $fpdf->Image($html,20,88,50,0,'PNG');
+            
+            // rate condition
+            if ($condition != "") {
+
+                $fpdf->Ln(10);
+
+                $fpdf->SetFont('Helvetica', 'B', 11);
+
+                $fpdf->Cell(70);
+                $fpdf->Cell(55, 5, "Rate Condition", 0, 1);
+
+                $fpdf->SetFont('Helvetica', '', 11);
+
+                $fpdf->Cell(70);
+                $fpdf->MultiCell(105, 5, $condition, 0);
+
+            }
+
             $fpdf->Ln(5);
 
             $fpdf->Output("I", $bookID, true);
