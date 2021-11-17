@@ -60,7 +60,9 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             } else {
 
-                if (!Auth::attempt($request->only('email', 'password'))) {
+                $remember = $request->has('remember') ? true : false;
+
+                if (!Auth::attempt($request->only('email', 'password'), $remember)) {
                     return back()->with('status', 'Incorrect login credentials');
                 }
 

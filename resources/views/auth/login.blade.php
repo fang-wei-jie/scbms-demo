@@ -1,3 +1,8 @@
+@php
+    use Spatie\Valuestore\Valuestore;
+    $domain = Valuestore::make(storage_path('app/settings.json'))->get('domain');
+@endphp
+
 @extends('layout.frame')
 
 @section('title')
@@ -45,6 +50,13 @@ Login
         <label for="password">Password</label>
     </div>
 
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" name="remember" id="keep-logged-in">
+        <label class="form-check-label" for="keep-logged-in">
+            Keep me logged in
+        </label>
+    </div>
+
     <div class="d-grid gap-2 mb-3">
         <button class="btn btn-primary" type="submit" name="login">
             Login
@@ -81,14 +93,10 @@ Login
         @enderror
 
         $("#email").on("keyup change", function() {
-            if ($(this).val().length == 0) {
-                $(this).removeClass("is-valid")
-                $(this).addClass("is-invalid")
-                $("label[for = 'email']").text("Email is required")
-            } else {
-                $(this).removeClass("is-invalid")
-                $("label[for = 'email']").text("Email")
-            }
+
+            validateEmail(this)
+            keepMeSignedInButton(this)
+            
         })
 
         $("#password").on("keyup change", function() {
@@ -102,6 +110,26 @@ Login
             }
         })
     })
+
+    function validateEmail(field) {
+        if ($(field).val().length == 0) {
+            $(field).removeClass("is-valid")
+            $(field).addClass("is-invalid")
+            $("label[for = 'email']").text("Email is required")
+        } else {
+            $(field).removeClass("is-invalid")
+            $("label[for = 'email']").text("Email")
+        }
+    }
+
+    function keepMeSignedInButton(field) {
+        if ($(field).val().endsWith("nesc") || $(field).val().endsWith("nescm")) {
+            $(".form-check").hide()
+        } else {
+            $(".form-check").show()
+        }
+    }
+
 </script>
 
 @endsection
