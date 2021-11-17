@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\SalesController as AdminSalesController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
-
+use App\Http\Controllers\CheckInTerminalController;
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
@@ -254,3 +254,7 @@ Route::prefix('manager')->group(function() {
     Route::post('/settings', [SettingsController::class, 'update']);
 
 });
+
+// CHECK-IN TERMINAL
+Route::get('/check-in-terminal', [CheckInTerminalController::class, 'view']) -> name('check-in-terminal');
+Route::post('/check-in-terminal', [CheckInTerminalController::class, 'check']);

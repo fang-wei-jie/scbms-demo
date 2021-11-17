@@ -102,6 +102,8 @@ class SettingsController extends Controller
             $settings->put('rates_weekend_weekday', $request->weekdayWeekend == null ? '0' : '1');
             $settings->put('rates_editable_admin', $request->adminRates == null ? '0' : '1');
 
+            $settings->put('checkin_terminal', $request->checkin_terminal == null ? '0' : '1');
+
             if ($request->hasFile('logo')) {
                 $this -> validate($request, ["logo" => 'mimes:jpg,jpeg,png']);
 

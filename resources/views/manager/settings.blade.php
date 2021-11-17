@@ -217,6 +217,8 @@
                         <small>Enable the admin to view sales report</small>
                     </div>
 
+                    <br>
+
                     <h5>Rates</h5>
 
                     <div class="form-check form-switch">
@@ -246,6 +248,17 @@
                         <label class="form-check-label" for="adminRates">Rates Editable by Admin</label>
                         <br>
                         <small class="@if($settings->get('rates') != 1){{ 'disabled-label' }}@endif">Enable the admin to edit rates detail</small>
+                    </div>
+
+                    <br>
+                    
+                    <h5>Check-in Terminal</h5>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
+                        <label class="form-check-label" for="checkin_terminal">Use Check-in Terminal</label>
+                        <br>
+                        <small id="smallUseRates">Use check-in terminal to speed up admission</small>
                     </div>
 
                 </div>
