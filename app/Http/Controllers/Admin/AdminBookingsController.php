@@ -17,33 +17,7 @@ class AdminBookingsController extends Controller
     function view()
     {
 
-        $todayBookings = DB::table('bookings')
-            ->join('users', 'users.id', '=', 'bookings.custID')
-            ->where('dateSlot', '=', date('Ymd'))
-            ->orderBy('timeSlot')
-            ->get();
-
-        $futureBookings = DB::table('bookings')
-            ->join('users', 'users.id', '=', 'bookings.custID')
-            ->where('dateSlot', '>', date('Ymd'))
-            ->orderBy('dateSlot')
-            ->orderBy('timeSlot')
-            ->get();
-
-        $previousBookings = DB::table('bookings')
-            ->join('users', 'users.id', '=', 'bookings.custID')
-            ->where('dateSlot', '<', date('Ymd'))
-            ->orderByDesc('dateSlot')
-            ->orderByDesc('timeSlot')
-            ->get();
-
-        $allBookings = DB::table('bookings')
-            ->join('users', 'users.id', '=', 'bookings.custID')
-            ->orderByDesc('dateSlot')
-            ->orderByDesc('timeSlot')
-            ->get();
-
-        return view('admin.bookings', ['todayBookings' => $todayBookings, 'futureBookings' => $futureBookings, 'previousBookings' => $previousBookings, 'allBookings' => $allBookings]);
+        return view('admin.bookings');
 
     }
 

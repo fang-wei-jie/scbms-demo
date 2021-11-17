@@ -4,10 +4,6 @@
 Bookings
 @endsection
 
-@section('extra-dependencies')
-<script src="{{ URL::asset('dependencies/sortable-0.8.0/js/sortable.min.js') }}"></script>
-@endsection
-
 @section('extra-css')
 <style>
     .event,
