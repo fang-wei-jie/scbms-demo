@@ -126,10 +126,13 @@ Check In
                                     <td>Court</td>
                                     <td>{{ $result->courtID }}</td>
                                 </tr>
+                                
+                                @if($result->name ?? '')
                                 <tr>
                                     <td>Name</td>
                                     <td>{{ $result->name }}</td>
                                 </tr>
+                                @endif
                             </table>
                         </div>
                     </div>
