@@ -31,7 +31,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/tngd.png') }}" alt="TNG e-wallet logo" height="80">
                         </div>
-                        <div class="col"><h4>Touch &#39;N Go eWallet</h4></div>
+                        <div class="col"><h4>Touch &#39;N Go eWallet<sup>2</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/boost.jpg') }}" alt="Boost logo" height="80" style="border-radius: 15px">
                         </div>
-                        <div class="col"><h4>Boost</h4></div>
+                        <div class="col"><h4>Boost<sup>2</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/visa.png') }}" alt="Visa Logo" width="80">
                         </div>
-                        <div class="col"><h4>Visa</h4></div>
+                        <div class="col"><h4>Visa<sup>2</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/mc.png') }}" alt="MasterCard Logo" width="80">
                         </div>
-                        <div class="col"><h4>MasterCard</h4></div>
+                        <div class="col"><h4>MasterCard<sup>2</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -97,6 +97,11 @@ Payment Methods
     <small>
         <sup>1</sup>
         For over the counter bookings only. Availability depends on business owner discretion. 
+
+        <br>
+
+        <sup>2</sup>
+        Available for over the counter bookings and online bookings. 
     </small>
 </div>
 
