@@ -43,9 +43,9 @@ class AddRateRecordTable extends Migration
         DB::table('rates')->insert(['id' => 2, 'name' => 'Weekend', 'status' => 1, 'price' => 0, 'condition' => null]);
         DB::table('rates')->insert(['id' => 3, 'name' => 'Standard', 'status' => 1, 'price' => 0, 'condition' => null]);
 
-        DB::table('rate_records')->insert(['id' => 1, 'name' => 'Weekday', 'price' => 0, 'condition' => null]);
-        DB::table('rate_records')->insert(['id' => 2, 'name' => 'Weekend', 'price' => 0, 'condition' => null]);
-        DB::table('rate_records')->insert(['id' => 3, 'name' => 'Standard', 'price' => 0, 'condition' => null]);
+        DB::table('rate_records')->insert(['rateID' => 1, 'name' => 'Weekday', 'price' => 0, 'condition' => null]);
+        DB::table('rate_records')->insert(['rateID' => 2, 'name' => 'Weekend', 'price' => 0, 'condition' => null]);
+        DB::table('rate_records')->insert(['rateID' => 3, 'name' => 'Standard', 'price' => 0, 'condition' => null]);
 
     }
 
