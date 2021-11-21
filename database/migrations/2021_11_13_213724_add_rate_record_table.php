@@ -36,6 +36,7 @@ class AddRateRecordTable extends Migration
             $table->dropColumn('bookingPrice');
             $table->dropColumn('bookingRateName');
             $table->dropColumn('condition');
+            $table->dropColumn('rateID');
             $table->bigInteger('rateRecordID');
         });
 
