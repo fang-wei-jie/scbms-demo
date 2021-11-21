@@ -98,6 +98,16 @@
                 </div>
             @endforeach
         </div>
+
+        <div class="my-5"></div>
+
+        <div class="mb-5">
+            <div class="d-grid gap-2">
+                <a class="btn btn-lg btn-primary" href="{{ route('book-court') }}">
+                    Login and Book Now
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
