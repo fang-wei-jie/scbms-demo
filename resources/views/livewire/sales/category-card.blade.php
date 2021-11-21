@@ -8,14 +8,20 @@
                     </div>
 
                     <div class="col-auto d-block d-md-block d-lg-none">
-                        <div class="my-2"></div>
+                        <div wire:loading>
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="my-2 d-block d-md-block d-lg-none"></div>
+                    
                     @if($hasData == true)
 
                         <div class="col-auto">
                             <div class="row">
-                                <div class="col-auto d-none d-md-block">
+                                <div class="col-auto d-none d-md-none d-lg-block">
                                     <div class="col-auto">
                                         <div wire:loading>
                                             <div class="spinner-border" role="status">
@@ -57,16 +63,6 @@
                                         @endforeach
                                     </select>
                                     @endif
-                                </div>
-
-                                <div class="col-auto d-block d-md-none">
-                                    <div class="col-auto">
-                                        <div wire:loading>
-                                            <div class="spinner-border" role="status">
-                                                <span class="visually-hidden">Loading...</span>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
