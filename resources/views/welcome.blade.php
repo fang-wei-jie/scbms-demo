@@ -49,77 +49,54 @@
             <h1>Why Choose Us? </h1>
         </div>
 
-        <div class="row">
+        <div class="row row-cols-1 row-cols-lg-4 g-2">
             <div class="col">
-                <i class="bi bi-layers-half feature"></i>
-                <h2>Feature 1</h2>
-                <span>Feature description. </span>
+                <i class="bi bi-cup feature"></i>
+                <h2>Complimentary Drink</h2>
+                <span>Free complimentary drink for you to recharge after working out. Choice of protein drink or fresh fruit juice. </span>
             </div>
 
             <div class="col">
-                <i class="bi bi-layers-half feature"></i>
-                <h2>Feature 2</h2>
-                <span>Feature description. </span>
+                <i class="bi bi-lightbulb feature"></i>
+                <h2>LED Lumination</h2>
+                <span>Our whole court is luminated with LED luminares for consistent lumination of the court. Plus, the court will feel cooler throughout the play. </span>
             </div>
 
             <div class="col">
-                <i class="bi bi-layers-half feature"></i>
-                <h2>Feature 3</h2>
-                <span>Feature description. </span>
+                <i class="bi bi-fullscreen feature"></i>
+                <h2>Free Parking Space</h2>
+                <span>Free parking space is available right outside for our driving, riding, and biking customers. </span>
             </div>
 
             <div class="col">
-                <i class="bi bi-layers-half feature"></i>
-                <h2>Feature 4</h2>
-                <span>Feature description. </span>
+                <i class="bi bi-bandaid feature"></i>
+                <h2>First-Aid on Court</h2>
+                <span>Get medical attention quickly when injured by our First-Aid team. </span>
             </div>
         </div>
 
         <div class="row mt-5">
-            <h1>Rental Rates</h1>
+            <h1>Rates</h1>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <i class="bi bi-building feature"></i>
-                <h2>Students</h2>
-                <span>Primary, Secondary, University</span><br>
-                <h4>RM 10/hour</h4>
-            </div>
-            <div class="col">
-                <i class="bi bi-calendar-week feature"></i>
-                <h2>Weekdays</h2>
-                <span>Monday till Friday, Public Holiday or Not</span>
-                <h4>RM 20/hour</h4>
-            </div>
-            <div class="col">
-                <i class="bi bi-calendar-range feature"></i>
-                <h2>Weekends</h2>
-                <span>Saturday and Sunday, Public Holiday or Not</span>
-                <h4>RM 23/hour</h4>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <h1>Amenities</h1>
-        </div>
-
-        <div class="row my-3">
-            <div class="col">
-                <i class="bi bi-asterisk feature"></i>
-                <h2>Amenities 1</h2>
-                <span>Amenities Description (Optional)</span>
-            </div>
-            <div class="col">
-                <i class="bi bi-asterisk feature"></i>
-                <h2>Amenities 2</h2>
-                <span>Amenities Description (Optional)</span>
-            </div>
-            <div class="col">
-                <i class="bi bi-asterisk feature"></i>
-                <h2>Amenities 3</h2>
-                <span>Amenities Description (Optional)</span>
-            </div>
+        <div class="row row-cols-1 row-cols-lg-5 g-2">
+            @foreach ($rates as $rate)
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h2 class="card-title">{{ $rate->name }}</h2>
+                                    <p class="card-text">
+                                        <span>RM {{ $rate->price }}/hour</span> <br>
+                                        <span>{{ $rate->condition ?? '' }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

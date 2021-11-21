@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Auth\LogoutController;
 use Spatie\Valuestore\Valuestore;
+use App\Models\Rates;
 
 // Customer Controllers
 use App\Http\Controllers\Auth\LoginController;
@@ -53,7 +54,28 @@ use App\Http\Controllers\Manager\SettingsController;
 // GLOBAL PAGES
 
 Route::get('/', function () {
-    return view('welcome');
+    // get setting values
+    $settings = Valuestore::make(storage_path('app/settings.json'));
+
+    // check if rates use is enabled, if not return back
+    if ($settings->get('rates') != 1) {
+        return back();
+    }
+
+    if ($settings->get('rates_weekend_weekday') == 1) {
+        // if weekend and weekday is in use, disable normal rate
+        $default = Rates::get()->where('id', '<=', 2);
+    } else {
+        // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
+        $default = Rates::where('id', 3)->get();
+    }
+
+    // get list of custom rates
+    $custom = Rates::where('id', '>', 3)->get();
+    
+    return view('welcome', [
+        'rates' => $default->merge($custom)->all(),
+    ]);
 });
 
 // Login
