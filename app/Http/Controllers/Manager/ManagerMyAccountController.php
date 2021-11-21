@@ -24,6 +24,7 @@ class ManagerMyAccountController extends Controller
 
     function update (Request $request) {
 
+        // get logged in account variables
         $manager = Auth::guard('manager') -> user();
 
         if (isset ($_POST["change-ID"])) {

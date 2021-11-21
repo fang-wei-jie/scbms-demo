@@ -21,6 +21,7 @@ class ReceiptController extends Controller
 
     function get_request (Request $request) {
         
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
         $this -> validate($request, [
@@ -29,6 +30,7 @@ class ReceiptController extends Controller
 
         ]);
 
+        // get receipt details
         $receiptDetail = DB::table('bookings')
             -> join('users', 'bookings.custID', '=', 'users.id')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
@@ -38,6 +40,7 @@ class ReceiptController extends Controller
             -> first();
 
         if ($receiptDetail != null) {
+            // if receipt details found
 
             $bookID = str_pad($receiptDetail->bookingID, 7, 0, STR_PAD_LEFT).str_pad($receiptDetail->custID, 7, 0, STR_PAD_LEFT);
             $createdOn = substr($receiptDetail->created_at, 2, 2) . "/" . substr($receiptDetail->created_at, 5, 2) . "/" . substr($receiptDetail->created_at, 0, 4) . substr($receiptDetail->created_at, 10);
@@ -152,6 +155,7 @@ class ReceiptController extends Controller
             exit;
 
         } else {
+            // if receipt details not found
 
             return redirect() -> route('mybookings');
 

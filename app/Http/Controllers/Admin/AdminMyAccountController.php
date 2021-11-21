@@ -24,6 +24,7 @@ class AdminMyAccountController extends Controller
 
     function update (Request $request) {
 
+        // get logged in account variables
         $admin = Auth::guard('admin') -> user();
 
         if (isset ($_POST["change-name"]) ) {

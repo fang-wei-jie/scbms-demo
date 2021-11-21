@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class CategoryCard extends Component
 {
+
+    // predefined the "model"-able variables
     public $type = "y";
     public $date = "";
     public $month = "";
@@ -15,25 +17,13 @@ class CategoryCard extends Component
 
     public function render()
     {
+        // get the current year and month
         $year = date("Y");
         $month = date("m");
-        $day = date("d");
 
-        $dayOfWeek = date("w");
-        $startDateNumber = str_pad(date("d") - $dayOfWeek, 2, "0", STR_PAD_LEFT);
-        $endDateNumber = str_pad(date("d") + (6 - $dayOfWeek), 2, "0", STR_PAD_LEFT);
-
+        // check what value is selected in the "type" field
         switch ($this->type) {
-            // case 'd':
-            //     $type = "d";
-            //     $condition = 'LIKE "' . date("Y-m-d%");
-            //     $period = date("d") . " " . $monthString . " " . date("Y");
-            //     break;
-            // case 'w':
-            //     $type = "w";
-            //     $condition = 'BETWEEN "' . date('Y-m-') . $startDateNumber . '%" AND "' . date('Y-m-') . $endDateNumber . '%';
-            //     $period = $startDateNumber . date('/m/Y') . " till " . $endDateNumber . date('/m/Y');
-            //     break;
+            // type is month
             case 'm':
                 $type = "m";
                 $dateTrim = "1, 7";
@@ -41,6 +31,7 @@ class CategoryCard extends Component
                 $condition = 'LIKE "' . $date .'%';
                 break;
 
+            // type is year
             case 'y':
                 $type = "y";
                 $dateTrim = "1, 4";
@@ -49,12 +40,14 @@ class CategoryCard extends Component
                 break;
         }
 
+        // get the latest date for month/year
         $firstDate = DB::table('bookings')
             ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
             ->orderByDesc("created_at")
             ->first();
 
         if ($firstDate != null) {
+            // if first date does not equal null, it means there are bookings made (new business does not have sales yet)
 
             // used to handle when the type is changed
             // date will be automatically set to the first row result of dates list
@@ -64,6 +57,7 @@ class CategoryCard extends Component
                 $condition = 'LIKE "' . $firstDate->date .'%';
             }
 
+            // sales by rates
             $ratesPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('rate_records.name as rate, SUM(timeLength*price) as total')
@@ -72,6 +66,7 @@ class CategoryCard extends Component
                 ->orderBy('rate')
                 ->get();
 
+            // sales by time slot
             $timeslotPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('timeSlot as slot, SUM(timeLength*price) as total')
@@ -80,6 +75,7 @@ class CategoryCard extends Component
                 ->orderBy('bookings.timeSlot')
                 ->get();
 
+            // sales by time length
             $timelengthPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('bookings.timeLength as length, SUM(timeLength*price) as total')
@@ -88,6 +84,7 @@ class CategoryCard extends Component
                 ->orderBy('bookings.timelength')
                 ->get();
 
+            // get the list of dates that can be seelcted (year or month)
             $dates = DB::table('bookings')
                 ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
                 ->orderByDesc("created_at")
@@ -109,6 +106,8 @@ class CategoryCard extends Component
             ]);
 
         } else {
+            // if not bookings were mae, return empty sales
+
             return view('livewire.sales.category-card', [
                 'hasData' => false,
             ]);

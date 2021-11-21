@@ -22,6 +22,7 @@ class AdminCounterBookingController extends Controller
     function view ()
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
         // get operation hours
@@ -52,6 +53,7 @@ class AdminCounterBookingController extends Controller
     function book_court (Request $request)
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
         // get operation hours

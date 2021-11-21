@@ -20,8 +20,10 @@ class AdminRatesController extends Controller
     function view()
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        // check if rates use is enabled, return back if not
         if ($settings->get('rates') != 1) {
             return back();
         }
@@ -34,8 +36,10 @@ class AdminRatesController extends Controller
             $default = Rates::where('id', 3)->get();
         }
 
+        // get custom rates
         $custom = Rates::where('id', '>', 3)->get();
 
+        // determine if admins can edit rates
         $editable = $settings->get('rates_editable_admin');
 
         return view('admin.rates', [
@@ -48,12 +52,15 @@ class AdminRatesController extends Controller
     function process(Request $request)
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        // check if rates use is enabled, return back if not
         if ($settings->get('rates') != 1) {
             return back();
         }
 
+        // determine if admins can edit rates, if not return back without any operation
         if ($settings->get('rates_editable_admin') != 1) {
             return back();
         }
@@ -107,6 +114,7 @@ class AdminRatesController extends Controller
 
                 ]);
 
+                // create a new record in rate records to store rate detail(s) change
                 RateRecords::create([
                 
                     'name' => $request->name,
@@ -148,6 +156,7 @@ class AdminRatesController extends Controller
 
             ]);
 
+            // create a new record in rate records to store rate detail(s)
             RateRecords::create([
                 
                 'name' => $request->name,

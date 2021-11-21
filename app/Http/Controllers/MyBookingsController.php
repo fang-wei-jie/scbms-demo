@@ -76,6 +76,7 @@ class MyBookingsController extends Controller
                 ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition')
                 ->paginate(25);
     
+            // ajax content
             $past = '';
             if ($request->ajax()) {
                 foreach ($past_bookings as $result) {

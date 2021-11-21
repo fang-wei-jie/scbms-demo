@@ -12,11 +12,13 @@ class ManagerDashboard extends Component
     public function render()
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        // check if rates use is enabled
         $ratesEnabled = ($settings->get('rates') == 1) ? true : false;
-        $courts_count = $settings->get('courts_count');
 
+        // get list of bookings at the current hour
         $bookingRows = DB::table('bookings')
             ->where('dateSlot', '=', date('Ymd'))
             ->where('timeSlot', '<=', date('H'))
@@ -34,6 +36,7 @@ class ManagerDashboard extends Component
             $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
         }
 
+        // get sales metric for differnt time length, this year, this month, today
         $yearSales = DB::table('bookings')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as yearSales')
@@ -55,17 +58,13 @@ class ManagerDashboard extends Component
         return view('livewire.dashboard.manager-dashboard', [
             'rates_card_enabled' => $ratesEnabled,
 
-            'courts_count' => $courts_count,
             'bookings' => $bookingRows,
 
             'rates' => $rates,
 
             'yearSales' => $yearSales->yearSales,
             'monthSales' => $monthSales->monthSales,
-            // 'weekSales' => $weekSales->weekSales,
             'todaySales' => $todaySales->todaySales,
-            // "week_start_date" => $startDateNumber,
-            // "week_end_date" => $endDateNumber,
         ]);
     }
 }

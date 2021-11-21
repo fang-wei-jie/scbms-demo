@@ -22,6 +22,7 @@ class MakeBookingsController extends Controller
     function view ()
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
         // get operation hours
@@ -106,6 +107,7 @@ class MakeBookingsController extends Controller
 
                 // if selected date is after today
 
+                // count numebr of courts
                 $count = DB::table('bookings')
                     ->where('dateSlot', $dateSlot)
                     ->where(
@@ -118,6 +120,7 @@ class MakeBookingsController extends Controller
 
             }
 
+            // get array of courts available
             $courts = array();
             for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                 $booked = DB::table('bookings')
@@ -138,6 +141,9 @@ class MakeBookingsController extends Controller
                 // if rates was enabled
 
                 if ($settings->get('rates_weekend_weekday') == 1) {
+                    // weekend and weekday is in use
+
+                    // check which rates to exclude
                     $dayOfWeek = date_format(date_create($dateSlot), 'N');
                     if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
                         $excludeRateID = 2; // weekend
@@ -218,12 +224,14 @@ class MakeBookingsController extends Controller
 
                 $message = "We are sorry. We had moved away from single rate policy. Please review the new rate below. ";
 
+                // count the number of courts available
                 $count = DB::table('bookings')
                     ->where('dateSlot', $dateSlot)
                     ->where('timeSlot', $timeSlot)
                     ->where('courtID', $courtID)
                     ->count();
 
+                // get the array of courts available
                 $courts = array();
                 for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                     $booked = DB::table('bookings')
@@ -257,18 +265,21 @@ class MakeBookingsController extends Controller
             // get day of the week
             $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
+            // get the number of courts available
             $count = DB::table('bookings')
                 ->where('dateSlot', $dateSlot)
                 ->where('timeSlot', $timeSlot)
                 ->where('courtID', $courtID)
                 ->count();
 
+            // check if the selected date and time is valid
             $validCourtDateTime = ($count < $courts_count
                                     && (($dateSlot == date("Ymd") && $timeSlot >= date("H") && ($timeLength + $timeSlot) <= $end_time) ||
                                     ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time))
                                     ) ? true : false;
 
             if ($ratesEnabled) {
+                // if rates were in use
 
                 $this->validate($request, [
                     'rateID' => 'required | numeric',
@@ -302,11 +313,13 @@ class MakeBookingsController extends Controller
                 // inject the one and only rate and get details
                 $rateID = 3;
 
+                // check if it was a valid booking
                 $validBooking = ($validCourtDateTime && $request->rateID == null) ? true : false;
 
             }
 
             if ($validBooking) {
+                // if booking is valid
 
                 // save created at date temporarily
                 $created_at = date('Y-m-d H:m:s');
@@ -328,6 +341,7 @@ class MakeBookingsController extends Controller
                 return redirect() -> route('mybookings');
 
             } else {
+                // if booking is invalid
 
                 if ($ratesEnabled) {
                     // if rates is enabled
@@ -356,6 +370,7 @@ class MakeBookingsController extends Controller
 
                 }
 
+                // get array of courts available
                 $courts = array();
                 for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
                     $booked = DB::table('bookings')

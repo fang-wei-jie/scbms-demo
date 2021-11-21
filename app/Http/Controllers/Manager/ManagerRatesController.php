@@ -20,8 +20,10 @@ class ManagerRatesController extends Controller
     function view()
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        // check if rates use is enabled, if not return back
         if ($settings->get('rates') != 1) {
             return back();
         }
@@ -34,6 +36,7 @@ class ManagerRatesController extends Controller
             $default = Rates::where('id', 3)->get();
         }
 
+        // get list of custom rates
         $custom = Rates::where('id', '>', 3)->get();
 
         return view('manager.rates', [
@@ -45,8 +48,10 @@ class ManagerRatesController extends Controller
     function process(Request $request)
     {
 
+        // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        // check if rates use is enabled, if not return back
         if ($settings->get('rates') != 1) {
             return back();
         }
@@ -73,7 +78,8 @@ class ManagerRatesController extends Controller
                     'price' => $request->price,
                     'condition' => $request->condition,
                 ]);
-
+                
+                // create a new record in rate records to store rate detail(s) change
                 RateRecords::create([
                 
                     'name' => $request->name,
@@ -141,6 +147,7 @@ class ManagerRatesController extends Controller
 
             ]);
 
+            // create a new record in rate records to store rate detail(s)
             RateRecords::create([
                 
                 'name' => $request->name,

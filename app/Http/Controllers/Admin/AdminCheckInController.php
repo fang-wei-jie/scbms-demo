@@ -33,6 +33,7 @@ class AdminCheckInController extends Controller
 
         // query the booking details
         if (substr($request->input('code'), 7, 7) != "0000000") {
+            // if custID is null
             
             $result = DB::table('bookings')
                 ->join('users', 'users.id', '=', 'bookings.custID')
@@ -43,6 +44,7 @@ class AdminCheckInController extends Controller
                 ->first();
                 
         } else {
+            // if custID is not null
             
             $result = DB::table('bookings')
                 ->where('bookingID', '=', substr($request->input('code'), 0, 7))
@@ -58,6 +60,7 @@ class AdminCheckInController extends Controller
         $currentDate = date('Ymd');
 
 
+        // give different visual cues based on result
         if ($result == null) {
 
             // if no result was querried

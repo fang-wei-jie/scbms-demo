@@ -25,9 +25,11 @@ class CustomerMyAccountController extends Controller
 
     function update (Request $request) {
 
+        // get logged in user variables
         $user = Auth::user();
 
         if (isset ($_POST["change-name"]) ) {
+            // if user wants to change name
 
             // validation
             $this -> validate($request, [
@@ -47,6 +49,7 @@ class CustomerMyAccountController extends Controller
             return back() -> with('info', 'Name updated');
 
         } else if (isset ($_POST["change-phone"]) ) {
+            // if user wants to change phone number
 
             // validate
             $this -> validate($request, [
@@ -71,6 +74,7 @@ class CustomerMyAccountController extends Controller
             return back() -> with('info', 'Phone number updated. ');
 
         } else if (isset ($_POST["change-email"]) ) {
+            // if user wants to change email
 
             // validate
             $this -> validate($request, [
@@ -95,6 +99,7 @@ class CustomerMyAccountController extends Controller
             return back() -> with('info', 'Email updated. ');
 
         } else if (isset ($_POST["change-password"]) ) {
+            // if user wants to change password
 
             // validate
             $this -> validate($request, [
@@ -129,6 +134,7 @@ class CustomerMyAccountController extends Controller
             return back() -> with('info', 'Password updated. ');
 
         } else if (isset ($_POST["delete-account"]) ) {
+            // if user wants to delete account
 
             $this -> validate($request, [
 
@@ -153,7 +159,7 @@ class CustomerMyAccountController extends Controller
 
             }
 
-            // redirect user out of the current page
+            // redirect user to login page
             Auth::logout();
             return redirect() -> route('login');
 

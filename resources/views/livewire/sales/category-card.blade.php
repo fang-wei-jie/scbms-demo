@@ -29,8 +29,6 @@
                                     <select class="form-select" wire:model="type">
                                         <option value="y">Year</option>
                                         <option value="m">Month</option>
-                                        {{-- <option value="w">Week</option> --}}
-                                        {{-- <option value="d">Day</option> --}}
                                     </select>
                                 </div>
 

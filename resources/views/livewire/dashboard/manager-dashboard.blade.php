@@ -41,16 +41,12 @@
                     <h5 class="card-title" style="display: flex; justify-content: center; align-items: center;">No Bookings Currently</h5>
                     @else
 
-                        @for ($i = 1; $i <= $courts_count; $i++)
-                            @foreach ($bookings as $booking)
-                                @if ($i == $booking->courtID)
-                                    <h5>Court {{ $i }}</h5><span>{{ $booking->rateName }} rate</span> <br>
-                                    <span>{{ $booking->timeLength }} hours, {{ $booking->timeSlot }}:00 -
-                                        {{ $booking->timeSlot + $booking->timeLength }}:00</span>
-                                    <div class="my-2"></div>
-                                @endif
-                            @endforeach
-                        @endfor
+                        @foreach ($bookings as $booking)
+                            <h5>Court {{ $booking->courtID }}</h5><span>{{ $booking->rateName }} rate</span> <br>
+                            <span>{{ $booking->timeLength }} hours, {{ $booking->timeSlot }}:00 -
+                                {{ $booking->timeSlot + $booking->timeLength }}:00</span>
+                            <div class="my-2"></div>
+                        @endforeach
 
                     @endif
                 </div>

@@ -22,6 +22,7 @@ class AdminAccountsController extends Controller
     function view()
     {
 
+        // get list of admins
         $admins = DB::table('admins')->get();
 
         return view('manager.admins_management', [
@@ -93,8 +94,10 @@ class AdminAccountsController extends Controller
 
             ]);
 
+            // generate random string as password
             $randomPassword = Str::random(10);
 
+            // update the password with the randomly generated password
             $admin = Admin::find($request->id);
             $admin->password = Hash::make($randomPassword);
             $admin->save();

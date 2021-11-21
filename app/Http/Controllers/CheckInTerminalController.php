@@ -20,6 +20,7 @@ class CheckInTerminalController extends Controller
     function check(Request $request)
     {
 
+        // validate the input
         $this->validate($request, [
 
             'code' => 'required | numeric | regex:/^[0-9]{14}/u',

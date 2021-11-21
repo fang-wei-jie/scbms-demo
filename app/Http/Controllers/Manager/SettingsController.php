@@ -19,6 +19,7 @@ class SettingsController extends Controller
 
     function view () {
 
+        // get standard rate's price
         $ratePerHour = Rates::where('id', 3)->first()->price;
 
         return view ('manager.settings', [
@@ -31,6 +32,7 @@ class SettingsController extends Controller
     function update (Request $request) {
 
         if (isset ($_POST['save'])) {
+            // update setting values
 
             $this -> validate($request, [
                 "name" => 'required | string | max:255',

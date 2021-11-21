@@ -21,6 +21,7 @@ class ManagerAccountsController extends Controller
     function view()
     {
 
+        // get list of managers
         $managers = DB::table('managers')->get();
 
         return view('manager.managers_management', [
@@ -33,6 +34,7 @@ class ManagerAccountsController extends Controller
     function process(Request $request)
     {
 
+        // if the request process on the ucrrent user, prevent it and return back
         if ($request->id == Auth::user()->id) {
             return back();
         }
@@ -96,8 +98,10 @@ class ManagerAccountsController extends Controller
 
             ]);
 
+            // generate random string as password
             $randomPassword = Str::random(10);
 
+            // update the password with the randomly generated password
             $manager = Manager::find($request->id);
             $manager->password = Hash::make($randomPassword);
             $manager->save();
