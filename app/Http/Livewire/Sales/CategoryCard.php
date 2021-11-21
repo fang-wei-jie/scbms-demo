@@ -10,7 +10,8 @@ class CategoryCard extends Component
 {
 
     // predefined the "model"-able variables
-    public $type = "y";
+    public $range = "y";
+    public $type = "created_at";
     public $date = "";
     public $month = "";
     public $day = "";
@@ -21,19 +22,19 @@ class CategoryCard extends Component
         $year = date("Y");
         $month = date("m");
 
-        // check what value is selected in the "type" field
-        switch ($this->type) {
-            // type is month
+        // check what value is selected in the "range" field
+        switch ($this->range) {
+            // range is month
             case 'm':
-                $type = "m";
+                $range = "m";
                 $dateTrim = "1, 7";
                 if ($this->date != "") { $date = $this->date; } else { $date = $year."-".$month; }
                 $condition = 'LIKE "' . $date .'%';
                 break;
 
-            // type is year
+            // range is year
             case 'y':
-                $type = "y";
+                $range = "y";
                 $dateTrim = "1, 4";
                 if ($this->date != "") { $date = $this->date; } else { $date = $year; }
                 $condition = 'LIKE "' . $date .'%';
@@ -42,18 +43,20 @@ class CategoryCard extends Component
 
         // get the latest date for month/year
         $firstDate = DB::table('bookings')
-            ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
-            ->orderByDesc("created_at")
+            ->selectRaw("DISTINCT(SUBSTRING(".$this->type.",".$dateTrim.")) as date")
+            // ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
+            // ->orderByDesc("created_at")
+            ->orderByDesc($this->type)
             ->first();
 
         if ($firstDate != null) {
             // if first date does not equal null, it means there are bookings made (new business does not have sales yet)
 
-            // used to handle when the type is changed
+            // used to handle when the range is changed
             // date will be automatically set to the first row result of dates list
             if ($this->date == ""
-                || (Str::length($this->date) == 4 && $this->type =="m"
-                || (Str::length($this->date) == 7 && $this->type =="y"))) {
+                || (Str::length($this->date) == 4 && $this->range =="m"
+                || (Str::length($this->date) == 7 && $this->range =="y"))) {
                 $condition = 'LIKE "' . $firstDate->date .'%';
             }
 
@@ -61,7 +64,8 @@ class CategoryCard extends Component
             $ratesPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('rate_records.name as rate, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->groupBy('rate')
                 ->orderBy('rate')
                 ->get();
@@ -70,7 +74,8 @@ class CategoryCard extends Component
             $timeslotPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('timeSlot as slot, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->groupBy('bookings.timeSlot')
                 ->orderBy('bookings.timeSlot')
                 ->get();
@@ -79,7 +84,8 @@ class CategoryCard extends Component
             $timelengthPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('bookings.timeLength as length, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->groupBy('bookings.timelength')
                 ->orderBy('bookings.timelength')
                 ->get();
@@ -92,7 +98,7 @@ class CategoryCard extends Component
 
             return view('livewire.sales.category-card', [
                 'hasData' => true,
-                'type' => $type,
+                'range' => $range,
                 'rates' => $ratesPerf,
                 'ratesMax' => $ratesPerf->max("total"),
                 'ratesSum' => $ratesPerf->sum("total"),
