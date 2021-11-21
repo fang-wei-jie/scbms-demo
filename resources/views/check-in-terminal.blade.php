@@ -170,7 +170,7 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
 
         </div>
 
-        <div id="prompt" class="row text-center">
+        <div class="row text-center" @if($result == "0") hidden @endif>
             <i style="font-size: 5rem" class="bi bi-qr-code-scan"></i>
             <h1>Scan your QR Code Here</h1>
         </div>
