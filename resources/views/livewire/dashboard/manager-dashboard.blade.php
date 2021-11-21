@@ -4,7 +4,7 @@
     <div class="my-2"></div>
 
     <div class="row">
-        <div class="col-xl">
+        <div class="col-xl-7">
             <!-- courts booked -->
             <div class="card bg-light">
                 <div class="card-body">
@@ -41,12 +41,27 @@
                     <h5 class="card-title" style="display: flex; justify-content: center; align-items: center;">No Bookings Currently</h5>
                     @else
 
+                    <div class="row row-cols-1 row-cols-md-3 g-2">
+
                         @foreach ($bookings as $booking)
-                            <h5>Court {{ $booking->courtID }}</h5><span>{{ $booking->rateName }} rate</span> <br>
-                            <span>{{ $booking->timeLength }} hours, {{ $booking->timeSlot }}:00 -
-                                {{ $booking->timeSlot + $booking->timeLength }}:00</span>
-                            <div class="my-2"></div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h5 class="card-title">Court {{ $booking->courtID }}</h5>
+                                                <p class="card-text">
+                                                    <span>{{ $booking->rateName }} rate</span> <br>
+                                                    <span>{{ $booking->timeLength }} {{ $booking->timeLength == 1 ? " hour" : " hours" }}, {{ $booking->timeSlot }}:00 - {{ $booking->timeSlot + $booking->timeLength }}:00</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
+
+                        </div>
 
                     @endif
                 </div>
@@ -57,7 +72,7 @@
         </div>
 
 
-        <div class="col-sm">
+        <div class="col-xl-5">
             <!-- rates card -->
             @if($rates_card_enabled == 1)
             <div class="card bg-light">
