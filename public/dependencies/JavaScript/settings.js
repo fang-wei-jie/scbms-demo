@@ -100,6 +100,12 @@ $(document).ready(function() {
         $("#precheckin_minutes").text($(this).val() + text)
     })
 
+    $("#payment_grace_period").on("keyup change", function() {
+        validateNumber("#payment_grace_period", 5, 15)
+        var text = $(this).val() > 1 ? " minutes" : " minute"
+        $("#payment_grace_period").text($(this).val() + text)
+    })
+
     // Rate Toggles
     $("#rate").change(function() {
         useRates()

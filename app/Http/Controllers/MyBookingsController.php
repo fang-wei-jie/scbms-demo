@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Valuestore\Valuestore;
 
 class MyBookingsController extends Controller
 {
@@ -131,7 +132,11 @@ class MyBookingsController extends Controller
                 return $past;
             }
 
-            return view('customer.mybookings', ['bookings_count' => $count,'today_bookings' => $today_bookings]);
+            return view('customer.mybookings', [
+                'bookings_count' => $count,
+                'today_bookings' => $today_bookings, 
+                'payment_grace_period' => Valuestore::make(storage_path('app/settings.json'))->get('payment_grace_period'),
+            ]);
         
         } else {
 

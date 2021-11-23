@@ -324,6 +324,7 @@ class ManagerCounterBookingController extends Controller
                     'timeSlot' => $timeSlot,
                     'timeLength' => $timeLength,
                     'rateRecordID' => $rateRecordID,
+                    'status_id' => 1,
                 ]);
 
                 $details = DB::table('bookings')

@@ -47,6 +47,7 @@ class SettingsController extends Controller
                 "prebook_days_ahead" => 'required | numeric | min:1',
                 "booking_cut_off_time" => 'required | numeric | min:0 | max:30',
                 "precheckin_duration" => 'required | numeric | min:0 | max:30',
+                "payment_grace_period" => 'required | numeric | min:5 | max:15',
 
                 "customer_navbar_color" => 'required | string',
                 "customer_navtext" => 'required | string',
@@ -92,6 +93,7 @@ class SettingsController extends Controller
             $settings->put('prebook_days_ahead', $request->prebook_days_ahead);
             $settings->put('booking_cut_off_time', $request->booking_cut_off_time);
             $settings->put('precheckin_duration', $request->precheckin_duration);
+            $settings->put('payment_grace_period', $request->payment_grace_period);
 
             $settings->put('delete_booking', $request->deleteBooking == null ? '0' : '1');
             $settings->put('customer_delete_booking', $request->customerDeleteBooking == null ? '0' : '1');

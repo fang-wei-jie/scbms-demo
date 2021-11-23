@@ -87,7 +87,7 @@ My Bookings
                                         @endif
 
                                         @if($list->status_id == 0)
-                                            <span class="text-danger"><b>Pay before {{ date('d/m/Y H:i:s', strtotime('+ 10 minutes', strtotime($list->created_at))) }} or booking will be forfitted</b></span>
+                                            <span class="text-danger"><b>Pay before {{ date('d/m/Y H:i', strtotime('+ '. $payment_grace_period .' minutes', strtotime($list->created_at))) }} or booking will be forfitted</b></span>
                                         @endif
                                     </div>
     

@@ -168,6 +168,14 @@
                             E.g. Booking of 07h is able to checkin <mark><span id="precheckin_minutes"></span></mark> before the session starts.
                         </small>
                     </div>
+
+                    <div class="form-floating mb-3">
+                        <input class="form-control" type="number" name="payment_grace_period" id="payment_grace_period" value="{{ $settings->get('payment_grace_period') }}" pattern="[0-9]*" step="1" min="5" max="15">
+                        <label for="payment_grace_period">Payment Grace Period (Minutes)</label>
+                        <small>
+                            Duration of time before the unpaid booking will be forfitted. Duration starts from the moment customer clicks the confirm booking button. Minimum 5 minutes, maximum 15 minutes. 
+                        </small>
+                    </div>
                 </div>
 
                 <div class="col-lg mb-4">

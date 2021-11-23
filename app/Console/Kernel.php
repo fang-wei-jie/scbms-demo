@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
 
 class Kernel extends ConsoleKernel
 {
@@ -29,7 +30,7 @@ class Kernel extends ConsoleKernel
             
             DB::table('bookings')
                 ->where('status_id', '=', 0)
-                ->whereRaw('created_at < (NOW() - INTERVAL 10 MINUTE)')
+                ->whereRaw('created_at < (NOW() - INTERVAL '. Valuestore::make(storage_path('app/settings.json'))->get('payment_grace_period') .' MINUTE)')
                 ->delete();
 
         }) -> everyMinute();
