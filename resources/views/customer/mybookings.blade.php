@@ -85,6 +85,10 @@ My Bookings
                                         @else
                                             <span>No condition to follow. </span>
                                         @endif
+
+                                        @if($list->status_id == 0)
+                                            <span class="text-danger"><b>Pay before {{ date('d/m/Y H:i:s', strtotime('+ 10 minutes', strtotime($list->created_at))) }} or booking will be forfitted</b></span>
+                                        @endif
                                     </div>
     
                                 </div>
@@ -106,7 +110,7 @@ My Bookings
 
                                     <form action="{{ route('preview-payment') }}" method="get">
                                         <input type="text" name="id" id="id" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
-                                        <button type="submit" class="btn btn-outline-danger">
+                                        <button type="submit" class="btn btn-outline-primary">
                                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                                 <i class="bi bi-wallet2"></i>&nbsp;Pay Now
                                             </span>
