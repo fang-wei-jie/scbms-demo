@@ -57,7 +57,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/fpx.png') }}" alt="FPX logo" height="80">
                         </div>
-                        <div class="col"><h4>FPX</h4></div>
+                        <div class="col"><h4>FPX<sup>3</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/visa.png') }}" alt="Visa Logo" width="80">
                         </div>
-                        <div class="col"><h4>Visa<sup>2</sup></h4></div>
+                        <div class="col"><h4>Visa<sup>3</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@ Payment Methods
                         <div class="col-auto">
                             <img src="{{ URL::asset('images/mc.png') }}" alt="MasterCard Logo" width="80">
                         </div>
-                        <div class="col"><h4>MasterCard<sup>2</sup></h4></div>
+                        <div class="col"><h4>MasterCard<sup>3</sup></h4></div>
                     </div>
                 </div>
             </div>
@@ -102,6 +102,11 @@ Payment Methods
 
         <sup>2</sup>
         Available for over the counter bookings and online bookings. 
+
+        <br>
+
+        <sup>3</sup>
+        Available for online bookings only. 
     </small>
 </div>
 
