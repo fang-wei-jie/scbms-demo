@@ -26,6 +26,7 @@ class ManagerDashboard extends Component
             ->orderBy('courtID', 'asc')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
+            ->where('status_id', '!=', 0)
             ->get();
 
         if ($settings->get('rates_weekend_weekday') == 1) {
@@ -41,18 +42,21 @@ class ManagerDashboard extends Component
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as yearSales')
             ->where('bookings.created_at', 'LIKE', date('Y').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         $monthSales = DB::table('bookings')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as monthSales')
             ->where('bookings.created_at', 'LIKE', date('Y-m').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         $todaySales = DB::table('bookings')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as todaySales')
             ->where('bookings.created_at', 'LIKE', date('Y-m-d').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         return view('livewire.dashboard.manager-dashboard', [

@@ -16,18 +16,21 @@ class SummaryCard extends Component
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as yearSales')
             ->where('bookings.created_at', 'LIKE', date('Y').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         $monthSales = DB::table('bookings')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as monthSales')
             ->where('bookings.created_at', 'LIKE', date('Y-m').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         $todaySales = DB::table('bookings')
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->selectRaw('SUM(timeLength*price) as todaySales')
             ->where('bookings.created_at', 'LIKE', date('Y-m-d').'%')
+            ->where('status_id', '!=', 0)
             ->first();
 
         return view('livewire.sales.summary-card', [

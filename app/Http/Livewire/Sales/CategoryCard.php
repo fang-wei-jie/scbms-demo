@@ -44,8 +44,7 @@ class CategoryCard extends Component
         // get the latest date for month/year
         $firstDate = DB::table('bookings')
             ->selectRaw("DISTINCT(SUBSTRING(".$this->type.",".$dateTrim.")) as date")
-            // ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
-            // ->orderByDesc("created_at")
+            ->where('status_id', '!=', 0)
             ->orderByDesc($this->type)
             ->first();
 
@@ -65,7 +64,7 @@ class CategoryCard extends Component
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('rate_records.name as rate, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
-                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->where('status_id', '!=', 0)
                 ->groupBy('rate')
                 ->orderBy('rate')
                 ->get();
@@ -75,7 +74,7 @@ class CategoryCard extends Component
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('timeSlot as slot, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
-                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->where('status_id', '!=', 0)
                 ->groupBy('bookings.timeSlot')
                 ->orderBy('bookings.timeSlot')
                 ->get();
@@ -85,7 +84,7 @@ class CategoryCard extends Component
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('bookings.timeLength as length, SUM(timeLength*price) as total')
                 ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
-                // ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->where('status_id', '!=', 0)
                 ->groupBy('bookings.timelength')
                 ->orderBy('bookings.timelength')
                 ->get();
