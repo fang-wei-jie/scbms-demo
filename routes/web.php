@@ -106,6 +106,10 @@ Route::post('/mybookings', [MyBookingsController::class, 'delete_bookings']);
 Route::get('/book-court', [MakeBookingsController::class, 'view']) -> name('book-court');
 Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
 
+// Payment
+Route::get('/payment', [MakeBookingsController::class, 'payment_preview']) -> name('preview-payment');
+Route::post('/payment', [MakeBookingsController::class, 'payment_process']) -> name('process-payment');
+
 // Receipt/Invoice
 Route::get('/receipt', [ReceiptController::class, 'get_request']) -> name('view-receipt');
 Route::post('/receipt', [ReceiptController::class, 'view']);

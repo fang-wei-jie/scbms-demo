@@ -163,7 +163,7 @@ Book Courts
             <div class="d-grid gap-2 mt-3">
                 <button class="btn btn-outline-primary" type="submit" id="confirm-booking" name="confirm-booking">
                     <i class="bi bi-journal-check"></i>
-                    Confirm Booking for RM<span id="price"></span> in Cash
+                    Confirm Booking for RM<span id="price"></span>
                 </button>
             </div>
 

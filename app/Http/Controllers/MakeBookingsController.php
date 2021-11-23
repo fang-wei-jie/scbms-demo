@@ -336,9 +336,21 @@ class MakeBookingsController extends Controller
                     'timeSlot' => $timeSlot,
                     'timeLength' => $timeLength,
                     'rateRecordID' => $rateRecordID,
+                    'status_id' => 0,
                 ]);
 
-                return redirect() -> route('mybookings');
+                $details = DB::table('bookings')
+                    ->select('bookings.bookingID')
+                    ->where('courtID', '=', $courtID)
+                    ->where('dateSlot', '=', $dateSlot)
+                    ->where('timeSlot', '=', $timeSlot)
+                    ->where('timeLength', '=', $timeLength)
+                    ->where('rateRecordID', '=', $rateRecordID)
+                    ->where('status_id', '=', 0)
+                    ->first();
+
+                // return redirect() -> route('mybookings');
+                return redirect() -> action([MakeBookingsController::class, 'payment_preview'], ['id' => str_pad($details->bookingID, 7, 0, STR_PAD_LEFT)]);
 
             } else {
                 // if booking is invalid
@@ -405,5 +417,52 @@ class MakeBookingsController extends Controller
         } else {
             return redirect() -> route('book-court');
         }
+    }
+
+    function payment_preview (Request $request) {
+
+        $this -> validate($request, [
+
+            'id' => 'required | regex:/^[0-9]{7}/u',
+
+        ]);
+
+        $details = DB::table('bookings')
+            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+            ->select('bookings.*', 'rate_records.price')
+            ->where('bookings.bookingID', '=', $request->id)
+            ->first();
+
+        if ($details->status_id == 0 && $details->custID == Auth::user()->id) {
+            
+            return view ('payment', [
+                'id' => $details->bookingID,
+                'amount' => $details->timeLength * $details->price
+            ]);
+
+        }
+
+        return redirect() -> route('mybookings');
+
+    }
+
+    function payment_process (Request $request) {
+
+        $this -> validate($request, [
+
+            'id' => 'required | regex:/^[0-9]{7}/u',
+
+        ]);
+
+        if (isset($_POST["pay"])) {
+            
+            DB::table('bookings')
+                ->where('bookingID', '=', $request->id)
+                ->update(['status_id' => 1]);
+
+        }
+
+        return redirect() -> route('mybookings');
+
     }
 }

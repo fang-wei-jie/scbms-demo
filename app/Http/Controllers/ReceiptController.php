@@ -37,6 +37,7 @@ class ReceiptController extends Controller
             ->select('bookings.*', 'users.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
             -> where('bookings.bookingID', $request->input('bookID'))
             -> where('bookings.custID', Auth::user()->id)
+            -> where('bookings.status_id', 1)
             -> first();
 
         if ($receiptDetail != null) {

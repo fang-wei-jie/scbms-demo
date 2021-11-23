@@ -53,7 +53,10 @@ My Bookings
                                 Court {{ $list->courtID }} - {{ $list->rateName }} rate
                             </div>
                             <div class="col-auto me-3">
-                                @if ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
+                                @if ($list->status_id == 0)
+                                    {{-- not paid --}}
+                                    <h4><span class="badge bg-danger">Unpaid</span></h4>
+                                @elseif ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
                                     {{-- same date and same hour --}}
                                     <h4><span class="badge bg-primary">Current</span></h4>
                                 @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
@@ -87,6 +90,9 @@ My Bookings
                                 </div>
     
                                 <div class="col-auto mb-4">
+
+                                    @if($list->status_id != 0)
+
                                     <form action="{{ route('view-receipt') }}" method="get">
                                         <input type="text" name="bookID" id="bookID" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
                                         <button type="submit" class="btn btn-outline-secondary" id="show-receipt">
@@ -95,22 +101,39 @@ My Bookings
                                             </span>
                                         </button>
                                     </form>
+
+                                    @else
+
+                                    <form action="{{ route('preview-payment') }}" method="get">
+                                        <input type="text" name="id" id="id" value="{{ str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) }}" hidden>
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <span style="display: flex; justify-content: space-between; align-items: center;">
+                                                <i class="bi bi-wallet2"></i>&nbsp;Pay Now
+                                            </span>
+                                        </button>
+                                    </form>
+
+                                    @endif
                                 </div>
                                 
-                                {{-- if booking not expired yet, show QR code --}}
-                                @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
-                                    <div class="col-auto" style="margin: auto; display: block;">
-                                        <div class="row justify-content-center">
-                                            @php
-                                                $content = str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT);
-                                                $qrCode = (new QrCode($content))->setSize(300)->setMargin(5);
-                                            @endphp
-                                            <img src='{{ $qrCode->writeDataUri() }}'/>
+                                @if($list->status_id != 0)
+
+                                    {{-- if booking not expired yet, show QR code --}}
+                                    @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                        <div class="col-auto" style="margin: auto; display: block;">
+                                            <div class="row justify-content-center">
+                                                @php
+                                                    $content = str_pad($list->bookingID, 7, 0, STR_PAD_LEFT) . str_pad($list->custID, 7, 0, STR_PAD_LEFT);
+                                                    $qrCode = (new QrCode($content))->setSize(300)->setMargin(5);
+                                                @endphp
+                                                <img src='{{ $qrCode->writeDataUri() }}'/>
+                                            </div>
+                                            <div class="row justify-content-center fw-bold">
+                                                {{ $content }}
+                                            </div>
                                         </div>
-                                        <div class="row justify-content-center fw-bold">
-                                            {{ $content }}
-                                        </div>
-                                    </div>
+                                    @endif
+
                                 @endif
                             </div>
                             
