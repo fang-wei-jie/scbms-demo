@@ -133,7 +133,7 @@ Bookings
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>Customer Name: <span id="name"></span></p>
+                <p id="customer_name">Customer Name: <span id="name"></span></p>
                 <p>Date: <span id="date"></span></p>
                 <p>Time: <span id="time"></span></p>
                 <p>Paid: RM <span id="paid"></span></p>
@@ -153,7 +153,13 @@ Bookings
     })
 
     $(document).on("click", ".amandable", function() {
-        $("#name").text($(this).data('name'))
+        if ($(this).data('name') == "") {
+            $("#customer_name").hide()
+        } else {
+            $("#customer_name").show()
+            $("#name").text($(this).data('name'))
+        }
+
         $("#date").text($(this).data('date'))
         $("#time").text($(this).data('time'))
         $("#paid").text($(this).data('price'))

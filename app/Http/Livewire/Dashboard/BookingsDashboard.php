@@ -19,7 +19,7 @@ class BookingsDashboard extends Component
         $date = $this->date != "" ?  $this->date : date('Ymd');
 
         $bookings = DB::table('bookings')
-            ->join('users', 'users.id', '=', 'bookings.custID')
+            ->leftJoin('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '=', str_replace("-", "", $date))
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
             ->select('bookings.*', 'users.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
@@ -50,9 +50,10 @@ class BookingsDashboard extends Component
         }
 
         // if current court count is smaller than the previous booked court no, use the one in the bookings table
-        $lastCourtIDinTable = DB::table('bookings')->max('courtID');
-        $courtCountInOperation = $settings->get('courts_count');
-        $courts = $lastCourtIDinTable > $courtCountInOperation ? $lastCourtIDinTable : $courtCountInOperation;
+        $lastCourtIDinTable = DB::table('bookings')->where('dateSlot', '=', str_replace("-", "", $date))->max('courtID');
+        $courtCountInOperation = (int) $settings->get('courts_count');
+        $courts = ($lastCourtIDinTable > $courtCountInOperation) ? $lastCourtIDinTable : $courtCountInOperation;
+
 
         return view('livewire.dashboard.bookings-dashboard', [
             "start" => $start,
