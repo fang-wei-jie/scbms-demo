@@ -161,9 +161,9 @@ Book Courts
             <input type="text" class="confirmed-fields" name="bookingPrice" id="bookingPrice">
 
             <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-outline-primary" type="submit" id="confirm-booking" name="confirm-booking">
+                <button class="btn btn-lg btn-outline-primary" type="submit" id="confirm-booking" name="confirm-booking">
                     <i class="bi bi-journal-check"></i>
-                    Confirm Booking for RM<span id="price"></span>
+                    Received RM<span id="price"></span> for Booking Confirmation
                 </button>
             </div>
 
