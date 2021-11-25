@@ -104,7 +104,8 @@ Route::post('/mybookings', [MyBookingsController::class, 'delete_bookings']);
 
 // Book Courts
 Route::get('/book-court', [MakeBookingsController::class, 'view']) -> name('book-court');
-Route::post('/book-court', [MakeBookingsController::class, 'book_court']);
+Route::post('/book-court', [MakeBookingsController::class, 'check_booking']);
+Route::post('/confirm-booking', [MakeBookingsController::class, 'confirm_booking']) -> name('confirm-booking');
 
 // Payment
 Route::get('/payment', [MakeBookingsController::class, 'payment_preview']) -> name('preview-payment');
@@ -203,7 +204,8 @@ Route::prefix('admin')->group(function() {
 
     // Make Booking
     Route::get('/book-court', [AdminCounterBookingController::class, 'view']) -> name('admin.book-court');
-    Route::post('/book-court', [AdminCounterBookingController::class, 'book_court']);
+    Route::post('/book-court', [AdminCounterBookingController::class, 'check_booking']);
+    Route::post('/confirm-booking', [AdminCounterBookingController::class, 'confirm_booking']) -> name('admin.confirm-booking');
 
     // Receipt Generator
     Route::get('/receipt', [AdminCounterBookingController::class, 'preview']) -> name('admin.receipt');
@@ -242,7 +244,9 @@ Route::prefix('manager')->group(function() {
 
     // Make Booking
     Route::get('/book-court', [ManagerCounterBookingController::class, 'view']) -> name('manager.book-court');
-    Route::post('/book-court', [ManagerCounterBookingController::class, 'book_court']);
+    Route::post('/book-court', [ManagerCounterBookingController::class, 'check_booking']);
+    Route::post('/confirm-booking', [ManagerCounterBookingController::class, 'confirm_booking']) -> name('manager.confirm-booking');
+
 
     // Receipt Generator
     Route::get('/receipt', [ManagerCounterBookingController::class, 'preview']) -> name('manager.receipt');

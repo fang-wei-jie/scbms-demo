@@ -78,7 +78,7 @@ Book Courts
         @elseif($selectedDate == 1)
 
         <!-- lower portion of form, hidden if upper portion of form shown -->
-        <form class="form-resize" action="{{ route('book-court') }}" method="post">
+        <form class="form-resize" action="{{ route('confirm-booking') }}" method="post">
             @csrf
 
             @if($dateSlot == date('Y-m-d') && $timeSlot == date("H") && date("i") <= $booking_cut_off_time)
@@ -111,8 +111,14 @@ Book Courts
 
             @if($message ?? '')
             <div class="alert alert-warning" role="alert">
-                <i class="bi bi-exclamation-lg"></i>
-                {{ $message ?? '' }}
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        {{ $message ?? '' }}
+                    </div>
+                </div>
             </div>
             @endif
 

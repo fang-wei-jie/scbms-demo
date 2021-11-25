@@ -78,7 +78,7 @@ Book Courts
         @elseif($selectedDate == 1)
 
         <!-- lower portion of form, hidden if upper portion of form shown -->
-        <form class="form-resize" action="{{ route('manager.book-court') }}" method="post">
+        <form class="form-resize" action="{{ route('manager.confirm-booking') }}" method="post">
             @csrf
 
             @if($dateSlot == date('Y-m-d') && $timeSlot == date("H") && date("i") <= $booking_cut_off_time)
