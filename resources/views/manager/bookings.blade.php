@@ -121,7 +121,15 @@ Bookings
 
 @section('body')
 <div class="container">
-    @livewire('dashboard.bookings-dashboard')
+
+    <div class="d-block d-lg-none">
+        <h2>Screen Area Too Small</h2>
+        <h5>Rotating the screen orientation may allow enough screen area to display the contents. </h5>
+    </div>
+
+    <div class="d-none d-lg-block">
+        @livewire('dashboard.bookings-dashboard')
+    </div>
 </div>
 
 <!-- Modal -->
