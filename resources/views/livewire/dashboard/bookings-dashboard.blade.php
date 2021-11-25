@@ -1,4 +1,4 @@
-<div class="d-none d-sm-none d-md-none d-lg-block" @if($date >= date('Y-m-d') || $date == null) wire:poll.10000ms @endif>
+<div @if($date >= date('Y-m-d') || $date == null) wire:poll.10000ms @endif>
 
     <style>
         .calendar {
@@ -95,9 +95,4 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="d-block d-lg-none">
-    <h2>Screen Area Too Small</h2>
-    <h5>Rotating the screen orientation may allow enough screen area to display the contents. </h5>
 </div>
