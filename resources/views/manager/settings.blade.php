@@ -184,27 +184,20 @@
 
                     <hr>
 
-                    <h5>Delete Booking</h5>
+                    <h5>Cancel Booking</h5>
 
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="deleteBooking" name="deleteBooking" @if($settings->get('delete_booking') == 1){{ "checked" }}@endif>
-                        <label class="form-check-label" for="deleteBooking">Delete Booking</label>
+                        <input class="form-check-input" type="checkbox" id="cancelBooking" name="cancelBooking" @if($settings->get('cancel_booking') == 1){{ "checked" }}@endif>
+                        <label class="form-check-label" for="cancelBooking">Cancel Booking</label>
                         <br>
-                        <small>Enable the deletion/cancelation of bookings made</small>
+                        <small>Enable cancellation of booking by manager for bookings that has not started</small>
                     </div>
 
-                    <div class="form-check form-switch" id="bookingDeletableCustomer" @if($settings->get('delete_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="customerDeleteBooking" name="customerDeleteBooking" @if($settings->get('customer_delete_booking') == 1){{ "checked" }}@endif @if($settings->get('delete_booking') != 1){{ "disabled" }}@endif>
-                        <label class="form-check-label" for="customerDeleteBooking">Booking Deleteable by Customer</label>
+                    <div class="form-check form-switch" id="bookingDeletableAdmin" @if($settings->get('cancel_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
+                        <input class="form-check-input" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('cancel_booking') != 1){{ "disabled" }}@endif>
+                        <label class="form-check-label" for="adminCancelBooking">Booking Cancelable by Admin</label>
                         <br>
-                        <small class="@if($settings->get('delete_booking') != 1){{ 'disabled-label' }}@endif">Enable the customer to delete booking</small>
-                    </div>
-
-                    <div class="form-check form-switch" id="bookingDeletableAdmin" @if($settings->get('delete_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminDeleteBooking" name="adminDeleteBooking" @if($settings->get('admin_delete_booking') == 1){{ "checked" }}@endif @if($settings->get('delete_booking') != 1){{ "disabled" }}@endif>
-                        <label class="form-check-label" for="adminDeleteBooking">Booking Deleteable by Admin</label>
-                        <br>
-                        <small class="@if($settings->get('delete_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin to delete booking</small>
+                        <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
                     </div>
 
                     <br>
@@ -248,7 +241,7 @@
                         <input class="form-check-input" type="checkbox" id="weekdayWeekend" name="weekdayWeekend" @if($settings->get('rates_weekend_weekday') == 1){{ "checked" }}@endif  @if($settings->get('rates') != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="weekdayWeekend">Weekday Weekend Rate</label>
                         <br>
-                        <small class="@if($settings->get('rates') != 1){{ 'disabled-label' }}@endif">Enable different rate on weekdays and weekends. This feature does not apply to custom rates. </small>
+                        <small class="@if($settings->get('rates') != 1){{ 'disabled-label' }}@endif">Enable different rate on weekdays and weekends. This feature does not apply to custom rates</small>
                     </div>
 
                     <div class="form-check form-switch" @if($settings->get('rates') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif  @if($settings->get('admin_role') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>

@@ -95,9 +95,8 @@ class SettingsController extends Controller
             $settings->put('precheckin_duration', $request->precheckin_duration);
             $settings->put('payment_grace_period', $request->payment_grace_period);
 
-            $settings->put('delete_booking', $request->deleteBooking == null ? '0' : '1');
-            $settings->put('customer_delete_booking', $request->customerDeleteBooking == null ? '0' : '1');
-            $settings->put('admin_delete_booking', $request->adminDeleteBooking == null ? '0' : '1');
+            $settings->put('cancel_booking', $request->cancelBooking == null ? '0' : '1');
+            $settings->put('admin_cancel_booking', $request->adminCancelBooking == null ? '0' : '1');
 
             $settings->put('admin_role', $request->adminRole == null ? '0' : '1');
             $settings->put('admin_sales_report', $request->adminSalesReport == null ? '0' : '1');

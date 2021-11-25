@@ -21,12 +21,11 @@ class ManagerBookingsController extends Controller
 
     }
 
-    function delete (Request $request)
+    function cancel (Request $request)
     {
 
         DB::table('bookings')
             ->where('bookingID', '=', $request->bookingID)
-            ->where('custID', '=', $request->custID)
             ->delete();
 
         return redirect() -> route('manager.bookings');

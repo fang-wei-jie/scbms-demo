@@ -217,7 +217,7 @@ Route::prefix('admin')->group(function() {
 
     // Court Bookings
     Route::get('/bookings', [AdminBookingsController::class, 'view']) -> name('admin.bookings');
-    Route::post('/bookings', [AdminBookingsController::class, 'delete']);
+    Route::post('/bookings', [AdminBookingsController::class, 'cancel']);
 
     // Rates Management
     Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
@@ -258,7 +258,7 @@ Route::prefix('manager')->group(function() {
 
     // Court Bookings
     Route::get('/bookings', [ManagerBookingsController::class, 'view']) -> name('manager.bookings');
-    Route::post('/bookings', [ManagerBookingsController::class, 'delete']);
+    Route::post('/bookings', [ManagerBookingsController::class, 'cancel']);
 
     // Admin Accounts Management
     Route::get('/admins', [AdminAccountsController::class, 'view']) -> name('manager.admins_management');

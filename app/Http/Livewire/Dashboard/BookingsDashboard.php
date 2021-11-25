@@ -60,7 +60,8 @@ class BookingsDashboard extends Component
             "end" => $end,
             "courts" => $courts,
             "date" => substr($date, 0, 4)."-".substr($date, 4, 2)."-".substr($date, 6, 2),
-
+            "admincancelable" => $settings->get('admin_cancel_booking'),
+            
             "bookings" => $bookings->get(),
         ]);
     }

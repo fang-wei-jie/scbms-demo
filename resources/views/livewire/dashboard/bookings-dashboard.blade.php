@@ -39,6 +39,8 @@
         @endfor
     </style>
 
+    <input type="text" id="admin-cancel-able" value="{{ $admincancelable }}" style="display: none">
+
     <div class="row align-items-center justify-content-end">
 
         <div class="col-auto">
@@ -81,12 +83,12 @@
                      {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }}"
 
                      @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot.':00' }}" data-price="{{ $booking->price * $booking->timeLength }}"
+                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot.':00' }}" data-price="{{ $booking->price * $booking->timeLength }}"
                      @endif
                      >
                         {{ $booking->rateName }}
                         @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                        <span class="indicator">&nbsp<i class="bi bi-arrow-up-right-circle"></i></span>
+                        
                         @endif
                         
                     </div>

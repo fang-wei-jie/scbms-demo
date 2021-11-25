@@ -141,12 +141,37 @@ Bookings
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p id="customer_name">Customer Name: <span id="name"></span></p>
+                <p id="customer_name">Name: <span id="name"></span></p>
                 <p>Date: <span id="date"></span></p>
                 <p>Time: <span id="time"></span></p>
                 <p>Paid: RM <span id="paid"></span></p>
+                <div class="d-grid gap-2">
+                    <form action="{{ route('manager.bookings') }}" method="post">
+                        @csrf
+
+                        <div class="accordion accordion-flush" id="cancelBooking">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                        Cancel Booking
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#cancelBooking">
+                                    <div class="accordion-body">
+                                        <div class="d-grid gap-2">
+                                            <h5>Booking cancellation is irreversible! Please double confirm with customer before proceed. </h5>
+                                            <input type="text" style="display: none" name="bookingID" id="bookingID"> 
+                                            <button type="submit" class="btn btn-lg btn-danger" name="cancel">Yes, Cancel Booking & Refund</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            {{-- <div class="modal-footer"></div> --}}
+            <div class="modal-footer">
+            </div>
         </div>
     </div>
 </div>
@@ -161,6 +186,8 @@ Bookings
     })
 
     $(document).on("click", ".amandable", function() {
+
+        // hide name if customer book over the counter
         if ($(this).data('name') == "") {
             $("#customer_name").hide()
         } else {
@@ -168,6 +195,12 @@ Bookings
             $("#name").text($(this).data('name'))
         }
 
+        // close the cancel booking accordion
+        $(".accordion-button").addClass("collapsed")
+        $(".accordion-collapse").removeClass("show")
+
+        // inject booking details
+        $("#bookingID").prop("value", $(this).data('bookingid'))
         $("#date").text($(this).data('date'))
         $("#time").text($(this).data('time'))
         $("#paid").text($(this).data('price'))

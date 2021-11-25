@@ -106,6 +106,16 @@ $(document).ready(function() {
         $("#payment_grace_period").text($(this).val() + text)
     })
 
+    // Cancel Bookings Toggles
+    $("#cancelBooking").change(function() {
+        if ($("#cancelBooking").prop('checked')) {
+            $("#adminCancelBooking").prop('disabled', false)
+        } else {
+            $("#adminCancelBooking").prop('disabled', true)
+            $("#adminCancelBooking").prop('checked', false)
+        }
+    })
+
     // Rate Toggles
     $("#rate").change(function() {
         useRates()
