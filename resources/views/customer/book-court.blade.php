@@ -238,8 +238,6 @@ $(document).ready(function() {
         // compares selected date to today's date
         if (selectedDate < todayDate) {
 
-            console.log("Previous time selected")
-
             // clear date slot selected date
             {{-- PROBLEM: WHEN CLEARED, THE ONCHANGE FUNCTION OF DATESLOT WILL GO THROUGH AGAIN, DOUBLING THE ERROR DETECTION --}}
 
@@ -256,14 +254,9 @@ $(document).ready(function() {
             // if today's date was selected
             // get today's hours
             var todayHours = today.getHours()
-
-            console.log(todayHours)
-            console.log({{ $end_time }})
             
             if (todayHours >= {{ $end_time }}) {
                 // if today's hours was over {{ $start_time }}pm, prompt user we were closed
-
-                console.log("here")
 
                 $("#timeSlot").prop("disabled", true)
                 $("#timeLength").prop("disabled", true)

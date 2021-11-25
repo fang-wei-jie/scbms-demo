@@ -211,7 +211,6 @@ Bookings
         $("#paid").text($(this).data('price'))
 
         // change message if admin cancelable-bility is disabled
-        console.log($("#admin-cancel-able").val())
         if ($("#admin-cancel-able").val() == 0) {
             $(".admin-cancel-able").hide()
             $(".admin-cancel-not-able").show()
