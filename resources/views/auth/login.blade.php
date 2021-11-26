@@ -50,11 +50,8 @@ Login
         <label for="password">Password</label>
     </div>
 
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" name="remember" id="keep-logged-in">
-        <label class="form-check-label" for="keep-logged-in">
-            Keep me logged in
-        </label>
+    <div class="mb-3">
+        Any previously logged in devices will get logged out. 
     </div>
 
     <div class="d-grid gap-2 mb-3">
@@ -95,7 +92,6 @@ Login
         $("#email").on("keyup change", function() {
 
             validateEmail(this)
-            keepMeSignedInButton(this)
             
         })
 
@@ -119,14 +115,6 @@ Login
         } else {
             $(field).removeClass("is-invalid")
             $("label[for = 'email']").text("Email")
-        }
-    }
-
-    function keepMeSignedInButton(field) {
-        if ($(field).val().endsWith("nesc") || $(field).val().endsWith("nescm")) {
-            $(".form-check").hide()
-        } else {
-            $(".form-check").show()
         }
     }
 
