@@ -173,6 +173,9 @@ My Account
                             <input type="password" class="form-control" name="email-update-password" placeholder="Enter current password" required>
                             <label>Enter password to confirm changes</label>
                         </div>
+                        <span>
+                            Changing the email address will log you out other previously logged in devices. 
+                        </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -207,6 +210,9 @@ My Account
                             <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype new password" required>
                             <label>Confirm new password</label>
                         </div>
+                        <span>
+                            Changing the password will log you out other previously logged in devices. 
+                        </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

@@ -10,7 +10,7 @@ My Account
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
             <h3>Manager ID</h3>
-            <span>{{ Auth::user()->email }}</span>
+            <span>{{ Auth::user()->email . "@" . $settings->get('domain') ."m" }}</span>
         </div>
         <div>
             <button type="button" class="btn btn-outline-primary" id="changeIDButton" data-bs-toggle="modal" data-bs-target="#changeID">
@@ -72,6 +72,13 @@ My Account
                             <input type="text" class="form-control" name="email" maxlength="25" placeholder="Enter your new Manager ID" required>
                             <label>Enter your new Manager ID</label>
                         </div>
+                        <div class="form-floating mb-3">
+                            <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype password" required>
+                            <label>Enter password to confirm changes</label>
+                        </div>
+                        <span>
+                            Changing the Manager ID will log you out other previously logged in devices. 
+                        </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -132,6 +139,9 @@ My Account
                             <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype new password" required>
                             <label>Confirm new password</label>
                         </div>
+                        <span>
+                            Changing the password will log you out other previously logged in devices. 
+                        </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

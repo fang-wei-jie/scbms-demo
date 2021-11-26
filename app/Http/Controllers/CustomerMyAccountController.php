@@ -90,10 +90,13 @@ class CustomerMyAccountController extends Controller
                 return back() -> with('alert', 'Password incorrect. Email not updated');
 
             }
-
+            
             // save changes
             $user->email = $request->input('email');
             $user->save();
+
+            // logout other logged in instances
+            Auth::logoutOtherDevices($request->input('email-update-password'));
 
             // redirect back to page with info prompt
             return back() -> with('info', 'Email updated. ');
@@ -129,7 +132,10 @@ class CustomerMyAccountController extends Controller
             // save changes
             $user->password = Hash::make($request->input('new-password'));
             $user->save();
-
+            
+            // logout other logged in instances
+            Auth::logoutOtherDevices($request->input('old-password'));
+            
             // redirect back to page with info prompt
             return back() -> with('info', 'Password updated. ');
 

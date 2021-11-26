@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Valuestore\Valuestore;
 
 class ManagerMyAccountController extends Controller
 {
@@ -18,7 +19,7 @@ class ManagerMyAccountController extends Controller
 
     function view () {
 
-        return view ('manager.myaccount');
+        return view ('manager.myaccount', ['settings' => Valuestore::make(storage_path('app/settings.json'))]);
 
     }
 
@@ -33,12 +34,16 @@ class ManagerMyAccountController extends Controller
             $this -> validate($request, [
 
                 'email' => 'required | max:25 | unique:managers',
+                'confirm-password' => 'required',
 
             ]);
 
             // save changes
             $manager->email = $request->email;
             $manager->save();
+
+            // logout other logged in instances
+            Auth::guard('manager')->logoutOtherDevices($request->input('confirm-password'));
 
             // redirect back to page with info prompt
             return back() -> with('info', 'Manager ID updated');
@@ -89,6 +94,9 @@ class ManagerMyAccountController extends Controller
             // save changes
             $manager->password = Hash::make($request->input('new-password'));
             $manager->save();
+
+            // logout other logged in instances
+            Auth::guard('manager')->logoutOtherDevices($request->input('old-password'));
 
             // redirect back to page with info prompt
             return back() -> with('info', 'Password updated. ');

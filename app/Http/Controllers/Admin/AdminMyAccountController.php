@@ -74,10 +74,15 @@ class AdminMyAccountController extends Controller
             $admin->password = Hash::make($request->input('new-password'));
             $admin->save();
 
+            // logout other logged in instances
+            Auth::guard('admin')->logoutOtherDevices($request->input('old-password'));
+
             // redirect back to page with info prompt
             return back() -> with('info', 'Password updated. ');
 
         }
+
+        return back();
 
     }
 }

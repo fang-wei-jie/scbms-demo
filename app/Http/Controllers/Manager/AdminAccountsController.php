@@ -106,7 +106,7 @@ class AdminAccountsController extends Controller
 
         }
 
-        return redirect() -> route('manager.admins_management');
+        return back();
 
     }
 }
