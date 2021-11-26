@@ -70,7 +70,7 @@ My Account
                     <div class="modal-body">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" name="email" maxlength="25" placeholder="Enter your new Manager ID" required>
-                            <label>Enter your new Manager ID</label>
+                            <label>Enter your new Manager ID ({{ "@".$settings->get('domain')."m" }})</label>
                         </div>
                         <div class="form-floating mb-3">
                             <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype password" required>

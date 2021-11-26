@@ -105,19 +105,8 @@ Admins Account
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
-                        <label for="email">Admin ID</label>
+                        <label for="email">Admin ID ({{ "@".$domain }})</label>
                     </div>
-
-                    {{-- <div class="form-floating mb-3">
-                        <label for="id">Admin ID</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="my-addon">{{ $domain }}</span>
-                            </div>
-                        </div>
-                        <small class="form-text text-muted">Maximum character is 25</small>
-                    </div> --}}
 
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" name="password" placeholder="Password" maxlength="255" required>
@@ -156,19 +145,9 @@ Admins Account
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
-                        <label for="email">Admin ID</label>
+                        <label for="email">Admin ID ({{ "@".$domain }})</label>
                     </div>
 
-                    {{-- <div class="form-floating mb-3" id="editID">
-                        <label for="id">Admin ID</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control admin-id" name="email" placeholder="Enter admin ID" maxlength="25" required>
-                            <div class="input-group-append">
-                                <span class="input-group-text" id="my-addon">{{ $domain }}</span>
-                            </div>
-                        </div>
-                        <small" class="form-text text-muted">Admin ID should be unique, and should not exceed 25 characters</small>
-                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <input type="text" class="id" name="id" style="display: none">

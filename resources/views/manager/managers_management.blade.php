@@ -117,7 +117,7 @@ Managers Account
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control manager-id" name="email" placeholder="Enter manager ID" maxlength="25" required>
-                        <label for="email">Manager ID</label>
+                        <label for="email">Manager ID ({{ "@".$domain."m" }})</label>
                     </div>
 
                     <div class="form-floating mb-3">
@@ -157,7 +157,7 @@ Managers Account
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control manager-id" name="email" placeholder="Enter manager ID" maxlength="25" required>
-                        <label for="email">Manager ID</label>
+                        <label for="email">Manager ID ({{ "@".$domain."m" }})</label>
                     </div>
                 </div>
                 <div class="modal-footer">
