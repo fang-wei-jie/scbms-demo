@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    // run when the page is first loaded
-    useRates()
 
     // Initialize Coloris  Color Picker
     Coloris({
@@ -116,15 +114,6 @@ $(document).ready(function() {
         }
     })
 
-    // Rate Toggles
-    $("#rate").change(function() {
-        useRates()
-    })
-
-    $("#ratePerHour").keyup(function() {
-        validateRate()
-    })
-
     // UI Preview
     // call the color picker when color palette icon clicked
     $("#customer_navbar_toggle").click(function() {
@@ -193,38 +182,6 @@ $(document).ready(function() {
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
-
-
-    function validateRate() {
-        if ($("#ratePerHour").val() >= 1 && $("#ratePerHour").val() < 100 && $.isNumeric($("#ratePerHour").val()) ) {
-            $("#ratePerHour").removeClass('is-invalid')
-            $("#ratePerHour").addClass('is-valid')
-            $("#save").prop('disabled', false)
-        } else {
-            $("#ratePerHour").addClass('is-invalid')
-            $("#ratePerHour").removeClass('is-valid')
-            $("#save").prop('disabled', true)
-        }
-    }
-
-    function useRates() {
-        if ($("#rate").prop('checked')) {
-            $("#rph").hide()
-            $("#smallUseRates").text("Let customer enjoy different price rate for your specified conditions")
-            $("#save").prop('disabled', false)
-            $("#weekdayWeekend").prop('disabled', false)
-            $("#adminRates").prop('disabled', false)
-        } else {
-            $("#rph").show()
-            $("#smallUseRates").text("Use a single price rate for all bookings")
-            $("#ratePerHour").focus()
-            validateRate()
-            $("#weekdayWeekend").prop('disabled', true)
-            $("#adminRates").prop('disabled', true)
-            $("#weekdayWeekend").prop('checked', false)
-            $("#adminRates").prop('checked', false)
-        }
-    }
 
     function validateHours() {
 

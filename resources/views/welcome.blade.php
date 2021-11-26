@@ -79,7 +79,7 @@
             <h1>Rates</h1>
         </div>
 
-        <div class="row row-cols-1 row-cols-lg-5 g-2">
+        <div class="row row-cols-1 row-cols-lg-4 g-2">
             @foreach ($rates as $rate)
                 <div class="col">
                     <div class="card h-100">
@@ -89,6 +89,46 @@
                                     <h2 class="card-title">{{ $rate->name }}</h2>
                                     <p class="card-text">
                                         <span>RM {{ $rate->price }}/hour</span> <br>
+                                        @if ($rate->id > 3)
+                                            <span>
+                                                @if ($rate->dow == "12345")
+                                                    {{ "Weekdays" }}
+                                                @elseif ($rate->dow == "67")
+                                                    {{ "Weekend" }}
+                                                @elseif ($rate->dow == "1234567")
+                                                    {{ "Everyday" }}
+                                                @else
+                                                    @for ($day = 1; $day <= 7; $day++)
+                                                        @if(str_contains($rate->dow, $day))
+                                                            @switch($day)
+                                                                @case(1)
+                                                                    {{ "Mon" }}
+                                                                    @break
+                                                                @case(2)
+                                                                    {{ "Tue" }}
+                                                                    @break
+                                                                @case(3)
+                                                                    {{ "Wed" }}
+                                                                    @break
+                                                                @case(4)
+                                                                    {{ "Thu" }}
+                                                                    @break
+                                                                @case(5)
+                                                                    {{ "Fri" }}
+                                                                    @break
+                                                                @case(6)
+                                                                    {{ "Sat" }}
+                                                                    @break
+                                                                @case(7)
+                                                                    {{ "Sun" }}
+                                                                    @break
+                                                            @endswitch
+                                                        @endif
+                                                    @endfor
+                                                @endif
+                                                only
+                                            </span> <br>
+                                            @endif
                                         <span>{{ $rate->condition ?? '' }}</span>
                                     </p>
                                 </div>

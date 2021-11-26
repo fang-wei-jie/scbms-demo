@@ -23,23 +23,12 @@ class ManagerRatesController extends Controller
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        // check if rates use is enabled, if not return back
-        if ($settings->get('rates') != 1) {
-            return back();
-        }
-
-        if ($settings->get('rates_weekend_weekday') == 1) {
-            // if weekend and weekday is in use, disable normal rate
-            $default = Rates::get()->where('id', '<=', 2);
-        } else {
-            // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $default = Rates::where('id', 3)->get();
-        }
-
-        // get list of custom rates
+        // get list of default and custom rates
+        $default = Rates::where('id', '<', 4)->get();
         $custom = Rates::where('id', '>', 3)->get();
 
         return view('manager.rates', [
+            'settings' => $settings,
             'default' => $default,
             'custom' => $custom,
         ]);
@@ -51,11 +40,18 @@ class ManagerRatesController extends Controller
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        // check if rates use is enabled, if not return back
-        if ($settings->get('rates') != 1) {
-            return back();
-        }
+        // save rates weekend weekday toggle state
+        $settings->put('rates_weekend_weekday', $request->weekdayWeekend == null ? '0' : '1');
 
+        // update status of default rates with the change of weekend weekday toggle
+        if ($request->weekdayWeekend == null) {
+            Rates::where('id', 3)->update(['status' => 1]);
+            Rates::where('id', '<', 3)->update(['status' => 0]);
+        } else {
+            Rates::where('id', 3)->update(['status' => 0]);
+            Rates::where('id', '<', 3)->update(['status' => 1]);
+        }
+        
         if (isset($_POST['enable'])) {
 
             Rates::where('id', $request->id)->update(['status' => 1]);
@@ -67,10 +63,12 @@ class ManagerRatesController extends Controller
         } else if (isset($_POST['edit'])) {
 
             if (Rates::where('id', $request->id)->first()->name == $request->name || $request->id <= 3) {
+                // for rates that hasn't changed name, or default rates
 
                 $this -> validate($request, [
 
                     'price' => 'required | numeric | max:99',
+                    'condition' => 'string | nullable',
 
                 ]);
 
@@ -78,38 +76,67 @@ class ManagerRatesController extends Controller
                     'price' => $request->price,
                     'condition' => $request->condition,
                 ]);
-                
-                // create a new record in rate records to store rate detail(s) change
-                RateRecords::create([
-                
-                    'name' => $request->name,
-                    'rateID' => $request->id,
-                    'price' => $request->price,
-                    'condition' => $request->condition,
-    
-                ]);
 
             } else {
+                // for rates that do change name (that excludes default rates)
 
                 $this -> validate($request, [
 
                     'name' => 'required | string | max:255 | unique:rates,name',
                     'price' => 'required | numeric | max:99',
+                    'condition' => 'string | nullable',
 
                 ]);
 
-                $rate = Rates::where('id', $request->id)->update([
+                Rates::where('id', $request->id)->update([
 
                     'name' => $request->name,
                     'price' => $request->price,
                     'condition' => $request->condition,
 
+                ]);  
+
+            }
+
+            // update DOW (excluding default rates)
+            if ($request->id > 3) {
+
+                $this -> validate($request, [
+                    'qdow' => 'required',
+                ]);
+                
+                $qdow = $request->qdow;
+
+                if ($qdow == "1234567" || $qdow == "12345" || $qdow == "67") {
+                    // if DOW is selected from quick select, use its value
+                    $dow = $qdow;
+                } else {
+                // if custom DOW is used
+                    $dow = "";
+                    $dow .= ($request->monday == null) ? "" : "1";
+                    $dow .= ($request->tuesday == null) ? "" : "2";
+                    $dow .= ($request->wednesday == null) ? "" : "3";
+                    $dow .= ($request->thursday == null) ? "" : "4";
+                    $dow .= ($request->friday == null) ? "" : "5";
+                    $dow .= ($request->saturday == null) ? "" : "6";
+                    $dow .= ($request->sunday == null) ? "" : "7";
+                }
+
+                Rates::where('id', $request->id)->update([
+                    'dow' => $dow,
                 ]);
 
+            }
+
+            // if the only thing changed is DOW, then do not create a new rate record
+            $current_values = Rates::where('id', $request->id)->first();
+            if ($current_values->name != $request->name || $current_values->price != $request->price || $current_values->condition != $request->condition) {
+
+                // create a new record in rate records to store rate detail(s) change
                 RateRecords::create([
                 
                     'name' => $request->name,
-                    'rateID' => $rate->id,
+                    'rateID' => $request->id,
                     'price' => $request->price,
                     'condition' => $request->condition,
     
@@ -134,15 +161,35 @@ class ManagerRatesController extends Controller
                 'name' => 'required | string | max:255 | unique:rates,name',
                 'status' => 'required | regex:/^[0-1]{1}/u',
                 'price' => 'required | max:99 | numeric',
+                'qdow' => 'required',
                 'condition' => 'string | nullable',
 
             ]);
 
-            Rates::create([
+            // process DOW selections
+            $qdow = $request->qdow;
+
+            if ($qdow == "1234567" || $qdow == "12345" || $qdow == "67") {
+                // if DOW is selected from quick select, use its value
+                $dow = $qdow;
+            } else {
+            // if custom DOW is used
+                $dow = "";
+                $dow .= ($request->monday == null) ? "" : "1";
+                $dow .= ($request->tuesday == null) ? "" : "2";
+                $dow .= ($request->wednesday == null) ? "" : "3";
+                $dow .= ($request->thursday == null) ? "" : "4";
+                $dow .= ($request->friday == null) ? "" : "5";
+                $dow .= ($request->saturday == null) ? "" : "6";
+                $dow .= ($request->sunday == null) ? "" : "7";
+            }
+
+            $rate = Rates::create([
 
                 'name' => $request->name,
                 'status' => $request->status,
                 'price' => $request->price,
+                'dow' => $dow,
                 'condition' => $request->condition,
 
             ]);
@@ -151,7 +198,7 @@ class ManagerRatesController extends Controller
             RateRecords::create([
                 
                 'name' => $request->name,
-                'rateID' => $request->id,
+                'rateID' => $rate->id,
                 'price' => $request->price,
                 'condition' => $request->condition,
 

@@ -73,7 +73,6 @@
 
         <div class="col-xl-5">
             <!-- rates card -->
-            @if($rates_card_enabled == 1)
             <div class="card bg-light">
                 <div class="card-body">
                     <div class="row">
@@ -96,9 +95,48 @@
                         <div class="card py-2">
                             <div class="mx-3 my-1">
                                 <div class="row no-gutters align-items-center">
-                                    <div class="col d-flex justify-content-between">
-                                        <div class="text-xs fw-bold text-primary mb-1">
-                                            {{ $ratesDetail->name }}
+                                    <div class="col d-flex justify-content-between align-items-center">
+                                        <div class="text-xs fw-bold text-dark mb-1">
+                                            {{ $ratesDetail->name }} <br>
+                                            @if ($ratesDetail->id > 3)
+                                            <small style="font-weight: normal">
+                                                @if ($ratesDetail->dow == "12345")
+                                                    {{ "Weekdays" }}
+                                                @elseif ($ratesDetail->dow == "67")
+                                                    {{ "Weekend" }}
+                                                @elseif ($ratesDetail->dow == "1234567")
+                                                    {{ "Everyday" }}
+                                                @else
+                                                    @for ($day = 1; $day <= 7; $day++)
+                                                        @if(str_contains($ratesDetail->dow, $day))
+                                                            @switch($day)
+                                                                @case(1)
+                                                                    {{ "Mon" }}
+                                                                    @break
+                                                                @case(2)
+                                                                    {{ "Tue" }}
+                                                                    @break
+                                                                @case(3)
+                                                                    {{ "Wed" }}
+                                                                    @break
+                                                                @case(4)
+                                                                    {{ "Thu" }}
+                                                                    @break
+                                                                @case(5)
+                                                                    {{ "Fri" }}
+                                                                    @break
+                                                                @case(6)
+                                                                    {{ "Sat" }}
+                                                                    @break
+                                                                @case(7)
+                                                                    {{ "Sun" }}
+                                                                    @break
+                                                            @endswitch
+                                                        @endif
+                                                    @endfor
+                                                @endif
+                                            </small>
+                                            @endif
                                         </div>
                                         <div class="h5 mb-0 fw-bold text-gray-800">
                                             RM {{ $ratesDetail->price }}
@@ -114,7 +152,6 @@
             </div>
 
             <br>
-            @endif
 
             {{-- sales performance card --}}
             @if($sales_card_enabled == 1)

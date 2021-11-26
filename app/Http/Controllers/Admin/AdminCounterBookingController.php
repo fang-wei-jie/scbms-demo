@@ -136,30 +136,18 @@ class AdminCounterBookingController extends Controller
             array_push($courts, $booked);
         }
 
-        if ($settings->get('rates') == 1) {
-            // if rates was enabled
+        // check which day of week the date slot is selected
+        $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-            if ($settings->get('rates_weekend_weekday') == 1) {
-                // weekend and weekday is in use
+        if ($settings->get('rates_weekend_weekday') == 1) {
+            // weekend and weekday is in use
 
-                // check which rates to exclude
-                $dayOfWeek = date_format(date_create($dateSlot), 'N');
-                if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                    $excludeRateID = 2; // weekend
-                } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                    $excludeRateID = 1; // weekdays
-                }
-
-                // if weekend and weekday is in use, disable normal rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
-            } else {
-                // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
-            }
+            // if weekend and weekday is in use, disable normal rate
+            $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
         } else {
-            // if rates was disabled
-            $rates = Rates::where('id', 3)->get();
+            // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
+            $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
         }
 
         return view ('admin.book-court', [
@@ -173,8 +161,6 @@ class AdminCounterBookingController extends Controller
             'endTime' => $timeSlot + $timeLength,
             'booking_cut_off_time' => $booking_cut_off_time,
         ]);
-
-        // return redirect() -> route('admin.book-court');
             
     }
 
@@ -182,9 +168,6 @@ class AdminCounterBookingController extends Controller
 
         // get setting variables
         $settings = Valuestore::make(storage_path('app/settings.json'));
-
-        // check if rates is enabled
-        $ratesEnabled = $settings->get('rates') == 1 ? true : false;
 
         // input validation
         $this->validate($request, [
@@ -224,30 +207,6 @@ class AdminCounterBookingController extends Controller
             return back()->with(['selectedDate' => 0, 'notify' => "We are sorry. You had exceed the last allowed time of booking the court for the selected time. Please choose another time. "]);
         }
 
-        // check if user come from rates disabled to rates enabled
-        if ($ratesEnabled && $request->rateID == null) {
-
-            // get day of the week
-            $dayOfWeek = date_format(date_create($dateSlot), 'N');
-
-            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                $excludeRateID = 2; // weekend
-            } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                $excludeRateID = 1; // weekdays
-            }
-
-            if ($settings->get('rates_weekend_weekday') == 1) {
-                // if weekend and weekday is in use, disable normal rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
-            } else {
-                // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
-            }
-
-            $message .= "We are sorry. We had moved away from single rate policy. Please review the new rate below. ";
-
-        }
-
         // check if others booked this in advance before you clicked the confirm booking thing
         $availability = DB::table('bookings')
             ->where('dateSlot', $dateSlot)
@@ -263,8 +222,6 @@ class AdminCounterBookingController extends Controller
         if ($availability != 0) {
             $message .= "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
         }
-
-        // dd($message);
 
         // if there are error messages
         if ($message != "") {
@@ -293,21 +250,18 @@ class AdminCounterBookingController extends Controller
                 array_push($courts, $booked);
             }
 
-            // get day of the week
+            // check which day of week the date slot is selected
             $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                $excludeRateID = 2; // weekend
-            } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                $excludeRateID = 1; // weekdays
-            }
-
             if ($settings->get('rates_weekend_weekday') == 1) {
+                // weekend and weekday is in use
+
                 // if weekend and weekday is in use, disable normal rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
+                $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
+
             } else {
                 // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
+                $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
             }
 
             return view ('admin.book-court', [
@@ -341,45 +295,20 @@ class AdminCounterBookingController extends Controller
                                 ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time))
                                 ) ? true : false;
 
-        if ($ratesEnabled) {
-            // if rates were in use
+        $this->validate($request, [
+            'rateID' => 'required | numeric',
+        ]);
 
-            $this->validate($request, [
-                'rateID' => 'required | numeric',
-            ]);
+        // check which day of week the date slot is selected
+        $dayOfWeek = date_format(date_create($dateSlot), 'N');
+        
+        // get selected rate details
+        $rateID = $request->rateID;
+        $selectedRate = Rates::where('id', $rateID)->first();
 
-            // obtain rates detail
-            $rateID = $request->rateID;
+        $validRate = ($selectedRate->status == 1 && str_contains($selectedRate->dow, $dayOfWeek)) ? true : false;
 
-            // validate rate validity
-            if ($settings->get('rates_weekend_weekday') == 1) {
-
-                if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                    $excludeRateID = 2; // weekend
-                } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                    $excludeRateID = 1; // weekdays
-                }
-
-                // if weekend and weekday IS in use
-                // check if normal rate is NOT selected, then if rate selected is enabled, then if rate selected is NOT excluded rate for the date
-                $validRate = ($rateID != 3 && Rates::where('id', $rateID)->first()->status == 1 && $rateID != $excludeRateID) ? true : false;
-            } else {
-                // if weekend and weekday is NOT in use
-                // check if weekend/weekday rate is NOT selected, then if rate selected is enabled
-                $validRate = ($rateID != 1 && $rateID != 2 && Rates::where('id', $rateID)->first()->status == 1) ? true : false;
-            }
-
-            $validBooking = ($validCourtDateTime && $validRate) ? true : false;
-
-        } else {
-
-            // inject the one and only rate and get details
-            $rateID = 3;
-
-            // check if it was a valid booking
-            $validBooking = ($validCourtDateTime && $request->rateID == null) ? true : false;
-
-        }
+        $validBooking = ($validCourtDateTime && $validRate) ? true : false;
 
         if ($validBooking) {
             // if booking is valid
@@ -416,32 +345,21 @@ class AdminCounterBookingController extends Controller
         } else {
             // if booking is invalid
 
-            if ($ratesEnabled) {
-                // if rates is enabled
+            // check which day of week the date slot is selected
+            $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-                if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
-                    $excludeRateID = 2; // weekend
-                } else if ($dayOfWeek == 6 || $dayOfWeek == 7) {
-                    $excludeRateID = 1; // weekdays
-                }
+            if ($settings->get('rates_weekend_weekday') == 1) {
+                // weekend and weekday is in use
 
-                if ($settings->get('rates_weekend_weekday') == 1) {
-                    // if weekend and weekday is in use, disable normal rate
-                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 3)->where('id', '!=', $excludeRateID);
-                } else {
-                    // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                    $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
-                }
-
-                $message = ($validRate == false) ? "We are sorry. The rate selected was no longer available. " : "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
+                // if weekend and weekday is in use, disable normal rate
+                $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
             } else {
-                // if rates is disabled
-                $rates = Rates::where('id', 3)->get();
-
-                $message = ($request->rateID != null) ? "We are sorry. We had moved to a single rate policy. Please review the new rate below. " : "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
-
+                // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
+                $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
             }
+
+            $message = "We are sorry. The rate selected was no longer available. ";
 
             // get array of courts available
             $courts = array();

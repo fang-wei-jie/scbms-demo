@@ -130,7 +130,7 @@ Book Courts
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" name="rateID" id="rateID" @if($settings->get('rates') != 1){{ "disabled" }}@endif>
+                <select class="form-select" name="rateID" id="rateID">
                     @foreach ($rates as $rateDetail)
                         <option value="{{ $rateDetail->id }}" data-price={{ $rateDetail->price }} data-condition='{{ $rateDetail->condition }}''>
                             {{ $rateDetail->name }} @ RM{{ $rateDetail->price }}/hour

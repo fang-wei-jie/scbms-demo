@@ -193,16 +193,16 @@
                         <small>Enable cancellation of booking by manager for bookings that has not started</small>
                     </div>
 
-                    <div class="form-check form-switch" id="bookingDeletableAdmin" @if($settings->get('cancel_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('cancel_booking') != 1){{ "disabled" }}@endif>
-                        <label class="form-check-label" for="adminCancelBooking">Booking Cancelable by Admin</label>
+                    <h5 class="mt-3">Check-in Terminal</h5>
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
+                        <label class="form-check-label" for="checkin_terminal">Use Check-in Terminal</label>
                         <br>
-                        <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
+                        <small id="smallUseRates">Use check-in terminal to speed up admission</small>
                     </div>
 
-                    <br>
-
-                    <h5>Admin</h5>
+                    <h5 class="mt-3">Admin</h5>
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="adminRole" name="adminRole" @if($settings->get('admin_role') == 1){{ "checked" }}@endif>
@@ -218,48 +218,18 @@
                         <small>Enable the admin to view sales report</small>
                     </div>
 
-                    <br>
-
-                    <h5>Rates</h5>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="rate" name="rate" @if($settings->get('rates') == 1){{ "checked" }}@endif>
-                        <label class="form-check-label" for="rate">Use Rates</label>
+                    <div class="form-check form-switch" id="bookingDeletableAdmin" @if($settings->get('cancel_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
+                        <input class="form-check-input" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('cancel_booking') != 1){{ "disabled" }}@endif>
+                        <label class="form-check-label" for="adminCancelBooking">Booking Cancelable by Admin</label>
                         <br>
-                        <small id="smallUseRates"></small>
-
-                        <div class="my-2"></div>
-
-                        <div id="rph" class="form-floating mb-3">
-                            <input id="ratePerHour" class="form-control" type="text" name="ratePerHour" maxlength="2" value="{{ $rate_per_hour }}">
-                            <label for="ratePerHour">Rate Per Hour (RM)</label>
-                            <small>Integer only</small>
-                        </div>
+                        <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
                     </div>
 
-                    <div class="form-check form-switch" @if($settings->get('rates') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="weekdayWeekend" name="weekdayWeekend" @if($settings->get('rates_weekend_weekday') == 1){{ "checked" }}@endif  @if($settings->get('rates') != 1){{ "disabled" }}@endif>
-                        <label class="form-check-label" for="weekdayWeekend">Weekday Weekend Rate</label>
-                        <br>
-                        <small class="@if($settings->get('rates') != 1){{ 'disabled-label' }}@endif">Enable different rate on weekdays and weekends. This feature does not apply to custom rates</small>
-                    </div>
-
-                    <div class="form-check form-switch" @if($settings->get('rates') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Rates to change this setting" @endif  @if($settings->get('admin_role') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('rates') != 1){{ "disabled" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
+                    <div class="form-check form-switch" @if($settings->get('admin_role') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
+                        <input class="form-check-input" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="adminRates">Rates Editable by Admin</label>
                         <br>
-                        <small class="@if($settings->get('rates') != 1){{ 'disabled-label' }}@endif">Enable the admin to edit rates detail</small>
-                    </div>
-
-                    <br>
-                    
-                    <h5>Check-in Terminal</h5>
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
-                        <label class="form-check-label" for="checkin_terminal">Use Check-in Terminal</label>
-                        <br>
-                        <small id="smallUseRates">Use check-in terminal to speed up admission</small>
+                        <small>Enable the admin to edit rates detail</small>
                     </div>
 
                 </div>

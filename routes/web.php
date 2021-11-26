@@ -57,11 +57,7 @@ Route::get('/', function () {
     // get setting values
     $settings = Valuestore::make(storage_path('app/settings.json'));
 
-    // check if rates use is enabled, if not return back
-    if ($settings->get('rates') != 1) {
-        return back();
-    }
-
+    // obtains list of rates
     if ($settings->get('rates_weekend_weekday') == 1) {
         // if weekend and weekday is in use, disable normal rate
         $default = Rates::get()->where('id', '<=', 2);

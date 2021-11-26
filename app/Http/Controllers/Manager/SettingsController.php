@@ -19,11 +19,7 @@ class SettingsController extends Controller
 
     function view () {
 
-        // get standard rate's price
-        $ratePerHour = Rates::where('id', 3)->first()->price;
-
         return view ('manager.settings', [
-            "rate_per_hour" => $ratePerHour,
             "settings" => Valuestore::make(storage_path('app/settings.json')),
         ]);
 
@@ -64,26 +60,6 @@ class SettingsController extends Controller
             $settings->put('phone', $request->phone);
             $settings->put('address', $request->address);
 
-            if ($request->rate == null) {
-                $this -> validate($request, [
-                    "ratePerHour"  => 'required | numeric | digits_between:1,2',
-                ]);
-
-                if (Rates::where('id', 3)->first()->price != $request->ratePerHour) {
-                    
-                    Rates::where('id', 3)->update(['price' => $request->ratePerHour]);
-
-                    RateRecords::create([
-                
-                        'name' => "Standard",
-                        'rateID' => 3,
-                        'price' => $request->ratePerHour,
-        
-                    ]);
-                }
-
-            }
-
             if (($request->end_time - $request->start_time) > 0) {
                 $settings->put('start_time', $request->start_time);
                 $settings->put('end_time', $request->end_time);
@@ -96,13 +72,10 @@ class SettingsController extends Controller
             $settings->put('payment_grace_period', $request->payment_grace_period);
 
             $settings->put('cancel_booking', $request->cancelBooking == null ? '0' : '1');
-            $settings->put('admin_cancel_booking', $request->adminCancelBooking == null ? '0' : '1');
-
+            
             $settings->put('admin_role', $request->adminRole == null ? '0' : '1');
             $settings->put('admin_sales_report', $request->adminSalesReport == null ? '0' : '1');
-
-            $settings->put('rates', $request->rate == null ? '0' : '1');
-            $settings->put('rates_weekend_weekday', $request->weekdayWeekend == null ? '0' : '1');
+            $settings->put('admin_cancel_booking', $request->adminCancelBooking == null ? '0' : '1');
             $settings->put('rates_editable_admin', $request->adminRates == null ? '0' : '1');
 
             $settings->put('checkin_terminal', $request->checkin_terminal == null ? '0' : '1');

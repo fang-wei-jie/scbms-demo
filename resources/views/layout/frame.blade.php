@@ -213,14 +213,12 @@
                             </a>
                         </li>
 
-                        @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/rates')) ? 'active fw-bold' : '' }}" href="{{ route('admin.rates') }}">
                                 <i class="bi bi-{{ (request()->is('admin/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
-                        @endif
 
                         @if($settings->get('admin_sales_report') == 1)
                         <li class="nav-item">
@@ -268,14 +266,12 @@
                             </a>
                         </li>
 
-                        @if($settings->get('rates') == 1)
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/rates')) ? 'active fw-bold' : '' }}" href="{{ route('manager.rates') }}">
                                 <i class="bi bi-{{ (request()->is('manager/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
-                        @endif
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/managers')) ? 'active fw-bold' : '' }}" href="{{ route('manager.managers_management') }}">

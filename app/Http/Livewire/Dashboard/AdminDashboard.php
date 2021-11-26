@@ -16,9 +16,6 @@ class AdminDashboard extends Component
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        // check if rates use is enabled
-        $ratesEnabled = ($settings->get('rates') == 1) ? true : false;
-
         // check if admin is allowed to see the sales report
         $adminSalesReportEnabled = ($settings->get('admin_sales_report') == 1) ? true : false;
 
@@ -64,7 +61,6 @@ class AdminDashboard extends Component
             ->first();
 
         return view('livewire.dashboard.admin-dashboard', [
-            'rates_card_enabled' => $ratesEnabled,
             'sales_card_enabled' => $adminSalesReportEnabled,
 
             'bookings' => $bookingRows,

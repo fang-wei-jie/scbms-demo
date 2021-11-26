@@ -15,9 +15,6 @@ class ManagerDashboard extends Component
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        // check if rates use is enabled
-        $ratesEnabled = ($settings->get('rates') == 1) ? true : false;
-
         // get list of bookings at the current hour
         $bookingRows = DB::table('bookings')
             ->where('dateSlot', '=', date('Ymd'))
@@ -60,8 +57,6 @@ class ManagerDashboard extends Component
             ->first();
 
         return view('livewire.dashboard.manager-dashboard', [
-            'rates_card_enabled' => $ratesEnabled,
-
             'bookings' => $bookingRows,
 
             'rates' => $rates,

@@ -14,5 +14,6 @@ class Rates extends Model
         'status',
         'price',
         'condition',
+        'dow',
     ];
 }
