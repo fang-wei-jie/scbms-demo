@@ -206,27 +206,27 @@
 
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="adminRole" name="adminRole" @if($settings->get('admin_role') == 1){{ "checked" }}@endif>
-                        <label class="form-check-label" for="adminRole">Admin Panel</label>
+                        <label class="form-check-label" for="adminRole">Admin Role</label>
                         <br>
                         <small>Enable the admin role</small>
                     </div>
 
                     <div class="form-check form-switch" id="adminSalesReport">
-                        <input class="form-check-input" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($settings->get('admin_sales_report') == 1){{ "checked" }}@endif>
+                        <input class="form-check-input admin-toggles" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($settings->get('admin_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="adminSalesReport">View Sales Report</label>
                         <br>
                         <small>Enable the admin to view sales report</small>
                     </div>
 
-                    <div class="form-check form-switch" id="bookingDeletableAdmin" @if($settings->get('cancel_booking') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Delete Booking to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('cancel_booking') != 1){{ "disabled" }}@endif>
+                    <div class="form-check form-switch" id="bookingDeletableAdmin">
+                        <input class="form-check-input admin-toggles" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="adminCancelBooking">Booking Cancelable by Admin</label>
                         <br>
                         <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
                     </div>
 
-                    <div class="form-check form-switch" @if($settings->get('admin_role') != 1) data-bs-toggle="tooltip" data-bs-placement="left" title="Enable Admin Panel to change this setting" @endif>
-                        <input class="form-check-input" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input admin-toggles" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
                         <label class="form-check-label" for="adminRates">Rates Editable by Admin</label>
                         <br>
                         <small>Enable the admin to edit rates detail</small>

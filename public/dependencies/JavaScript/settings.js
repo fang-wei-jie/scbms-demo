@@ -104,13 +104,26 @@ $(document).ready(function() {
         $("#payment_grace_period").text($(this).val() + text)
     })
 
+    // FEATURES
     // Cancel Bookings Toggles
     $("#cancelBooking").change(function() {
         if ($("#cancelBooking").prop('checked')) {
-            $("#adminCancelBooking").prop('disabled', false)
+            if ($("#adminRole").prop('checked')) {
+                $("#adminCancelBooking").prop('disabled', false)
+            }
         } else {
             $("#adminCancelBooking").prop('disabled', true)
             $("#adminCancelBooking").prop('checked', false)
+        }
+    })
+    
+    // Admin Toggles
+    $("#adminRole").change(function() {
+        if ($(this).prop('checked')) {
+            $(".admin-toggles").prop('disabled', false)
+        } else {
+            $(".admin-toggles").prop('disabled', true)
+            $(".admin-toggles").prop('checked', false)
         }
     })
 
@@ -175,12 +188,6 @@ $(document).ready(function() {
 
         // inject text class into input field so server can save it
         $("#manager_navtext").val(textColor)
-    })
-
-    // enable tooltip everywhere
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 
     function validateHours() {
