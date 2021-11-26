@@ -49,10 +49,10 @@ class LoginController extends Controller
                     return back()->with('status', 'Incorrect login credentials');
                 }
 
+                return redirect()->route('manager.dashboard');
+                
                 // logout other logged in instances
                 Auth::guard('manager')->logoutOtherDevices($request->password);
-
-                return redirect()->route('manager.dashboard');
 
             } else if (str_ends_with($request->email, $adminDomain) && $settings->get('admin_role') == 1) {
 
@@ -61,10 +61,10 @@ class LoginController extends Controller
                     return back()->with('status', 'Incorrect login credentials');
                 }
 
+                return redirect()->route('admin.dashboard');
+
                 // logout other logged in instances
                 Auth::guard('admin')->logoutOtherDevices($request->password);
-
-                return redirect()->route('admin.dashboard');
 
             } else {
 
@@ -72,10 +72,10 @@ class LoginController extends Controller
                     return back()->with('status', 'Incorrect login credentials');
                 }
 
+                return redirect()->route('mybookings');
+                
                 // logout other logged in instances
                 Auth::logoutOtherDevices($request->password);
-
-                return redirect()->route('mybookings');
             }
         }
     }
