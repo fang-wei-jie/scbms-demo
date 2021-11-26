@@ -41,12 +41,12 @@ class ManagerMyAccountController extends Controller
             // save changes
             $manager->email = $request->email;
             $manager->save();
+            
+            // redirect back to page with info prompt
+            return back() -> with('info', 'Manager ID updated');
 
             // logout other logged in instances
             Auth::guard('manager')->logoutOtherDevices($request->input('confirm-password'));
-
-            // redirect back to page with info prompt
-            return back() -> with('info', 'Manager ID updated');
 
         } else if (isset ($_POST["change-name"]) ) {
 
@@ -94,12 +94,12 @@ class ManagerMyAccountController extends Controller
             // save changes
             $manager->password = Hash::make($request->input('new-password'));
             $manager->save();
+            
+            // redirect back to page with info prompt
+            return back() -> with('info', 'Password updated. ');
 
             // logout other logged in instances
             Auth::guard('manager')->logoutOtherDevices($request->input('old-password'));
-
-            // redirect back to page with info prompt
-            return back() -> with('info', 'Password updated. ');
 
         }
 

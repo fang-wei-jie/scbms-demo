@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Manager;
 
+use App\Http\Controllers\Admin\AdminResetPasswordController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use Spatie\Valuestore\Valuestore;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAccountsController extends Controller
 {
@@ -27,7 +29,7 @@ class AdminAccountsController extends Controller
 
         return view('manager.admins_management', [
             'admins' => $admins,
-            'domain' => Valuestore::make(storage_path('app/settings.json'))->get('domain')
+            'domain' => Valuestore::make(storage_path('app/settings.json'))->get('domain'),
         ]);
 
     }
@@ -102,7 +104,17 @@ class AdminAccountsController extends Controller
             $admin->password = Hash::make($randomPassword);
             $admin->save();
 
-            return back()->with('info', "Password for ".$admin->name." was resetted to ".$randomPassword);
+            // logout from manager
+            Auth::guard('manager')->logout();
+
+            // login into the admin account
+            // login verification for admin
+            if (!Auth::guard('admin')->attempt(['email' => $admin->email, 'password' => $randomPassword])) {
+                return back()->with('status', 'Incorrect login credentials');
+            }
+            
+            // redirect to reset password page
+            return redirect() -> route('admin.reset-password');
 
         }
 

@@ -185,6 +185,17 @@
 
                     @if (request()->is('admin/*'))
 
+                        @if (request()->is('admin/reset-password'))
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="">
+                                <i class="bi bi-person"></i>
+                                {{ Auth::user()->name }}
+                            </a>
+                        </li>
+
+                        @else
+
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('admin.dashboard') }}">
                                 <i class="bi bi-{{ (request()->is('admin/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
@@ -236,7 +247,20 @@
                             </a>
                         </li>
 
+                        @endif
+
                     @elseif(request()->is('manager/*'))
+
+                        @if (request()->is('manager/reset-password'))
+
+                        <li class="nav-item">
+                            <span class="nav-link" href="">
+                                <i class="bi bi-person"></i>
+                                {{ Auth::user()->name }}
+                            </span>
+                        </li>
+
+                        @else
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('manager.dashboard') }}">
@@ -309,6 +333,8 @@
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
+                        
+                        @endif
 
                     @else
 
@@ -335,6 +361,8 @@
 
                     @endif
 
+                    @if (!request()->is('manager/reset-password') && !request()->is('admin/reset-password'))
+
                     <li class="nav-item">
                         <a class="nav-link" id="logout-button" href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i id="logout-icon" class="bi bi-door-closed"></i>
@@ -345,6 +373,8 @@
                             @csrf
                         </form>
                     </li>
+                    
+                    @endif
 
                     @endauth
                 </ul>

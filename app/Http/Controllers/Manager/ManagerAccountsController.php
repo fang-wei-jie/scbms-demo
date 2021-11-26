@@ -106,8 +106,18 @@ class ManagerAccountsController extends Controller
             $manager->password = Hash::make($randomPassword);
             $manager->save();
 
-            return back()->with('info', "Password for ".$manager->name." was resetted to ".$randomPassword);
+            // logout from manager
+            Auth::guard('manager')->logout();
 
+            // login into the manager account
+            // login verification for manager
+            if (!Auth::guard('manager')->attempt(['email' => $manager->email, 'password' => $randomPassword])) {
+                return back()->with('status', 'Incorrect login credentials');
+            }
+            
+            // redirect to reset password page
+            return redirect()->route('manager.reset-password');
+            
         }
 
         return redirect() -> route('manager.managers_management');

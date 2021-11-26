@@ -11,9 +11,12 @@ use App\Http\Controllers\Auth\LogoutController;
 use Spatie\Valuestore\Valuestore;
 use App\Models\Rates;
 
-// Customer Controllers
+// Public Controllers
+use App\Http\Controllers\CheckInTerminalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+
+// Customer Controllers
 use App\Http\Controllers\CustomerMyAccountController;
 use App\Http\Controllers\MyBookingsController;
 use App\Http\Controllers\MakeBookingsController;
@@ -27,7 +30,8 @@ use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
 use App\Http\Controllers\Admin\SalesController as AdminSalesController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
-use App\Http\Controllers\CheckInTerminalController;
+use App\Http\Controllers\Admin\AdminResetPasswordController;
+
 // Manager Controllers
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
@@ -38,6 +42,7 @@ use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\SalesController as ManagerSalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
+use App\Http\Controllers\Manager\ManagerResetPasswordController;
 use App\Http\Controllers\Manager\SettingsController;
 
 /*
@@ -226,6 +231,10 @@ Route::prefix('admin')->group(function() {
     Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myaccount');
     Route::post('/myaccount', [AdminMyAccountController::class, 'update']);
 
+    // Password Reset
+    Route::get('/reset-password', [AdminResetPasswordController::class, 'view']) -> name('admin.reset-password');
+    Route::post('/reset-password', [AdminResetPasswordController::class, 'update']);
+
 });
 
 // MANAGER PAGES
@@ -278,6 +287,10 @@ Route::prefix('manager')->group(function() {
     // Settings
     Route::get('/settings', [SettingsController::class, 'view']) -> name('manager.settings');
     Route::post('/settings', [SettingsController::class, 'update']);
+
+    // Password Reset
+    Route::get('/reset-password', [ManagerResetPasswordController::class, 'view']) -> name('manager.reset-password');
+    Route::post('/reset-password', [ManagerResetPasswordController::class, 'update']);
 
 });
 
