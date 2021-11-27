@@ -31,8 +31,13 @@ class BookingsDashboard extends Component
         $end_time = $settings->get('end_time');
 
         // start end time of the day's booking (just in case if previous operation time was modified)
-        $earliest_booking = $bookings->min('timeSlot');
-        $last_booking = $bookings->max('timeSlot');
+        $bookingTime = DB::table('bookings')
+            ->where('dateSlot', '=', str_replace("-", "", $date))
+            ->selectRaw('min(bookings.timeSlot) as startSlot, max(bookings.timeSlot + bookings.timeLength) as endSlot')
+            ->first();
+
+        $earliest_booking = $bookingTime->startSlot;
+        $last_booking = $bookingTime->endSlot;
 
         if ($earliest_booking != null || $last_booking != null) {
 
