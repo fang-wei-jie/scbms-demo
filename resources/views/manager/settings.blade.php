@@ -126,7 +126,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <select class="form-select" name="end_time" id="end_time">
-                                    @for ($hour = 0; $hour <= 23; $hour++)
+                                    @for ($hour = 0; $hour <= 24; $hour++)
                                     <option value="{{ $hour }}" @if($settings->get('end_time') == $hour){{ "selected" }}@endif>{{ $hour.":00" }}</option>
                                     @endfor
                                 </select>
