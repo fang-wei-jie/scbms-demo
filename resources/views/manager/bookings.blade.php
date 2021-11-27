@@ -143,7 +143,7 @@ Bookings
             <div class="modal-body">
                 <p id="customer_name">Name: <span id="name"></span></p>
                 <p>Date: <span id="date"></span></p>
-                <p>Time: <span id="time"></span></p>
+                <p>Time: <span id="start-time"></span>:00 - <span id="end-time"></span>:00</p>
                 <p>Paid: RM <span id="paid"></span></p>
                 <div class="d-grid gap-2">
                     <form action="{{ route('manager.bookings') }}" method="post">
@@ -202,7 +202,8 @@ Bookings
         // inject booking details
         $("#bookingID").prop("value", $(this).data('bookingid'))
         $("#date").text($(this).data('date'))
-        $("#time").text($(this).data('time'))
+        $("#start-time").text($(this).data('time'))
+        $("#end-time").text($(this).data('length'))
         $("#paid").text($(this).data('price'))
     })
 </script>
