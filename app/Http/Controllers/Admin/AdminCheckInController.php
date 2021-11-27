@@ -33,7 +33,7 @@ class AdminCheckInController extends Controller
 
         // query the booking details
         if (substr($request->input('code'), 7, 7) != "0000000") {
-            // if custID is null
+            // if custID is not null
             
             $result = DB::table('bookings')
                 ->join('users', 'users.id', '=', 'bookings.custID')
@@ -44,7 +44,7 @@ class AdminCheckInController extends Controller
                 ->first();
                 
         } else {
-            // if custID is not null
+            // if custID is null
             
             $result = DB::table('bookings')
                 ->where('bookingID', '=', substr($request->input('code'), 0, 7))
@@ -135,6 +135,20 @@ class AdminCheckInController extends Controller
                 $cardIcon = "bi-cone-striped";
                 $cardText = "System Error";
             }
+        }
+
+        // check if custID field is populated, but input has 7(0) as custID
+        // if yes, it means customer abused the export for deleted account feature
+        if ($result->custID != null && substr($request->input('code'), 7, 7) == "0000000") {
+
+            // display warning
+            $cardColor = "danger";
+            $cardIcon = "bi-exclamation-circle";
+            $cardText = "Customer Account Not Deleted, Violation of Using Deleted Account Booking Receipt";
+            
+            // hide result
+            $result = null;
+
         }
 
         return view('admin.checkin', [

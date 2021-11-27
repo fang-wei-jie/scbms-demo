@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Spatie\Valuestore\Valuestore;
+use Codedge\Fpdf\Fpdf\Fpdf;
+use Da\QrCode\QrCode;
 
 class CustomerMyAccountController extends Controller
 {
@@ -19,7 +24,29 @@ class CustomerMyAccountController extends Controller
 
     function view () {
 
-        return view ('customer.myaccount');
+        // get unused bookings count
+        $unusedBookingCount = DB::table('bookings')
+        ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+        ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
+        ->where('bookings.custID', Auth::user()->id)
+        ->where(function ($query) {
+
+            $query
+
+            // today valid booking
+            -> where (function ($query) {
+                $query
+                ->where('bookings.dateSlot', "=", date('Ymd'))
+                ->where(DB::raw('(bookings.timeSlot + bookings.timeLength)'), '>', date('H'));
+            })
+
+            // future
+            -> orwhere ('bookings.dateSlot', '>', date('Ymd'));
+
+        })
+        ->count();
+
+        return view ('customer.myaccount', ['unusedBookingCount' => $unusedBookingCount]);
 
     }
 
@@ -144,20 +171,20 @@ class CustomerMyAccountController extends Controller
 
             $this -> validate($request, [
 
-                'delete-password' => 'required',
+                'password' => 'required',
 
             ]);
 
             // check if password matches, if not redirect back with alert prompt
-            if (Hash::check($request->input('delete-password'), $user->password)) {
+            if (Hash::check($request->input('password'), $user->password)) {
 
-                // empties unnecessary data field
-                $user->name = 'DELETED';
-                $user->phone = '';
-                $user->email = Str::random(255);
-                $user->password = '';
-                $user->remember_token = null;
-                $user->save();
+                // empty custID field related to this customer
+                DB::table('bookings')                
+                    ->where('custID', $user->id)
+                    ->update(['custID' => null]);
+
+                // delete user
+                User::where('id', $user->id)->delete();
 
             } else {
 
@@ -168,6 +195,158 @@ class CustomerMyAccountController extends Controller
             // redirect user to login page
             Auth::logout();
             return redirect() -> route('login');
+
+        } else if (isset ($_POST['export-unused-bookings'])) {
+
+            // get setting values
+            $settings = Valuestore::make(storage_path('app/settings.json'));
+
+            // get user details
+            $custName = $user->name;
+            $custPhone = $user->phone;
+            $custEmail = $user->email;
+
+            // get all unused bookings details
+            $receipts = DB::table('bookings')
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->select('bookings.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
+                ->where('bookings.custID', Auth::user()->id)
+                ->where(function ($query) {
+    
+                    $query
+    
+                    // today valid booking
+                    -> where (function ($query) {
+                        $query
+                        ->where('bookings.dateSlot', "=", date('Ymd'))
+                        ->where(DB::raw('(bookings.timeSlot + bookings.timeLength)'), '>', date('H'));
+                    })
+    
+                    // future
+                    -> orwhere ('bookings.dateSlot', '>', date('Ymd'));
+    
+                })
+                ->orderBy('bookings.dateSlot', 'asc')
+                ->orderBy('bookings.timeSlot', 'asc')
+                ->get();
+
+            if (count($receipts) == 0) {
+                return back();
+            }
+
+            // initialize and add first page for pdf
+            $fpdf = new Fpdf('L', 'mm', 'A5');
+
+            foreach ($receipts as $receiptDetail) {
+
+                $bookID = str_pad($receiptDetail->bookingID, 7, 0, STR_PAD_LEFT).str_pad(0, 7, 0, STR_PAD_LEFT);
+                $createdOn = substr($receiptDetail->created_at, 2, 2) . "/" . substr($receiptDetail->created_at, 5, 2) . "/" . substr($receiptDetail->created_at, 0, 4) . substr($receiptDetail->created_at, 10);
+                $bookingDateTimeSlot = substr($receiptDetail->dateSlot, 6, 2) . "/" . substr($receiptDetail->dateSlot, 4, 2) . "/" . substr($receiptDetail->dateSlot, 0, 4) . " " . $receiptDetail->timeSlot . ":00 - " . ($receiptDetail->timeSlot + $receiptDetail->timeLength) . ":00";
+                $courtID = $receiptDetail->courtID;
+                $rateName = $receiptDetail->rateName;
+                $ratePrice = $receiptDetail->price;
+                $timeLength = $receiptDetail->timeLength;
+                $condition = $receiptDetail->condition;
+
+                $fpdf->addPage();
+                
+                // header
+                $fpdf->SetFont('Helvetica', 'B', 18);
+
+                $fpdf->Image($settings->get('navbar_customer_logo'), 10, 10, -200);
+
+                $fpdf->Cell(20);
+                if ($settings->get('registration')) {
+                    $fpdf->Cell(100, 5, $settings->get('name'). " (" . $settings->get('registration'). ")", 0, 1);
+                } else {
+                    $fpdf->Cell(100, 5, $settings->get('name'), 0, 1);
+                }
+                
+                $fpdf->SetFont('Helvetica', '', 11);
+
+                $fpdf->Cell(20);
+                $fpdf->Cell(500, 5, str_replace('\r\n', '', $settings->get('address')), 0, 1);
+
+                $fpdf->Cell(20);
+                $fpdf->Cell(500, 5, $settings->get('phone'), 0, 1);
+
+                $fpdf->Ln(6);
+
+                // customer and receipt information
+                $fpdf->SetFont('Helvetica', 'B', 12);
+                
+                $fpdf->Cell(100, 5, "To [Deleted Account]", 0, 1);
+                
+                $fpdf->SetFont('Helvetica', '', 11);
+
+                $fpdf->Cell(115, 5, $custName, 0, 0);
+                $fpdf->Cell(30, 5, "Order/Receipt ID", 0, 0);
+                $fpdf->Cell(55, 5, ": ".$bookID, 0, 1);
+                
+                $fpdf->Cell(115, 5, $custPhone, 0, 0);
+                $fpdf->Cell(30, 5, "Created On", 0, 0);
+                $fpdf->Cell(55, 5, ": ".$createdOn, 0, 1);
+                
+                $fpdf->Cell(115, 5, $custEmail, 0, 0);
+                $fpdf->Cell(30, 5, "Printed On", 0, 0);
+                $fpdf->Cell(55, 5, ": ".date('d/m/Y H:i:s'), 0, 1);
+                $fpdf->Ln(5);
+
+                // order information
+                $fpdf->SetFont('Helvetica', 'B', 12);
+                
+                $fpdf->Cell(100, 5, "Order Information");
+                $fpdf->Ln(5);
+
+                $fpdf->SetFont('Helvetica', '', 11);
+
+                $fpdf->Cell(100, 5, $bookingDateTimeSlot, 0, 1);
+                $fpdf->Cell(105, 5, "Court " . $courtID . " " . $rateName . " rate", 0, 0);
+
+                $hourUnit = $timeLength == 1 ? " hour" : " hours";
+                $fpdf->Cell(65, 5, "RM" . $ratePrice ."/hour * " . $timeLength . $hourUnit, 0, 0);
+                $fpdf->Cell(65, 5, "RM" . $ratePrice * $timeLength, 0, 1);
+                $fpdf->Line(10, 74, 195, 74);
+
+                $fpdf->Ln(5);
+                
+                $fpdf->SetFont('Helvetica', 'B', 11);
+                $fpdf->Cell(170, 5, "Total", 0, 0);
+                $fpdf->SetFont('Helvetica', '', 11);
+                $fpdf->Cell(65, 5, "RM" . $ratePrice * $timeLength, 0, 1);
+                $fpdf->Line(10, 82, 195, 82);
+
+                $fpdf->Ln(5);
+
+                // display qrcode
+                $qrCode = (new QrCode($bookID))->setSize(250)->setMargin(5)->setLabel($bookID);
+                $html = $qrCode->writeDataUri();
+                
+                $fpdf->Image($html,20,88,50,0,'PNG');
+                
+                // rate condition
+                if ($condition != "") {
+
+                    $fpdf->Ln(10);
+
+                    $fpdf->SetFont('Helvetica', 'B', 11);
+
+                    $fpdf->Cell(70);
+                    $fpdf->Cell(55, 5, "Rate Condition", 0, 1);
+
+                    $fpdf->SetFont('Helvetica', '', 11);
+
+                    $fpdf->Cell(70);
+                    $fpdf->MultiCell(105, 5, $condition, 0);
+
+                }
+
+                $fpdf->Ln(5);
+                
+            }
+            
+            $fpdf->Output("I", Auth::user()->name." Unused Bookings", true);
+            exit;
 
         }
 

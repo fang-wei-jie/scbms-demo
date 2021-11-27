@@ -41,25 +41,6 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
     <script type="text/javascript" src="{{ URL::asset('dependencies/checkin.js') }}"></script>
 
     <style>
-        .form-resize {
-            width: 100%;
-            max-width: 500px;
-            margin: auto;
-        }
-
-        /* remove arrows for type number */
-        /* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-
         body {
             background-color: #F5F5F5;
         }
@@ -71,15 +52,22 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
         table {
             width: auto
         }
+
+        .center {
+            margin: auto;
+            position: relative;
+            top: 30%;
+            width: 80%; 
+        }
     </style>
 
     @livewireStyles
 </head>
 
-<body class="container form-resize mt-3">
+<body class="container h-100 fluid">
 
     @if($settings->get('checkin_terminal') != 1)
-    <div class="row position-absolute top-50 start-50 translate-middle text-center">
+    <div class="row center text-center">
         <i class="bi bi-exclamation-circle" style="font-size: 3rem; "></i>
         <div class="my-2"></div>
         <span class="display-4">Check-in Terminal Not Activated for Use</span>
@@ -87,51 +75,53 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
     </div>
     @else
 
-    <div id="prompt" class="row position-absolute top-50 start-50 translate-middle text-center" @if($result != "0") hidden @endif>
+    <div id="prompt" class="row center text-center" @if($result != "0") hidden @endif>
         <i style="font-size: 10rem" class="bi bi-qr-code-scan"></i>
-        <h1>Scan your QR Code Here</h1>
+        <h1>Scan QR Code Here</h1>
     </div>
-        
-    <div id="details" class="row position-absolute top-50 start-50 translate-middle">
 
-        <div class="col-sm d-none">
+    {{-- scanner --}}
+    <div class="d-none">
 
-            <!-- scanner/camera preview window -->
-            <div class="video-container row justify-content-center">
-                <video id="video-preview"></video>
-                <canvas id="qr-canvas" style="display: none;"></canvas>
-            </div>
-
-            <br>
-
-            <!-- submission field -->
-            <div class="row justify-content-center">
-                @error('code')
-                    <div class="alert alert-danger" role="alert">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-
-            <div class="row justify-content-center" style="display: none">
-                <div class="col">
-                    <form action="{{ route('check-in-terminal') }}" method="post">
-                        @csrf
-                        <input id="code" class="form-control" name="code" type="text"
-                            placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
-                </div>
-                <div class="col-auto">
-                    <button class="btn btn-outline-primary" type="submit" id="startQuery" name="startQuery">
-                        <i class="bi bi-person-check-fill"></i>
-                        Check-in
-                    </button>
-                    </form>
-                </div>
-            </div>
-
-            <br>
-
+        <!-- scanner/camera preview window -->
+        <div class="video-container row justify-content-center">
+            <video id="video-preview"></video>
+            <canvas id="qr-canvas" style="display: none;"></canvas>
         </div>
+
+        <br>
+
+        <!-- submission field -->
+        <div class="row justify-content-center">
+            @error('code')
+                <div class="alert alert-danger" role="alert">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="row justify-content-center" style="display: none">
+            <div class="col">
+                <form action="{{ route('check-in-terminal') }}" method="post">
+                    @csrf
+                    <input id="code" class="form-control" name="code" type="text"
+                        placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-primary" type="submit" id="startQuery" name="startQuery">
+                    <i class="bi bi-person-check-fill"></i>
+                    Check-in
+                </button>
+                </form>
+            </div>
+        </div>
+
+        <br>
+
+    </div>
+
+    <div id="details" class="row center">
+
 
         <div class="col-xxl align-self-center">
 
@@ -142,8 +132,14 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
                         <div class="card-body">
                             <span class="text-centre">
                                 <span class="card-title h1">
-                                    <i style="font-size: 3rem;" class="bi {{ $cardIcon }}"></i>
-                                    {{ $cardText }}
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <i style="font-size: 3rem;" class="bi {{ $cardIcon }}"></i>
+                                        </div>
+                                        <div class="col">
+                                            {{ $cardText }}
+                                        </div>
+                                    </div>
                                 </span>
                             </span>
                         </div>
@@ -172,7 +168,7 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
 
         <div class="row text-center" @if($result == "0") hidden @endif>
             <i style="font-size: 5rem" class="bi bi-qr-code-scan"></i>
-            <h1>Scan your QR Code Here</h1>
+            <h1>Scan QR Code Here</h1>
         </div>
 
     </div>

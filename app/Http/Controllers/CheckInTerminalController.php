@@ -28,11 +28,27 @@ class CheckInTerminalController extends Controller
         ]);
 
         // query the booking details
-        $result = DB::table('bookings')
-            ->where('bookingID', '=', substr($request->input('code'), 0, 7))
-            ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
-            ->select('bookings.dateSlot', 'bookings.timeSlot', 'bookings.timeLength', 'bookings.courtID', 'rate_records.name as rateName', 'rate_records.condition as condition')
-            ->first();
+        if (substr($request->input('code'), 7, 7) != "0000000") {
+            // if custID is not null
+            
+            $result = DB::table('bookings')
+                ->join('users', 'users.id', '=', 'bookings.custID')
+                ->where('bookingID', '=', substr($request->input('code'), 0, 7))
+                ->where('custID', '=', substr($request->input('code'), 7, 7))
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->select('bookings.custID', 'bookings.dateSlot', 'bookings.timeSlot', 'bookings.timeLength', 'bookings.courtID', 'rate_records.name as rateName', 'rate_records.condition as condition')
+                ->first();
+                
+        } else {
+            // if custID is null
+            
+            $result = DB::table('bookings')
+                ->where('bookingID', '=', substr($request->input('code'), 0, 7))
+                ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
+                ->select('bookings.custID', 'bookings.dateSlot', 'bookings.timeSlot', 'bookings.timeLength', 'bookings.courtID', 'rate_records.name as rateName', 'rate_records.condition as condition')
+                ->first();
+
+        }
 
         // get current time and date
         $currentMinute = date('i');
@@ -114,6 +130,20 @@ class CheckInTerminalController extends Controller
                 $cardIcon = "bi-cone-striped";
                 $cardText = "System Error";
             }
+        }
+
+        // check if custID field is populated, but input has 7(0) as custID
+        // if yes, it means customer abused the export for deleted account feature
+        if ($result->custID != null && substr($request->input('code'), 7, 7) == "0000000") {
+
+            // display warning
+            $cardColor = "danger";
+            $cardIcon = "bi-exclamation-circle";
+            $cardText = "Customer Account Not Deleted, Violation of Using Deleted Account Booking Receipt";
+            
+            // hide result
+            $result = null;
+
         }
 
         return view('check-in-terminal', [

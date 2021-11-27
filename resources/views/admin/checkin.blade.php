@@ -90,8 +90,14 @@ Check In
                             <div class="card-body">
                                 <span class="text-centre">
                                     <h1 class="card-title">
-                                        <i style="font-size: 3rem;" class="bi {{ $cardIcon }}"></i>
-                                        {{ $cardText }}
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <i style="font-size: 3rem;" class="bi {{ $cardIcon }}"></i>
+                                            </div>
+                                            <div class="col">
+                                                {{ $cardText }}
+                                            </div>
+                                        </div>
                                     </h1>
                                 </span>
                             </div>

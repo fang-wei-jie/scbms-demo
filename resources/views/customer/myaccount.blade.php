@@ -89,7 +89,7 @@ My Account
             <button type="button" class="btn btn-outline-danger" id="accountDeleteButton" data-bs-toggle="modal" data-bs-target="#accountDeleteConfirmation">
                 <span style="display: flex; justify-content: space-between; align-items: center;">
                     <i class="bi bi-person-x"></i>
-                    <span class="d-none d-md-block">&nbsp;DELETE</span>
+                    <span class="d-none d-md-block">&nbsp;Delete</span>
                 </span>
             </button>
         </div>
@@ -225,7 +225,7 @@ My Account
 
     <!-- account delete confirmation modal view -->
     <div class="modal fade" id="accountDeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="accountDeleteConfirmationLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <span class="modal-title" id="titleLabel">Account Deletion Confirmation</span>
@@ -236,19 +236,40 @@ My Account
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <span>Are you sure? This action is <b>irreversible</b> for your privacy. </span><br><br>
-                            <span>All your data will be removed from our database, except the custID (randomized, can't be used to identify you) and the booking history as we need it for bookkeeping and legal reasons. All unused bookings will be forfitted with no refund (since we can't refer back to the record). </span><br><br>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" name="delete-password" placeholder="Retype your password" required>
-                                <label>Retype password to confirm deletion</label>
+                            <p>Are you sure? This action is <b>irreversible</b> for your privacy. All your data will be removed from our database. </p>
+
+                            @if ($unusedBookingCount > 0)
+                            <p><b>The receipts downloaded at the My Bookings page will not work after deleting the account. Please download the receipt of your unused booking below, or we have no way to process your admission. You may download them by clicking the Download Unused Booking Receipt below. </b></p>
+
+                            {{-- <input type="text" class="form-control" name="custID" value="{{ Auth::user()->id }}" style="display: none;">
+                            <input type="text" class="form-control" name="custName" value="{{ Auth::user()->name }}" style="display: none;"> --}}
+
+                            <div class="d-grid gap-2 mb-3">
+                                <button type="submit" class="btn btn-lg btn-primary" id="export-unused-bookings" name="export-unused-bookings">Download Unused Booking Receipt</button>
                             </div>
-                            <input type="text" class="form-control" name="custID" value="{{ Auth::user()->id }}" style="display: none;">
-                            <input type="text" class="form-control" name="custName" value="{{ Auth::user()->name }}" style="display: none;">
+                            @endif
+                            
+                            <div class="accordion accordion-flush" id="deleteAccount">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Proceed to Delete Account
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#deleteAccount">
+                                        <div class="accordion-body">
+                                            <div class="d-grid gap-2">
+                                                <div class="form-floating mb-3">
+                                                    <input type="password" class="form-control" id="delete-password" name="password" placeholder="Retype your password" minlength="8">
+                                                    <label>Retype password to confirm deletion</label>
+                                                </div>                                                
+                                                <button type="submit" class="btn btn-lg btn-danger" name="delete-account">DELETE MY ACCOUNT</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-danger" name="delete-account">DELETE MY ACCOUNT</button>
                     </div>
                 </form>
             </div>
@@ -289,6 +310,23 @@ My Account
 
 <script>
     var infoBox = new bootstrap.Modal(document.getElementById('infoBox'))
+
+    $(document).ready(function() {
+
+        // require the delete password field if delete account accordion expanded
+        $(".accordion-button").click(function() {
+            if ($(this).hasClass("collapsed")) {
+                $("#delete-password").prop("required", false)
+            } else {
+                $("#delete-password").prop("required", true)
+            }
+        })
+
+        // disabled the required for delete password field if download bookings receipt clicked
+        $("#export-unused-bookings").click(function() {
+            $("#delete-password").prop("required", false)
+        })
+    })
 </script>
 
 @if(session('alert') || session('info'))
