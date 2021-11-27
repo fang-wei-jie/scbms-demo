@@ -47,12 +47,45 @@ $(document).ready(function() {
         ]
     });
 
-    // inject e.g. <small>s
-    $("#prebook_days").text($(prebook_days_ahead).val() + ($(prebook_days_ahead).val() > 1 ? " days" : " day"))
-    $("#cut_off_minutes").text($(booking_cut_off_time).val() + ($(booking_cut_off_time).val() > 1 ? " minutes" : " minute"))
-    $("#precheckin_minutes").text($(precheckin_duration).val() + ($(precheckin_duration).val() > 1 ? " minutes" : " minute"))
+    // Operation
+    $("#start_time").change(function() {
+        // get new start and end time
+        var starttime = Number($("#start_time").val())
+        var endtime = Number($("#end_time").val())
+        
+        // empty and repopulate endtime field
+        $("#end_time").empty()
+        for (i = (starttime + 1); i <= 24; i++) {
+            $("#end_time").append(new Option(i + ":00", i))
+        }
 
-    // General
+        // reselect end time if new starttime is still earlier than new end time
+        if (endtime > starttime) {
+            $("#end_time").prop("value", endtime)
+        }
+    })
+
+    $("#courts_count").on("keyup change", function() {
+        validateNumber(this, 1, null)
+    })
+
+    $("#prebook_days_ahead").on("keyup change", function() {
+        validateNumber(this, 1, null)
+    })
+
+    $("#booking_cut_off_time").on("keyup change", function() {
+        validateNumber(this, 0, 30)
+    })
+
+    $("#precheckin_duration").on("keyup change", function() {
+        validateNumber(this, 0, 30)
+    })
+
+    $("#payment_grace_period").on("keyup change", function() {
+        validateNumber(this, 5, 15)
+    })
+
+    // Presence
     $("#name").keyup(function() {
         validateIsEmpty("#name")
         $(".company-name").text($("#name").val())
@@ -72,39 +105,7 @@ $(document).ready(function() {
         validateIsEmpty("#address")
     })
 
-    $("#start_time, #end_time").change(function() {
-        validateHours()
-    })
-
-    $("#courts_count").on("keyup change", function() {
-        validateNumber("#courts_count", 1, null)
-    })
-
-    $("#prebook_days_ahead").on("keyup change", function() {
-        validateNumber("#prebook_days_ahead", 1, null)
-        var text = $(this).val() > 1 ? " days" : " day"
-        $("#prebook_days").text($(this).val() + text)
-    })
-
-    $("#booking_cut_off_time").on("keyup change", function() {
-        validateNumber("#booking_cut_off_time", 0, 30)
-        var text = $(this).val() > 1 ? " minutes" : " minute"
-        $("#cut_off_minutes").text($(this).val() + text)
-    })
-
-    $("#precheckin_duration").on("keyup change", function() {
-        validateNumber("#precheckin_duration", 0, 30)
-        var text = $(this).val() > 1 ? " minutes" : " minute"
-        $("#precheckin_minutes").text($(this).val() + text)
-    })
-
-    $("#payment_grace_period").on("keyup change", function() {
-        validateNumber("#payment_grace_period", 5, 15)
-        var text = $(this).val() > 1 ? " minutes" : " minute"
-        $("#payment_grace_period").text($(this).val() + text)
-    })
-
-    // FEATURES
+    // Features
     // Cancel Bookings Toggles
     $("#cancelBooking").change(function() {
         if ($("#cancelBooking").prop('checked')) {
@@ -127,7 +128,7 @@ $(document).ready(function() {
         }
     })
 
-    // UI Preview
+    // UI
     // call the color picker when color palette icon clicked
     $("#customer_navbar_toggle").click(function() {
         $("#customer_navbar_color").click()
@@ -189,38 +190,6 @@ $(document).ready(function() {
         // inject text class into input field so server can save it
         $("#manager_navtext").val(textColor)
     })
-
-    function validateHours() {
-
-        var starttime = Number($("#start_time").val())
-        var endtime = Number($("#end_time").val())
-
-        if (endtime > starttime) {
-
-            $("#save").prop("disabled", false)
-            $("#start_time").addClass("is-valid")
-            $("#start_time").removeClass("is-invalid")
-            $("#end_time").addClass("is-valid")
-            $("#end_time").removeClass("is-invalid")
-
-        } else if (endtime < starttime) {
-
-            $("#save").prop("disabled", true)
-            $("#start_time").removeClass("is-invalid")
-            $("#start_time").addClass("is-valid")
-            $("#end_time").addClass("is-invalid")
-            $("#end_time").removeClass("is-valid")
-
-        } else if (endtime == starttime) {
-
-            $("#save").prop("disabled", true)
-            $("#start_time").addClass("is-invalid")
-            $("#start_time").removeClass("is-valid")
-            $("#end_time").addClass("is-invalid")
-            $("#end_time").removeClass("is-valid")
-
-        }
-    }
 
     function validateIsEmpty(objectID) {
         if ($(objectID).val() == "") {

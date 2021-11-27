@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
-use App\Models\RateRecords;
 use Illuminate\Http\Request;
-use App\Models\Rates;
 use Spatie\Valuestore\Valuestore;
 
 class SettingsController extends Controller
