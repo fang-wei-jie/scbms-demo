@@ -130,7 +130,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar navbar-expand-lg {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
+    <nav id="header" class="navbar @if(request()->is('manager/*')) {{ "navbar-expand-xl" }} @else {{ "navbar-expand-lg" }} @endif {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
