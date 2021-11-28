@@ -192,6 +192,7 @@
                                         <input id="name" class="form-control" type="text" name="name" maxlength="255" value="{{ $settings->get('name') }}">
                                         <label for="name">Name</label>
                                         <small>Name will be displayed across the whole website and receipt. </small>
+                                        <small>Please request assist from developer to change the name for the system that will be used when sending reset password email. </small>
                                     </div>
 
                                     <div class="form-floating mb-3">
@@ -223,7 +224,26 @@
                                         <textarea id="address" class="form-control" name="address" style="height: 100px">{{ $settings->get('address') }}</textarea>
                                         <label for="address">Physical Address</label>
                                         <small>Address will be used on receipt and about us. </small>
+                                        <small>Please update the map marker and preview by updating the lattitude and longitude values below. </small>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <input id="map_lat" class="form-control" type="number" step="any" name="map_lat" maxlength="20" value="{{ $settings->get('map_lat') }}">
+                                                <label for="map_lat">Lattitude</label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-floating mb-3">
+                                                <input id="map_long" class="form-control" type="number" step="any" name="map_long" maxlength="20" value="{{ $settings->get('map_long') }}">
+                                                <label for="map_long">Longitude</label>
+                                            </div>
+                                        </div>
+                                        <small>The lattitude and longitude coordiantes will be used on about us for map preview and to faciliate map navigation links. </small>
+                                    </div>
+
+                                    
 
                                 </div>
 

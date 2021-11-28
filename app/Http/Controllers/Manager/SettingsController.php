@@ -33,6 +33,8 @@ class SettingsController extends Controller
                 "domain" => 'required | string | max:255',
                 "phone" => 'required | string',
                 "address" => 'required | string',
+                "map_lat" => 'required | string',
+                "map_long" => 'required | string',
 
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
@@ -57,6 +59,8 @@ class SettingsController extends Controller
             $settings->put('registration', $request->registration);
             $settings->put('phone', $request->phone);
             $settings->put('address', $request->address);
+            $settings->put('map_lat', $request->map_lat);
+            $settings->put('map_long', $request->map_long);
 
             if (($request->end_time - $request->start_time) > 0) {
                 $settings->put('start_time', $request->start_time);

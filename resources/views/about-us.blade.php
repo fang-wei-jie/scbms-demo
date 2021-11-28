@@ -4,12 +4,25 @@
 About Us
 @endsection
 
+@section('extra-dependencies')
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+@endsection
+
+@section('extra-css')
+<style>
+    .btn-light {
+        background-color: #F5F5F5;
+    }
+</style>
+@endsection
+
 @section('body')
 <div class="container">
     <h3>About Us</h3>
 
     <div class="row">
-        <div class="col mb-3">
+        <div class="col-lg mb-3">
             Delectus eum voluptatem provident sit corporis. Repellendus debitis enim est porro laudantium voluptatibus totam. Perspiciatis ex quia rerum recusandae maiores repellendus. Consequatur sed magnam fuga.
 
             Quos cumque et ea eveniet et deserunt vitae. Totam expedita sint eius laborum qui. Quia rem et et. Eum qui corrupti aperiam tempora. Molestias temporibus dolore debitis quaerat explicabo quibusdam sint. Sit quam nemo officiis officiis.
@@ -22,21 +35,54 @@ About Us
         
         </div>
 
-        <div class="col mb-3">
-            <iframe width="350" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=101.79093450307847%2C2.986110430675759%2C101.79338067770006%2C2.9880202473514195&amp;layer=mapnik&amp;marker=2.9870653394288107%2C101.79215759038925" style="border: 1px solid black"></iframe><br/><small><a href="https://www.openstreetmap.org/?mlat=2.98707&amp;mlon=101.79216#map=19/2.98707/101.79216">View Larger Map</a></small>
+        <div class="col-lg mb-3">
+            <div id='map' style='width: auto; height: 350px;'></div>
             
             <h5 class="mt-3" id="addcon">Address</h5>
-            <a>{{ $settings->get('address') }}</a>
+            <p>
+                {{ $settings->get('address') }} <br>
+                GPS coordinates: <a href="geo:{{ $settings->get('map_lat') }}, {{ $settings->get('map_long') }}">{{ $settings->get('map_lat') }}, {{ $settings->get('map_long') }}</a>
+            </p>
+
+            <a class="btn btn-light" href="https://www.google.com/maps?daddr=({{ $settings->get('map_lat') }},{{ $settings->get('map_long') }})">
+                <img src="{{ URL::asset('images/gmaps.png') }}" alt="Google Maps" height="28px">
+                &nbsp;Google Maps
+            </a>
+            <a class="btn btn-light" href="https://maps.apple.com/?daddr=({{ $settings->get('map_lat') }}%2C%20{{ $settings->get('map_long') }})">
+                <img src="{{ URL::asset('images/apple-maps.png') }}" alt="Apple Maps" height="28px">
+                &nbsp;Apple Maps
+            </a>
 
             <h5 class="mt-2">Phone</h5>
-            <a class="link-dark" href="tel:{{ $settings->get('phone') }}">{{ $settings->get('phone') }}</a>
+            <p>
+                <a class="link-dark" href="tel:{{ $settings->get('phone') }}">{{ $settings->get('phone') }}</a>
+            </p>
 
             <h5 class="mt-2">
                 Operation Hours
             </h5>
-            <a>{{ str_pad($settings->get('start_time'), 2, 0, STR_PAD_LEFT) . ":00 - " . str_pad($settings->get('end_time'), 2, 0, STR_PAD_LEFT) . ":00" }}</a>
+            <p>{{ str_pad($settings->get('start_time'), 2, 0, STR_PAD_LEFT) . ":00 - " . str_pad($settings->get('end_time'), 2, 0, STR_PAD_LEFT) . ":00" }}</p>
         </div>
     </div>
 
 </div>
+@endsection
+
+@section('bottom-js')
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFweHBsb3JlciIsImEiOiJja3dqOXNnMG4xZzgwMzFxYjM4NmcyamU2In0.nWXQ2yqA7PfyEgO7HZNVmw';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', // map style
+        center: [{{ $settings->get('map_long') }}, {{ $settings->get('map_lat') }}], // starting position 
+        zoom: 13, // default zoom level
+        cooperativeGestures: true,
+    });
+
+    // Create a new marker.
+    new mapboxgl.Marker({
+        color: '#DC3545',
+    }).setLngLat([{{ $settings->get('map_long') }}, {{ $settings->get('map_lat') }}]).addTo(map);
+
+</script>
 @endsection
