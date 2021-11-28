@@ -240,7 +240,7 @@
                                                 <label for="map_long">Longitude</label>
                                             </div>
                                         </div>
-                                        <small>The lattitude and longitude coordiantes will be used on about us for map preview and to faciliate map navigation links. </small>
+                                        <small>The lattitude and longitude coordiantes will be used on <a href="{{ route('about-us') }}">About Us page</a> for map preview and to faciliate map navigation links. </small>
                                     </div>
 
                                     
