@@ -399,14 +399,22 @@
             @guest
             <div class="row justify-content-around">
 
-                <div class="col-md">
+                <h2>{{ $name }}</h2>
 
-                    <h2>{{ $name }}</h2>
+                <div class="col-md">
                     
                     <div class="my-3"></div>
 
                     <h5>Address</h5>
-                    <a>{{ $settings->get('address') }}</a>
+                    <p>{{ $settings->get('address') }}</p>
+                    <a class="btn btn-light" href="https://www.google.com/maps?daddr=({{ $settings->get('map_lat') }},{{ $settings->get('map_long') }})">
+                        <img src="{{ URL::asset('images/gmaps.png') }}" alt="Google Maps" height="28px">
+                        &nbsp;Google Maps
+                    </a>
+                    <a class="btn btn-light" href="https://maps.apple.com/?daddr=({{ $settings->get('map_lat') }}%2C%20{{ $settings->get('map_long') }})">
+                        <img src="{{ URL::asset('images/apple-maps.png') }}" alt="Apple Maps" height="28px">
+                        &nbsp;Apple Maps
+                    </a>
 
                 </div>
 
