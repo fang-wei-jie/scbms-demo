@@ -69,7 +69,7 @@
         color: {{ $settings->get('navbar_manager_color') }};
     }
 
-    .nav-link {
+    .nav-link, .form-check-label, .preview, small, h5 {
         user-select: none;
     }
 
@@ -256,48 +256,62 @@
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="cancelBooking" name="cancelBooking" @if($settings->get('cancel_booking') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="cancelBooking">Cancel Booking</label>
+                                <label class="form-check-label" for="cancelBooking">
+                                    Cancel Booking
+                                    <br>
+                                    <small>Enable cancellation of booking by manager for bookings that has not started</small>
+                                </label>
                                 <br>
-                                <small>Enable cancellation of booking by manager for bookings that has not started</small>
                             </div>
 
                             <h5 class="mt-3">Check-in Terminal</h5>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="checkin_terminal">Use Check-in Terminal</label>
-                                <br>
-                                <small id="smallUseRates">Use check-in terminal to speed up and automate admission</small>
+                                <label class="form-check-label" for="checkin_terminal">
+                                    Use Check-in Terminal
+                                    <br>
+                                    <small id="smallUseRates">Use check-in terminal to speed up and automate admission</small>
+                                </label>
+                                
                             </div>
 
                             <h5 class="mt-3">Admin</h5>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="adminRole" name="adminRole" @if($settings->get('admin_role') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="adminRole">Admin Role</label>
-                                <br>
-                                <small>Enable the admin role</small>
+                                <label class="form-check-label" for="adminRole">
+                                    Admin Role
+                                    <br>
+                                    <small>Enable the admin role</small>
+                                </label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input admin-toggles" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($settings->get('admin_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminSalesReport">View Sales Report</label>
-                                <br>
-                                <small>Enable the admin to view sales report</small>
+                                <label class="form-check-label" for="adminSalesReport">
+                                    View Sales Report
+                                    <br>
+                                    <small>Enable the admin to view sales report</small>
+                                </label>
                             </div>
 
                             <div class="form-check form-switch" id="bookingDeletableAdmin">
                                 <input class="form-check-input admin-toggles" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminCancelBooking">Booking Cancelable by Admin</label>
-                                <br>
-                                <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
+                                <label class="form-check-label" for="adminCancelBooking">
+                                    Booking Cancelable by Admin
+                                    <br>
+                                    <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
+                                </label>
                             </div>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input admin-toggles" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminRates">Rates Editable by Admin</label>
-                                <br>
-                                <small>Enable the admin to edit rates detail</small>
+                                <label class="form-check-label" for="adminRates">
+                                    Rates Editable by Admin
+                                    <br>
+                                    <small>Enable the admin to edit rates detail</small>
+                                </label>
                             </div>
 
                         </div>
