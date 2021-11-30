@@ -166,6 +166,15 @@
                             About Us
                         </a>
                     </li>
+
+                    @if(Auth::guard("manager")->check() || Auth::guard("admin")->check())
+                    <li class="nav-item">
+                        <a class="nav-link" href="@if(Auth::guard("manager")->check()) {{ route('manager.settings') }} @else {{ route('admin.dashboard') }} @endif">
+                            <i class="bi @if(Auth::guard("manager")->check()) {{ "bi-file-person" }} @else {{ "bi-person-badge" }} @endif"></i>
+                            Back to @if(Auth::guard("manager")->check()) Manager @else Admin @endif site
+                        </a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link {{ (request()->is('login')) ? 'active fw-bold' : '' }}" href="{{ route('login') }}">
                             <i class="bi bi-{{ (request()->is('login')) ? 'person-fill' : 'person' }}"></i>
@@ -178,6 +187,7 @@
                             Register
                         </a>
                     </li>
+                    @endif
 
                     @endguest
 
