@@ -35,10 +35,10 @@ About Us
         
         </div>
 
-        <div class="col-lg mb-3">
+        <div class="col-lg mb-3" id="anc">
             <div id='map' style='width: auto; height: 350px;'></div>
             
-            <h5 class="mt-3" id="addcon">Address</h5>
+            <h5 class="mt-3">Address</h5>
             <p>
                 {{ $settings->get('address') }} <br>
                 GPS coordinates: <a href="geo:{{ $settings->get('map_lat') }}, {{ $settings->get('map_long') }}">{{ $settings->get('map_lat') }}, {{ $settings->get('map_long') }}</a>

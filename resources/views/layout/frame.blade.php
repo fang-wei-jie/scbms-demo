@@ -447,7 +447,7 @@
                     <a class="link-dark" href="{{ route('payment-methods') }}">Payment Methods</a> &nbsp;
                     
                     @auth
-                        <a class="link-dark" href="about-us/#addcon">Address and Contact</a> &nbsp;
+                        <a class="link-dark" href="about-us/#anc">Address and Contact</a> &nbsp;
                     @endauth
                 </div>
             </div>
