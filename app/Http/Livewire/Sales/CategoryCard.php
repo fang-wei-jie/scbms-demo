@@ -27,7 +27,7 @@ class CategoryCard extends Component
             // range is month
             case 'm':
                 $range = "m";
-                $dateTrim = "1, 7";
+                if ($this->type == "created_at") { $dateTrim = "1, 7"; } else { $dateTrim = "1, 5"; }
                 if ($this->date != "") { $date = $this->date; } else { $date = $year."-".$month; }
                 $condition = 'LIKE "' . $date .'%';
                 break;
