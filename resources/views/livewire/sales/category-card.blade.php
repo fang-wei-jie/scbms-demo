@@ -78,9 +78,9 @@
                     @else
 
                         <div class="row">
-                            <div class="col-sm">
+                            <div class="col">
                                 <h4>Rates</h4>
-                                <table class="charts-css bar show-labels data-spacing-5">
+                                <table class="charts-css bar show-labels data-spacing-5" id="rates">
 
                                     <caption> Rates </caption>
 
@@ -109,9 +109,9 @@
                                 </table>
                                 <br>
                             </div>
-                            <div class="col-sm">
+                            <div class="col">
                                 <h4>Time Length</h4>
-                                <table class="charts-css bar show-labels data-spacing-5">
+                                <table class="charts-css bar show-labels data-spacing-5" id="length">
 
                                     <caption> Time Length </caption>
 
@@ -145,7 +145,7 @@
                         <div class="row">
                             <div class="col">
                                 <h4>Time Slot</h4>
-                                <table class="charts-css bar show-labels data-spacing-5">
+                                <table class="charts-css bar show-labels data-spacing-5" id="slot">
 
                                     <caption> Time Slot </caption>
 
