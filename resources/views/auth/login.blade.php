@@ -50,9 +50,9 @@ Login
         <label for="password">Password</label>
     </div>
 
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         Any previously logged in devices will get logged out. 
-    </div>
+    </div> --}}
 
     <div class="d-grid gap-2 mb-3">
         <button class="btn btn-primary" type="submit" name="login">

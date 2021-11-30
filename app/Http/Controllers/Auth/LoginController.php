@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Features;
 use Spatie\Valuestore\Valuestore;
 
 class LoginController extends Controller
@@ -60,7 +59,7 @@ class LoginController extends Controller
                 }
                 
                 // logout other logged in instances
-                Auth::guard('manager')->logoutOtherDevices($request->password);
+                // Auth::guard('manager')->logoutOtherDevices($request->password);
 
                 return redirect()->route('manager.dashboard');
 
@@ -72,7 +71,7 @@ class LoginController extends Controller
                 }
 
                 // logout other logged in instances
-                Auth::guard('admin')->logoutOtherDevices($request->password);
+                // Auth::guard('admin')->logoutOtherDevices($request->password);
 
                 return redirect()->route('admin.dashboard');
 
@@ -83,7 +82,7 @@ class LoginController extends Controller
                 }
                 
                 // logout other logged in instances
-                Auth::logoutOtherDevices($request->password);
+                // Auth::logoutOtherDevices($request->password);
                 
                 return redirect()->route('mybookings');
                 
