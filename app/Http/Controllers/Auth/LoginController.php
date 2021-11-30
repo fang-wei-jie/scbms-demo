@@ -20,6 +20,16 @@ class LoginController extends Controller
     function view()
     {
 
+        // redirect if user already logged in
+        if (Auth::guard('manager')->check()) {
+            return redirect() -> route('manager.dashboard');
+        } else if (Auth::guard('admin')->check()) {
+            return redirect() -> route('admin.dashboard');
+        } else if (Auth::check()) {
+            return redirect() -> route('mybookings');
+        }
+
+        // if not authenticated, then display the login form
         return view('auth.login');
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Auth\LogoutController;
 use Spatie\Valuestore\Valuestore;
 use App\Models\Rates;
+use Illuminate\Support\Facades\Auth;
 
 // Public Controllers
 use App\Http\Controllers\CheckInTerminalController;
@@ -59,6 +60,16 @@ use App\Http\Controllers\Manager\SettingsController;
 // GLOBAL PAGES
 
 Route::get('/', function () {
+
+    // redirect if user already logged in
+    if (Auth::guard('manager')->check()) {
+        return redirect() -> route('manager.dashboard');
+    } else if (Auth::guard('admin')->check()) {
+        return redirect() -> route('admin.dashboard');
+    } else if (Auth::check()) {
+        return redirect() -> route('mybookings');
+    }
+
     // get setting values
     $settings = Valuestore::make(storage_path('app/settings.json'));
 
