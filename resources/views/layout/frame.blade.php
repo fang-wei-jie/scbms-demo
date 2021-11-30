@@ -66,6 +66,10 @@
 
     <!-- custom styles -->
     <style>
+        body {
+            margin-top: 3.5rem;
+        }
+
         footer {
             background-color: #f5f5f5;
         }
@@ -130,7 +134,7 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar @if(request()->is('manager/*')) {{ "navbar-expand-xl" }} @else {{ "navbar-expand-lg" }} @endif {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
+    <nav id="header" class="navbar @if(request()->is('manager/*')) {{ "navbar-expand-xxl" }} @elseif(request()->is('admin/*')) {{ "navbar-expand-xl" }} @else {{ "navbar-expand-lg" }} @endif {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
@@ -473,19 +477,6 @@
 @yield('bottom-js')
 
 <script>
-    // code below was used to dynamically resize the content padding to accomodate to the change of header height
-    resizeContentPadding()
-
-    $(window).on('resize', function(){
-        resizeContentPadding()
-    })
-
-    function resizeContentPadding() {
-        headerHeight = parseInt(document.getElementById('header').clientHeight)
-        $('.body').css('padding-top', headerHeight)
-    }
-    // dynamic header resize feature end
-
     // open the door when hover on logout button
     $("#logout-button").hover(function(){
         $("#logout-icon").removeClass("bi-door-closed")
