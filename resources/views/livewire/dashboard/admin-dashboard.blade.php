@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h3 class="card-title">Bookings</h3>
+                            <h3 class="card-title">Active Bookings</h3>
                         </div>
                         <div class="col-auto">
                             <a href="checkin" class="btn btn-outline-secondary">
@@ -38,7 +38,7 @@
 
                     @if (count($bookings) == 0)
                     <br>
-                    <h5 class="card-title" style="display: flex; justify-content: center; align-items: center;">No Bookings Currently</h5>
+                    <h5 class="card-title" style="display: flex; justify-content: center; align-items: center;">No Active Bookings Currently</h5>
                     @else
 
                     <div class="row row-cols-1 row-cols-md-3 g-2">
@@ -223,6 +223,9 @@
                             </div>
                         </div>
                     </div>
+
+                    <span class="mt-2" style="display: flex; justify-content: flex-end; align-items: center;"><small>Categorized by when bookings were created</small></span>
+
                 </div>
             </div>
             @endif
