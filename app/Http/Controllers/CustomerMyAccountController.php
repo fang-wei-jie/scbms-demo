@@ -126,7 +126,7 @@ class CustomerMyAccountController extends Controller
             Auth::logoutOtherDevices($request->input('email-update-password'));
 
             // redirect back to page with info prompt
-            return back() -> with('info', 'Email updated. ');
+            return back() -> with('info', 'Email updated. Other logged in devices has been logged out. ');
 
         } else if (isset ($_POST["change-password"]) ) {
             // if user wants to change password
@@ -164,7 +164,7 @@ class CustomerMyAccountController extends Controller
             Auth::logoutOtherDevices($request->input('old-password'));
             
             // redirect back to page with info prompt
-            return back() -> with('info', 'Password updated. ');
+            return back() -> with('info', 'Password updated. Other logged in devices has been logged out. ');
 
         } else if (isset ($_POST["delete-account"]) ) {
             // if user wants to delete account
