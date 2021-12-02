@@ -59,7 +59,7 @@ class LoginController extends Controller
                 }
                 
                 // logout other logged in instances
-                // Auth::guard('manager')->logoutOtherDevices($request->password);
+                Auth::guard('manager')->logoutOtherDevices($request->password);
 
                 return redirect()->route('manager.dashboard');
 
@@ -71,7 +71,7 @@ class LoginController extends Controller
                 }
 
                 // logout other logged in instances
-                // Auth::guard('admin')->logoutOtherDevices($request->password);
+                Auth::guard('admin')->logoutOtherDevices($request->password);
 
                 return redirect()->route('admin.dashboard');
 
