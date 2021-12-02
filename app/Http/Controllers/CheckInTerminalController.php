@@ -132,17 +132,22 @@ class CheckInTerminalController extends Controller
             }
         }
 
-        // check if custID field is populated, but input has 7(0) as custID
-        // if yes, it means customer abused the export for deleted account feature
-        if ($result->custID != null && substr($request->input('code'), 7, 7) == "0000000") {
+        // if result is null, skip this check
+        if ($result != null) {
 
-            // display warning
-            $cardColor = "danger";
-            $cardIcon = "bi-exclamation-circle";
-            $cardText = "Customer Account Not Deleted, Violation of Using Deleted Account Booking Receipt";
-            
-            // hide result
-            $result = null;
+            // check if custID field is populated, but input has 7(0) as custID
+            // if yes, it means customer abused the export for deleted account feature
+            if ($result->custID != null && substr($request->input('code'), 7, 7) == "0000000") {
+
+                // display warning
+                $cardColor = "danger";
+                $cardIcon = "bi-exclamation-circle";
+                $cardText = "Customer Account Not Deleted, Violation of Using Deleted Account Booking Receipt";
+                
+                // hide result
+                $result = null;
+
+            }
 
         }
 
