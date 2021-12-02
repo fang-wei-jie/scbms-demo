@@ -330,13 +330,8 @@
                                             <div class="form-control">
                                                 <label class="mimic-floating mt-1" for="logo"">Upload New Logo</label>
                                                 <input id="logo" class="form-control form-control-sm form-control-file mb-1" type="file" name="logo">
-                                                <small>PNG or JPEG (JPG) with 128x128 resolution</small>
+                                                <small>PNG or JPEG (JPG) with 128x128 resolution without alpha channel</small>
                                             </div>
-                                            {{-- <br>
-                                            Preview how the receipt will look like with this logo <br>
-                                            <a class="btn btn-primary" href="{{ route('preview-receipt') }}">
-                                                Preview Receipt
-                                            </a> --}}
                                         </div>
                                     </div>
         
