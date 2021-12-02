@@ -66,8 +66,12 @@
 
     <!-- custom styles -->
     <style>
-        body {
+        .body {
+            @if(request()->is('/'))
             margin-top: 3.5rem;
+            @else
+            margin-top: 4.5rem;
+            @endif
         }
 
         footer {
@@ -397,7 +401,7 @@
 
     </nav>
 
-    <div class="body @if(!request()->is('/')) mt-3 @endif">
+    <div class="body">
         @yield('body')
         <br>
     </div>
