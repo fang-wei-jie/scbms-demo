@@ -4,7 +4,7 @@
     <div class="my-2"></div>
 
     <div class="row">
-        <div class="col-sm">
+        <div class="col-md">
             <div class="card py-2">
                 <div class="mx-3 my-1">
                     <div class="row no-gutters align-items-center">
@@ -22,7 +22,7 @@
             <div class="my-2"></div>
         </div>
 
-        <div class="col-sm">
+        <div class="col-md">
             <div class="card py-2">
                 <div class="mx-3 my-1">
                     <div class="row no-gutters align-items-center">
@@ -40,7 +40,7 @@
             <div class="my-2"></div>
         </div>
 
-        <div class="col-sm">
+        <div class="col-md">
             <div class="card py-2">
                 <div class="mx-3 my-1">
                     <div class="row no-gutters align-items-center">

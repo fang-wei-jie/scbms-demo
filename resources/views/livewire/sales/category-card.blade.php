@@ -78,7 +78,7 @@
                     @else
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md">
                                 <h4>Rates</h4>
                                 <table class="charts-css bar show-labels data-spacing-5" id="rates">
 
@@ -109,7 +109,7 @@
                                 </table>
                                 <br>
                             </div>
-                            <div class="col">
+                            <div class="col-md">
                                 <h4>Time Length</h4>
                                 <table class="charts-css bar show-labels data-spacing-5" id="length">
 
