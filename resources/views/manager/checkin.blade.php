@@ -42,7 +42,7 @@ Check In
 
         <div class="row align-items-center">
     
-            <div class="col-sm">
+            <div class="col-md">
     
                 <!-- scanner/camera preview window -->
                 <div class="video-container row justify-content-center">
@@ -81,7 +81,7 @@ Check In
     
             </div>
     
-            <div class="col-xxl">
+            <div class="col-md">
     
                 @if ($result != '0')
                     <!-- result card -->
