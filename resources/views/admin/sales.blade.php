@@ -10,12 +10,14 @@
 
 @section('extra-css')
     <style>
+        .charts-css.bar.show-labels#rates {
+            --labels-size: 125px;
+        }
+
         .charts-css td {
             color: white;
             border-radius: 100px;
         }
-
-        --labels
 
         .data {
             font-weight: 600;
