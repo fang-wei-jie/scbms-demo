@@ -460,13 +460,31 @@
                 </div>
 
                 <div class="col-auto">
-                    <a class="link-dark" href="{{ route('privacy') }}">Privacy Notice</a> &nbsp;
-                    <a class="link-dark" href="{{ route('terms') }}">Terms of Use</a> &nbsp;
-                    <a class="link-dark" href="{{ route('payment-methods') }}">Payment Methods</a> &nbsp;
+                    <div class="row">
+                        <div class="col-auto">
+                            <a class="link-dark" href="{{ route('privacy') }}">Privacy Notice</a>
+                        </div>
+
+                        <div class="col-auto">
+                            <a class="link-dark" href="{{ route('terms') }}">Terms of Use</a> 
+                        </div>
+                        
+                        <div class="col-auto">
+                            <a class="link-dark" href="{{ route('payment-methods') }}">Payment Methods</a> 
+                        </div>
+
+                    @guest
+                        <div class="col-auto">
+                            <a class="link-dark" href="{{ route('about-us') }}">About Us</a> 
+                        </div>
+                    @endguest
                     
                     @auth
-                        <a class="link-dark" href="about-us/#anc">Address and Contact</a> &nbsp;
+                        <div class="col-auto">
+                            <a class="link-dark" href="about-us/#anc">Address and Contact</a>
+                        </div>
                     @endauth
+                    </div>
                 </div>
             </div>
 
