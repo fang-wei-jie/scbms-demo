@@ -27,11 +27,11 @@ About Us
 
             Quos cumque et ea eveniet et deserunt vitae. Totam expedita sint eius laborum qui. Quia rem et et. Eum qui corrupti aperiam tempora. Molestias temporibus dolore debitis quaerat explicabo quibusdam sint. Sit quam nemo officiis officiis.
         
-            Aut voluptatem ex officia non quia iure iste qui. Ut debitis nisi sunt cumque. Ratione voluptatum explicabo odit. Magnam atque ratione sed nemo cumque sed eos.
+            {{-- Aut voluptatem ex officia non quia iure iste qui. Ut debitis nisi sunt cumque. Ratione voluptatum explicabo odit. Magnam atque ratione sed nemo cumque sed eos.
         
             Debitis ex id sint perspiciatis rerum. Modi qui tempora laboriosam officia cupiditate. Nisi sed pariatur et corporis id omnis. Soluta dicta animi voluptatem officiis aperiam. Vitae nisi maxime molestiae in. Amet aliquam consequatur iusto animi voluptatem ad adipisci aut.
         
-            Et aperiam rerum quae repellendus at quaerat consectetur. Porro quasi est quo voluptatem similique aperiam. Placeat omnis placeat aut laudantium commodi. Voluptatibus vel in voluptas in perspiciatis ex. A consequuntur aut dolore.
+            Et aperiam rerum quae repellendus at quaerat consectetur. Porro quasi est quo voluptatem similique aperiam. Placeat omnis placeat aut laudantium commodi. Voluptatibus vel in voluptas in perspiciatis ex. A consequuntur aut dolore. --}}
         
         </div>
 
