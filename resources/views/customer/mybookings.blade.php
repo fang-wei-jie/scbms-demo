@@ -64,7 +64,7 @@ My Bookings
                                     <h4><span class="badge bg-primary">Soon</span></h4>
                                 @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
                                     {{-- same date but passed this hour, or older than today --}}
-                                    <h4><span class="badge bg-secondary">Used</span></h4>
+                                    <h4><span class="badge bg-secondary">Past</span></h4>
                                 @endif
                                     
                             </div>

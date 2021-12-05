@@ -94,7 +94,7 @@ class MyBookingsController extends Controller
                                     Court '.$result->courtID.' - '.$result->rateName.' rate
                                 </div>
                                 <div class="col-auto me-3">
-                                    <h4><span class="badge bg-secondary">Used</span></h4>
+                                    <h4><span class="badge bg-secondary">Past</span></h4>
                                 </div>
                             </button>
                         </h2>
