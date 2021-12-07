@@ -93,34 +93,7 @@ class AdminCounterBookingController extends Controller
 
                 return back()->with(['selectedDate' => 0, 'notify' => "We are sorry. You had exceed the last allowed time of booking the court for the selected time. Please choose another time. "]);
 
-            } else {
-
-                $count = DB::table('bookings')
-                    ->where('dateSlot', date('Ymd'))
-                    ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength)])
-                    ->count();
-
             }
-
-        } else if ($dateSlot > $minDate && $dateSlot <= $maxDate && ($timeLength + $timeSlot) <= $end_time) {
-
-            // if selected date is after today
-
-            // count numebr of courts
-            $count = DB::table('bookings')
-                ->where('dateSlot', $dateSlot)
-                ->where(
-                    function($query) use ($timeSlot, $timeLength){
-                        $query
-                            ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                            ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
-                            ->orWhere(function($query) use ($timeSlot, $timeLength){
-                                $query
-                                    ->where('timeSlot', '<=', $timeSlot)
-                                    ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
-                            });
-                    })
-                ->count();
 
         }
 
@@ -161,7 +134,7 @@ class AdminCounterBookingController extends Controller
         }
 
         return view ('admin.book-court', [
-            'count' => $count,
+            'count' => array_count_values($courts)['0'],
             'courts' => $courts,
             'rates' => $rates,
             'selectedDate' => 1,
@@ -286,7 +259,7 @@ class AdminCounterBookingController extends Controller
 
             return view ('admin.book-court', [
                 'selectedDate' => 1,
-                'count' => $count,
+                'count' => array_count_values($courts)['0'],
                 'courts' => $courts,
                 'rates' => $rates,
                 'dateSlot' => $request->dateSlot,
@@ -405,7 +378,7 @@ class AdminCounterBookingController extends Controller
 
             return view ('admin.book-court', [
                 'selectedDate' => 1,
-                'count' => $count,
+                'count' => array_count_values($courts)['0'],
                 'courts' => $courts,
                 'rates' => $rates,
                 'dateSlot' => $request->dateSlot,
