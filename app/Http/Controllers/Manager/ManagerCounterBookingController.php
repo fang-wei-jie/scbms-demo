@@ -113,7 +113,12 @@ class ManagerCounterBookingController extends Controller
                     function($query) use ($timeSlot, $timeLength){
                         $query
                             ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                            ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                            ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
+                            ->orWhere(function($query) use ($timeSlot, $timeLength){
+                                $query
+                                    ->where('timeSlot', '<=', $timeSlot)
+                                    ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
+                            });
                     })
                 ->count();
 
@@ -129,7 +134,12 @@ class ManagerCounterBookingController extends Controller
                     function($query) use ($timeSlot, $timeLength){
                         $query
                             ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                            ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                            ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
+                            ->orWhere(function($query) use ($timeSlot, $timeLength){
+                                $query
+                                    ->where('timeSlot', '<=', $timeSlot)
+                                    ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
+                            });
                 })
                 ->count();
 
@@ -215,7 +225,12 @@ class ManagerCounterBookingController extends Controller
                 function($query) use ($timeSlot, $timeLength){
                     $query
                         ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                        ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                        ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
+                        ->orWhere(function($query) use ($timeSlot, $timeLength){
+                            $query
+                                ->where('timeSlot', '<=', $timeSlot)
+                                ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
+                        });
             })
             ->count();
 
@@ -243,7 +258,12 @@ class ManagerCounterBookingController extends Controller
                         function($query) use ($timeSlot, $timeLength){
                             $query
                                 ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                                ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                                ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
+                                ->orWhere(function($query) use ($timeSlot, $timeLength){
+                                    $query
+                                        ->where('timeSlot', '<=', $timeSlot)
+                                        ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
+                                });
                     })
                     ->count();
 
@@ -371,7 +391,12 @@ class ManagerCounterBookingController extends Controller
                         function($query) use ($timeSlot, $timeLength){
                             $query
                                 ->whereBetween('timeSlot', [$timeSlot, ($timeSlot + $timeLength - 1)])
-                                ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)]);
+                                ->orWhereBetween(DB::raw('timeSlot + timeLength - 1'), [$timeSlot, ($timeSlot + $timeLength)])
+                                ->orWhere(function($query) use ($timeSlot, $timeLength){
+                                    $query
+                                        ->where('timeSlot', '<=', $timeSlot)
+                                        ->whereRaw('(timeSlot + timeLength) >= '. $timeSlot + $timeLength);
+                                });
                     })
                     ->count();
 
