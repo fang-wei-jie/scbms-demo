@@ -108,7 +108,7 @@ Book Courts
             </div>
             @endif
 
-            @if($count < $settings->get('courts_count'))
+            @if($count <= $settings->get('courts_count'))
 
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
