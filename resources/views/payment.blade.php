@@ -111,7 +111,7 @@ $navbar_text_class = $settings->get('navbar_customer_text_class');
                     <div class="form-check">
                         <div class="row align-items-center justify-content-start mx-2 my-2">
                             <div class="col-auto">
-                                <input class="form-check-input" type="radio" name="method" id="tng">
+                                <input class="form-check-input" type="radio" name="method" id="tng" required>
                             </div>
                             <label class="col form-check-label" for="tng">
                                 <div class="row align-items-center">
@@ -131,7 +131,7 @@ $navbar_text_class = $settings->get('navbar_customer_text_class');
                     <div class="form-check">
                         <div class="row align-items-center justify-content-start mx-2 my-2">
                             <div class="col-auto">
-                                <input class="form-check-input" type="radio" name="method" id="boost">
+                                <input class="form-check-input" type="radio" name="method" id="boost" required>
                             </div>
                             <label class="col form-check-label" for="boost">
                                 <div class="row align-items-center">
@@ -151,7 +151,7 @@ $navbar_text_class = $settings->get('navbar_customer_text_class');
                     <div class="form-check">
                         <div class="row align-items-center justify-content-start mx-2 my-2">
                             <div class="col-auto">
-                                <input class="form-check-input" type="radio" name="method" id="fpx">
+                                <input class="form-check-input" type="radio" name="method" id="fpx" required>
                             </div>
                             <label class="col form-check-label" for="fpx">
                                 <div class="row align-items-center">
@@ -171,7 +171,7 @@ $navbar_text_class = $settings->get('navbar_customer_text_class');
                     <div class="form-check">
                         <div class="row align-items-center justify-content-start mx-2 my-2">
                             <div class="col-auto">
-                                <input class="form-check-input" type="radio" name="method" id="visa">
+                                <input class="form-check-input" type="radio" name="method" id="visa" required>
                             </div>
                             <label class="col form-check-label" for="visa">
                                 <div class="row align-items-center">
@@ -191,7 +191,7 @@ $navbar_text_class = $settings->get('navbar_customer_text_class');
                     <div class="form-check">
                         <div class="row align-items-center justify-content-start mx-2 my-2">
                             <div class="col-auto">
-                                <input class="form-check-input" type="radio" name="method" id="mc">
+                                <input class="form-check-input" type="radio" name="method" id="mc" required>
                             </div>
                             <label class="col form-check-label" for="mc">
                                 <div class="row align-items-center">
