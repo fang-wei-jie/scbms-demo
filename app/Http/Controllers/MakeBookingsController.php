@@ -414,7 +414,7 @@ class MakeBookingsController extends Controller
         if ($details) {
             if ($details->status_id == 0 && $details->custID == Auth::user()->id) {
             
-                return view ('payment', [
+                return view ('customer.payment', [
                     'id' => $details->bookingID,
                     'amount' => $details->timeLength * $details->price
                 ]);

@@ -24,24 +24,24 @@ use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
 
 // Admin Controllers
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminCheckInController;
 use App\Http\Controllers\Admin\AdminCounterBookingController;
 use App\Http\Controllers\Admin\AdminBookingsController;
 use App\Http\Controllers\Admin\AdminRatesController;
-use App\Http\Controllers\Admin\SalesController as AdminSalesController;
+use App\Http\Controllers\Admin\AdminSalesController;
 use App\Http\Controllers\Admin\AdminMyAccountController;
 use App\Http\Controllers\Admin\AdminResetPasswordController;
 
 // Manager Controllers
-use App\Http\Controllers\Manager\DashboardController as ManagerDashboardController;
+use App\Http\Controllers\Manager\ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerCounterBookingController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
 use App\Http\Controllers\Manager\AdminAccountsController;
 use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
-use App\Http\Controllers\Manager\SalesController as ManagerSalesController;
+use App\Http\Controllers\Manager\ManagerSalesController;
 use App\Http\Controllers\Manager\ManagerMyAccountController;
 use App\Http\Controllers\Manager\ManagerResetPasswordController;
 use App\Http\Controllers\Manager\SettingsController;

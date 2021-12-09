@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Spatie\Valuestore\Valuestore;
 
-class SalesController extends Controller
+class AdminSalesController extends Controller
 {
     function __construct()
     {

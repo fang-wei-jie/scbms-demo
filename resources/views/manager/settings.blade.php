@@ -77,7 +77,7 @@
 @endsection
 
 @section('extra-dependencies')
-<script src="{{ URL::asset('dependencies/JavaScript/settings.js') }}"></script>
+<script src="{{ URL::asset('dependencies/settings.js') }}"></script>
 
 {{-- Coloris Color Picker --}}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>

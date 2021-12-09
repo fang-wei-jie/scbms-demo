@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
 
-class SalesController extends Controller
+class ManagerSalesController extends Controller
 {
     function __construct()
     {
