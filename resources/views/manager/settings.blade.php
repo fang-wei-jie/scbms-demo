@@ -264,7 +264,7 @@
                                 <br>
                             </div>
 
-                            <h5 class="mt-3">Check-in Terminal</h5>
+                            {{-- <h5 class="mt-3">Check-in Terminal</h5>
 
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
@@ -274,7 +274,7 @@
                                     <small id="smallUseRates">Use check-in terminal to speed up and automate admission</small>
                                 </label>
                                 
-                            </div>
+                            </div> --}}
 
                             <h5 class="mt-3">Admin</h5>
 
