@@ -53,7 +53,7 @@ Payment Methods
                             <picture alt="cash logo">
                                 <source srcset="{{ URL::asset('images/boost.webp') }}" type="image/webp" height="80">
                                 <source srcset="{{ URL::asset('images/boost.jpg') }}" type="image/jpeg" height="80">
-                                <img src="{{ URL::asset('images/boost.jpg') }}" height="80">
+                                <img src="{{ URL::asset('images/boost.jpg') }}" height="80" style="border-radius: 1rem">
                             </picture>
                         </div>
                         <div class="col"><h4>Boost<sup>2</sup></h4></div>
