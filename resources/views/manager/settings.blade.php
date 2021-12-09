@@ -330,7 +330,7 @@
                                             <div class="form-control">
                                                 <label class="mimic-floating mt-1" for="logo"">Upload New Logo</label>
                                                 <input id="logo" class="form-control form-control-sm form-control-file mb-1" type="file" name="logo">
-                                                <small>PNG or JPEG (JPG) with 128x128 resolution without alpha channel</small>
+                                                <small>PNG at 128x128 resolution without alpha channel</small>
                                             </div>
                                         </div>
                                     </div>
