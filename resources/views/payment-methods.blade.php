@@ -14,7 +14,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/cash-coin.png') }}" alt="cash logo" height="80">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/cash-coin.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/cash-coin.png') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/cash-coin.png') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col">
                             <h4>Cash<sup>1</sup></h4>
@@ -29,7 +33,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/tngd.png') }}" alt="TNG e-wallet logo" height="80">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/tngd.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/tngd.png') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/tngd.png') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col"><h4>Touch &#39;N Go eWallet<sup>2</sup></h4></div>
                     </div>
@@ -42,7 +50,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/boost.jpg') }}" alt="Boost logo" height="80" style="border-radius: 15px">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/boost.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/boost.jpg') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/boost.jpg') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col"><h4>Boost<sup>2</sup></h4></div>
                     </div>
@@ -55,7 +67,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/fpx.png') }}" alt="FPX logo" height="80">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/fpx.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/fpx.png') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/fpx.png') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col"><h4>FPX<sup>3</sup></h4></div>
                     </div>
@@ -68,7 +84,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/visa.png') }}" alt="Visa Logo" width="80">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/visa.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/visa.png') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/visa.png') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col"><h4>Visa<sup>3</sup></h4></div>
                     </div>
@@ -81,7 +101,11 @@ Payment Methods
                 <div class="card-body">
                     <div class="row align-items-center justify-content-start">
                         <div class="col-auto">
-                            <img src="{{ URL::asset('images/mc.png') }}" alt="MasterCard Logo" width="80">
+                            <picture alt="cash logo">
+                                <source srcset="{{ URL::asset('images/mc.webp') }}" type="image/webp" height="80">
+                                <source srcset="{{ URL::asset('images/mc.png') }}" type="image/jpeg" height="80">
+                                <img src="{{ URL::asset('images/mc.png') }}" height="80">
+                            </picture>
                         </div>
                         <div class="col"><h4>MasterCard<sup>3</sup></h4></div>
                     </div>

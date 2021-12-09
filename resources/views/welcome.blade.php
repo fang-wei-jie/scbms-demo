@@ -23,13 +23,25 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="{{ URL::asset('images/banner/banner-1.jpg') }}" class="d-block w-100 carousel-image" alt="...">
+            <picture alt="cash logo">
+                <source srcset="{{ URL::asset('images/banner/banner-1.webp') }}" type="image/webp">
+                <source srcset="{{ URL::asset('images/banner/banner-1.jpg') }}" type="image/jpeg">
+                <img src="{{ URL::asset('images/banner/banner-1.jpg') }}" class="d-block w-100 carousel-image">
+            </picture>
         </div>
         <div class="carousel-item">
-            <img src="{{ URL::asset('images/banner/banner-2.jpg') }}" class="d-block w-100 carousel-image" alt="...">
+            <picture alt="cash logo">
+                <source srcset="{{ URL::asset('images/banner/banner-2.webp') }}" type="image/webp">
+                <source srcset="{{ URL::asset('images/banner/banner-2.jpg') }}" type="image/jpeg">
+                <img src="{{ URL::asset('images/banner/banner-2.jpg') }}" class="d-block w-100 carousel-image">
+            </picture>
         </div>
         <div class="carousel-item">
-            <img src="{{ URL::asset('images/banner/banner-3.jpg') }}" class="d-block w-100 carousel-image" alt="...">
+            <picture alt="cash logo">
+                <source srcset="{{ URL::asset('images/banner/banner-3.webp') }}" type="image/webp">
+                <source srcset="{{ URL::asset('images/banner/banner-3.jpg') }}" type="image/jpeg">
+                <img src="{{ URL::asset('images/banner/banner-3.jpg') }}" class="d-block w-100 carousel-image">
+            </picture>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-bs-slide="prev">

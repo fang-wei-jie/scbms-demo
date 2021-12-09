@@ -45,11 +45,19 @@ About Us
             </p>
 
             <a class="btn btn-light" href="https://www.google.com/maps?daddr=({{ $settings->get('map_lat') }},{{ $settings->get('map_long') }})">
-                <img src="{{ URL::asset('images/gmaps.png') }}" alt="Google Maps" height="28px">
+                <picture alt="Google Maps">
+                    <source srcset="{{ URL::asset('images/gmaps.webp') }}" type="image/webp" height="28px">
+                    <source srcset="{{ URL::asset('images/gmaps.png') }}" type="image/jpeg" height="28px">
+                    <img src="{{ URL::asset('images/gmaps.png') }}" height="28px">
+                </picture>
                 &nbsp;Google Maps
             </a>
             <a class="btn btn-light" href="https://maps.apple.com/?daddr=({{ $settings->get('map_lat') }}%2C%20{{ $settings->get('map_long') }})">
-                <img src="{{ URL::asset('images/apple-maps.png') }}" alt="Apple Maps" height="28px">
+                <picture alt="Apple Maps">
+                    <source srcset="{{ URL::asset('images/apple-maps.webp') }}" type="image/webp" height="28px">
+                    <source srcset="{{ URL::asset('images/apple-maps.png') }}" type="image/jpeg" height="28px">
+                    <img src="{{ URL::asset('images/apple-maps.png') }}" height="28px">
+                </picture>
                 &nbsp;Apple Maps
             </a>
 
