@@ -56,7 +56,7 @@ My Bookings
                                 @if ($list->status_id == 0)
                                     {{-- not paid --}}
                                     <h4><span class="badge bg-danger">Unpaid</span></h4>
-                                @elseif ($list->dateSlot == date('Ymd') && $list->timeSlot == date('H'))
+                                @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot == date('H') || ($list->timeSlot + $list->timeLength - 1) <= date('H')))
                                     {{-- same date and same hour --}}
                                     <h4><span class="badge bg-primary">Current</span></h4>
                                 @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
@@ -123,7 +123,7 @@ My Bookings
                                 @if($list->status_id != 0)
 
                                     {{-- if booking not expired yet, show QR code --}}
-                                    @if (!($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                    @if (!($list->dateSlot == date('Ymd') && ($list->timeSlot < date('H') && ($list->timeSlot + $list->timeLength < date('H')))))
                                         <div class="col-auto" style="margin: auto; display: block;">
                                             <div class="row justify-content-center">
                                                 @php
