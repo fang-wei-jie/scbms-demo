@@ -4,6 +4,7 @@
     $settings = Valuestore::make(storage_path('app/settings.json'));
     $name = $settings->get('name');
     $domain = $settings->get('domain');
+    $registration = $settings->get('registration');
 
     if (str_contains($_SERVER['REQUEST_URI'], "manager")) {
 
@@ -417,7 +418,7 @@
             @guest
             <div class="row justify-content-around">
 
-                <h2>{{ $name }}</h2>
+                <span class="h2">{{ $name }}<span class="h6">&nbsp;{{ $registration }}</span></span>
 
                 <div class="col-md">
                     

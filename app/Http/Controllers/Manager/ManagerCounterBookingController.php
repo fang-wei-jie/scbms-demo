@@ -451,7 +451,10 @@ class ManagerCounterBookingController extends Controller
 
             $fpdf->Cell(20);
             if ($settings->get('registration')) {
-                $fpdf->Cell(100, 5, $settings->get('name'). " (" . $settings->get('registration'). ")", 0, 1);
+                $fpdf->Write(5, $settings->get('name'));
+
+                $fpdf->SetFont('Helvetica', '', 11);
+                $fpdf->Cell(100, 5, "  " . $settings->get('registration'), 0, 1);
             } else {
                 $fpdf->Cell(100, 5, $settings->get('name'), 0, 1);
             }
