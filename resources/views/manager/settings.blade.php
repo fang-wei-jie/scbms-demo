@@ -191,8 +191,7 @@
                                     <div class="form-floating mb-3">
                                         <input id="name" class="form-control" type="text" name="name" maxlength="255" value="{{ $settings->get('name') }}">
                                         <label for="name">Name</label>
-                                        <small>Name will be displayed across the whole website and receipt. </small>
-                                        <small>Please request assist from developer to change the name for the system that will be used when sending reset password email. </small>
+                                        <small>Name will be displayed across the whole website, receipt, and email. </small>
                                     </div>
 
                                     <div class="form-floating mb-3">

@@ -1,4 +1,6 @@
 <?php
+use Spatie\Valuestore\Valuestore;
+$settings = Valuestore::make(storage_path('app/settings.json'));
 
 return [
 
@@ -85,7 +87,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => $settings->get("name", env('MAIL_FROM_NAME', 'Example')),
     ],
 
     /*
