@@ -226,15 +226,15 @@
                                         <small>Please update the map marker and preview by updating the lattitude and longitude values below. </small>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row mb-3">
                                         <div class="col">
-                                            <div class="form-floating mb-3">
+                                            <div class="form-floating">
                                                 <input id="map_lat" class="form-control" type="number" step="any" name="map_lat" maxlength="20" value="{{ $settings->get('map_lat') }}">
                                                 <label for="map_lat">Lattitude</label>
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <div class="form-floating mb-3">
+                                            <div class="form-floating">
                                                 <input id="map_long" class="form-control" type="number" step="any" name="map_long" maxlength="20" value="{{ $settings->get('map_long') }}">
                                                 <label for="map_long">Longitude</label>
                                             </div>
