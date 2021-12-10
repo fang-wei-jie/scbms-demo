@@ -15,6 +15,26 @@ class ManagerDashboard extends Component
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
+
+        // query for bookings that conflicts with new operation hours
+        $operationHourConflicts = DB::table('bookings')
+            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
+            ->where(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('timeSlot', '<', $start_time) // for bookings that is earlier than new start time
+                    ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
+                    ->orWhereRaw('(timeSlot + timeLength - 1) > '. $end_time); // for bookings that ends later than new end time
+                })
+            ->get();
+
+        // query for bookings that conflicts with new number of courts
+        $courtCountConflicts = DB::table('bookings')
+            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
+            ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
+            ->get();
+
         // get list of bookings at the current hour
         $bookingRows = DB::table('bookings')
             ->where('dateSlot', '=', date('Ymd'))
@@ -57,6 +77,10 @@ class ManagerDashboard extends Component
             ->first();
 
         return view('livewire.dashboard.manager-dashboard', [
+            'settings' => $settings,
+            'operationHourConflicts' => $operationHourConflicts,
+            'courtCountConflicts' => $courtCountConflicts,
+
             'bookings' => $bookingRows,
 
             'rates' => $rates,

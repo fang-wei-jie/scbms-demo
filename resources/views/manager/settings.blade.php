@@ -73,6 +73,10 @@
         user-select: none;
     }
 
+    small {
+        margin-top: .5rem !important;
+    }
+
 </style>
 @endsection
 
@@ -88,7 +92,7 @@
     <div class="container">
 
         <div class="row justify-content-center">
-            <div class="col-xl-8">
+            <div class="col-xl-9">
                 <form action="{{ route('manager.settings') }}" enctype="multipart/form-data" method="post" autocomplete="off">
                     @csrf
 
@@ -115,6 +119,44 @@
             
                                 <div class="col-lg-6">
                                     <div class="row mb-3">
+                                        {{-- operation hour conflicts accordion --}}
+                                        @if (count($operationHourConflicts) > 0)
+                                        <div class="accordion mb-2" id="operationHourConflicts">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ohc_list" aria-expanded="false" aria-controls="ohc_list">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-auto">
+                                                            <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                                                        </div>
+                                                        <div class="col">
+                                                            @if(count($operationHourConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict with New Operation Hours
+                                                        </div>
+                                                    </div>
+                                                </button>
+                                            </h2>
+                                            <div id="ohc_list" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#operationHourConflicts">
+                                                <div class="accordion-body">
+                                                    @foreach ($operationHourConflicts as $details)
+                                                        <div class="row justify-content-start mb-1">
+                                                            <div class="col">
+                                                                {{ substr($details->dateSlot, 6, 2) . "/" . substr($details->dateSlot, 4, 2) . "/" . substr($details->dateSlot, 0, 4) }}
+                                                            </div>
+                                                            <div class="col">
+                                                                {{ $details->timeSlot .":00-".($details->timeSlot + $details->timeLength).":00" }}
+                                                            </div>
+                                                            <div class="col">
+                                                                {{  "Court " . $details->courtID  }}
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        @endif
+
+                                        {{-- operation hours, as in start and end time --}}
                                         <div class="col">
                                             <div class="form-floating">
                                                 <select class="form-select" name="start_time" id="start_time">
@@ -135,13 +177,51 @@
                                                 <label for="end_time">End Time</label>
                                             </div>
                                         </div>
-                                        <small>Start and end time will be used to guide the bookings' time slot. </small>
+                                        <small>Start and end time will be used to guide the bookings' time slot. If any prior bookings conflicts with new operation hours, the court should still open for them, or cancel and refund the booking. </small>
                                     </div>
                 
+                                    {{-- court count conflicts accordion --}}
+                                    @if (count($courtCountConflicts) > 0)
+                                    <div class="accordion mb-2" id="courtCountConflicts">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ccc_list" aria-expanded="false" aria-controls="ccc_list">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                                                    </div>
+                                                    <div class="col">
+                                                        @if(count($courtCountConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict with New Number of Courts
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                        <div id="ccc_list" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#courtCountConflicts">
+                                            <div class="accordion-body">
+                                                @foreach ($courtCountConflicts as $details)
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            {{ substr($details->dateSlot, 6, 2) . "/" . substr($details->dateSlot, 4, 2) . "/" . substr($details->dateSlot, 0, 4) }}
+                                                        </div>
+                                                        <div class="col">
+                                                            {{ $details->timeSlot .":00-".($details->timeSlot + $details->timeLength).":00" }}
+                                                        </div>
+                                                        <div class="col">
+                                                            {{  "Court " . $details->courtID  }}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    @endif
+
+                                    {{-- court count setting, as in number of courts --}}
                                     <div class="form-floating mb-3">
                                         <input id="courts_count" class="form-control" type="number" name="courts_count" value="{{ $settings->get('courts_count') }}" pattern="[0-9]*" step="1" min="1">
                                         <label for="courts_count">Number of Courts</label>
-                                        <small>Number of courts available for the customer to book. </small>
+                                        <small>Number of courts available for the customer to book. If any prior bookings conflicts with the new courts count, the court should notify and cancel the booking for the customer. </small>
                                     </div>
                 
                                     <div class="form-floating mb-3">
@@ -241,14 +321,10 @@
                                         </div>
                                         <small>The lattitude and longitude coordiantes will be used on <a href="{{ route('about-us') }}">About Us page</a> for map preview and to faciliate map navigation links. </small>
                                     </div>
-
-                                    
-
                                 </div>
-
                             </div>
-
                         </div>
+
                         <div class="tab-pane fade" id="pills-features" role="tabpanel" aria-labelledby="pills-features-tab">
                             
                             <h5>Cancel Booking</h5>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Valuestore\Valuestore;
+use Illuminate\Support\Facades\DB;
 
 class SettingsController extends Controller
 {
@@ -17,8 +18,32 @@ class SettingsController extends Controller
 
     function view () {
 
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
+
+        // query for bookings that conflicts with new operation hours
+        $operationHourConflicts = DB::table('bookings')
+            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
+            ->where(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('timeSlot', '<', $start_time) // for bookings that is earlier than new start time
+                    ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
+                    ->orWhereRaw('(timeSlot + timeLength - 1) > '. $end_time); // for bookings that ends later than new end time
+                })
+            ->get();
+
+        // query for bookings that conflicts with new number of courts
+        $courtCountConflicts = DB::table('bookings')
+            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
+            ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
+            ->get();
+
         return view ('manager.settings', [
-            "settings" => Valuestore::make(storage_path('app/settings.json')),
+            "settings" => $settings,
+            'operationHourConflicts' => $operationHourConflicts,
+            'courtCountConflicts' => $courtCountConflicts,
         ]);
 
     }
