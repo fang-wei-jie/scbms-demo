@@ -112,7 +112,7 @@ Rates
                             </span>
                         </button>
                         @else
-                        <button class="btn btn-outline-danger" type="submit" name="enable">
+                        <button class="btn btn-danger" type="submit" name="enable">
                             <span style="display: flex; justify-content: space-between; align-items: center;">
                                 <i class="bi bi-toggle-off"></i>
                                 <span class="d-none d-md-block">&nbsp;Disabled</span>
