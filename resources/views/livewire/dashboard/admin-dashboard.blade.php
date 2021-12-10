@@ -21,7 +21,7 @@
                             </a>
                             <a href="book-court" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-bookmark-plus"></i>
+                                    <i class="bi bi-bookmark-plus-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Book Courts</span>
                                 </span>
                             </a>
