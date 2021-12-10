@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h3 class="card-title text-light">Alerts</h3>
+                            <h3 class="card-title text-light">Alert</h3>
                         </div>
                         <div class="col-auto">
                             <a href="bookings" class="btn btn-outline-light">
