@@ -555,13 +555,3 @@
 
     </div>
 @endsection
-
-@section('bottom-js')
-<script>
-    $(document).ready(function() {
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-            $('#customer_navbar_toggle, #customer_navtext_toggle, #admin_navbar_toggle, #admin_navtext_toggle, #manager_navbar_toggle, #manager_navtext_toggle').popover('disable');
-        }
-    })
-</script>
-@endsection
