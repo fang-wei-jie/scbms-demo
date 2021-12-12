@@ -224,13 +224,15 @@
                                         <small>Number of courts available for the customer to book. If any prior bookings conflicts with the new courts count, the court should notify and cancel the booking for the customer. </small>
                                     </div>
                 
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating">
                                         <input class="form-control" type="number" name="prebook_days_ahead" id="prebook_days_ahead" value="{{ $settings->get('prebook_days_ahead') }}" pattern="[0-9]*" step="1" min="1">
                                         <label for="prebook_days_ahead">Allowed Days Ahead to Book (Days)</label>
                                         <small>
                                             Determines how many days ahead that the court can be booked (excluding today). Recommended value is at least 7 days or more, but can be reduced to 1 days ahead. 
                                         </small>
                                     </div>
+
+                                    <div class="d-block d-md-block d-lg-none mb-3"></div>
                                 </div>
                                 
                                 <div class="col-lg">
@@ -250,7 +252,7 @@
                                         </small>
                                     </div>
                 
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating">
                                         <input class="form-control" type="number" name="payment_grace_period" id="payment_grace_period" value="{{ $settings->get('payment_grace_period') }}" pattern="[0-9]*" step="1" min="5" max="15">
                                         <label for="payment_grace_period">Payment Grace Period (Minutes)</label>
                                         <small>
@@ -306,7 +308,7 @@
                                         <small>Please update the map marker and preview by updating the lattitude and longitude values below. </small>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <div class="row">
                                         <div class="col">
                                             <div class="form-floating">
                                                 <input id="map_lat" class="form-control" type="number" step="any" name="map_lat" maxlength="20" value="{{ $settings->get('map_lat') }}">
