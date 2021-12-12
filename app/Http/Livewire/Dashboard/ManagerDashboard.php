@@ -27,12 +27,14 @@ class ManagerDashboard extends Component
                     ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
                     ->orWhereRaw('(timeSlot + timeLength - 1) > '. $end_time); // for bookings that ends later than new end time
                 })
+            ->where('status_id', 1) // paid bookings only
             ->get();
 
         // query for bookings that conflicts with new number of courts
         $courtCountConflicts = DB::table('bookings')
             ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
             ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
+            ->where('status_id', 1) // paid bookings only
             ->get();
 
         // get list of bookings at the current hour
