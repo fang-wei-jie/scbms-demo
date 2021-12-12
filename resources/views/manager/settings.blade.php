@@ -319,7 +319,7 @@
                                                 <label for="map_long">Longitude</label>
                                             </div>
                                         </div>
-                                        <small>The lattitude and longitude coordiantes will be used on <a href="{{ route('about-us') }}">About Us page</a> for map preview and to faciliate map navigation links. </small>
+                                        <small>7 decimals point precision was required for compatibility reasons. Always check the result on <a href="{{ route('about-us') }}">About Us page</a> after changing this value. The lattitude and longitude coordiantes will be used for map preview and map navigation links. </small>
                                     </div>
                                 </div>
                             </div>
@@ -541,8 +541,9 @@
 
                     <div class="row mb-3">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" type="submit" id="save" name="save">
-                                Save
+                            <button class="btn btn-outline-primary" type="submit" id="save" name="save" disabled>
+                                <i class="bi bi-check-lg"></i>
+                                Saved
                             </button>
                         </div>
                     </div>

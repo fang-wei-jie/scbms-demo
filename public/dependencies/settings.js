@@ -66,6 +66,10 @@ $(document).ready(function() {
     })
 
     $("#courts_count").on("keyup change", function() {
+    // promopt changes not saved for operation hours
+    $("#start_time, #end_time").change(function() {
+        changesNotSaved()
+    })
         validateNumber(this, 1, null)
     })
 
@@ -83,6 +87,10 @@ $(document).ready(function() {
 
     $("#payment_grace_period").on("keyup change", function() {
         validateNumber(this, 5, 15)
+    })
+
+    $("#registration, #map_lat, #map_long").on("keyup change", function() {
+        changesNotSaved()
     })
 
     // Presence
@@ -126,6 +134,11 @@ $(document).ready(function() {
             $(".admin-toggles").prop('disabled', true)
             $(".admin-toggles").prop('checked', false)
         }
+    })
+
+    // any toggle changes, prompt changes not saved
+    $(".form-check-input").change(function() {
+        changesNotSaved()
     })
 
     // UI
@@ -191,15 +204,22 @@ $(document).ready(function() {
         $("#manager_navtext").val(textColor)
     })
 
+    // prompt changes not saved when UI previews changed
+    $("#customer_navbar_toggle, #admin_navbar_toggle, #manager_navbar_toggle, #customer_navtext_toggle, #admin_navtext_toggle, #manager_navtext_toggle").click(function() {
+        changesNotSaved()
+    })
+
+    $("#customer_navbar_color, #admin_navbar_color, #manager_navbar_color, .form-control-file").on("input change", function() {
+        changesNotSaved()
+    })
+
     function validateIsEmpty(objectID) {
         if ($(objectID).val() == "") {
-            $(objectID).addClass("is-invalid")
-            $(objectID).removeClass("is-valid")
-            $("#save").prop("disabled", true)
+            makeFieldInvalid(objectID)
+            saveBlocked()
         } else {
-            $(objectID).addClass("is-valid")
-            $(objectID).removeClass("is-invalid")
-            $("#save").prop("disabled", false)
+            makeFieldValid(objectID)
+            changesNotSaved()
         }
     }
 
@@ -216,18 +236,47 @@ $(document).ready(function() {
             }
 
             if (minValidate && maxValidate) {
-                $(objectID).addClass("is-valid")
-                $(objectID).removeClass("is-invalid")
-                $("#save").prop("disabled", false)
+                makeFieldValid(objectID)
+                changesNotSaved()
             } else {
-                $(objectID).addClass("is-invalid")
-                $(objectID).removeClass("is-valid")
-                $("#save").prop("disabled", true)
+                makeFieldInvalid(objectID)
+                saveBlocked()
             }
         } else {
-            $(objectID).addClass("is-invalid")
-            $(objectID).removeClass("is-valid")
-            $("#save").prop("disabled", true)
+            makeFieldInvalid(objectID)
+            saveBlocked()
         }
+    }
+
+    // display valid check message for input
+    function makeFieldValid(objectID) {
+        $(objectID).addClass("is-valid")
+        $(objectID).removeClass("is-invalid")
+    }
+
+    // display invalid check message for input
+    function makeFieldInvalid(objectID) {
+        $(objectID).addClass("is-invalid")
+        $(objectID).removeClass("is-valid")
+    }
+
+    // save button notify user why data cannot be saved
+    function saveBlocked() {
+        
+        $("#save").prop("disabled", true)
+        $("#save").text("Error Found")
+        $("#save").removeClass("btn-outline-primary")
+        $("#save").addClass("btn-primary")
+
+    }
+
+    // save button notify user that the data is not saved yet
+    function changesNotSaved() {
+
+        $("#save").prop("disabled", false)
+        $("#save").text("Save Changes")
+        $("#save").removeClass("btn-outline-primary")
+        $("#save").addClass("btn-primary")
+
     }
 })
