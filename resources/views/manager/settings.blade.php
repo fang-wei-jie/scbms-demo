@@ -95,8 +95,8 @@
             <div class="col-xl-9">
                 <form action="{{ route('manager.settings') }}" enctype="multipart/form-data" method="post" autocomplete="off">
                     @csrf
-
-                    <ul class="nav nav-pills nav-fill mb-3" id="pills-tab" role="tablist">
+                    
+                    <ul class="nav nav-pills nav-fill mb-3 pt-2"  id="pills-tab" style="position: -webkit-sticky; position: sticky; top: 3.5rem; z-index: 1; background-color: white;" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="pills-operation-tab" data-bs-toggle="pill" data-bs-target="#pills-operation" type="button" role="tab" aria-controls="pills-operation" aria-selected="true">Operation</button>
                         </li>
@@ -111,7 +111,7 @@
                         </li>
                     </ul>
 
-                    <div class="tab-content mb-3" id="pills-tabContent">
+                    <div class="tab-content mb-3" id="pills-tabContent" style="margin-top: 4.5rem;">
 
                         <div class="tab-pane fade show active" id="pills-operation" role="tabpanel" aria-labelledby="pills-operation-tab">
 
@@ -539,7 +539,7 @@
                     </div>
 
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 pb-3" style="position: -webkit-sticky; position: sticky; bottom: 0rem; z-index: 1; background-color: white" >
                         <div class="d-grid gap-2">
                             <button class="btn btn-outline-primary" type="submit" id="save" name="save" disabled>
                                 <i class="bi bi-check-lg"></i>
@@ -549,9 +549,7 @@
                     </div>
                 </form>
             </div>
-        </div>
-
-       
+        </div> 
 
     </div>
 @endsection

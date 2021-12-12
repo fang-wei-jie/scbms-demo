@@ -68,7 +68,9 @@
     <!-- custom styles -->
     <style>
         .body {
-            @if(request()->is('/'))
+            @if(request()->is('manager/settings'))
+            margin-top: 0rem;
+            @elseif(request()->is('/'))
             margin-top: 3.5rem;
             @else
             margin-top: 4.5rem;
@@ -404,7 +406,9 @@
 
     <div class="body">
         @yield('body')
+        @if(! request()->is('manager/settings'))
         <br>
+        @endif
     </div>
 
     <!-- footer -->
