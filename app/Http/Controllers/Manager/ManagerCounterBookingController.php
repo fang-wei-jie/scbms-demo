@@ -96,7 +96,12 @@ class ManagerCounterBookingController extends Controller
             }
 
         }
-
+        
+        // check if the new operation time, if changed, makes the user submitted timeSlot invalid
+        if ($timeSlot < $start_time || ($timeSlot + $timeLength) > $end_time) {
+            return back() -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
+        }
+        
         // get array of courts available
         $courts = array();
         for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
@@ -158,6 +163,7 @@ class ManagerCounterBookingController extends Controller
             'timeSlot' => 'required | digits_between:1,2',
             'timeLength' => 'required | digits_between:1,2',
             'dateSlot' => 'required | date_format:Y-m-d',
+            'courtID' => 'required | numeric',
 
         ]);
 
@@ -209,6 +215,16 @@ class ManagerCounterBookingController extends Controller
 
         if ($availability != 0) {
             $message .= "We are sorry. The court that you selected has been booked a moment ago. Please select another court. ";
+        }
+        
+        // check if the number of total courts count had changed, hence making it illogical, where courtID selected is bigger than the total number of counts
+        if ($courtID > $courts_count) {
+            $message .= "We are sorry. We had updated our number of courts available, and your previous selection was made unavailable. Please select another court. ";
+        }
+
+        // check if the new operation time, if changed, makes the user submitted timeSlot invalid
+        if ($timeSlot < $start_time || ($timeSlot + $timeLength) > $end_time) {
+            return redirect() -> route('book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
         }
 
         // if there are error messages
