@@ -20,6 +20,7 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 
+    @if ($settings->get('checkin_terminal') == 1)
     {{-- qrcode scanner --}}
     <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/grid.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/version.js') }}"></script>
@@ -39,6 +40,7 @@ $settings = Valuestore::make(storage_path('app/settings.json'));
     <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/alignpat.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('dependencies/jsqrcode-master/src/databr.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('dependencies/checkin.js') }}"></script>
+    @endif
 
     <style>
         body {
