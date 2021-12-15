@@ -11,7 +11,6 @@ class CategoryCard extends Component
 
     // predefined the "model"-able variables
     public $range = "y";
-    public $type = "created_at";
     public $date = "";
     public $month = "";
     public $day = "";
@@ -27,7 +26,7 @@ class CategoryCard extends Component
             // range is month
             case 'm':
                 $range = "m";
-                if ($this->type == "created_at") { $dateTrim = "1, 7"; } else { $dateTrim = "1, 5"; }
+                $dateTrim = "1, 7";
                 if ($this->date != "") { $date = $this->date; } else { $date = $year."-".$month; }
                 $condition = 'LIKE "' . $date .'%';
                 break;
@@ -43,9 +42,9 @@ class CategoryCard extends Component
 
         // get the latest date for month/year
         $firstDate = DB::table('bookings')
-            ->selectRaw("DISTINCT(SUBSTRING(".$this->type.",".$dateTrim.")) as date")
+            ->selectRaw("DISTINCT(SUBSTRING(created_at,".$dateTrim.")) as date")
             ->where('status_id', '!=', 0)
-            ->orderByDesc($this->type)
+            ->orderByDesc("created_at")
             ->first();
 
         if ($firstDate != null) {
@@ -63,7 +62,7 @@ class CategoryCard extends Component
             $ratesPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('rate_records.name as rate, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->where('status_id', '!=', 0)
                 ->groupBy('rate')
                 ->orderBy('rate')
@@ -73,7 +72,7 @@ class CategoryCard extends Component
             $timeslotPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('timeSlot as slot, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->where('status_id', '!=', 0)
                 ->groupBy('bookings.timeSlot')
                 ->orderBy('bookings.timeSlot')
@@ -83,7 +82,7 @@ class CategoryCard extends Component
             $timelengthPerf = DB::table('bookings')
                 ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
                 ->selectRaw('bookings.timeLength as length, SUM(timeLength*price) as total')
-                ->whereRaw('`bookings`.`'.$this->type.'` ' . $condition . '"')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
                 ->where('status_id', '!=', 0)
                 ->groupBy('bookings.timelength')
                 ->orderBy('bookings.timelength')

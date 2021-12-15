@@ -337,8 +337,6 @@
                         </div>
                     </div>
 
-                    <span class="mt-2" style="display: flex; justify-content: flex-end; align-items: center;"><small>Categorized by when bookings were created</small></span>
-
                 </div>
             </div>
         </div>

@@ -32,13 +32,6 @@
                                 </div>
 
                                 <div class="col-auto selection">
-                                    <select class="form-select" wire:model="type">
-                                        <option value="created_at">Created On</option>
-                                        <option value="dateSlot">Booking On</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-auto selection">
                                     <select class="form-select" wire:model="range">
                                         <option value="y">Year</option>
                                         <option value="m">Month</option>
@@ -70,8 +63,6 @@
                     </div>
 
                     <div class="my-2"></div>
-
-
 
                     @if (count($rates) == 0)
                         <h5>No bookings were made in this period</h5>
