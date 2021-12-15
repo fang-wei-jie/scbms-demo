@@ -65,11 +65,12 @@ $(document).ready(function() {
         }
     })
 
-    $("#courts_count").on("keyup change", function() {
     // promopt changes not saved for operation hours
     $("#start_time, #end_time").change(function() {
         changesNotSaved()
     })
+    
+    $("#courts_count").on("keyup change", function() {
         validateNumber(this, 1, null)
     })
 
