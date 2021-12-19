@@ -64,25 +64,25 @@
         <div class="row row-cols-1 row-cols-lg-4 g-2">
             <div class="col">
                 <i class="bi bi-cup feature"></i>
-                <h2>Complimentary Drink</h2>
+                <h3>Complimentary Drink</h3>
                 <span>Free complimentary drink for you to recharge after working out. Choice of protein drink or fresh fruit juice. </span>
             </div>
 
             <div class="col">
                 <i class="bi bi-lightbulb feature"></i>
-                <h2>LED Lumination</h2>
+                <h3>LED Lumination</h3>
                 <span>Our whole court is luminated with LED luminares for consistent lumination of the court. Plus, the court will feel cooler throughout the play. </span>
             </div>
 
             <div class="col">
                 <i class="bi bi-fullscreen feature"></i>
-                <h2>Free Parking Space</h2>
+                <h3>Free Parking Space</h3>
                 <span>Free parking space is available right outside for our driving, riding, and biking customers. </span>
             </div>
 
             <div class="col">
                 <i class="bi bi-bandaid feature"></i>
-                <h2>First-Aid on Court</h2>
+                <h3>First-Aid on Court</h3>
                 <span>Get medical attention quickly when injured by our First-Aid team. </span>
             </div>
         </div>
@@ -98,9 +98,9 @@
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h2 class="card-title">{{ $rate->name }}</h2>
+                                    <h3 class="card-title">{{ $rate->name }}</h3>
                                     <p class="card-text">
-                                        <span>RM {{ $rate->price }}/hour</span> <br>
+                                        <h5>RM {{ $rate->price }}/hour</h5>
                                         @if ($rate->id > 3)
                                             <span>
                                                 @if ($rate->dow == "12345")
