@@ -287,7 +287,7 @@ My Account
                 <div class="modal-body">
                     @if(session('info')) {{ session('info') }} @endif
                     @if(session('alert')) {{ session('alert') }} @endif
-                    @error('name') @if (str_contains($message, 'format')) Only alphabet, numbers, and underscore @else {{ $message }} @endif @enderror
+                    @error('name') @if (str_contains($message, 'format')) Only alphabet, numbers, and underscore is allowed @else {{ $message }} @endif @enderror
                     @error('email') {{ $message }} @enderror
                     @error('password') {{ $message }} @enderror
                 </div>
@@ -330,24 +330,17 @@ My Account
 
         $("#name").on("keyup change", function() {
             if ($(this).val().length == 0) {
-                $(this).removeClass("is-valid")
                 $(this).addClass("is-invalid")
                 $("label[for = 'name']").text("Name is required")
-                $("#change-name").prop("disabled", true)
             } else {
                 // check if name is Enlgish, numbers, or underscore
                 if($("#name").val().match(/^[\w\s-]*$/)) {
                     $(this).removeClass("is-invalid")
-                    $(this).addClass("is-valid")
                     $("label[for = 'name']").text("Enter your new name")
-                    $("#change-name").prop("disabled", false)
                 } else {
-                    $(this).removeClass("is-valid")
                     $(this).addClass("is-invalid")
                     $("label[for = 'name']").text("Only alphabet, numbers, and underscore")
-                    $("#change-name").prop("disabled", true)
                 }
-                
             }
         })
     })
