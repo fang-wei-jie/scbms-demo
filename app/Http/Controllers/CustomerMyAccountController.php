@@ -61,7 +61,7 @@ class CustomerMyAccountController extends Controller
             // validation
             $this -> validate($request, [
 
-                'name' => 'required',
+                'name' => 'required | max:255 | regex:/^[\w-]*$/',
 
             ]);
 

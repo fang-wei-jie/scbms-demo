@@ -110,13 +110,13 @@ My Account
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="name" maxlength="255" placeholder="Maximum 255 characters" required>
-                            <label>Enter your new name</label>
+                            <input type="text" class="form-control" id="name" name="name" maxlength="255" placeholder="Maximum 255 characters" required>
+                            <label for="name">Enter your new name</label>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" name="change-name">Change name</button>
+                        <button type="submit" class="btn btn-primary" id="change-name" name="change-name">Change name</button>
                     </div>
                 </form>
             </div>
@@ -287,6 +287,7 @@ My Account
                 <div class="modal-body">
                     @if(session('info')) {{ session('info') }} @endif
                     @if(session('alert')) {{ session('alert') }} @endif
+                    @error('name') @if (str_contains($message, 'format')) Only alphabet, numbers, and underscore @else {{ $message }} @endif @enderror
                     @error('email') {{ $message }} @enderror
                     @error('password') {{ $message }} @enderror
                 </div>
@@ -326,6 +327,29 @@ My Account
         $("#export-unused-bookings").click(function() {
             $("#delete-password").prop("required", false)
         })
+
+        $("#name").on("keyup change", function() {
+            if ($(this).val().length == 0) {
+                $(this).removeClass("is-valid")
+                $(this).addClass("is-invalid")
+                $("label[for = 'name']").text("Name is required")
+                $("#change-name").prop("disabled", true)
+            } else {
+                // check if name is Enlgish, numbers, or underscore
+                if($("#name").val().match(/^[\w-]*$/)) {
+                    $(this).removeClass("is-invalid")
+                    $(this).addClass("is-valid")
+                    $("label[for = 'name']").text("Enter your new name")
+                    $("#change-name").prop("disabled", false)
+                } else {
+                    $(this).removeClass("is-valid")
+                    $(this).addClass("is-invalid")
+                    $("label[for = 'name']").text("Only alphabet, numbers, and underscore")
+                    $("#change-name").prop("disabled", true)
+                }
+                
+            }
+        })
     })
 </script>
 
@@ -334,6 +358,12 @@ My Account
     infoBox.show()
 </script>
 @endif
+
+@error('name')
+<script>
+    infoBox.show()
+</script>
+@enderror
 
 @error('email')
 <script>

@@ -48,7 +48,11 @@ Register
 <script>
     $(document).ready(function() {
         @error('name')
-            $("label[for = 'name']").text("Name is required")
+            @if (str_contains($message, 'format'))
+                $("label[for = 'name']").text("Only alphabet, numbers, and underscore")
+            @else
+                $("label[for = 'name']").text("Name is required")
+            @endif
         @enderror
 
         @error('phone')
@@ -85,9 +89,17 @@ Register
                 $(this).addClass("is-invalid")
                 $("label[for = 'name']").text("Name is required")
             } else {
-                $(this).removeClass("is-invalid")
-                $(this).addClass("is-valid")
-                $("label[for = 'name']").text("Name")
+                // check if name is Enlgish, numbers, or underscore
+                if($("#name").val().match(/^[\w-]*$/)) {
+                    $(this).removeClass("is-invalid")
+                    $(this).addClass("is-valid")
+                    $("label[for = 'name']").text("Name")
+                } else {
+                    $(this).removeClass("is-valid")
+                    $(this).addClass("is-invalid")
+                    $("label[for = 'name']").text("Only alphabet, numbers, and underscore")
+                }
+                
             }
         })
 
