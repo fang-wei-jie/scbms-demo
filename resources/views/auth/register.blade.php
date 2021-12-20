@@ -90,7 +90,7 @@ Register
                 $("label[for = 'name']").text("Name is required")
             } else {
                 // check if name is Enlgish, numbers, or underscore
-                if($("#name").val().match(/^[\w-]*$/)) {
+                if($("#name").val().match(/^[\w\s-]*$/)) {
                     $(this).removeClass("is-invalid")
                     $(this).addClass("is-valid")
                     $("label[for = 'name']").text("Name")
@@ -99,7 +99,6 @@ Register
                     $(this).addClass("is-invalid")
                     $("label[for = 'name']").text("Only alphabet, numbers, and underscore")
                 }
-                
             }
         })
 

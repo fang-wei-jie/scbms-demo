@@ -29,7 +29,7 @@ class RegisterController extends Controller
         // sanction and validate user input
         $this -> validate($request, [
 
-            'name' => 'required | max:255 | regex:/^[\w-]*$/',
+            'name' => 'required | max:255 | regex:/^[\w\s-]*$/',
             'phone' => 'required | numeric | digits_between:10,11 | unique:users',
             'email' => 'required | email | max:75 | unique:users',
             'password' => 'required | min:8 | max:50 | confirmed'

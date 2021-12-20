@@ -336,7 +336,7 @@ My Account
                 $("#change-name").prop("disabled", true)
             } else {
                 // check if name is Enlgish, numbers, or underscore
-                if($("#name").val().match(/^[\w-]*$/)) {
+                if($("#name").val().match(/^[\w\s-]*$/)) {
                     $(this).removeClass("is-invalid")
                     $(this).addClass("is-valid")
                     $("label[for = 'name']").text("Enter your new name")
