@@ -127,16 +127,8 @@ class AdminCounterBookingController extends Controller
         // check which day of week the date slot is selected
         $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-        if ($settings->get('rates_weekend_weekday') == 1) {
-            // weekend and weekday is in use
-
-            // if weekend and weekday is in use, disable normal rate
-            $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-
-        } else {
-            // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-        }
+        // get list of rates
+        $rates = Rates::where('status', 1)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
         return view ('admin.book-court', [
             'count' => array_count_values($courts)['0'],
@@ -262,16 +254,8 @@ class AdminCounterBookingController extends Controller
             // check which day of week the date slot is selected
             $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-            if ($settings->get('rates_weekend_weekday') == 1) {
-                // weekend and weekday is in use
-
-                // if weekend and weekday is in use, disable normal rate
-                $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-
-            } else {
-                // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-            }
+            // get list of rates
+            $rates = Rates::where('status', 1)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
             return view ('admin.book-court', [
                 'selectedDate' => 1,
@@ -357,16 +341,8 @@ class AdminCounterBookingController extends Controller
             // check which day of week the date slot is selected
             $dayOfWeek = date_format(date_create($dateSlot), 'N');
 
-            if ($settings->get('rates_weekend_weekday') == 1) {
-                // weekend and weekday is in use
-
-                // if weekend and weekday is in use, disable normal rate
-                $rates = Rates::where('status', 1)->where('id', '!=', 3)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-
-            } else {
-                // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-                $rates = Rates::where('status', 1)->where('id', '>', 2)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
-            }
+            // get list of rates
+        $rates = Rates::where('status', 1)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
             $message = "We are sorry. The rate selected was no longer available. ";
 
