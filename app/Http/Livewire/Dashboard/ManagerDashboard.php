@@ -25,7 +25,7 @@ class ManagerDashboard extends Component
                 $query
                     ->where('timeSlot', '<', $start_time) // for bookings that is earlier than new start time
                     ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
-                    ->orWhereRaw('(timeSlot + timeLength - 1) > '. $end_time); // for bookings that ends later than new end time
+                    ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
                 })
             ->where('status_id', 1) // paid bookings only
             ->get();
