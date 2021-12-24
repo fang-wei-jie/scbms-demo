@@ -35,7 +35,14 @@
                                         <i class="bi bi-exclamation-circle-fill text-danger"></i>
                                     </div>
                                     <div class="col">
-                                        @if(count($operationHourConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict with New Operation Hours
+                                        <div class="row">
+                                            New Operation Hours Conflict
+                                        </div>
+                                        <small>
+                                            <div class="row">
+                                                {{ count($operationHourConflicts) }} @if (count($operationHourConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict Found
+                                            </div>
+                                        </small>
                                     </div>
                                 </div>
                             </button>
@@ -75,7 +82,14 @@
                                         <i class="bi bi-exclamation-circle-fill text-danger"></i>
                                     </div>
                                     <div class="col">
-                                        @if(count($courtCountConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict with New Number of Courts
+                                        <div class="row">
+                                            New Number of Courts Conflict
+                                        </div>
+                                        <small>
+                                            <div class="row">
+                                                {{ count($courtCountConflicts) }} @if(count($courtCountConflicts) > 1){{ "Bookings" }} @else {{ "Booking" }} @endif Conflict Found
+                                            </div>
+                                        </small>
                                     </div>
                                 </div>
                             </button>
