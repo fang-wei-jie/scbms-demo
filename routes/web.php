@@ -71,7 +71,7 @@ Route::get('/', function () {
     }
     
     return view('welcome', [
-        'rates' => Rates::where('status', 1),
+        'rates' => Rates::where('status', 1)->get(),
     ]);
 });
 
