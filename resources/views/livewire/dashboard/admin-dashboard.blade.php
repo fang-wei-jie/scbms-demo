@@ -16,7 +16,7 @@
                         <div class="col-auto">
                             <a href="bookings" class="btn btn-outline-light">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-bookmark-fill"></i>
+                                    <i class="bi bi-bookmarks-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Bookings</span>
                                 </span>
                             </a>
@@ -148,7 +148,7 @@
                             </a>
                             <a href="bookings" class="btn btn-outline-secondary">
                                 <span style="display: flex; justify-content: space-between; align-items: center;">
-                                    <i class="bi bi-bookmark-fill"></i>
+                                    <i class="bi bi-bookmarks-fill"></i>
                                     <span class="d-none d-md-block">&nbsp;Bookings</span>
                                 </span>
                             </a>

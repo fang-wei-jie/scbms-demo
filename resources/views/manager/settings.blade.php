@@ -441,13 +441,13 @@
                                                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                                                 <li class="nav-item">
                                                                     <a class="nav-link">
-                                                                        <i class="bi bi-bookmark"></i>
+                                                                        <i class="bi bi-bookmarks"></i>
                                                                         Inactive
                                                                     </a>
                                                                 </li>
                                                                 <li class="nav-item">
                                                                     <a class="nav-link active fw-bold">
-                                                                        <i class="bi bi-bookmark-fill"></i>
+                                                                        <i class="bi bi-bookmarks-fill"></i>
                                                                         Active
                                                                     </a>
                                                                 </li>
@@ -482,13 +482,13 @@
                                                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                                                 <li class="nav-item">
                                                                     <a class="nav-link">
-                                                                        <i class="bi bi-bookmark"></i>
+                                                                        <i class="bi bi-bookmarks"></i>
                                                                         Inactive
                                                                     </a>
                                                                 </li>
                                                                 <li class="nav-item">
                                                                     <a class="nav-link active fw-bold">
-                                                                        <i class="bi bi-bookmark-fill"></i>
+                                                                        <i class="bi bi-bookmarks-fill"></i>
                                                                         Active
                                                                     </a>
                                                                 </li>
@@ -523,13 +523,13 @@
                                                             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                                                                 <li class="nav-item">
                                                                     <a class="nav-link">
-                                                                        <i class="bi bi-bookmark"></i>
+                                                                        <i class="bi bi-bookmarks"></i>
                                                                         Inactive
                                                                     </a>
                                                                 </li>
                                                                 <li class="nav-item">
                                                                     <a class="nav-link active fw-bold">
-                                                                        <i class="bi bi-bookmark-fill"></i>
+                                                                        <i class="bi bi-bookmarks-fill"></i>
                                                                         Active
                                                                     </a>
                                                                 </li>

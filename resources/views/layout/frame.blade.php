@@ -240,7 +240,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('admin/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('admin.bookings') }}">
-                                <i class="bi bi-{{ (request()->is('admin/bookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
+                                <i class="bi bi-{{ (request()->is('admin/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 Bookings
                             </a>
                         </li>
@@ -306,7 +306,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('manager/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.bookings') }}">
-                                <i class="bi bi-{{ (request()->is('manager/bookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
+                                <i class="bi bi-{{ (request()->is('manager/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 Bookings
                             </a>
                         </li>
@@ -368,7 +368,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link {{ (request()->is('mybookings')) ? 'active fw-bold' : '' }}" href="{{ route('mybookings') }}">
-                                <i class="bi bi-{{ (request()->is('mybookings')) ? 'bookmark-fill' : 'bookmark' }}"></i>
+                                <i class="bi bi-{{ (request()->is('mybookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 My Bookings
                             </a>
                         </li>
