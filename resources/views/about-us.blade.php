@@ -23,16 +23,10 @@ About Us
 
     <div class="row">
         <div class="col-lg mb-3">
-            Delectus eum voluptatem provident sit corporis. Repellendus debitis enim est porro laudantium voluptatibus totam. Perspiciatis ex quia rerum recusandae maiores repellendus. Consequatur sed magnam fuga.
-
-            Quos cumque et ea eveniet et deserunt vitae. Totam expedita sint eius laborum qui. Quia rem et et. Eum qui corrupti aperiam tempora. Molestias temporibus dolore debitis quaerat explicabo quibusdam sint. Sit quam nemo officiis officiis.
-        
-            {{-- Aut voluptatem ex officia non quia iure iste qui. Ut debitis nisi sunt cumque. Ratione voluptatum explicabo odit. Magnam atque ratione sed nemo cumque sed eos.
-        
-            Debitis ex id sint perspiciatis rerum. Modi qui tempora laboriosam officia cupiditate. Nisi sed pariatur et corporis id omnis. Soluta dicta animi voluptatem officiis aperiam. Vitae nisi maxime molestiae in. Amet aliquam consequatur iusto animi voluptatem ad adipisci aut.
-        
-            Et aperiam rerum quae repellendus at quaerat consectetur. Porro quasi est quo voluptatem similique aperiam. Placeat omnis placeat aut laudantium commodi. Voluptatibus vel in voluptas in perspiciatis ex. A consequuntur aut dolore. --}}
-        
+            <p style="text-align: justify;">
+                Located in the center of Kajang city center, we aim to provide a good badminton playing experience at our court. We will treat you to a cup of complimentary healthy drink after a healty session of badminton exercise. 
+                Established since 2022, we had always made a commitment to made the badminton sport accessible to all people, by pricing our bookings affordably, so that everyone can enjoy the joy of the badminton sport. 
+            </p>
         </div>
 
         <div class="col-lg mb-3" id="anc">
