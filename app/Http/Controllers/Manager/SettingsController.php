@@ -56,8 +56,8 @@ class SettingsController extends Controller
             // update setting values
 
             $this -> validate($request, [
-                "name" => 'required | string | max:255',
-                "domain" => 'required | string | max:255',
+                "name" => 'required | string | regex:/^[\w\s()-]*$/',
+                "domain" => 'required | string | regex:/^[\w\s()-]*$/',
                 "phone" => 'required | string',
                 "address" => 'required | string',
                 "map_lat" => 'required | string',
@@ -83,7 +83,12 @@ class SettingsController extends Controller
             $settings = Valuestore::make(storage_path('app/settings.json'));
             $settings->put('name', $request->name);
             $settings->put('domain', strtolower($request->domain));
-            $settings->put('registration', $request->registration);
+            if ($request->registration != null) {
+                $this -> validate($request, [
+                    "domain" => 'string | regex:/^[\w\s()-]*$/',
+                ]);
+                $settings->put('registration', $request->registration);
+            }
             $settings->put('phone', $request->phone);
             $settings->put('address', $request->address);
             $settings->put('map_lat', $request->map_lat);

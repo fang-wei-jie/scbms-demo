@@ -90,18 +90,16 @@ $(document).ready(function() {
         validateNumber(this, 5, 15)
     })
 
-    $("#registration, #map_lat, #map_long").on("keyup change", function() {
-        changesNotSaved()
-    })
-
     // Presence
     $("#name").keyup(function() {
         validateIsEmpty("#name")
+        validateNotAsianChar("#name", "name", "Name")
         $(".company-name").text($("#name").val())
     })
 
     $("#domain").keyup(function() {
         validateIsEmpty(this)
+        validateNotAsianChar("#domain", "domain", "Domain")
         $(".company-login-domain").text($(this).val().toLowerCase())
         $(".company-display-domain").text($(this).val().toUpperCase())
     })
@@ -112,6 +110,14 @@ $(document).ready(function() {
 
     $("#address").keyup(function() {
         validateIsEmpty("#address")
+    })
+
+    $("#registration").keyup(function() {
+        validateNotAsianChar("#registration", "registration", "Registration")
+    })
+
+    $("#map_lat, #map_long").on("keyup change", function() {
+        changesNotSaved()
     })
 
     // Features
@@ -221,6 +227,18 @@ $(document).ready(function() {
         } else {
             makeFieldValid(objectID)
             changesNotSaved()
+        }
+    }
+
+    function validateNotAsianChar(inputField, forLabel, originalLabel) {
+        if($(inputField).val().match(/^[\w\s()-]*$/)) {
+            makeFieldValid(inputField)
+            $("label[for = '" + forLabel + "']").text(originalLabel)
+            changesNotSaved()
+        } else {
+            makeFieldInvalid(inputField)
+            $("label[for = '" + forLabel + "']").text("Only alphabet, numbers, and underscore")
+            saveBlocked()
         }
     }
 
