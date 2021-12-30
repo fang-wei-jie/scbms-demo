@@ -99,7 +99,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <h3 class="card-title">{{ $rate->name }}</h3>
-                                    <p class="card-text">
+                                    <div class="card-text">
                                         <h5>RM {{ $rate->price }}/hour</h5>
                                         @if ($rate->id > 3)
                                             <span>
@@ -142,7 +142,7 @@
                                             </span> <br>
                                             @endif
                                         <span>{{ $rate->condition ?? '' }}</span>
-                                    </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
