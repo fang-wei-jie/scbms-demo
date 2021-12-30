@@ -102,6 +102,11 @@ class MakeBookingsController extends Controller
             return back() -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
         }
 
+        // check if the new allowed days to book ahead, if changed, make the user restart again
+        if ($dateSlot > $maxDate) {
+            return back() -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation defines that customer can only book " . $prebook_days_ahead . " days ahead. Please choose your new time and date. "]);
+        }
+
         // get array of courts available
         $courts = array();
         for ($courtNo = 1; $courtNo <= $courts_count; $courtNo++) {
@@ -217,6 +222,11 @@ class MakeBookingsController extends Controller
         // check if the new operation time, if changed, makes the user submitted timeSlot invalid
         if ($timeSlot < $start_time || ($timeSlot + $timeLength) > $end_time) {
             return redirect() -> route('book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
+        }
+
+        // check if the new allowed days to book ahead, if changed, make the user restart again
+        if ($dateSlot > $maxDate) {
+            return redirect() -> route('book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation defines that customer can only book " . $prebook_days_ahead . " days ahead. Please choose your new time and date. "]);
         }
 
         // if there are error messages
