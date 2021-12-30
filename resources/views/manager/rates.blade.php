@@ -22,7 +22,7 @@ Rates
 
     <h3 class="mb-3">Default Rates</h3>
 
-    <form action="{{ route('manager.rates') }}" method="POST" id="weekdayWeekendSwitch">
+    <form action="{{ route('manager.default_switch') }}" method="POST" id="weekdayWeekendSwitch">
         @csrf
         <div class="form-check form-switch mb-3">
             <input class="form-check-input" type="checkbox" id="weekdayWeekend" name="weekdayWeekend" @if($settings->get('rates_weekend_weekday') == 1){{ "checked" }}@endif>

@@ -219,6 +219,10 @@ Route::prefix('admin')->group(function() {
     // Rates Management
     Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
     Route::post('/rates', [AdminRatesController::class, 'process']);
+    Route::get('/rates-default-switch', function() {
+        return back();
+    });
+    Route::post('/rates-default-switch', [AdminRatesController::class, 'update']) -> name('admin.default_switch');
 
     // Sales Report
     Route::get('/sales', [AdminSalesController::class, 'view']) -> name('admin.sales');
@@ -272,6 +276,10 @@ Route::prefix('manager')->group(function() {
     // Rates Management
     Route::get('/rates', [ManagerRatesController::class, 'view']) -> name('manager.rates');
     Route::post('/rates', [ManagerRatesController::class, 'process']);
+    Route::get('/rates-default-switch', function() {
+        return back();
+    });
+    Route::post('/rates-default-switch', [ManagerRatesController::class, 'update']) -> name('manager.default_switch');
 
     // Sales Report
     Route::get('/sales', [ManagerSalesController::class, 'view']) -> name('manager.sales');

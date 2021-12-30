@@ -36,21 +36,6 @@ class ManagerRatesController extends Controller
 
     function process(Request $request)
     {
-
-        // get setting values
-        $settings = Valuestore::make(storage_path('app/settings.json'));
-
-        // save rates weekend weekday toggle state
-        $settings->put('rates_weekend_weekday', $request->weekdayWeekend == null ? '0' : '1');
-
-        // update status of default rates with the change of weekend weekday toggle
-        if ($request->weekdayWeekend == null) {
-            Rates::where('id', 3)->update(['status' => 1]);
-            Rates::where('id', '<', 3)->update(['status' => 0]);
-        } else {
-            Rates::where('id', 3)->update(['status' => 0]);
-            Rates::where('id', '<', 3)->update(['status' => 1]);
-        }
         
         if (isset($_POST['enable'])) {
 
@@ -209,4 +194,26 @@ class ManagerRatesController extends Controller
         return back();
 
     }
+
+    function update (Request $request) {
+        
+        // get setting values
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+
+        // save rates weekend weekday toggle state
+        $settings->put('rates_weekend_weekday', $request->weekdayWeekend == null ? '0' : '1');
+
+        // update status of default rates with the change of weekend weekday toggle
+        if ($request->weekdayWeekend == null) {
+            Rates::where('id', 3)->update(['status' => 1]);
+            Rates::where('id', '<', 3)->update(['status' => 0]);
+        } else {
+            Rates::where('id', 3)->update(['status' => 0]);
+            Rates::where('id', '<', 3)->update(['status' => 1]);
+        }
+
+        return back();
+
+    }
+    
 }
