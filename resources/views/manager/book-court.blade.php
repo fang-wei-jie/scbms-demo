@@ -240,6 +240,7 @@ $(document).ready(function() {
             $("#dateSlot").addClass("is-invalid")
             $("#timeSlot").prop("disabled", true)
             $("#timeLength").prop("disabled", true)
+            $("#booking-cut-off-time-alert").hide()
 
         } else if (isSameDate(todayDate, selectedDate)) {
 
@@ -250,11 +251,11 @@ $(document).ready(function() {
             var todayHours = today.getHours()
             
             if (todayHours >= {{ $end_time }}) {
-                // if today's hours was over {{ $start_time }}pm, prompt user we were closed
-
                 $("#timeSlot").prop("disabled", true)
                 $("#timeLength").prop("disabled", true)
+                // if today's hours was close time, prompt user we were closed
 
+                $("#booking-cut-off-time-alert").hide()
                 $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
                 $("#dateSlot").addClass("is-invalid")
 
@@ -270,7 +271,7 @@ $(document).ready(function() {
                 if (today.getMinutes() > {{ $booking_cut_off_time }}) { start += 1 }
 
                 // show booking cut off time alert
-                if (today.getMinutes() < {{ $booking_cut_off_time }}) {
+                if (todayHours == start && today.getMinutes() < {{ $booking_cut_off_time }}) {
                     $("#booking-cut-off-time-alert").show()
                 } else {
                     $("#booking-cut-off-time-alert").hide()
@@ -312,7 +313,7 @@ $(document).ready(function() {
         // obtains selected date and format it to be comparable by integer
         var selectedDate = new Date($("#dateSlot").val()).withoutTime()
 
-        if (today.withoutTime() == selectedDate && todayHours == $("#timeSlot").val() && today.getMinutes() < {{ $booking_cut_off_time }}) {
+        if (isSameDate(today.withoutTime(), selectedDate) && today.getHours() == $("#timeSlot").val() && today.getMinutes() < {{ $booking_cut_off_time }}) {
             $("#booking-cut-off-time-alert").show()
         } else {
             $("#booking-cut-off-time-alert").hide()
