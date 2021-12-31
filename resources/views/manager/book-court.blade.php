@@ -111,8 +111,14 @@ Book Courts
 
             @if($message ?? '')
             <div class="alert alert-warning" role="alert">
-                <i class="bi bi-exclamation-lg"></i>
-                {{ $message ?? '' }}
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <i class="bi bi-exclamation-lg"></i>
+                    </div>
+                    <div class="col">
+                        {{ $message ?? '' }}
+                    </div>
+                </div>
             </div>
             @endif
 
