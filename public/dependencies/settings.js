@@ -92,24 +92,24 @@ $(document).ready(function() {
 
     // Presence
     $("#name").keyup(function() {
-        validateIsEmpty("#name")
+        validateIfEmpty("#name")
         validateNotAsianChar("#name", "name", "Name")
         $(".company-name").text($("#name").val())
     })
 
     $("#domain").keyup(function() {
-        validateIsEmpty(this)
+        validateIfEmpty(this)
         validateNotAsianChar("#domain", "domain", "Domain")
         $(".company-login-domain").text($(this).val().toLowerCase())
         $(".company-display-domain").text($(this).val().toUpperCase())
     })
 
     $("#phone").keyup(function() {
-        validateIsEmpty("#phone")
+        validateIfEmpty("#phone")
     })
 
     $("#address").keyup(function() {
-        validateIsEmpty("#address")
+        validateIfEmpty("#address")
     })
 
     $("#registration").keyup(function() {
@@ -117,7 +117,8 @@ $(document).ready(function() {
     })
 
     $("#map_lat, #map_long").on("keyup change", function() {
-        changesNotSaved()
+        validateIfEmpty("#map_lat")
+        validateIfEmpty("#map_long")
     })
 
     // Features
@@ -220,7 +221,7 @@ $(document).ready(function() {
         changesNotSaved()
     })
 
-    function validateIsEmpty(objectID) {
+    function validateIfEmpty(objectID) {
         if ($(objectID).val() == "") {
             makeFieldInvalid(objectID)
             saveBlocked()
