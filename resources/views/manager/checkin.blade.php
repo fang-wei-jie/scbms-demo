@@ -61,21 +61,23 @@ Check In
                     @enderror
                 </div>
     
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <form action="{{ route('manager.checkin') }}" method="post">
-                            @csrf
-                            <input id="code" class="form-control" name="code" type="text"
-                                placeholder="Scan or type check in code" value="" minlength=14 maxlength="14" required>
+                <form action="{{ route('manager.checkin') }}" method="post" autocomplete="off" id="checkinForm">
+                    @csrf
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col">
+                            <div class="form-floating">
+                                <input id="code" class="form-control" name="code" type="text" placeholder="Scan or type check in code" maxlength="14" value="">
+                                <label for="code">Scan or type check in code</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-outline-primary" type="submit" id="startQuery" name="startQuery" disabled>
+                                <i class="bi bi-person-check-fill"></i>
+                                Check-in
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-auto">
-                        <button class="btn btn-outline-primary" type="submit" id="startQuery" name="startQuery">
-                            <i class="bi bi-person-check-fill"></i>
-                            Check-in
-                        </button>
-                        </form>
-                    </div>
-                </div>
+                </form>
     
                 <br>
     
@@ -150,4 +152,32 @@ Check In
         </div>
 
     </div>
+@endsection
+
+@section('bottom-js')
+<script>
+    $(document).ready(function() {
+        $("#code").on("keyup change", function() {
+            if ($(this).val().length == 0) {
+                $(this).removeClass("is-valid")
+                $(this).addClass("is-invalid")
+                $("label[for = 'code']").text("Code is required")
+                $("#startQuery").prop("disabled", true)
+            } else if (!$(this).val().match(/^[0-9]*$/)) {
+                $(this).removeClass("is-valid")
+                $(this).addClass("is-invalid")
+                $("label[for = 'code']").text("Code contains only numbers")
+                $("#startQuery").prop("disabled", true)
+            } else if ($(this).val().length != 14) {
+                $(this).removeClass("is-invalid")
+                $(this).removeClass("is-valid")
+                $("#startQuery").prop("disabled", true)
+            } else {
+                $(this).removeClass("is-invalid")
+                $(this).addClass("is-valid")
+                $("#startQuery").prop("disabled", false)
+            }
+        })
+    })
+</script>
 @endsection

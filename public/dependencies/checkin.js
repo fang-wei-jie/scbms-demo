@@ -49,5 +49,5 @@ function tick() {
 
 function queryResult (result) {
     $("#code").val(result)
-    $("#startQuery").click()
+    document.getElementById('checkinForm').submit()
 }
