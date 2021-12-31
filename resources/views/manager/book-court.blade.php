@@ -257,18 +257,16 @@ $(document).ready(function() {
             var todayHours = today.getHours()
             
             if (todayHours >= {{ $end_time }}) {
-                $("#timeSlot").prop("disabled", true)
-                $("#timeLength").prop("disabled", true)
                 // if today's hours was close time, prompt user we were closed
 
                 $("#booking-cut-off-time-alert").hide()
+                $("#timeSlot, #timeLength").prop("disabled", true)
                 $("#dateLabel").text("We are closed today. Please select tomorrow or future date. ")
                 $("#dateSlot").addClass("is-invalid")
 
             } else {
 
-                $("#timeSlot").prop("disabled", false)
-                $("#timeLength").prop("disabled", false)
+                $("#timeSlot, #timeLength").prop("disabled", false)
 
                 // if the current time is later than the actual start time, display the actual start time
                 var start = (todayHours > {{ $start_time }}) ? todayHours : {{ $start_time }}
@@ -296,8 +294,7 @@ $(document).ready(function() {
         } else {
             // if selected time was tomorrow or future
 
-            $("#timeSlot").prop("disabled", false)
-            $("#timeLength").prop("disabled", false)
+            $("#timeSlot, #timeLength").prop("disabled", false)
 
             $("#booking-cut-off-time-alert").hide()
 
