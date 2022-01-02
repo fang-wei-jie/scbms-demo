@@ -325,17 +325,20 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input id="map_lat" class="form-control" type="number" step="any" name="map_lat" maxlength="20" value="{{ $settings->get('map_lat') }}">
+                                                <input id="map_lat" class="form-control" type="text" step="any" name="map_lat" value="{{ $settings->get('map_lat') }}">
                                                 <label for="map_lat">Lattitude</label>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="form-floating">
-                                                <input id="map_long" class="form-control" type="number" step="any" name="map_long" maxlength="20" value="{{ $settings->get('map_long') }}">
+                                                <input id="map_long" class="form-control" type="number" step="any" name="map_long" value="{{ $settings->get('map_long') }}">
                                                 <label for="map_long">Longitude</label>
                                             </div>
                                         </div>
-                                        <small>7 decimals point precision was required for compatibility reasons. Always check the result on <a href="{{ route('about-us') }}">About Us page</a> after changing this value. The lattitude and longitude coordiantes will be used for map preview and map navigation links. </small>
+                                        <small>
+                                            <span id="map_requirements">7 decimals point precision was required for compatibility reasons.</span>
+                                            Always check the result on <a href="{{ route('about-us') }}">About Us page</a> after changing this value. The lattitude and longitude coordiantes will be used for map preview and map navigation links. 
+                                        </small>
                                     </div>
                                 </div>
                             </div>

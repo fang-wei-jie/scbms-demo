@@ -116,10 +116,27 @@ $(document).ready(function() {
         validateNotAsianChar("#registration", "registration", "Registration")
     })
 
-    $("#map_lat, #map_long").on("keyup change", function() {
+    $("#map_lat").on("keyup change", function() {
         validateIfEmpty("#map_lat")
-        validateIfEmpty("#map_long")
+        verifyGPSCoordinates($("#map_lat").val(), "#map_lat")
     })
+
+    $("#map_long").on("keyup change", function() {
+        validateIfEmpty("#map_long")
+        verifyGPSCoordinates($("#map_long").val(), "#map_long")
+    })
+
+    function verifyGPSCoordinates (coordinates, objectID) {
+        if (coordinates.match(/^[0-9]{1,3}\.[0-9]{7}$/)) {
+            makeFieldValid(objectID)
+            changesNotSaved()
+            $("#map_requirements").removeClass("mark")
+        } else {
+            makeFieldInvalid(objectID)
+            saveBlocked()
+            $("#map_requirements").addClass("mark")
+        }
+    }
 
     // Features
     // Cancel Bookings Toggles

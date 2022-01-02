@@ -84,8 +84,8 @@ class SettingsController extends Controller
                 "domain" => 'required | string | regex:/^[\w\s()-]*$/',
                 "phone" => 'required | string',
                 "address" => 'required | string',
-                "map_lat" => 'required | string',
-                "map_long" => 'required | string',
+                "map_lat" => ['required', 'string', 'regex:/^[0-9]{1,3}\.[0-9]{7}$/'],
+                "map_long" => ['required', 'string', 'regex:/^[0-9]{1,3}\.[0-9]{7}$/'],
 
                 "start_time" => 'required | numeric | digits_between:1,2',
                 "end_time" => 'required | numeric | digits_between:1,2',
