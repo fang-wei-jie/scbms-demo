@@ -203,7 +203,7 @@ Bookings
         $("#bookingID").prop("value", $(this).data('bookingid'))
         $("#date").text($(this).data('date'))
         $("#start-time").text($(this).data('time'))
-        $("#end-time").text($(this).data('length'))
+        $("#end-time").text(Number($(this).data('time')) + Number($(this).data('length')))
         $("#paid").text($(this).data('price'))
     })
 </script>
