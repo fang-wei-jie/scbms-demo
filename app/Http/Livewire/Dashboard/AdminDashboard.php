@@ -24,25 +24,45 @@ class AdminDashboard extends Component
 
         // query for bookings that conflicts with new operation hours
         $operationHourConflicts = DB::table('bookings')
-            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
             ->where(function($query) use ($start_time, $end_time){
                 $query
-                    ->where('timeSlot', '<', $start_time) // for bookings that is earlier than new start time
-                    ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
-                    ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+                    ->where('dateSlot', '>=', date('Ymd')) // for bookings after today
+                    ->where(function($query) use ($start_time, $end_time){
+                        $query
+                            ->where('timeSlot', '<', $start_time) // for bookings that is earlier than new start time
+                            ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
+                            ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+                    });
+                })
+            ->orWhere(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('dateSlot', '=', date('Ymd')) // for bookings after today
+                    ->where(function($query) use ($start_time, $end_time){
+                        $query
+                            ->where('timeSlot', '>=', $end_time) // for bookings that starts later or same as the new end time
+                            ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+                    });
                 })
             ->where('status_id', 1) // paid bookings only
             ->orderBy('dateSlot')
             ->orderBy('timeSlot')
+            ->orderBy('courtID')
             ->get();
 
         // query for bookings that conflicts with new number of courts
         $courtCountConflicts = DB::table('bookings')
-            ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
+            ->where('dateSlot', '=', date('Ymd')) // for bookings on today
+            ->where(function($query) use ($end_time){
+                $query
+                    ->where('timeSlot', '>=', $end_time) // for bookings that starts later or same as the new end time
+                    ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+            })
+            ->orWhere('dateSlot', '>', date('Ymd')) // for bookings after today
             ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
             ->where('status_id', 1) // paid bookings only
             ->orderBy('dateSlot')
             ->orderBy('timeSlot')
+            ->orderBy('courtID')
             ->get();
 
         // get list of bookings at the current hour
