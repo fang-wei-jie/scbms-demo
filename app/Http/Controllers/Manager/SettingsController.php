@@ -33,6 +33,8 @@ class SettingsController extends Controller
                     ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
                 })
             ->where('status_id', 1) // paid bookings only
+            ->orderBy('dateSlot')
+            ->orderBy('timeSlot')
             ->get();
 
         // query for bookings that conflicts with new number of courts
@@ -40,6 +42,8 @@ class SettingsController extends Controller
             ->where('dateSlot', '>=', date('Ymd')) // for bookings today and after
             ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
             ->where('status_id', 1) // paid bookings only
+            ->orderBy('dateSlot')
+            ->orderBy('timeSlot')
             ->get();
 
         return view ('manager.settings', [
