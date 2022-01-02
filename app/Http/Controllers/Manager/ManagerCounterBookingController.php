@@ -189,7 +189,7 @@ class ManagerCounterBookingController extends Controller
         $message = "";
 
         // check if user exceeded time for last booking
-        if ($timeSlot == date("H") && date("i") > $booking_cut_off_time) {
+        if ($dateSlot == date("Ymd") && $timeSlot == date("H") && date("i") > $booking_cut_off_time) {
             return back()->with(['selectedDate' => 0, 'notify' => "We are sorry. You had exceed the last allowed time of booking the court for the selected time. Please choose another time. "]);
         }
 
