@@ -485,18 +485,16 @@
                         <div class="col-auto">
                             <a class="link-dark" href="{{ route('payment-methods') }}">Payment Methods</a> 
                         </div>
-
-                    @guest
                         <div class="col-auto">
-                            <a class="link-dark" href="{{ route('about-us') }}">About Us</a> 
+                            <a class="link-dark" href="{{ route('about-us') }}">
+                                @guest
+                                    About Us
+                                @endguest
+                                @auth
+                                    Address and Contact
+                                @endauth
+                            </a> 
                         </div>
-                    @endguest
-                    
-                    @auth
-                        <div class="col-auto">
-                            <a class="link-dark" href="about-us/#anc">Address and Contact</a>
-                        </div>
-                    @endauth
                     </div>
                 </div>
             </div>
