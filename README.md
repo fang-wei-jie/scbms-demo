@@ -20,8 +20,9 @@ This package comes preconfigured as it was served for demo purposes.
 2. Go and find your instance of `php.ini` file, and uncomment the line `extension=gd` by removing the `;` in front. If using XAMPP, the file will be in `C:\xampp\php\` on Windows. 
 3. Open the database management panel (phpMyAdmin if using XAMPP) and create a new table called **cbscbs**
 4. Download and unzip the code
-5. Start terminal for the folder and start the server by typing `php artisan serve`. The server should start, with its address displayed in the terminal. 
-6. Open the web application from the address shown in the terminal to start exploring. 
+5. Use your preffered code editor, and open up the `.env` file in the root directory of the folder. Change the value of the `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS` if using Gmail, else also change `MAIL_HOST`, `MAIL_PORT`, `MAIL_ENCRYPTION` as needed. This is used to setup the mail server for sending the password reset email. I'd removed my details there because it was my personal mail box. 
+6. Start terminal for the folder and start the server by typing `php artisan serve`. The server should start, with its address displayed in the terminal. 
+7. Open the web application from the address shown in the terminal to start exploring. 
 
 ## Demo Accounts
 - Manager Account `ID: demo@nescm, password: password`
