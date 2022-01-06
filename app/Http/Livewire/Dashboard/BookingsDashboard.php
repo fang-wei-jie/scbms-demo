@@ -22,7 +22,7 @@ class BookingsDashboard extends Component
             ->leftJoin('users', 'users.id', '=', 'bookings.custID')
             ->where('dateSlot', '=', str_replace("-", "", $date))
             ->join('rate_records', 'bookings.rateRecordID', '=', 'rate_records.id')
-            ->select('bookings.*', 'users.*', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
+            ->select('bookings.*', 'users.name as username', 'users.phone as phone', 'users.email as email', 'rate_records.rateID as rateID', 'rate_records.name as rateName', 'rate_records.condition as condition', 'rate_records.price as price')
             ->where('status_id', '!=', 0)
             ->orderBy('timeSlot');
 

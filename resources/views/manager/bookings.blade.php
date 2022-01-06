@@ -142,6 +142,8 @@ Bookings
             </div>
             <div class="modal-body">
                 <p id="customer_name">Name: <span id="name"></span></p>
+                <p id="customer_phone">Phone: <span id="phone"></span></p>
+                <p id="customer_email">Email: <span id="email"></span></p>
                 <p>Date: <span id="date"></span></p>
                 <p>Time: <span id="start-time"></span>:00 - <span id="end-time"></span>:00</p>
                 <p>Rate: <span id="rate"></span></p>
@@ -188,12 +190,18 @@ Bookings
 
     $(document).on("click", ".amandable", function() {
 
-        // hide name if customer book over the counter
+        // hide customer details if customer book over the counter
         if ($(this).data('name') == "") {
             $("#customer_name").hide()
+            $("#customer_phone").hide()
+            $("#customer_email").hide()
         } else {
             $("#customer_name").show()
+            $("#customer_phone").show()
+            $("#customer_email").show()
             $("#name").text($(this).data('name'))
+            $("#phone").text($(this).data('phone'))
+            $("#email").text($(this).data('email'))
         }
 
         // close the cancel booking accordion
