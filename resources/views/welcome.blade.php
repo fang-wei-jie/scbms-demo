@@ -138,7 +138,6 @@
                                                         @endif
                                                     @endfor
                                                 @endif
-                                                only
                                             </span> <br>
                                             @endif
                                         <span>{{ $rate->condition ?? '' }}</span>

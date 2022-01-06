@@ -76,9 +76,6 @@ My Account
                             <input id="confirm-password" class="form-control" type="password" name="confirm-password" minlength=8 placeholder="Retype password" required>
                             <label>Enter password to confirm changes</label>
                         </div>
-                        <span>
-                            Changing the Manager ID will log you out other previously logged in devices. 
-                        </span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
