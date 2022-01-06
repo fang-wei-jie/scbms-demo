@@ -83,7 +83,7 @@
                      {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }}"
 
                      @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}"
+                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->name }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}" data-rate="{{ $booking->rateName }}"
                      @endif
                      >
                         {{ $booking->rateName }}
