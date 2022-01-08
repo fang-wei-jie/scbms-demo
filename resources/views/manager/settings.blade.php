@@ -341,6 +341,16 @@
                                 <div class="col-lg-8">
 
                                     <h5>Logo</h5>
+
+                                    @error('logo')
+                                    <div class="alert alert-danger" role="alert">
+                                        @if(str_contains($message, "dimensions"))
+                                            {{ "The logo should be 128x128 in resolution" }}
+                                        @else
+                                            {{ $message }}
+                                        @endif
+                                    </div>
+                                    @enderror
                                     
                                     <div class="row">
                                         <div class="col-auto align-self-center">
@@ -350,7 +360,7 @@
                                             <div class="form-control">
                                                 <label class="mimic-floating mt-1" for="logo"">Upload New Logo</label>
                                                 <input id="logo" class="form-control form-control-sm form-control-file mb-1" type="file" name="logo">
-                                                <small>PNG at 128x128 resolution without alpha channel</small>
+                                                <small>PNG at 128x128 resolution, with transparent background preffered</small>
                                             </div>
                                         </div>
                                     </div>
