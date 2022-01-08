@@ -113,7 +113,7 @@ class SettingsController extends Controller
                     "domain" => 'string | regex:/^[\w\s()-]*$/',
                 ]);
                 $settings->put('registration', $request->registration);
-            }
+            } else { $settings->put('registration', null); }
             $settings->put('phone', $request->phone);
             $settings->put('address', $request->address);
             $settings->put('map_lat', $request->map_lat);
