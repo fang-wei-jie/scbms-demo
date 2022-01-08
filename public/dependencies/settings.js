@@ -113,7 +113,7 @@ $(document).ready(function() {
     })
 
     $("#registration").keyup(function() {
-        validateNotAsianChar("#registration", "registration", "Registration")
+        validateNotAsianChar("#registration", "registration", "Business Registration Number")
     })
 
     $("#map_lat").on("keyup change", function() {
