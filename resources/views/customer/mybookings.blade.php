@@ -47,10 +47,53 @@ My Bookings
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-parent="accordian" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
                             <div class="col">
-                                {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                                <br>
-                                Court {{ $list->courtID }} - {{ $list->rateName }} rate
+
+                                {{-- If booking conflict found --}}
+                                @if ($start_time > $list->timeSlot || $end_time < ($list->timeSlot + $list->timeLength))
+                                    <div class="row align-items-center mt-1">
+                                        <div class="col-auto">
+                                            <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                                        </div>
+                                        <div class="col">
+
+                                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                                            <br>
+                                            Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                                            <br>
+
+                                            <span style="color: red">
+                                                New operation hours may affect your booking
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                @elseif ($number_of_courts < $list->courtID)
+                                    <div class="row align-items-center mt-1">
+                                        <div class="col-auto">
+                                            <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                                        </div>
+                                        <div class="col">
+
+                                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                                            <br>
+                                            Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                                            <br>
+
+                                            <span style="color: red">
+                                                New number of courts may affect your booking
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                @else
+                                    {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                                    {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                                    <br>
+                                    Court {{ $list->courtID }} - {{ $list->rateName }} rate
+                                @endif
+
                             </div>
                             <div class="col-auto me-3">
                                 @if ($list->status_id == 0)

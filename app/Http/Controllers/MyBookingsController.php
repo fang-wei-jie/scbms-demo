@@ -19,6 +19,12 @@ class MyBookingsController extends Controller
     function view_bookings (Request $request)
     {
 
+        // Get operation hours and court count to check for possible booking conflict
+        $settings = Valuestore::make(storage_path('app/settings.json'));
+        $start_time = $settings->get('start_time');
+        $end_time = $settings->get('end_time');
+        $number_of_courts = $settings->get('courts_count');
+
         // Count if current customer has any bookings
         $count = DB::table('bookings')
             ->where('bookings.custID', '=', Auth::user()->id)
@@ -136,6 +142,9 @@ class MyBookingsController extends Controller
                 'bookings_count' => $count,
                 'today_bookings' => $today_bookings, 
                 'payment_grace_period' => Valuestore::make(storage_path('app/settings.json'))->get('payment_grace_period'),
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+                'number_of_courts' => $number_of_courts,
             ]);
         
         } else {
