@@ -10,7 +10,7 @@ class CategoryCard extends Component
 {
 
     // predefined the "model"-able variables
-    public $range = "y";
+    public $range = "m";
     public $date = "";
     public $month = "";
     public $day = "";

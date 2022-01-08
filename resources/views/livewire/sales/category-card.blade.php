@@ -33,8 +33,8 @@
 
                                 <div class="col-auto selection">
                                     <select class="form-select" wire:model="range">
-                                        <option value="y">Year</option>
                                         <option value="m">Month</option>
+                                        <option value="y">Year</option>
                                     </select>
                                 </div>
 
