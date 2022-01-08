@@ -145,7 +145,7 @@
                                             <div id="ohc_list" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#operationHourConflicts">
                                                 <div class="accordion-body">
                                                     @foreach ($operationHourConflicts as $details)
-                                                        <div class="row justify-content-start mb-1">
+                                                        <div class="row">
                                                             <div class="col">
                                                                 {{ substr($details->dateSlot, 6, 2) . "/" . substr($details->dateSlot, 4, 2) . "/" . substr($details->dateSlot, 0, 4) }}
                                                             </div>
