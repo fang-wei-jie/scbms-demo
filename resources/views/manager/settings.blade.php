@@ -92,7 +92,7 @@
     <div class="container">
 
         <div class="row justify-content-center">
-            <div class="col-xl-9">
+            <div class="col-xl-10">
                 <form action="{{ route('manager.settings') }}" enctype="multipart/form-data" method="post" autocomplete="off">
                     @csrf
                     
@@ -106,9 +106,9 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-features-tab" data-bs-toggle="pill" data-bs-target="#pills-features" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Features</button>
                         </li>
-                        <li class="nav-item" role="presentation">
+                        {{-- <li class="nav-item" role="presentation">
                             <button class="nav-link" id="pills-ui-tab" data-bs-toggle="pill" data-bs-target="#pills-ui" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">UI</button>
-                        </li>
+                        </li> --}}
                     </ul>
 
                     <div class="tab-content mb-3" id="pills-tabContent" style="margin-top: 4.5rem;">
@@ -305,10 +305,6 @@
                                         <small>Business registration number will only be shown on receipt. This field is optional if you do not have business registration number. </small>
                                     </div>
 
-                                </div>
-
-                                <div class="col-lg">
-
                                     <div class="form-floating mb-3">
                                         <input id="phone" class="form-control" type="tel" name="phone" maxlength="15" value="{{ $settings->get('phone') }}">
                                         <label for="phone">Phone Number</label>
@@ -341,78 +337,8 @@
                                         </small>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="tab-pane fade" id="pills-features" role="tabpanel" aria-labelledby="pills-features-tab">
-                            
-                            <h5>Cancel Booking</h5>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="cancelBooking" name="cancelBooking" @if($settings->get('cancel_booking') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="cancelBooking">
-                                    Cancel Booking
-                                    <br>
-                                    <small>Enable cancellation of booking by manager for bookings that has not started</small>
-                                </label>
-                                <br>
-                            </div>
-
-                            {{-- <h5 class="mt-3">Check-in Terminal</h5>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="checkin_terminal">
-                                    Use Check-in Terminal
-                                    <br>
-                                    <small id="smallUseRates">Use check-in terminal to speed up and automate admission</small>
-                                </label>
-                                
-                            </div> --}}
-
-                            <h5 class="mt-3">Staff</h5>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="staffRole" name="staffRole" @if($settings->get('staff_role') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="staffRole">
-                                    Staff Role
-                                    <br>
-                                    <small>Enable the staff role</small>
-                                </label>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input staff-toggles" type="checkbox" id="staffSalesReport" name="staffSalesReport" @if($settings->get('staff_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="staffSalesReport">
-                                    View Sales Report
-                                    <br>
-                                    <small>Enable the staff to view sales report</small>
-                                </label>
-                            </div>
-
-                            <div class="form-check form-switch" id="bookingDeletableStaff">
-                                <input class="form-check-input staff-toggles" type="checkbox" id="staffCancelBooking" name="staffCancelBooking" @if($settings->get('staff_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="staffCancelBooking">
-                                    Booking Cancelable by Staff
-                                    <br>
-                                    <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the staff process booking cancellation</small>
-                                </label>
-                            </div>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input staff-toggles" type="checkbox" id="staffRates" name="staffRates" @if($settings->get('rates_editable_staff') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="staffRates">
-                                    Rates Editable by Staff
-                                    <br>
-                                    <small>Enable the staff to edit rates detail</small>
-                                </label>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="pills-ui" role="tabpanel" aria-labelledby="pills-ui-tab">
-    
-                            <div class="row">
-                                <div class="col-lg">
+                                <div class="col-lg-8">
 
                                     <h5>Logo</h5>
                                     
@@ -553,8 +479,81 @@
                                     </div>
         
                                 </div>
+
                             </div>
                         </div>
+
+                        <div class="tab-pane fade" id="pills-features" role="tabpanel" aria-labelledby="pills-features-tab">
+                            
+                            <h5>Cancel Booking</h5>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="cancelBooking" name="cancelBooking" @if($settings->get('cancel_booking') == 1){{ "checked" }}@endif>
+                                <label class="form-check-label" for="cancelBooking">
+                                    Cancel Booking
+                                    <br>
+                                    <small>Enable cancellation of booking by manager for bookings that has not started</small>
+                                </label>
+                                <br>
+                            </div>
+
+                            {{-- <h5 class="mt-3">Check-in Terminal</h5>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="checkin_terminal" name="checkin_terminal" @if($settings->get('checkin_terminal') == 1){{ "checked" }}@endif>
+                                <label class="form-check-label" for="checkin_terminal">
+                                    Use Check-in Terminal
+                                    <br>
+                                    <small id="smallUseRates">Use check-in terminal to speed up and automate admission</small>
+                                </label>
+                                
+                            </div> --}}
+
+                            <h5 class="mt-3">Staff</h5>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="staffRole" name="staffRole" @if($settings->get('staff_role') == 1){{ "checked" }}@endif>
+                                <label class="form-check-label" for="staffRole">
+                                    Staff Role
+                                    <br>
+                                    <small>Enable the staff role</small>
+                                </label>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffSalesReport" name="staffSalesReport" @if($settings->get('staff_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffSalesReport">
+                                    View Sales Report
+                                    <br>
+                                    <small>Enable the staff to view sales report</small>
+                                </label>
+                            </div>
+
+                            <div class="form-check form-switch" id="bookingDeletableStaff">
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffCancelBooking" name="staffCancelBooking" @if($settings->get('staff_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffCancelBooking">
+                                    Booking Cancelable by Staff
+                                    <br>
+                                    <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the staff process booking cancellation</small>
+                                </label>
+                            </div>
+
+                            <div class="form-check form-switch">
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffRates" name="staffRates" @if($settings->get('rates_editable_staff') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffRates">
+                                    Rates Editable by Staff
+                                    <br>
+                                    <small>Enable the staff to edit rates detail</small>
+                                </label>
+                            </div>
+
+                        </div>
+                        {{-- <div class="tab-pane fade" id="pills-ui" role="tabpanel" aria-labelledby="pills-ui-tab">
+                            <div class="row">
+                                <div class="col-lg">        
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
 
 
