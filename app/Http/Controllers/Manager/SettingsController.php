@@ -140,7 +140,7 @@ class SettingsController extends Controller
             $settings->put('checkin_terminal', $request->checkin_terminal == null ? '0' : '1');
 
             if ($request->hasFile('logo')) {
-                $this -> validate($request, ["logo" => 'mimes:png | dimensions:width=128,height=128']);
+                $this -> validate($request, ["logo" => 'mimes:png','dimensions:width=128,height=128']);
 
                 $file_name = "customer_favicon." . $request->logo->extension();
                 $request->logo->move(public_path('favicon'), $file_name);
