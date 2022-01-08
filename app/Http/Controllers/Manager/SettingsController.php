@@ -99,8 +99,8 @@ class SettingsController extends Controller
 
                 "customer_navbar_color" => 'required | string',
                 "customer_navtext" => 'required | string',
-                "admin_navbar_color" => 'required | string',
-                "admin_navtext" => 'required | string',
+                "staff_navbar_color" => 'required | string',
+                "staff_navtext" => 'required | string',
                 "manager_navbar_color" => 'required | string',
                 "manager_navtext" => 'required | string',
             ]);
@@ -132,10 +132,10 @@ class SettingsController extends Controller
 
             $settings->put('cancel_booking', $request->cancelBooking == null ? '0' : '1');
             
-            $settings->put('admin_role', $request->adminRole == null ? '0' : '1');
-            $settings->put('admin_sales_report', $request->adminSalesReport == null ? '0' : '1');
-            $settings->put('admin_cancel_booking', $request->adminCancelBooking == null ? '0' : '1');
-            $settings->put('rates_editable_admin', $request->adminRates == null ? '0' : '1');
+            $settings->put('staff_role', $request->staffRole == null ? '0' : '1');
+            $settings->put('staff_sales_report', $request->staffSalesReport == null ? '0' : '1');
+            $settings->put('staff_cancel_booking', $request->staffCancelBooking == null ? '0' : '1');
+            $settings->put('rates_editable_staff', $request->staffRates == null ? '0' : '1');
 
             $settings->put('checkin_terminal', $request->checkin_terminal == null ? '0' : '1');
 
@@ -150,8 +150,8 @@ class SettingsController extends Controller
 
             $settings->put('navbar_customer_color', $request->customer_navbar_color);
             $settings->put('navbar_customer_text_class', $request->customer_navtext);
-            $settings->put('navbar_admin_color', $request->admin_navbar_color);
-            $settings->put('navbar_admin_text_class', $request->admin_navtext);
+            $settings->put('navbar_staff_color', $request->staff_navbar_color);
+            $settings->put('navbar_staff_text_class', $request->staff_navtext);
             $settings->put('navbar_manager_color', $request->manager_navbar_color);
             $settings->put('navbar_manager_text_class', $request->manager_navtext);
 

@@ -142,22 +142,22 @@ $(document).ready(function() {
     // Cancel Bookings Toggles
     $("#cancelBooking").change(function() {
         if ($("#cancelBooking").prop('checked')) {
-            if ($("#adminRole").prop('checked')) {
-                $("#adminCancelBooking").prop('disabled', false)
+            if ($("#staffRole").prop('checked')) {
+                $("#staffCancelBooking").prop('disabled', false)
             }
         } else {
-            $("#adminCancelBooking").prop('disabled', true)
-            $("#adminCancelBooking").prop('checked', false)
+            $("#staffCancelBooking").prop('disabled', true)
+            $("#staffCancelBooking").prop('checked', false)
         }
     })
     
-    // Admin Toggles
-    $("#adminRole").change(function() {
+    // Staff Toggles
+    $("#staffRole").change(function() {
         if ($(this).prop('checked')) {
-            $(".admin-toggles").prop('disabled', false)
+            $(".staff-toggles").prop('disabled', false)
         } else {
-            $(".admin-toggles").prop('disabled', true)
-            $(".admin-toggles").prop('checked', false)
+            $(".staff-toggles").prop('disabled', true)
+            $(".staff-toggles").prop('checked', false)
         }
     })
 
@@ -172,8 +172,8 @@ $(document).ready(function() {
         $("#customer_navbar_color").click()
     })
 
-    $("#admin_navbar_toggle").click(function() {
-        $("#admin_navbar_color").click()
+    $("#staff_navbar_toggle").click(function() {
+        $("#staff_navbar_color").click()
     })
 
     $("#manager_navbar_toggle").click(function() {
@@ -188,11 +188,11 @@ $(document).ready(function() {
         $("#customer-header").css('background-color', value)
     })
     
-    $("#admin_navbar_color").on("input change", function() {
+    $("#staff_navbar_color").on("input change", function() {
         var value = $(this).val()
         // var rgb = value.substring(4, value.length - 1)
 
-        $("#admin-header").css('background-color', value)
+        $("#staff-header").css('background-color', value)
     })
 
     $("#manager_navbar_color").on("input change", function() {
@@ -211,13 +211,13 @@ $(document).ready(function() {
         $("#customer_navtext").val(textColor)
     })
 
-    $("#admin_navtext_toggle").click(function() {
-        $("#admin-header").toggleClass("navbar-light navbar-dark")
-        $("#admin_logo").toggleClass("invert-logo")
-        var textColor = $("#admin-header").hasClass("navbar-light") ? "navbar-light" : "navbar-dark"
+    $("#staff_navtext_toggle").click(function() {
+        $("#staff-header").toggleClass("navbar-light navbar-dark")
+        $("#staff_logo").toggleClass("invert-logo")
+        var textColor = $("#staff-header").hasClass("navbar-light") ? "navbar-light" : "navbar-dark"
 
         // inject text class into input field so server can save it
-        $("#admin_navtext").val(textColor)
+        $("#staff_navtext").val(textColor)
     })
 
     $("#manager_navtext_toggle").click(function() {
@@ -230,11 +230,11 @@ $(document).ready(function() {
     })
 
     // prompt changes not saved when UI previews changed
-    $("#customer_navbar_toggle, #admin_navbar_toggle, #manager_navbar_toggle, #customer_navtext_toggle, #admin_navtext_toggle, #manager_navtext_toggle").click(function() {
+    $("#customer_navbar_toggle, #staff_navbar_toggle, #manager_navbar_toggle, #customer_navtext_toggle, #staff_navtext_toggle, #manager_navtext_toggle").click(function() {
         changesNotSaved()
     })
 
-    $("#customer_navbar_color, #admin_navbar_color, #manager_navbar_color, .form-control-file").on("input change", function() {
+    $("#customer_navbar_color, #staff_navbar_color, #manager_navbar_color, .form-control-file").on("input change", function() {
         changesNotSaved()
     })
 

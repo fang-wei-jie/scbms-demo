@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,21 +8,21 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 
-class AdminResetPasswordController extends Controller
+class StaffResetPasswordController extends Controller
 {
     
     function __construct()
     {
 
-        $this -> middleware('auth:admin');
+        $this -> middleware('auth:staff');
 
     }
 
     function view () {
 
-        // make sure request comes from manager panel managing admins
-        if (str_contains(URL::previous(), "/manager/admins")) {
-            return view ('admin.reset-password');
+        // make sure request comes from manager panel managing staffs
+        if (str_contains(URL::previous(), "/manager/staffs")) {
+            return view ('staff.reset-password');
         } else {
             return back();
         }
@@ -33,9 +33,9 @@ class AdminResetPasswordController extends Controller
     function update (Request $request) {
 
         // make sure request comes from reset password page
-        if (str_contains(URL::previous(), "admin/reset-password")) {
+        if (str_contains(URL::previous(), "staff/reset-password")) {
 
-            $admin = Auth::guard('admin') -> user();
+            $staff = Auth::guard('staff') -> user();
 
             // validate
             $this -> validate($request, [
@@ -52,14 +52,14 @@ class AdminResetPasswordController extends Controller
             }
             
             // save changes
-            $admin->password = Hash::make($request->password);
-            $admin->save();
+            $staff->password = Hash::make($request->password);
+            $staff->save();
 
             // redirect back to page with info prompt
-            return redirect() -> route('admin.dashboard');
+            return redirect() -> route('staff.dashboard');
 
             // logout other logged in instances
-            Auth::guard('admin')->logoutOtherDevices($request->password);
+            Auth::guard('staff')->logoutOtherDevices($request->password);
 
         } else {
             return back();

@@ -8,7 +8,7 @@ use App\Models\Operation;
 use Illuminate\Support\Facades\DB;
 use Spatie\Valuestore\Valuestore;
 
-class AdminDashboard extends Component
+class StaffDashboard extends Component
 {
     public function render()
     {
@@ -16,8 +16,8 @@ class AdminDashboard extends Component
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        // check if admin is allowed to see the sales report
-        $adminSalesReportEnabled = ($settings->get('admin_sales_report') == 1) ? true : false;
+        // check if staff is allowed to see the sales report
+        $staffSalesReportEnabled = ($settings->get('staff_sales_report') == 1) ? true : false;
         
         $start_time = $settings->get('start_time');
         $end_time = $settings->get('end_time');
@@ -107,8 +107,8 @@ class AdminDashboard extends Component
             ->where('status_id', '!=', 0)
             ->first();
 
-        return view('livewire.dashboard.admin-dashboard', [
-            'sales_card_enabled' => $adminSalesReportEnabled,
+        return view('livewire.dashboard.staff-dashboard', [
+            'sales_card_enabled' => $staffSalesReportEnabled,
 
             'settings' => $settings,
             'operationHourConflicts' => $operationHourConflicts,

@@ -47,9 +47,9 @@ return [
             'hash' => false,
         ],
 
-        'admin' => [
+        'staff' => [
             'driver' => 'session',
-            'provider' => 'admins',
+            'provider' => 'staffs',
         ],
 
         'manager' => [
@@ -86,9 +86,9 @@ return [
         //     'table' => 'users',
         // ],
 
-        'admins' => [
+        'staffs' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\Staff::class,
         ],
 
         'managers' => [
@@ -120,8 +120,8 @@ return [
             'throttle' => 60,
         ],
 
-        'admins' => [
-            'provider' => 'admins',
+        'staffs' => [
+            'provider' => 'staffs',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

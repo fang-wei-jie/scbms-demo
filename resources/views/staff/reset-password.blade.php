@@ -6,7 +6,7 @@ Reset Password
 
 @section('body')
 <div class="container">
-    <form class="form-auth" method="post" action="{{ route('admin.reset-password') }}" autocomplete="off">
+    <form class="form-auth" method="post" action="{{ route('staff.reset-password') }}" autocomplete="off">
         @csrf
         <h3 class="mb-3">Reset Password</h3>
     

@@ -22,8 +22,8 @@ class LoginController extends Controller
         // redirect if user already logged in
         if (Auth::guard('manager')->check()) {
             return redirect() -> route('manager.dashboard');
-        } else if (Auth::guard('admin')->check()) {
-            return redirect() -> route('admin.dashboard');
+        } else if (Auth::guard('staff')->check()) {
+            return redirect() -> route('staff.dashboard');
         } else if (Auth::check()) {
             return redirect() -> route('mybookings');
         }
@@ -49,7 +49,7 @@ class LoginController extends Controller
             $domain = $settings->get('domain');
 
             $managerDomain = '@'.$domain.'m';
-            $adminDomain = '@'.$domain;
+            $staffDomain = '@'.$domain;
 
             if (str_ends_with($request->email, $managerDomain)) {
 
@@ -63,17 +63,17 @@ class LoginController extends Controller
 
                 return redirect()->route('manager.dashboard');
 
-            } else if (str_ends_with($request->email, $adminDomain) && $settings->get('admin_role') == 1) {
+            } else if (str_ends_with($request->email, $staffDomain) && $settings->get('staff_role') == 1) {
 
-                // login verification for admin
-                if (!Auth::guard('admin')->attempt(['email' => str_replace('@'.$domain, "", $request->email), 'password' => $request->password])) {
+                // login verification for staff
+                if (!Auth::guard('staff')->attempt(['email' => str_replace('@'.$domain, "", $request->email), 'password' => $request->password])) {
                     return back()->with('status', 'Incorrect login credentials');
                 }
 
                 // logout other logged in instances
-                Auth::guard('admin')->logoutOtherDevices($request->password);
+                Auth::guard('staff')->logoutOtherDevices($request->password);
 
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('staff.dashboard');
 
             } else {
 

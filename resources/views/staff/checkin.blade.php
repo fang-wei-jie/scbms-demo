@@ -61,7 +61,7 @@ Check In
                     @enderror
                 </div>
     
-                <form action="{{ route('admin.checkin') }}" method="post" autocomplete="off" id="checkinForm">
+                <form action="{{ route('staff.checkin') }}" method="post" autocomplete="off" id="checkinForm">
                     @csrf
                     <div class="row justify-content-center align-items-center">
                         <div class="col">

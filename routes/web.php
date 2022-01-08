@@ -23,22 +23,22 @@ use App\Http\Controllers\MyBookingsController;
 use App\Http\Controllers\MakeBookingsController;
 use App\Http\Controllers\ReceiptController;
 
-// Admin Controllers
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminCheckInController;
-use App\Http\Controllers\Admin\AdminCounterBookingController;
-use App\Http\Controllers\Admin\AdminBookingsController;
-use App\Http\Controllers\Admin\AdminRatesController;
-use App\Http\Controllers\Admin\AdminSalesController;
-use App\Http\Controllers\Admin\AdminMyAccountController;
-use App\Http\Controllers\Admin\AdminResetPasswordController;
+// Staff Controllers
+use App\Http\Controllers\Staff\StaffDashboardController;
+use App\Http\Controllers\Staff\StaffCheckInController;
+use App\Http\Controllers\Staff\StaffCounterBookingController;
+use App\Http\Controllers\Staff\StaffBookingsController;
+use App\Http\Controllers\Staff\StaffRatesController;
+use App\Http\Controllers\Staff\StaffSalesController;
+use App\Http\Controllers\Staff\StaffMyAccountController;
+use App\Http\Controllers\Staff\StaffResetPasswordController;
 
 // Manager Controllers
 use App\Http\Controllers\Manager\ManagerDashboardController;
 use App\Http\Controllers\Manager\ManagerCheckInController;
 use App\Http\Controllers\Manager\ManagerCounterBookingController;
 use App\Http\Controllers\Manager\ManagerBookingsController;
-use App\Http\Controllers\Manager\AdminAccountsController;
+use App\Http\Controllers\Manager\StaffAccountsController;
 use App\Http\Controllers\Manager\ManagerAccountsController;
 use App\Http\Controllers\Manager\ManagerRatesController;
 use App\Http\Controllers\Manager\ManagerSalesController;
@@ -64,8 +64,8 @@ Route::get('/', function () {
     // redirect if user already logged in
     if (Auth::guard('manager')->check()) {
         return redirect() -> route('manager.dashboard');
-    } else if (Auth::guard('admin')->check()) {
-        return redirect() -> route('admin.dashboard');
+    } else if (Auth::guard('staff')->check()) {
+        return redirect() -> route('staff.dashboard');
     } else if (Auth::check()) {
         return redirect() -> route('mybookings');
     }
@@ -184,56 +184,56 @@ Route::post('/reset-password', function (Request $request) {
 // END OF CUSTOMER PAGES
 
 // ADMIN PAGES
-Route::prefix('admin')->group(function() {
+Route::prefix('staff')->group(function() {
 
     $settings = Valuestore::make(storage_path('app/settings.json'));
 
-    if ($settings->get('admin_role') != 1) {
-        Auth::guard('admin')->logout();
+    if ($settings->get('staff_role') != 1) {
+        Auth::guard('staff')->logout();
     }
 
     Route::get('/', function () {
-        return redirect() -> route('admin.dashboard');
+        return redirect() -> route('staff.dashboard');
     });
 
     // Dashboard
-    Route::get('/dashboard', [AdminDashboardController::class, 'view']) -> name('admin.dashboard');
+    Route::get('/dashboard', [StaffDashboardController::class, 'view']) -> name('staff.dashboard');
 
     // Make Booking
-    Route::get('/book-court', [AdminCounterBookingController::class, 'view']) -> name('admin.book-court');
-    Route::post('/book-court', [AdminCounterBookingController::class, 'check_booking']);
-    Route::post('/confirm-booking', [AdminCounterBookingController::class, 'confirm_booking']) -> name('admin.confirm-booking');
+    Route::get('/book-court', [StaffCounterBookingController::class, 'view']) -> name('staff.book-court');
+    Route::post('/book-court', [StaffCounterBookingController::class, 'check_booking']);
+    Route::post('/confirm-booking', [StaffCounterBookingController::class, 'confirm_booking']) -> name('staff.confirm-booking');
 
     // Receipt Generator
-    Route::get('/receipt', [AdminCounterBookingController::class, 'preview']) -> name('admin.receipt');
-    Route::post('/receipt', [AdminCounterBookingController::class, 'receipt']);
+    Route::get('/receipt', [StaffCounterBookingController::class, 'preview']) -> name('staff.receipt');
+    Route::post('/receipt', [StaffCounterBookingController::class, 'receipt']);
 
     // Check In
-    Route::get('/checkin', [AdminCheckInController::class, 'view']) -> name('admin.checkin');
-    Route::post('/checkin', [AdminCheckInController::class, 'check']);
+    Route::get('/checkin', [StaffCheckInController::class, 'view']) -> name('staff.checkin');
+    Route::post('/checkin', [StaffCheckInController::class, 'check']);
 
     // Court Bookings
-    Route::get('/bookings', [AdminBookingsController::class, 'view']) -> name('admin.bookings');
-    Route::post('/bookings', [AdminBookingsController::class, 'cancel']);
+    Route::get('/bookings', [StaffBookingsController::class, 'view']) -> name('staff.bookings');
+    Route::post('/bookings', [StaffBookingsController::class, 'cancel']);
 
     // Rates Management
-    Route::get('/rates', [AdminRatesController::class, 'view']) -> name('admin.rates');
-    Route::post('/rates', [AdminRatesController::class, 'process']);
+    Route::get('/rates', [StaffRatesController::class, 'view']) -> name('staff.rates');
+    Route::post('/rates', [StaffRatesController::class, 'process']);
     Route::get('/rates-default-switch', function() {
         return back();
     });
-    Route::post('/rates-default-switch', [AdminRatesController::class, 'update']) -> name('admin.default_switch');
+    Route::post('/rates-default-switch', [StaffRatesController::class, 'update']) -> name('staff.default_switch');
 
     // Sales Report
-    Route::get('/sales', [AdminSalesController::class, 'view']) -> name('admin.sales');
+    Route::get('/sales', [StaffSalesController::class, 'view']) -> name('staff.sales');
 
     // My Account
-    Route::get('/myaccount', [AdminMyAccountController::class, 'view']) -> name('admin.myaccount');
-    Route::post('/myaccount', [AdminMyAccountController::class, 'update']);
+    Route::get('/myaccount', [StaffMyAccountController::class, 'view']) -> name('staff.myaccount');
+    Route::post('/myaccount', [StaffMyAccountController::class, 'update']);
 
     // Password Reset
-    Route::get('/reset-password', [AdminResetPasswordController::class, 'view']) -> name('admin.reset-password');
-    Route::post('/reset-password', [AdminResetPasswordController::class, 'update']);
+    Route::get('/reset-password', [StaffResetPasswordController::class, 'view']) -> name('staff.reset-password');
+    Route::post('/reset-password', [StaffResetPasswordController::class, 'update']);
 
 });
 
@@ -265,9 +265,9 @@ Route::prefix('manager')->group(function() {
     Route::get('/bookings', [ManagerBookingsController::class, 'view']) -> name('manager.bookings');
     Route::post('/bookings', [ManagerBookingsController::class, 'cancel']);
 
-    // Admin Accounts Management
-    Route::get('/admins', [AdminAccountsController::class, 'view']) -> name('manager.admins_management');
-    Route::post('/admins', [AdminAccountsController::class, 'process']);
+    // Staff Accounts Management
+    Route::get('/staffs', [StaffAccountsController::class, 'view']) -> name('manager.staffs_management');
+    Route::post('/staffs', [StaffAccountsController::class, 'process']);
 
     // Manager Accounts Management
     Route::get('/managers', [ManagerAccountsController::class, 'view']) -> name('manager.managers_management');

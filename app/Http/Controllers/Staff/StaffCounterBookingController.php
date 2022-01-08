@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -11,11 +11,11 @@ use Spatie\Valuestore\Valuestore;
 use Da\QrCode\QrCode;
 use Codedge\Fpdf\Fpdf\Fpdf;
 
-class AdminCounterBookingController extends Controller
+class StaffCounterBookingController extends Controller
 {
     function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth:staff');
     }
 
     
@@ -38,7 +38,7 @@ class AdminCounterBookingController extends Controller
         $tomorrowDate = date('Y-m-d', strtotime($minDate."+ 1 days"));
         $maxDate = date('Y-m-d', strtotime("+".$prebook_days_ahead." days"));
 
-        return view ('admin.book-court', [
+        return view ('staff.book-court', [
             'selectedDate' => 0,
             'start_time' => $start_time,
             'tomorrow_date' => $tomorrowDate,
@@ -135,7 +135,7 @@ class AdminCounterBookingController extends Controller
         // get list of rates
         $rates = Rates::where('status', 1)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
-        return view ('admin.book-court', [
+        return view ('staff.book-court', [
             'count' => array_count_values($courts)['0'],
             'courts' => $courts,
             'rates' => $rates,
@@ -221,12 +221,12 @@ class AdminCounterBookingController extends Controller
 
         // check if the new operation time, if changed, makes the user submitted timeSlot invalid
         if ($timeSlot < $start_time || ($timeSlot + $timeLength) > $end_time) {
-            return redirect() -> route('admin.book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
+            return redirect() -> route('staff.book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation hours did not match with your selected time. Please choose your new time and date. "]);
         }
 
         // check if the new allowed days to book ahead, if changed, make the user restart again
         if ($dateSlot > $maxDate) {
-            return redirect() -> route('admin.book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation defines that customer can only book " . $prebook_days_ahead . " days ahead. Please choose your new time and date. "]);
+            return redirect() -> route('staff.book-court') -> with(['selectedDate' => 0, 'notify' => "We are sorry. Our new operation defines that customer can only book " . $prebook_days_ahead . " days ahead. Please choose your new time and date. "]);
         }
 
         // if there are error messages
@@ -267,7 +267,7 @@ class AdminCounterBookingController extends Controller
             // get list of rates
             $rates = Rates::where('status', 1)->where('dow', 'LIKE', '%'.$dayOfWeek.'%')->get();
 
-            return view ('admin.book-court', [
+            return view ('staff.book-court', [
                 'selectedDate' => 1,
                 'count' => array_count_values($courts)['0'],
                 'courts' => $courts,
@@ -343,7 +343,7 @@ class AdminCounterBookingController extends Controller
                 ->where('status_id', '=', 1)
                 ->first();
 
-            return redirect() -> action([AdminCounterBookingController::class, 'preview'], ['id' => str_pad($details->bookingID, 7, 0, STR_PAD_LEFT)]);
+            return redirect() -> action([StaffCounterBookingController::class, 'preview'], ['id' => str_pad($details->bookingID, 7, 0, STR_PAD_LEFT)]);
 
         } else {
             // if booking is invalid
@@ -378,7 +378,7 @@ class AdminCounterBookingController extends Controller
                 array_push($courts, $booked);
             }
 
-            return view ('admin.book-court', [
+            return view ('staff.book-court', [
                 'selectedDate' => 1,
                 'count' => array_count_values($courts)['0'],
                 'courts' => $courts,
@@ -393,7 +393,7 @@ class AdminCounterBookingController extends Controller
 
         }
         
-        return redirect() -> route('admin.book-court');
+        return redirect() -> route('staff.book-court');
 
     }
 
@@ -411,7 +411,7 @@ class AdminCounterBookingController extends Controller
             ->where('bookings.bookingID', '=', $request->id)
             ->first();
 
-        return view ('admin.finish-book-court', ['details' => $details, 'hour_unit' => $details->timeLength == 1 ? " hour" : " hours"]);
+        return view ('staff.finish-book-court', ['details' => $details, 'hour_unit' => $details->timeLength == 1 ? " hour" : " hours"]);
 
     }
 
@@ -547,7 +547,7 @@ class AdminCounterBookingController extends Controller
 
         } else {
 
-            return redirect() -> route('admin.book-court');
+            return redirect() -> route('staff.book-court');
 
         }
 

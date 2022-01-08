@@ -39,7 +39,7 @@
         @endfor
     </style>
 
-    <input type="text" id="admin-cancel-able" value="{{ $admincancelable }}" style="display: none">
+    <input type="text" id="staff-cancel-able" value="{{ $staffcancelable }}" style="display: none">
 
     <div class="row align-items-center justify-content-end">
 

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Spatie\Valuestore\Valuestore;
 
-class AdminSalesController extends Controller
+class StaffSalesController extends Controller
 {
     function __construct()
     {
 
-        $this->middleware('auth:admin');
+        $this->middleware('auth:staff');
     }
 
     function view()
@@ -18,9 +18,9 @@ class AdminSalesController extends Controller
 
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        if ($settings->get('admin_sales_report') == 1) {
+        if ($settings->get('staff_sales_report') == 1) {
 
-            return view('admin.sales');
+            return view('staff.sales');
 
         } else {
 

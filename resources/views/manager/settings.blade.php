@@ -42,7 +42,7 @@
     }
 
     /* show pointer on coloris */
-    .bi-palette-fill, .bi-circle-half, #customer_navbar_color, #admin_navbar_color, #manager_navbar_color {
+    .bi-palette-fill, .bi-circle-half, #customer_navbar_color, #staff_navbar_color, #manager_navbar_color {
         cursor: pointer;
     }
 
@@ -294,8 +294,8 @@
                                         <input id="domain" class="form-control" type="text" name="domain" maxlength="255" value="{{ $settings->get('domain') }}">
                                         <label for="domain">Domain</label>
                                         <small>
-                                            Domain used for log in of admin and manager accounts. <br>
-                                            <mark>@<span class="company-login-domain">{{ $settings->get('domain') }}</span></mark> for admin, <mark>@<span class="company-login-domain">{{ $settings->get('domain') }}</span>m</mark> for manager accounts
+                                            Domain used for log in of staff and manager accounts. <br>
+                                            <mark>@<span class="company-login-domain">{{ $settings->get('domain') }}</span></mark> for staff, <mark>@<span class="company-login-domain">{{ $settings->get('domain') }}</span>m</mark> for manager accounts
                                         </small>
                                     </div>
 
@@ -370,41 +370,41 @@
                                 
                             </div> --}}
 
-                            <h5 class="mt-3">Admin</h5>
+                            <h5 class="mt-3">Staff</h5>
 
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="adminRole" name="adminRole" @if($settings->get('admin_role') == 1){{ "checked" }}@endif>
-                                <label class="form-check-label" for="adminRole">
-                                    Admin Role
+                                <input class="form-check-input" type="checkbox" id="staffRole" name="staffRole" @if($settings->get('staff_role') == 1){{ "checked" }}@endif>
+                                <label class="form-check-label" for="staffRole">
+                                    Staff Role
                                     <br>
-                                    <small>Enable the admin role</small>
+                                    <small>Enable the staff role</small>
                                 </label>
                             </div>
 
                             <div class="form-check form-switch">
-                                <input class="form-check-input admin-toggles" type="checkbox" id="adminSalesReport" name="adminSalesReport" @if($settings->get('admin_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminSalesReport">
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffSalesReport" name="staffSalesReport" @if($settings->get('staff_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffSalesReport">
                                     View Sales Report
                                     <br>
-                                    <small>Enable the admin to view sales report</small>
+                                    <small>Enable the staff to view sales report</small>
                                 </label>
                             </div>
 
-                            <div class="form-check form-switch" id="bookingDeletableAdmin">
-                                <input class="form-check-input admin-toggles" type="checkbox" id="adminCancelBooking" name="adminCancelBooking" @if($settings->get('admin_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminCancelBooking">
-                                    Booking Cancelable by Admin
+                            <div class="form-check form-switch" id="bookingDeletableStaff">
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffCancelBooking" name="staffCancelBooking" @if($settings->get('staff_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffCancelBooking">
+                                    Booking Cancelable by Staff
                                     <br>
-                                    <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the admin process booking cancellation</small>
+                                    <small class="@if($settings->get('cancel_booking') != 1){{ 'disabled-label' }}@endif">Enable the staff process booking cancellation</small>
                                 </label>
                             </div>
 
                             <div class="form-check form-switch">
-                                <input class="form-check-input admin-toggles" type="checkbox" id="adminRates" name="adminRates" @if($settings->get('rates_editable_admin') == 1){{ "checked" }}@endif  @if($settings->get('admin_role') != 1){{ "disabled" }}@endif>
-                                <label class="form-check-label" for="adminRates">
-                                    Rates Editable by Admin
+                                <input class="form-check-input staff-toggles" type="checkbox" id="staffRates" name="staffRates" @if($settings->get('rates_editable_staff') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                <label class="form-check-label" for="staffRates">
+                                    Rates Editable by Staff
                                     <br>
-                                    <small>Enable the admin to edit rates detail</small>
+                                    <small>Enable the staff to edit rates detail</small>
                                 </label>
                             </div>
 
@@ -470,15 +470,15 @@
                                         </div>
                                     </div>
         
-                                    <h5 class="mt-3">Admin Navbar</h5>
+                                    <h5 class="mt-3">Staff Navbar</h5>
         
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col">
-                                            <nav id="admin-header" class="navbar navbar-expand-lg preview {{ $settings->get('navbar_admin_text_class') }}" style="background-color: {{ $settings->get('navbar_admin_color') }}">
+                                            <nav id="staff-header" class="navbar navbar-expand-lg preview {{ $settings->get('navbar_staff_text_class') }}" style="background-color: {{ $settings->get('navbar_staff_color') }}">
                                                 <div class="container-fluid">
                                                     <a class="navbar-brand">
-                                                        <img id="admin_logo" src="{{ url(htmlspecialchars($settings->get('navbar_admin_logo'))) }}" width="30" height="30" class="d-inline-block align-top @if($settings->get('navbar_admin_text_class') != "navbar-light") invert-logo @endif" alt="">
-                                                        <span class="company-display-domain">&nbsp;{{ strtoupper($settings->get('domain')) }}</span> Admin
+                                                        <img id="staff_logo" src="{{ url(htmlspecialchars($settings->get('navbar_staff_logo'))) }}" width="30" height="30" class="d-inline-block align-top @if($settings->get('navbar_staff_text_class') != "navbar-light") invert-logo @endif" alt="">
+                                                        <span class="company-display-domain">&nbsp;{{ strtoupper($settings->get('domain')) }}</span> Staff
                                                     </a>
                                                     <div class="d-none d-sm-block">
                                                         <div class="collapse navbar-collapse" id="navbarToggler">
@@ -502,11 +502,11 @@
                                             </nav>
                                         </div>
                                         <div class="col-auto">
-                                            <input style="width: 0px; opacity: 0;" class="form-control" type="text" name="admin_navbar_color" id="admin_navbar_color" class="coloris" value="{{ $settings->get('navbar_admin_color') }}" data-coloris>
-                                            <i id="admin_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
+                                            <input style="width: 0px; opacity: 0;" class="form-control" type="text" name="staff_navbar_color" id="staff_navbar_color" class="coloris" value="{{ $settings->get('navbar_staff_color') }}" data-coloris>
+                                            <i id="staff_navbar_toggle" class="bi bi-palette-fill fs-5"></i>
                                             &nbsp;
-                                            <input type="text" class="hidden" name="admin_navtext" id="admin_navtext" value="{{ $settings->get('navbar_admin_text_class') }}">
-                                            <i id="admin_navtext_toggle" class="bi bi-circle-half fs-5"></i>
+                                            <input type="text" class="hidden" name="staff_navtext" id="staff_navtext" value="{{ $settings->get('navbar_staff_text_class') }}">
+                                            <i id="staff_navtext_toggle" class="bi bi-circle-half fs-5"></i>
                                             &nbsp;
                                         </div>
                                     </div>

@@ -25,13 +25,13 @@
                 </div>
             </div>
     
-            <form action="{{ route('admin.receipt') }}" method="post">
+            <form action="{{ route('staff.receipt') }}" method="post">
                 @csrf
 
                 <div class="d-grid gap-2 mb-3">
                     <div class="row">
                         <div class="col d-grid gap-2 mb-3">
-                            <a class="btn btn-outline-secondary" href="{{ route('admin.book-court') }}">
+                            <a class="btn btn-outline-secondary" href="{{ route('staff.book-court') }}">
                                 <i class="bi bi-arrow-left-circle"></i>&nbsp;Back
                             </a>
                         </div>

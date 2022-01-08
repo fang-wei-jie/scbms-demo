@@ -19,7 +19,7 @@ class ManagerResetPasswordController extends Controller
 
     function view () {
 
-        // make sure request comes from manager panel managing admins
+        // make sure request comes from manager panel managing staffs
         if (str_contains(URL::previous(), "/manager/managers")) {
             return view ('manager.reset-password');
         } else {

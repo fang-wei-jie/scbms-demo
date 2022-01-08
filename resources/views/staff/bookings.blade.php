@@ -149,7 +149,7 @@ Bookings
                 <p>Rate: <span id="rate"></span></p>
                 <p>Paid: RM <span id="paid"></span></p>
                 <div class="d-grid gap-2">
-                    <form action="{{ route('admin.bookings') }}" method="post">
+                    <form action="{{ route('staff.bookings') }}" method="post">
                         @csrf
 
                         <div class="accordion accordion-flush" id="cancelBooking">
@@ -162,14 +162,14 @@ Bookings
                                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#cancelBooking">
                                     <div class="accordion-body">
                                         <div class="d-grid gap-2">
-                                            <div class="admin-cancel-able">
+                                            <div class="staff-cancel-able">
                                                 <span class="d-grid gap-2">
                                                     <h5>Booking cancellation is irreversible! Please double confirm with customer before proceed. </h5>
                                                     <input type="text" style="display: none" name="bookingID" id="bookingID"> 
                                                     <button type="submit" class="btn btn-lg btn-danger" name="cancel">Yes, Cancel Booking & Refund</button>
                                                 </span>
                                             </div>
-                                            <h5 class="admin-cancel-not-able">Please request assist from manager for handling booking cancellation. </h5>
+                                            <h5 class="staff-cancel-not-able">Please request assist from manager for handling booking cancellation. </h5>
                                         </div>
                                     </div>
                                 </div>
@@ -221,13 +221,13 @@ Bookings
         $("#rate").text($(this).data('rate'))
         $("#paid").text($(this).data('price'))
 
-        // change message if admin cancelable-bility is disabled
-        if ($("#admin-cancel-able").val() == 0) {
-            $(".admin-cancel-able").hide()
-            $(".admin-cancel-not-able").show()
+        // change message if staff cancelable-bility is disabled
+        if ($("#staff-cancel-able").val() == 0) {
+            $(".staff-cancel-able").hide()
+            $(".staff-cancel-not-able").show()
         } else {
-            $(".admin-cancel-able").show()
-            $(".admin-cancel-not-able").hide()
+            $(".staff-cancel-able").show()
+            $(".staff-cancel-not-able").hide()
         }
     })
 </script>

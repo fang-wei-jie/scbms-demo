@@ -1,31 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class AdminMyAccountController extends Controller
+class StaffMyAccountController extends Controller
 {
     function __construct()
     {
 
-        $this -> middleware('auth:admin');
+        $this -> middleware('auth:staff');
 
     }
 
     function view () {
 
-        return view ('admin.myaccount');
+        return view ('staff.myaccount');
 
     }
 
     function update (Request $request) {
 
         // get logged in account variables
-        $admin = Auth::guard('admin') -> user();
+        $staff = Auth::guard('staff') -> user();
 
         if (isset ($_POST["change-name"]) ) {
 
@@ -37,8 +37,8 @@ class AdminMyAccountController extends Controller
             ]);
 
             // save changes
-            $admin->name = $request->input('name');
-            $admin->save();
+            $staff->name = $request->input('name');
+            $staff->save();
 
             // redirect back to page with info prompt
             return back() -> with('info', 'Name updated');
@@ -55,7 +55,7 @@ class AdminMyAccountController extends Controller
             ]);
 
             // check if password matches, if not redirect back with alert prompt
-            if (!Hash::check($request->input('old-password'), $admin->password)) {
+            if (!Hash::check($request->input('old-password'), $staff->password)) {
 
                 return back() -> with('alert', 'Current password incorrect. Password not updated. ');
 
@@ -71,14 +71,14 @@ class AdminMyAccountController extends Controller
             }
 
             // save changes
-            $admin->password = Hash::make($request->input('new-password'));
-            $admin->save();
+            $staff->password = Hash::make($request->input('new-password'));
+            $staff->save();
             
             // redirect back to page with info prompt
             return back() -> with('info', 'Password updated. ');
 
             // logout other logged in instances
-            Auth::guard('admin')->logoutOtherDevices($request->input('old-password'));
+            Auth::guard('staff')->logoutOtherDevices($request->input('old-password'));
 
         }
 

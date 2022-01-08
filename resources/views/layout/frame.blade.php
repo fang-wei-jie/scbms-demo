@@ -13,12 +13,12 @@
         $navbar_color = $settings->get('navbar_manager_color');
         $navbar_text_class = $settings->get('navbar_manager_text_class');
         
-    } else if (str_contains($_SERVER['REQUEST_URI'], "admin")) {
+    } else if (str_contains($_SERVER['REQUEST_URI'], "staff")) {
         
-        $side = "admin";
-        $logo = $settings->get('navbar_admin_logo');
-        $navbar_color = $settings->get('navbar_admin_color');
-        $navbar_text_class = $settings->get('navbar_admin_text_class');
+        $side = "staff";
+        $logo = $settings->get('navbar_staff_logo');
+        $navbar_color = $settings->get('navbar_staff_color');
+        $navbar_text_class = $settings->get('navbar_staff_text_class');
         
     } else { 
         
@@ -43,7 +43,7 @@
     <meta name="theme-color" content="{{ $navbar_color }}">
     <link rel="shortcut icon" href="{{ url(htmlspecialchars($logo)) }}" />
 
-    @if(request()->is('admin/*') || request()->is('manager/*'))
+    @if(request()->is('staff/*') || request()->is('manager/*'))
         <title>@yield('title') - {{ strtoupper($domain) }} {{ ucwords($side) }}</title>
     @else
         @if($_SERVER['REQUEST_URI'] == "/")
@@ -141,14 +141,14 @@
 <body class="d-flex flex-column h-100">
 
     <!-- navbar/header -->
-    <nav id="header" class="navbar @if(request()->is('manager/*')) {{ "navbar-expand-xxl" }} @elseif(request()->is('admin/*')) {{ "navbar-expand-xl" }} @else {{ "navbar-expand-lg" }} @endif {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
+    <nav id="header" class="navbar @if(request()->is('manager/*')) {{ "navbar-expand-xxl" }} @elseif(request()->is('staff/*')) {{ "navbar-expand-xl" }} @else {{ "navbar-expand-lg" }} @endif {{ $navbar_text_class }} fixed-top hide-from-print" style="background-color: {{ $navbar_color }}">
         <div class="container-fluid">
 
             <a class="navbar-brand" href="
                 @guest {{ '/' }} @endguest
                 @auth
-                    @if (request()->is('admin/*'))
-                        {{ route('admin.dashboard') }}
+                    @if (request()->is('staff/*'))
+                        {{ route('staff.dashboard') }}
                     @elseif (request()->is('manager/*'))
                         {{ route('manager.dashboard') }}
                     @else
@@ -178,11 +178,11 @@
                         </a>
                     </li>
 
-                    @if(Auth::guard("manager")->check() || Auth::guard("admin")->check())
+                    @if(Auth::guard("manager")->check() || Auth::guard("staff")->check())
                     <li class="nav-item">
-                        <a class="nav-link" href="@if(Auth::guard("manager")->check()) {{ route('manager.settings') }} @else {{ route('admin.dashboard') }} @endif">
+                        <a class="nav-link" href="@if(Auth::guard("manager")->check()) {{ route('manager.settings') }} @else {{ route('staff.dashboard') }} @endif">
                             <i class="bi @if(Auth::guard("manager")->check()) {{ "bi-file-person" }} @else {{ "bi-person-badge" }} @endif"></i>
-                            Back to @if(Auth::guard("manager")->check()) Manager @else Admin @endif site
+                            Back to @if(Auth::guard("manager")->check()) Manager @else Staff @endif site
                         </a>
                     </li>
                     @else
@@ -204,9 +204,9 @@
 
                     @auth
 
-                    @if (request()->is('admin/*'))
+                    @if (request()->is('staff/*'))
 
-                        @if (request()->is('admin/reset-password'))
+                        @if (request()->is('staff/reset-password'))
 
                         <li class="nav-item">
                             <a class="nav-link" href="">
@@ -218,52 +218,52 @@
                         @else
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('admin.dashboard') }}">
-                                <i class="bi bi-{{ (request()->is('admin/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('staff.dashboard') }}">
+                                <i class="bi bi-{{ (request()->is('staff/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
                                 Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('admin.checkin') }}">
-                                <i class="bi bi-{{ (request()->is('admin/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('staff.checkin') }}">
+                                <i class="bi bi-{{ (request()->is('staff/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/book-court') || request()->is('admin/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('admin.book-court') }}">
-                                <i class="bi bi-{{ (request()->is('admin/book-court') || request()->is('admin/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/book-court') || request()->is('staff/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('staff.book-court') }}">
+                                <i class="bi bi-{{ (request()->is('staff/book-court') || request()->is('staff/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
                                 Book Court
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('admin.bookings') }}">
-                                <i class="bi bi-{{ (request()->is('admin/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('staff.bookings') }}">
+                                <i class="bi bi-{{ (request()->is('staff/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 Bookings
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/rates')) ? 'active fw-bold' : '' }}" href="{{ route('admin.rates') }}">
-                                <i class="bi bi-{{ (request()->is('admin/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/rates')) ? 'active fw-bold' : '' }}" href="{{ route('staff.rates') }}">
+                                <i class="bi bi-{{ (request()->is('staff/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
 
-                        @if($settings->get('admin_sales_report') == 1)
+                        @if($settings->get('staff_sales_report') == 1)
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/sales')) ? 'active fw-bold' : '' }}" href="{{ route('admin.sales') }}">
-                                <i class="bi bi-{{ (request()->is('admin/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/sales')) ? 'active fw-bold' : '' }}" href="{{ route('staff.sales') }}">
+                                <i class="bi bi-{{ (request()->is('staff/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
                                 Sales Report
                             </a>
                         </li>
                         @endif
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('admin/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('admin.myaccount') }}">
-                                <i class="bi bi-{{ (request()->is('admin/myaccount')) ? 'person-fill' : 'person' }}"></i>
+                            <a class="nav-link {{ (request()->is('staff/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('staff.myaccount') }}">
+                                <i class="bi bi-{{ (request()->is('staff/myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
                         </li>
@@ -325,11 +325,11 @@
                             </a>
                         </li>
 
-                        @if($settings->get('admin_role') == 1)
+                        @if($settings->get('staff_role') == 1)
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/admins')) ? 'active fw-bold' : '' }}" href="{{ route('manager.admins_management') }}">
-                                <i class="bi bi-{{ (request()->is('manager/admins')) ? 'person-badge-fill' : 'person-badge' }}"></i>
-                                Admins
+                            <a class="nav-link {{ (request()->is('manager/staffs')) ? 'active fw-bold' : '' }}" href="{{ route('manager.staffs_management') }}">
+                                <i class="bi bi-{{ (request()->is('manager/staffs')) ? 'person-badge-fill' : 'person-badge' }}"></i>
+                                Staffs
                             </a>
                         </li>
                         @endif
@@ -382,7 +382,7 @@
 
                     @endif
 
-                    @if (!request()->is('manager/reset-password') && !request()->is('admin/reset-password'))
+                    @if (!request()->is('manager/reset-password') && !request()->is('staff/reset-password'))
 
                     <li class="nav-item">
                         <a class="nav-link" id="logout-button" href="{{ ('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

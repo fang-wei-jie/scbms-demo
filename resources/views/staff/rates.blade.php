@@ -22,7 +22,7 @@ Rates
 
     <h3 class="mb-3">Default Rates</h3>
 
-    <form action="{{ route('admin.default_switch') }}" method="POST" id="weekdayWeekendSwitch">
+    <form action="{{ route('staff.default_switch') }}" method="POST" id="weekdayWeekendSwitch">
         @csrf
         <div class="form-check form-switch mb-3">
             <input class="form-check-input" type="checkbox" id="weekdayWeekend" name="weekdayWeekend" @if($settings->get('rates_weekend_weekday') == 1){{ "checked" }}@endif>
@@ -108,7 +108,7 @@ Rates
             <tr>
                 <td>{{$rates->name}}</td>
                 <td>
-                    <form action="{{ route('admin.rates') }}" method="post">
+                    <form action="{{ route('staff.rates') }}" method="post">
                         @csrf
                         @if($rates->status == 1)
                         <button class="btn btn-success" type="submit" name="disable" @if($editable != 1){{ "disabled" }}@endif>
@@ -202,7 +202,7 @@ Rates
                 <h5 class="modal-title" id="newRateLabel">Create New Rate</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('admin.rates') }}" method="post" autocomplete="off">
+            <form action="{{ route('staff.rates') }}" method="post" autocomplete="off">
                 @csrf
                 <div class="modal-body">
 

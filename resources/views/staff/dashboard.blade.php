@@ -5,5 +5,5 @@ Dashboard
 @endsection
 
 @section('body')
-    @livewire('dashboard.admin-dashboard')
+    @livewire('dashboard.staff-dashboard')
 @endsection

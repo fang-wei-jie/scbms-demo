@@ -22,7 +22,7 @@ Book Courts
     <div class="col">
         <!-- upper portion of form, hidden if lower portion of form shown -->
         @if ($selectedDate == 0)
-        <form class="form-resize" method="post" action="{{ route('admin.book-court') }}">
+        <form class="form-resize" method="post" action="{{ route('staff.book-court') }}">
             @csrf
 
             {{-- show title when items in navbar are invisible --}}
@@ -78,7 +78,7 @@ Book Courts
         @elseif($selectedDate == 1)
 
         <!-- lower portion of form, hidden if upper portion of form shown -->
-        <form class="form-resize" action="{{ route('admin.confirm-booking') }}" method="post">
+        <form class="form-resize" action="{{ route('staff.confirm-booking') }}" method="post">
             @csrf
 
             @if($dateSlot == date('Y-m-d') && $timeSlot == date("H") && date("i") <= $booking_cut_off_time)
@@ -118,7 +118,7 @@ Book Courts
                     <span id="confirmedTimeLength" style="display: none">{{ $timeLength }}</span>
                 </div>
                 <div>
-                    <a href="{{ route('admin.book-court') }}" class="btn btn-outline-primary">Reset date time</a>
+                    <a href="{{ route('staff.book-court') }}" class="btn btn-outline-primary">Reset date time</a>
                 </div>
             </div>
 
@@ -201,7 +201,7 @@ Book Courts
             </div>
 
             <div class="d-grid gap-2">
-                <a href="{{ route('admin.book-court') }}" class="btn btn-outline-primary">Reset date time selected</a>
+                <a href="{{ route('staff.book-court') }}" class="btn btn-outline-primary">Reset date time selected</a>
             </div>
 
             @endif

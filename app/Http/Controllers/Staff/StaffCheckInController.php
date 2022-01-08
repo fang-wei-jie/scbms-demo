@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Valuestore\Valuestore;
 
-class AdminCheckInController extends Controller
+class StaffCheckInController extends Controller
 {
 
     function __construct()
     {
 
-        $this->middleware('auth:admin');
+        $this->middleware('auth:staff');
     }
 
     function view()
     {
 
-        return view('admin.checkin', ['result' => "0"]);
+        return view('staff.checkin', ['result' => "0"]);
     }
 
     function check(Request $request)
@@ -156,7 +156,7 @@ class AdminCheckInController extends Controller
 
         }
 
-        return view('admin.checkin', [
+        return view('staff.checkin', [
             'code' => $request->code,
             'result' => $result,
             'cardColor' => $cardColor,

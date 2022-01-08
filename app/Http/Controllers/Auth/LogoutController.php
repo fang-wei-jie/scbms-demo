@@ -11,7 +11,7 @@ class LogoutController extends Controller
     function logout (Request $request) {
 
         Auth::logout();
-        Auth::guard('admin')->logout();
+        Auth::guard('staff')->logout();
         Auth::guard('manager')->logout();
 
         $request->session()->invalidate();

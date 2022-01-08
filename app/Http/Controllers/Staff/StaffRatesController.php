@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -8,13 +8,13 @@ use App\Models\Rates;
 use App\Models\RateRecords;
 use Spatie\Valuestore\Valuestore;
 
-class AdminRatesController extends Controller
+class StaffRatesController extends Controller
 {
 
     function __construct()
     {
 
-        $this->middleware('auth:admin');
+        $this->middleware('auth:staff');
     }
 
     function view()
@@ -27,10 +27,10 @@ class AdminRatesController extends Controller
         $default = Rates::where('id', '<', 4)->get();
         $custom = Rates::where('id', '>', 3)->get();
 
-        // determine if admins can edit rates
-        $editable = $settings->get('rates_editable_admin');
+        // determine if staffs can edit rates
+        $editable = $settings->get('rates_editable_staff');
 
-        return view('admin.rates', [
+        return view('staff.rates', [
             'settings' => $settings,
             'default' => $default,
             'custom' => $custom,
