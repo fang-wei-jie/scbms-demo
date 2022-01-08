@@ -128,7 +128,7 @@ $(document).ready(function() {
 
     function verifyGPSCoordinates (coordinates, objectID) {
         if (coordinates.match(/^[0-9]{1,3}\.[0-9]{7}$/)) {
-            makeFieldValid(objectID)
+            clearFieldInvalid(objectID)
             changesNotSaved()
             $("#map_requirements").removeClass("mark")
         } else {
@@ -243,14 +243,14 @@ $(document).ready(function() {
             makeFieldInvalid(objectID)
             saveBlocked()
         } else {
-            makeFieldValid(objectID)
+            clearFieldInvalid(objectID)
             changesNotSaved()
         }
     }
 
     function validateNotAsianChar(inputField, forLabel, originalLabel) {
         if($(inputField).val().match(/^[\w\s()-]*$/)) {
-            makeFieldValid(inputField)
+            clearFieldInvalid(inputField)
             $("label[for = '" + forLabel + "']").text(originalLabel)
             changesNotSaved()
         } else {
@@ -273,7 +273,7 @@ $(document).ready(function() {
             }
 
             if (minValidate && maxValidate) {
-                makeFieldValid(objectID)
+                clearFieldInvalid(objectID)
                 changesNotSaved()
             } else {
                 makeFieldInvalid(objectID)
@@ -286,8 +286,7 @@ $(document).ready(function() {
     }
 
     // display valid check message for input
-    function makeFieldValid(objectID) {
-        $(objectID).addClass("is-valid")
+    function clearFieldInvalid(objectID) {
         $(objectID).removeClass("is-invalid")
     }
 
