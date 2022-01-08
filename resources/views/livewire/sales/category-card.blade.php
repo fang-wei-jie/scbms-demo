@@ -68,107 +68,169 @@
                         <h5>No bookings were made in this period</h5>
                     @else
 
-                        <div class="row">
-                            <div class="col-md">
-                                <h4>Rates</h4>
-                                <table class="charts-css bar show-labels data-spacing-5" id="rates">
+                    <div class="my-2"></div>
 
-                                    <caption> Rates </caption>
-
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"> Rates </th>
-                                            <th scope="col"> Total(RM) </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($rates as $rates)
-                                        <tr>
-                                            <th scope="row"> {{ $rates->rate }} </th>
-                                            <td style="--size: calc( {{ $rates->total }} / {{ $ratesMax }} )">
-                                                &nbsp;
-                                                <span class="tooltip">
-                                                    RM {{ $rates->total }} <br>
-                                                    {{ round(($rates->total / $ratesSum) * 100) }}% of total
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                                <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card py-2">
+                                <div class="mx-3 my-1">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col d-flex justify-content-between">
+                                            <div class="text-xs fw-bold text-primary mb-1">
+                                                Bookings Made
+                                            </div>
+                                            <div class="h5 mb-0 fw-bold text-gray-800">
+                                                @if ($count != 0){{ $count }} @else {{ '0' }} @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md">
-                                <h4>Time Length</h4>
-                                <table class="charts-css bar show-labels data-spacing-5" id="length">
-
-                                    <caption> Time Length </caption>
-
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"> Length (Hours) </th>
-                                            <th scope="col"> Total(RM) </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($length as $length)
-                                        <tr>
-                                            <th scope="row"> {{ $length->length }} @if($length->length != 1){{ "hours" }}@else{{ "hour" }}@endif</th>
-                                            <td style="--size: calc( {{ $length->total }} / {{ $lengthMax }} )">
-                                                &nbsp;
-                                                <span class="tooltip">
-                                                    RM {{ $length->total }} <br>
-                                                    {{ round(($length->total / $lengthSum) * 100) }}% of total
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
-                                <br>
+                            <div class="my-2"></div>
+                        </div>
+                
+                        <div class="col-lg">
+                            <div class="card py-2">
+                                <div class="mx-3 my-1">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col d-flex justify-content-between">
+                                            <div class="text-xs fw-bold text-secondary mb-1">
+                                                Total Earned
+                                            </div>
+                                            <div class="h5 mb-0 fw-bold text-gray-800">
+                                                RM @if ($sum != 0){{ $sum }} @else {{ '0' }} @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="my-2"></div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <h4>Time Slot</h4>
-                                <table class="charts-css bar show-labels data-spacing-5" id="slot">
-
-                                    <caption> Time Slot </caption>
-
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"> Time Slot </th>
-                                            <th scope="col"> Total(RM) </th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($slot as $slot)
-                                        <tr>
-                                            <th scope="row"> {{ $slot->slot }}:00 </th>
-                                            <td style="--size: calc( {{ $slot->total }} / {{ $slotMax }} )">
-                                                &nbsp;
-                                                <span class="tooltip">
-                                                    RM {{ $slot->total }} <br>
-                                                    {{ round(($slot->total / $slotSum) * 100) }}% of total
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-
-                                </table>
+                        <div class="col-lg">
+                            <div class="card py-2">
+                                <div class="mx-3 my-1">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col d-flex justify-content-between">
+                                            <div class="text-xs fw-bold text-success mb-1">
+                                                Average Per Booking
+                                            </div>
+                                            <div class="h5 mb-0 fw-bold text-gray-800">
+                                                RM @if ($sum != 0){{ round($sum / $count, 2) }} @else {{ '0' }} @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="my-2"></div>
                         </div>
+                
+                    </div>
+
+                    <div class="my-2"></div>
+
+                    <div class="row">
+                        <div class="col-lg">
+                            <h4>Rates</h4>
+                            <table class="charts-css bar show-labels data-spacing-5" id="rates">
+
+                                <caption> Rates </caption>
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Rates </th>
+                                        <th scope="col"> Total(RM) </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($rates as $rates)
+                                    <tr>
+                                        <th scope="row"> {{ $rates->rate }} </th>
+                                        <td style="--size: calc( {{ $rates->total }} / {{ $ratesMax }} )">
+                                            &nbsp;
+                                            <span class="tooltip">
+                                                RM {{ $rates->total }} <br>
+                                                {{ round(($rates->total / $sum) * 100) }}% of total
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                            <br>
+                        </div>
+                        
+                        <div class="col-lg">
+                            <h4>Time Length</h4>
+                            <table class="charts-css bar show-labels data-spacing-5" id="length">
+
+                                <caption> Time Length </caption>
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Length (Hours) </th>
+                                        <th scope="col"> Total(RM) </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($length as $length)
+                                    <tr>
+                                        <th scope="row"> {{ $length->length }} @if($length->length != 1){{ "hours" }}@else{{ "hour" }}@endif</th>
+                                        <td style="--size: calc( {{ $length->total }} / {{ $lengthMax }} )">
+                                            &nbsp;
+                                            <span class="tooltip">
+                                                RM {{ $length->total }} <br>
+                                                {{ round(($length->total / $sum) * 100) }}% of total
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <h4>Time Slot</h4>
+                            <table class="charts-css bar show-labels data-spacing-5" id="slot">
+
+                                <caption> Time Slot </caption>
+
+                                <thead>
+                                    <tr>
+                                        <th scope="col"> Time Slot </th>
+                                        <th scope="col"> Total(RM) </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($slot as $slot)
+                                    <tr>
+                                        <th scope="row"> {{ $slot->slot }}:00 </th>
+                                        <td style="--size: calc( {{ $slot->total }} / {{ $slotMax }} )">
+                                            &nbsp;
+                                            <span class="tooltip">
+                                                RM {{ $slot->total }} <br>
+                                                {{ round(($slot->total / $sum) * 100) }}% of total
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                @endif
+                    @else
+                        <h5>No bookings were made yet</h5>
                     @endif
-                        @else
-                            <h5>No bookings were made yet</h5>
-                        @endif
             </div>
         </div>
     </div>

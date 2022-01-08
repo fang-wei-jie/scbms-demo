@@ -94,19 +94,24 @@ class CategoryCard extends Component
                 ->orderByDesc("created_at")
                 ->get();
 
+            // get the number of bookings
+            $count = DB::table('bookings')
+                ->whereRaw('`bookings`.`created_at` ' . $condition . '"')
+                ->where('status_id', '!=', 0)
+                ->count();
+
             return view('livewire.sales.category-card', [
                 'hasData' => true,
                 'range' => $range,
-                'rates' => $ratesPerf,
-                'ratesMax' => $ratesPerf->max("total"),
-                'ratesSum' => $ratesPerf->sum("total"),
-                'length' => $timelengthPerf,
-                'lengthMax' => $timelengthPerf->max("total"),
-                'lengthSum' => $timelengthPerf->sum("total"),
-                'slot' => $timeslotPerf,
-                'slotMax' => $timeslotPerf->max("total"),
-                'slotSum' => $timeslotPerf->sum("total"),
                 'dates' => $dates,
+                'sum' => $ratesPerf->sum("total"),
+                'count' => $count,
+                'rates' => $ratesPerf,
+                'length' => $timelengthPerf,
+                'slot' => $timeslotPerf,
+                'ratesMax' => $ratesPerf->max("total"),
+                'lengthMax' => $timelengthPerf->max("total"),
+                'slotMax' => $timeslotPerf->max("total"),
             ]);
 
         } else {
