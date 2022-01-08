@@ -71,7 +71,7 @@
                     <div class="my-2"></div>
 
                     <div class="row">
-                        <div class="col">
+                        <div class="col-lg">
                             <div class="card py-2">
                                 <div class="mx-3 my-1">
                                     <div class="row no-gutters align-items-center">
