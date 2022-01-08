@@ -172,7 +172,7 @@
                     @guest
 
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('about-us')) ? 'active fw-bold' : '' }}" href="{{ route('about-us') }}">
+                        <a class="nav-link {{ (request()->is('about-us')) ? 'active' : '' }}" href="{{ route('about-us') }}">
                             <i class="bi bi-{{ (request()->is('about-us')) ? 'info-circle-fill' : 'info-circle' }}"></i>
                             About Us
                         </a>
@@ -187,13 +187,13 @@
                     </li>
                     @else
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('login')) ? 'active fw-bold' : '' }}" href="{{ route('login') }}">
+                        <a class="nav-link {{ (request()->is('login')) ? 'active' : '' }}" href="{{ route('login') }}">
                             <i class="bi bi-{{ (request()->is('login')) ? 'person-fill' : 'person' }}"></i>
                             Login
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ (request()->is('register')) ? 'active fw-bold' : '' }}" href="{{ route('register') }}">
+                        <a class="nav-link {{ (request()->is('register')) ? 'active' : '' }}" href="{{ route('register') }}">
                             <i class="bi bi-{{ (request()->is('register')) ? 'person-plus-fill' : 'person-plus' }}"></i>
                             Register
                         </a>
@@ -218,35 +218,35 @@
                         @else
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('staff.dashboard') }}">
+                            <a class="nav-link {{ (request()->is('staff/dashboard')) ? 'active' : '' }}" href="{{ route('staff.dashboard') }}">
                                 <i class="bi bi-{{ (request()->is('staff/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
                                 Dashboard
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('staff.checkin') }}">
+                            <a class="nav-link {{ (request()->is('staff/checkin')) ? 'active' : '' }}" href="{{ route('staff.checkin') }}">
                                 <i class="bi bi-{{ (request()->is('staff/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/book-court') || request()->is('staff/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('staff.book-court') }}">
+                            <a class="nav-link {{ (request()->is('staff/book-court') || request()->is('staff/receipt')) ? 'active' : '' }}" href="{{ route('staff.book-court') }}">
                                 <i class="bi bi-{{ (request()->is('staff/book-court') || request()->is('staff/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
                                 Book Court
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('staff.bookings') }}">
+                            <a class="nav-link {{ (request()->is('staff/bookings')) ? 'active' : '' }}" href="{{ route('staff.bookings') }}">
                                 <i class="bi bi-{{ (request()->is('staff/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 Bookings
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/rates')) ? 'active fw-bold' : '' }}" href="{{ route('staff.rates') }}">
+                            <a class="nav-link {{ (request()->is('staff/rates')) ? 'active' : '' }}" href="{{ route('staff.rates') }}">
                                 <i class="bi bi-{{ (request()->is('staff/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
@@ -254,7 +254,7 @@
 
                         @if($settings->get('staff_sales_report') == 1)
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/sales')) ? 'active fw-bold' : '' }}" href="{{ route('staff.sales') }}">
+                            <a class="nav-link {{ (request()->is('staff/sales')) ? 'active' : '' }}" href="{{ route('staff.sales') }}">
                                 <i class="bi bi-{{ (request()->is('staff/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
                                 Sales Report
                             </a>
@@ -262,7 +262,7 @@
                         @endif
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('staff/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('staff.myaccount') }}">
+                            <a class="nav-link {{ (request()->is('staff/myaccount')) ? 'active' : '' }}" href="{{ route('staff.myaccount') }}">
                                 <i class="bi bi-{{ (request()->is('staff/myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
@@ -284,42 +284,42 @@
                         @else
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/dashboard')) ? 'active fw-bold' : '' }}" href="{{ route('manager.dashboard') }}">
+                            <a class="nav-link {{ (request()->is('manager/dashboard')) ? 'active' : '' }}" href="{{ route('manager.dashboard') }}">
                                 <i class="bi bi-{{ (request()->is('manager/dashboard')) ? 'grid-1x2-fill' : 'grid-1x2' }}"></i>
                                 Dashboard
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/checkin')) ? 'active fw-bold' : '' }}" href="{{ route('manager.checkin') }}">
+                            <a class="nav-link {{ (request()->is('manager/checkin')) ? 'active' : '' }}" href="{{ route('manager.checkin') }}">
                                 <i class="bi bi-{{ (request()->is('manager/checkin')) ? 'person-check-fill' : 'person-check' }}"></i>
                                 Check In
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/book-court') || request()->is('manager/receipt')) ? 'active fw-bold' : '' }}" href="{{ route('manager.book-court') }}">
+                            <a class="nav-link {{ (request()->is('manager/book-court') || request()->is('manager/receipt')) ? 'active' : '' }}" href="{{ route('manager.book-court') }}">
                                 <i class="bi bi-{{ (request()->is('manager/book-court') || request()->is('manager/receipt')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
                                 Book Court
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/bookings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.bookings') }}">
+                            <a class="nav-link {{ (request()->is('manager/bookings')) ? 'active' : '' }}" href="{{ route('manager.bookings') }}">
                                 <i class="bi bi-{{ (request()->is('manager/bookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 Bookings
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/rates')) ? 'active fw-bold' : '' }}" href="{{ route('manager.rates') }}">
+                            <a class="nav-link {{ (request()->is('manager/rates')) ? 'active' : '' }}" href="{{ route('manager.rates') }}">
                                 <i class="bi bi-{{ (request()->is('manager/rates')) ? 'ticket-fill' : 'ticket' }}"></i>
                                 Rates
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/managers')) ? 'active fw-bold' : '' }}" href="{{ route('manager.managers_management') }}">
+                            <a class="nav-link {{ (request()->is('manager/managers')) ? 'active' : '' }}" href="{{ route('manager.managers_management') }}">
                                 <i class="bi bi-{{ (request()->is('manager/managers')) ? 'file-person-fill' : 'file-person' }}"></i>
                                 Managers
                             </a>
@@ -327,7 +327,7 @@
 
                         @if($settings->get('staff_role') == 1)
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/staffs')) ? 'active fw-bold' : '' }}" href="{{ route('manager.staffs_management') }}">
+                            <a class="nav-link {{ (request()->is('manager/staffs')) ? 'active' : '' }}" href="{{ route('manager.staffs_management') }}">
                                 <i class="bi bi-{{ (request()->is('manager/staffs')) ? 'person-badge-fill' : 'person-badge' }}"></i>
                                 Staffs
                             </a>
@@ -335,21 +335,21 @@
                         @endif
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/sales')) ? 'active fw-bold' : '' }}" href="{{ route('manager.sales') }}">
+                            <a class="nav-link {{ (request()->is('manager/sales')) ? 'active' : '' }}" href="{{ route('manager.sales') }}">
                                 <i class="bi bi-{{ (request()->is('manager/sales')) ? 'file-earmark-bar-graph-fill' : 'file-earmark-bar-graph' }}"></i>
                                 Sales Report
                             </a>
                         </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/settings')) ? 'active fw-bold' : '' }}" href="{{ route('manager.settings') }}">
+                            <a class="nav-link {{ (request()->is('manager/settings')) ? 'active' : '' }}" href="{{ route('manager.settings') }}">
                                 <i class="bi bi-{{ (request()->is('manager/settings')) ? 'gear-fill' : 'gear' }}"></i>
                                 Settings
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('manager/myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('manager.myaccount') }}">
+                            <a class="nav-link {{ (request()->is('manager/myaccount')) ? 'active' : '' }}" href="{{ route('manager.myaccount') }}">
                                 <i class="bi bi-{{ (request()->is('manager/myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
@@ -360,21 +360,21 @@
                     @else
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('book-court')) ? 'active fw-bold' : '' }}" href="{{ route('book-court') }}">
+                            <a class="nav-link {{ (request()->is('book-court')) ? 'active' : '' }}" href="{{ route('book-court') }}">
                                 <i class="bi bi-{{ (request()->is('book-court')) ? 'bookmark-plus-fill' : 'bookmark-plus' }}"></i>
                                 Book Courts
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('mybookings')) ? 'active fw-bold' : '' }}" href="{{ route('mybookings') }}">
+                            <a class="nav-link {{ (request()->is('mybookings')) ? 'active' : '' }}" href="{{ route('mybookings') }}">
                                 <i class="bi bi-{{ (request()->is('mybookings')) ? 'bookmarks-fill' : 'bookmarks' }}"></i>
                                 My Bookings
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ (request()->is('myaccount')) ? 'active fw-bold' : '' }}" href="{{ route('myaccount') }}">
+                            <a class="nav-link {{ (request()->is('myaccount')) ? 'active' : '' }}" href="{{ route('myaccount') }}">
                                 <i class="bi bi-{{ (request()->is('myaccount')) ? 'person-fill' : 'person' }}"></i>
                                 {{ Auth::user()->name }}
                             </a>
