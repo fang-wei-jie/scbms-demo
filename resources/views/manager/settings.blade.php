@@ -521,16 +521,7 @@
                                             <small>Enable the staff role</small>
                                         </label>
                                     </div>
-        
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input staff-toggles" type="checkbox" id="staffSalesReport" name="staffSalesReport" @if($settings->get('staff_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
-                                        <label class="form-check-label" for="staffSalesReport">
-                                            View Sales Report
-                                            <br>
-                                            <small>Enable the staff to view sales report</small>
-                                        </label>
-                                    </div>
-        
+                                    
                                     <div class="form-check form-switch" id="bookingDeletableStaff">
                                         <input class="form-check-input staff-toggles" type="checkbox" id="staffCancelBooking" name="staffCancelBooking" @if($settings->get('staff_cancel_booking') == 1){{ "checked" }}@endif @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
                                         <label class="form-check-label" for="staffCancelBooking">
@@ -539,7 +530,7 @@
                                             <small>Enable the staff process booking cancellation</small>
                                         </label>
                                     </div>
-        
+                                    
                                     <div class="form-check form-switch">
                                         <input class="form-check-input staff-toggles" type="checkbox" id="staffRates" name="staffRates" @if($settings->get('rates_editable_staff') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
                                         <label class="form-check-label" for="staffRates">
@@ -548,7 +539,15 @@
                                             <small>Enable the staff to edit rates detail</small>
                                         </label>
                                     </div>
-        
+
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input staff-toggles" type="checkbox" id="staffSalesReport" name="staffSalesReport" @if($settings->get('staff_sales_report') == 1){{ "checked" }}@endif  @if($settings->get('staff_role') != 1){{ "disabled" }}@endif>
+                                        <label class="form-check-label" for="staffSalesReport">
+                                            View Sales Report
+                                            <br>
+                                            <small>Enable the staff to view sales report</small>
+                                        </label>
+                                    </div>
         
                                 </div>
 
