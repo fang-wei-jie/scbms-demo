@@ -144,6 +144,22 @@
                                             </h2>
                                             <div id="ohc_list" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#operationHourConflicts">
                                                 <div class="accordion-body">
+
+                                                    {{-- conflict suggestion --}}
+                                                    <div class="col-md mb-3" id="conflict_info">
+                                                        <div class="card py-2 bg-success">
+                                                            <div class="mx-3 my-1 text-white">
+                                                                <p class="fw-bold">Ways To Resolve</p>
+                                                                <ul>
+                                                                    <li>Change operation time</li>
+                                                                    <li>Stay as it is, and contact customer about it</li>
+                                                                    <li>Cancel the booking, and contact customer about it</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {{-- list of conflict booking --}}
                                                     @foreach ($operationHourConflicts as $details)
                                                         <div class="row">
                                                             <div class="col">
@@ -210,8 +226,25 @@
                                                 </div>
                                             </button>
                                         </h2>
+
                                         <div id="ccc_list" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#courtCountConflicts">
                                             <div class="accordion-body">
+
+                                                {{-- conflict suggestion --}}
+                                                <div class="col-md mb-3" id="conflict_info">
+                                                    <div class="card py-2 bg-success">
+                                                        <div class="mx-3 my-1 text-white">
+                                                            <p class="fw-bold">Ways To Resolve</p>
+                                                            <ul>
+                                                                <li>Change number of courts</li>
+                                                                <li>Stay as it is, and contact customer about it</li>
+                                                                <li>Cancel the booking, and contact customer about it</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {{-- list of conflict booking --}}
                                                 @foreach ($courtCountConflicts as $details)
                                                     <div class="row">
                                                         <div class="col">
