@@ -141,6 +141,25 @@ Bookings
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="col-md mb-3" id="conflict_info">
+                    <div class="card py-2 bg-danger">
+                        <div class="mx-3 my-1">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <i class="bi bi-exclamation-circle-fill text-white"></i>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <span class="text-white fw-bold" id="conflict-type"></span>
+                                    </div>
+                                    <div class="row">
+                                        <span class="text-white" id="conflict-resolution"></span> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <p id="customer_name">Name: <span id="name"></span></p>
                 <p id="customer_phone">Phone: <span id="phone"></span></p>
                 <p id="customer_email">Email: <span id="email"></span></p>
@@ -202,6 +221,19 @@ Bookings
             $("#name").text($(this).data('name'))
             $("#phone").text($(this).data('phone'))
             $("#email").text($(this).data('email'))
+        }
+
+        // show conflict data if available
+        if ($(this).data("conflict") == "t") {
+            $("#conflict_info").show()
+            $("#conflict-type").text("New Operation Hours Conflict")
+            $("#conflict-resolution").text("Change the operation time, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
+        } else if ($(this).data("conflict") == "c") {
+            $("#conflict_info").show()
+            $("#conflict-type").text("New Number of Courts Conflict")
+            $("#conflict-resolution").text("Change the number of courts, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
+        } else {
+            $("#conflict_info").hide()
         }
 
         // close the cancel booking accordion

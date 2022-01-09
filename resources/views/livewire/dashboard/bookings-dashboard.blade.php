@@ -79,13 +79,37 @@
 
                 <!-- Events -->
                 @foreach ($bookings as $booking)
-                    <div style="display: flex; justify-content: center; align-items: center;" class="event @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
-                     {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }}"
+                    <div style="display: flex; justify-content: center; align-items: center;" 
+                    
+                    class="event 
+                    
+                    /* class labels for timetable ordering */
+                    {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }} 
+                    
+                    /* if booking has not started, make the booking editable  */
+                    @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
 
-                     @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                     data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->username }}" data-phone="{{ $booking->phone }}" data-email="{{ $booking->email }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}" data-rate="{{ $booking->rateName }}"
-                     @endif
-                     >
+                    /* if booking conflict with operation hours or number of courts */
+                    @if ($real_courts < $booking->courtID || (($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength)))) || ($booking->dateSlot > date('Ymd') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength))))
+                    {{ "bg-danger text-white" }}
+                    @endif
+
+                    "
+
+                    /* if the booking is editable, inject the data */
+                    @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
+                    data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->username }}" data-phone="{{ $booking->phone }}" data-email="{{ $booking->email }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}" data-rate="{{ $booking->rateName }}"
+                    @endif
+
+
+                    /* if booking is conflict */
+                    @if ($real_courts < $booking->courtID)
+                        data-conflict="c"
+                    @elseif ((($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength)))) || ($booking->dateSlot > date('Ymd') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength))))
+                        data-conflict="t"
+                    @endif
+
+                    >
                         {{ $booking->rateName }}
                         @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
                         

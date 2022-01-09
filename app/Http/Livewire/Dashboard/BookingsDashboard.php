@@ -64,6 +64,11 @@ class BookingsDashboard extends Component
             "start" => $start,
             "end" => $end,
             "courts" => $courts,
+
+            "real_start" => $start_time,
+            "real_end" => $end_time,
+            "real_courts" => $courtCountInOperation,
+
             "date" => substr($date, 0, 4)."-".substr($date, 4, 2)."-".substr($date, 6, 2),
             "staffcancelable" => $settings->get('staff_cancel_booking'),
             
