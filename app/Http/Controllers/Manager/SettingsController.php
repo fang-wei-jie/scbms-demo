@@ -129,8 +129,6 @@ class SettingsController extends Controller
             $settings->put('booking_cut_off_time', $request->booking_cut_off_time);
             $settings->put('precheckin_duration', $request->precheckin_duration);
             $settings->put('payment_grace_period', $request->payment_grace_period);
-
-            $settings->put('cancel_booking', $request->cancelBooking == null ? '0' : '1');
             
             $settings->put('staff_role', $request->staffRole == null ? '0' : '1');
             $settings->put('staff_sales_report', $request->staffSalesReport == null ? '0' : '1');

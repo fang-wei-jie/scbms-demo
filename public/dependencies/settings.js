@@ -139,17 +139,6 @@ $(document).ready(function() {
     }
 
     // Features
-    // Cancel Bookings Toggles
-    $("#cancelBooking").change(function() {
-        if ($("#cancelBooking").prop('checked')) {
-            if ($("#staffRole").prop('checked')) {
-                $("#staffCancelBooking").prop('disabled', false)
-            }
-        } else {
-            $("#staffCancelBooking").prop('disabled', true)
-            $("#staffCancelBooking").prop('checked', false)
-        }
-    })
     
     // Staff Toggles
     $("#staffRole").change(function() {
