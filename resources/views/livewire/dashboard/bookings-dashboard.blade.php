@@ -110,11 +110,9 @@
                     @endif
 
                     >
+                    
                         {{ $booking->rateName }}
-                        @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                        
-                        @endif
-                        
+
                     </div>
                 @endforeach
 
