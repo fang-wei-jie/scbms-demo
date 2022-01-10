@@ -227,11 +227,15 @@ Bookings
         if ($(this).data("conflict") == "t") {
             $("#conflict_info").show()
             $("#conflict-type").text("New Operation Hours Conflict")
-            $("#conflict-resolution").text("Change the operation time, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
+            $("#conflict-resolution").text("Change the operation hours, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
         } else if ($(this).data("conflict") == "c") {
             $("#conflict_info").show()
             $("#conflict-type").text("New Number of Courts Conflict")
             $("#conflict-resolution").text("Change the number of courts, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
+        } else if ($(this).data("conflict") == "tc") {
+            $("#conflict_info").show()
+            $("#conflict-type").text("New Operation Hours & Number of Courts Conflict")
+            $("#conflict-resolution").text("Change the operation hours and/or number of courts, stay as it is and contact customer about it, or cancel the booking and contact customer about it.")
         } else {
             $("#conflict_info").hide()
         }

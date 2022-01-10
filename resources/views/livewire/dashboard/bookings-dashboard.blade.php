@@ -83,30 +83,36 @@
                     
                     class="event 
                     
-                    /* class labels for timetable ordering */
+                    {{-- class labels for timetable ordering --}}
                     {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }} 
                     
-                    /* if booking has not started, make the booking editable  */
-                    @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
+                    {{-- if booking has not started, make the booking editable  --}}
+                    @if((($booking->dateSlot > date('Ymd') || ($booking->dateSlot == date('Ymd')))) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
 
-                    /* if booking conflict with operation hours or number of courts */
-                    @if ($real_courts < $booking->courtID || (($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength)))) || ($booking->dateSlot > date('Ymd') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength))))
-                    {{ "bg-danger text-white" }}
+                    {{-- if booking conflict with operation hours or number of courts --}}
+                    @if (($booking->dateSlot == date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
+                        @if ($booking->courtID > $real_courts || ($booking->dateSlot == date("Ymd") && $booking->timeSlot > date("H") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end)) || ($booking->dateSlot > date("Ymd") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end)))
+                        {{ "bg-danger text-white" }}
+                        @endif
                     @endif
 
                     "
 
-                    /* if the booking is editable, inject the data */
-                    @if(($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
-                    data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->username }}" data-phone="{{ $booking->phone }}" data-email="{{ $booking->email }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}" data-rate="{{ $booking->rateName }}"
+                    {{-- if the booking is editable, inject the data --}}
+                    @if((($booking->dateSlot > date('Ymd') || ($booking->dateSlot == date('Ymd')))) || $booking->dateSlot > date('Ymd'))
+                        data-bs-toggle="modal" data-bs-target="#bookingDetailsModal" data-bookingid="{{ $booking->bookingID }}" data-name="{{ $booking->username }}" data-phone="{{ $booking->phone }}" data-email="{{ $booking->email }}" data-date="{{ substr($booking->dateSlot, 6, 2) . '/' . substr($booking->dateSlot, 4, 2) . '/' . substr($booking->dateSlot, 0, 4) }}" data-time="{{ $booking->timeSlot }}" data-length="{{ $booking->timeLength }}" data-price="{{ $booking->price * $booking->timeLength }}" data-rate="{{ $booking->rateName }}"
                     @endif
 
 
-                    /* if booking is conflict */
-                    @if ($real_courts < $booking->courtID)
-                        data-conflict="c"
-                    @elseif ((($booking->dateSlot >= date('Ymd') && $booking->timeSlot > date('H') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength)))) || ($booking->dateSlot > date('Ymd') && ($real_start > $booking->timeSlot || $real_end < ($booking->timeSlot + $booking->timeLength))))
-                        data-conflict="t"
+                    {{-- if booking is conflict --}}
+                    @if (($booking->dateSlot == date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))
+                        @if ($booking->courtID > $real_courts && (($booking->dateSlot == date("Ymd") && $booking->timeSlot > date("H") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end)) || ($booking->dateSlot > date("Ymd") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end))))
+                            data-conflict="tc"
+                        @elseif ($booking->courtID > $real_courts)
+                            data-conflict="c"
+                        @elseif (($booking->dateSlot == date("Ymd") && $booking->timeSlot > date("H") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end)) || ($booking->dateSlot > date("Ymd") && ($booking->timeSlot < $real_start || $booking->timeSlot >= $real_end || ($booking->timeSlot + $booking->timeLength) > $real_end)))
+                            data-conflict="t"
+                        @endif
                     @endif
 
                     >
