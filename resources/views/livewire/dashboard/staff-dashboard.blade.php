@@ -91,8 +91,8 @@
                     <div class="my-2"></div>
 
                     <div class="row">
+                        @if (count($operationHourConflicts) > 0)
                         <div class="col-lg">
-                            @if (count($operationHourConflicts) > 0)
                             <div class="accordion mb-2" id="operationHourConflicts">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
@@ -137,11 +137,11 @@
                                     </div>
                                 </div>
                             </div>
-                            @endif
                         </div>
+                        @endif
 
+                        @if (count($courtCountConflicts) > 0)
                         <div class="col-lg">
-                            @if (count($courtCountConflicts) > 0)
                             <div class="accordion mb-2" id="courtCountConflicts">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
@@ -188,8 +188,8 @@
                                 </div>
                                 </div>
                             </div>
-                            @endif
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
