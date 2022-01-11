@@ -85,7 +85,7 @@
                     {{ "court".$booking->courtID }} from-{{ $booking->timeSlot }} to-{{ $booking->timeSlot + $booking->timeLength }} 
                     
                     {{-- if booking has not started, make the booking editable  --}}
-                    @if(($booking->dateSlot == date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }}@endif
+                    @if(($booking->dateSlot == date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd')){{ 'amandable' }} @else {{ 'not-amandable' }} @endif
 
                     {{-- if booking conflict with operation hours or number of courts --}}
                     @if (($booking->dateSlot == date('Ymd') && $booking->timeSlot > date('H')) || $booking->dateSlot > date('Ymd'))

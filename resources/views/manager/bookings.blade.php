@@ -108,6 +108,14 @@ Bookings
             display: none;
         }
 
+        .not-amandable {
+            background-color: #fcfcfc;
+        }
+
+        .not-amandable:hover {
+            cursor: default;
+        }
+
         .amandable:hover {
             background: #f5f5f5;
             cursor: pointer;
