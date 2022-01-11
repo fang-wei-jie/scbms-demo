@@ -16,7 +16,7 @@ class BookingsDashboard extends Component
 
         $settings = Valuestore::make(storage_path('app/settings.json'));
 
-        $date = $this->date != "" ?  $this->date : date('Ymd');
+        $date = $this->date != "" ?  $this->date : date('Y-m-d');
 
         $bookings = DB::table('bookings')
             ->leftJoin('users', 'users.id', '=', 'bookings.custID')
@@ -69,7 +69,7 @@ class BookingsDashboard extends Component
             "real_end" => $end_time,
             "real_courts" => $courtCountInOperation,
 
-            "date" => substr($date, 0, 4)."-".substr($date, 4, 2)."-".substr($date, 6, 2),
+            "date" => $date,
             "staffcancelable" => $settings->get('staff_cancel_booking'),
             
             "bookings" => $bookings->get(),

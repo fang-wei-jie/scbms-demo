@@ -16,7 +16,6 @@
         .event[data-court=court{{ $i }}] {
             --court: court{{ $i }};
         }
-
         @endfor
 
         @for ($time = $start; $time <= $end; $time++)
@@ -35,7 +34,6 @@
         .event[data-end="{{ $time }}"] {
             --end-time: line-{{ $time }};
         }
-
         @endfor
     </style>
 
@@ -125,4 +123,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#dateSlot").val({{ $date }})
+            var date = document.getElementById("dateSlot")
+            var event = new Event("input")
+            date.dispatchEvent(event)
+        })
+    </script>
 </div>
