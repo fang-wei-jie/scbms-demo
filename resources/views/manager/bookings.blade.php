@@ -61,8 +61,7 @@ Bookings
         .event {
             margin: 2px;
             padding: 0.5em;
-            background: white;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 2px 2px rgba(0, 0, 0, 0.1);
+            background-color: #F8F9FA;
             border-radius: 4px;
         }
 
@@ -108,16 +107,32 @@ Bookings
             display: none;
         }
 
-        .not-amandable {
-            background-color: #fcfcfc;
-        }
-
         .not-amandable:hover {
             cursor: default;
         }
 
+        .amandable {
+            position: relative;
+        }
+
+        .amandable::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0; 
+            right: 0;
+            opacity: 0;
+            border-radius: 4px;
+            box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1);
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .amandable:hover::after {
+            opacity: 1;
+        }
+
         .amandable:hover {
-            background: #f5f5f5;
             cursor: pointer;
         }
 
