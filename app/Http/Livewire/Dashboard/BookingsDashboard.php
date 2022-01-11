@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Spatie\Valuestore\Valuestore;
@@ -59,11 +60,60 @@ class BookingsDashboard extends Component
         $courtCountInOperation = (int) $settings->get('courts_count');
         $courts = ($lastCourtIDinTable > $courtCountInOperation) ? $lastCourtIDinTable : $courtCountInOperation;
 
+        // Get Dates Of Conflicting Bookings Found
+        // The following code is modified from SettingsController.php, it contains reduced instructions
+        // query for bookings that conflicts with new operation hours
+        $operationHourConflicts = DB::table('bookings')
+            ->select('dateSlot')
+            ->where(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('dateSlot', '>', date('Ymd')) // for bookings after today
+                    ->where(function($query) use ($start_time, $end_time){
+                        $query
+                            ->where('timeSlot', '<', $start_time) // for bookings that starts earlier than new start time
+                            ->orWhere('timeSlot', '>', $end_time) // for bookings that starts later than new end time
+                            ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+                    });
+                })
+            ->orWhere(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('dateSlot', '=', date('Ymd')) // for bookings today
+                    ->where('timeSlot', '>', date('H')) // for bookings that had not started, excluding the current hour
+                    ->where(function($query) use ($start_time, $end_time){
+                        $query
+                            ->where('timeSlot', '<', $start_time) // for bookings that starts earlier than new start time
+                            ->orWhere('timeSlot', '>=', $end_time) // for bookings that starts later or same as the new end time
+                            ->orWhereRaw('(timeSlot + timeLength - 1) >= '. $end_time); // for bookings that ends later than new end time
+                    });
+                })
+            ->where('status_id', 1) // paid bookings only
+            ->get();
+
+        // query for bookings that conflicts with new number of courts
+        $courtCountConflicts = DB::table('bookings')
+            ->select('dateSlot')
+            ->where(function($query) use ($start_time, $end_time){
+                $query
+                    ->where('dateSlot', '>', date('Ymd')) // for bookings after today
+                    ->orWhere(function($query) use ($start_time, $end_time){
+                        $query
+                            ->where('dateSlot', '=', date('Ymd')) // for bookings today
+                            ->where('timeSlot', '>', date('H')); // for bookings that had not started, excluding the current hour
+                        });
+                })
+            ->where('status_id', 1) // paid bookings only
+            ->where('courtID', '>', $settings->get('courts_count')) // for bookings with court number bigger than this
+            ->get();
+
+        // sort array (merge both query and make the result unique)
+        $conflictDates = Arr::sort($operationHourConflicts->merge($courtCountConflicts)->unique()->all());
 
         return view('livewire.dashboard.bookings-dashboard', [
             "start" => $start,
             "end" => $end,
             "courts" => $courts,
+
+            "conflict_dates" => $conflictDates,
 
             "real_start" => $start_time,
             "real_end" => $end_time,

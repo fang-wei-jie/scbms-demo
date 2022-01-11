@@ -139,6 +139,13 @@ Bookings
         .event:hover .indicator {
             display: block;
         }
+
+        .date-card {
+            margin: 2px;
+            padding: 0.5em;
+            border-radius: 4px;
+        }
+
 </style>
 @endsection
 

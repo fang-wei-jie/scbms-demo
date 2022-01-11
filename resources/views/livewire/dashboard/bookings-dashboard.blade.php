@@ -39,20 +39,50 @@
 
     <input type="text" id="staff-cancel-able" value="{{ $staffcancelable }}" style="display: none">
 
-    <div class="row align-items-center justify-content-end">
+    <div class="row align-items-center @if(count($conflict_dates) != 0) justify-content-between @else justify-content-end @endif ">
 
+        {{-- print dates with booking conflict --}}
+        @if (count($conflict_dates) != 0)
         <div class="col-auto">
-            <div class="spinner-border" role="status" wire:loading>
-                <span class="visually-hidden">Loading...</span>
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <span class="fw-bold">
+                        Conflicts Found On
+                    </span>    
+                </div>
+
+                @foreach ($conflict_dates as $conflict_date)
+                <div class="col-auto">
+                    <div class="date-card bg-danger text-white">
+                        {{ substr($conflict_date->dateSlot, 6, 2) . "/" . substr($conflict_date->dateSlot, 4, 2) . "/" . substr($conflict_date->dateSlot, 0, 4) }}
+                    </div>
+                </div>
+                @endforeach
             </div>
-            <span wire:loading.remove>
-                Updated on {{ date('H:i:s') }}
-            </span>
         </div>
+        @else
+            &nbsp;
+        @endif
 
         <div class="col-auto">
-            <input type="date" class="form-control mb-1" id="dateSlot" name="dateSlot" required wire:model="date" value="{{ $date }}">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="spinner-border" role="status" wire:loading>
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <span wire:loading.remove>
+                        Updated on {{ date('H:i:s') }}
+                    </span>
+                </div>
+
+                <div class="col-auto">
+                    <input type="date" class="form-control mb-1" id="dateSlot" name="dateSlot" required wire:model="date" value="{{ $date }}">
+                </div>
+            </div>
         </div>
+
     </div>
 
     <div class="row">
