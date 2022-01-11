@@ -377,11 +377,7 @@
 
                                     @error('logo')
                                     <div class="alert alert-danger" role="alert">
-                                        @if(str_contains($message, "dimensions"))
-                                            {{ "The logo should be 128x128 in resolution" }}
-                                        @else
-                                            {{ $message }}
-                                        @endif
+                                        {{ $message }}
                                     </div>
                                     @enderror
                                     
@@ -393,7 +389,7 @@
                                             <div class="form-control">
                                                 <label class="mimic-floating mt-1" for="logo"">Upload New Logo</label>
                                                 <input id="logo" class="form-control form-control-sm form-control-file mb-1" type="file" name="logo">
-                                                <small>PNG at 128x128 resolution, with transparent background preffered</small>
+                                                <small>PNG with 1:1 ratio required, transparent background preffered</small>
                                             </div>
                                         </div>
                                     </div>

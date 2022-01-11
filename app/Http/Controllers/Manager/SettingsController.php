@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Valuestore\Valuestore;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 
 class SettingsController extends Controller
 {
@@ -141,12 +142,15 @@ class SettingsController extends Controller
             $settings->put('checkin_terminal', $request->checkin_terminal == null ? '0' : '1');
 
             if ($request->hasFile('logo')) {
-                $this -> validate($request, ["logo" => 'mimes:png','dimensions:width=128,height=128']);
+                // check if image is PNG format, then is it 1:1 ratio
+                $this -> validate($request, ["logo" => 'mimes:png|dimensions:ratio=1']);
 
+                // save image
                 $file_name = "customer_favicon." . $request->logo->extension();
                 $request->logo->move(public_path('favicon'), $file_name);
 
-                $settings->put('navbar_customer_logo', "favicon/".$file_name);
+                // resize image to 128 * 128
+                Image::make('favicon/customer_favicon.png')->resize(128, 128)->save('favicon/customer_favicon.png');
             }
 
             $settings->put('navbar_customer_color', $request->customer_navbar_color);
@@ -158,7 +162,7 @@ class SettingsController extends Controller
 
         }
 
-        return redirect() -> route('manager.settings');
+        return back();
 
     }
 }
