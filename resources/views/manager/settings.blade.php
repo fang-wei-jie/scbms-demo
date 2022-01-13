@@ -91,6 +91,18 @@
 @section('body')
     <div class="container">
 
+        {{-- Enter Key Prevented Toast --}}
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div id="enter-prevent" class="toast align-items-center @if(str_contains($settings->get('navbar_manager_text_class'), "light")) {{ "text-dark" }} @else {{ "text-white" }} @endif border-0" style="background-color: {{ $settings->get('navbar_manager_color') }}" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Please click the save changes button to save your changes
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-xl-10">
                 <form action="{{ route('manager.settings') }}" enctype="multipart/form-data" method="post" autocomplete="off">

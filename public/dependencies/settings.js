@@ -1,5 +1,17 @@
 $(document).ready(function() {
 
+    // prevent keying in enter as it triggers color picker rather than saving the values
+    $(document).keypress(
+        function(event){
+            if (event.which == '13') {
+                event.preventDefault();
+                
+                // initialize and call the toast
+                var toast = new bootstrap.Toast(document.getElementById("enter-prevent"))
+                toast.show()
+            }
+    });
+
     // Initialize Coloris  Color Picker
     Coloris({
       
