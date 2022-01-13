@@ -145,6 +145,7 @@ class MyBookingsController extends Controller
                 'start_time' => $start_time,
                 'end_time' => $end_time,
                 'number_of_courts' => $number_of_courts,
+                'phone' => $settings->get('phone'),
             ]);
         
         } else {

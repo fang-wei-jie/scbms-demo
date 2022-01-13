@@ -42,79 +42,109 @@ My Bookings
         <div id="data-wrapper">
     
             @foreach ($today_bookings as $list)
+
+                @php
+                    $conflict_type = "";
+
+                    if (($list->dateSlot == date('Ymd') && $list->timeSlot > date('H')) || $list->dateSlot > date('Ymd')) {
+                        if ($list->courtID > $number_of_courts && (($list->dateSlot == date("Ymd") && $list->timeSlot > date("H") && ($list->timeSlot < $start_time || $list->timeSlot >= $end_time || ($list->timeSlot + $list->timeLength) > $end_time)) || ($list->dateSlot > date("Ymd") && ($list->timeSlot < $start_time || $list->timeSlot >= $end_time || ($list->timeSlot + $list->timeLength) > $end_time)))) {
+                            $conflict_type = "tc";
+                        } else if ($list->courtID > $number_of_courts) {
+                            $conflict_type = "c";
+                        } else if (($list->dateSlot == date("Ymd") && $list->timeSlot > date("H") && ($list->timeSlot < $start_time || $list->timeSlot >= $end_time || ($list->timeSlot + $list->timeLength) > $end_time)) || ($list->dateSlot > date("Ymd") && ($list->timeSlot < $start_time || $list->timeSlot >= $end_time || ($list->timeSlot + $list->timeLength) > $end_time))) {
+                            $conflict_type = "t";
+                        }
+                    }
+                @endphp
     
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-parent="accordian" data-bs-toggle="collapse" data-bs-target="#accordian{{ $list->bookingID }}" aria-expanded="true" aria-controls="accordian{{ $list->bookingID }}">
                             <div class="col">
 
-                                {{-- If booking conflict found --}}
-                                @if ($start_time > $list->timeSlot || $end_time < ($list->timeSlot + $list->timeLength))
-                                    <div class="row align-items-center mt-1">
-                                        <div class="col-auto">
-                                            <i class="bi bi-exclamation-circle-fill text-danger"></i>
-                                        </div>
-                                        <div class="col">
-
-                                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                                            <br>
-                                            Court {{ $list->courtID }} - {{ $list->rateName }} rate
-                                            <br>
-
-                                            <span style="color: red">
-                                                New operation hours may affect your booking
-                                            </span>
-
-                                        </div>
-                                    </div>
-                                @elseif ($number_of_courts < $list->courtID)
-                                    <div class="row align-items-center mt-1">
-                                        <div class="col-auto">
-                                            <i class="bi bi-exclamation-circle-fill text-danger"></i>
-                                        </div>
-                                        <div class="col">
-
-                                            {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                            {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                                            <br>
-                                            Court {{ $list->courtID }} - {{ $list->rateName }} rate
-                                            <br>
-
-                                            <span style="color: red">
-                                                New number of courts may affect your booking
-                                            </span>
-
-                                        </div>
-                                    </div>
-                                @else
-                                    {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
-                                    {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
-                                    <br>
-                                    Court {{ $list->courtID }} - {{ $list->rateName }} rate
-                                @endif
+                                {{-- booking detail overview --}}
+                                {{ substr($list->dateSlot, 6, 2) }}/{{ substr($list->dateSlot, 4, 2) }}/{{ substr($list->dateSlot, 0, 4) }}
+                                {{ $list->timeSlot }}:00 - {{ ($list->timeSlot + $list->timeLength) }}:00
+                                <br>
+                                Court {{ $list->courtID }} - {{ $list->rateName }} rate
 
                             </div>
+
                             <div class="col-auto me-3">
-                                @if ($list->status_id == 0)
-                                    {{-- not paid --}}
-                                    <h4><span class="badge bg-danger">Unpaid</span></h4>
-                                @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot == date('H') || ($list->timeSlot + $list->timeLength - 1) <= date('H')))
-                                    {{-- same date and same hour --}}
-                                    <h4><span class="badge bg-primary">Current</span></h4>
-                                @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
-                                    {{-- same date and happening in less than 2 hour --}}
-                                    <h4><span class="badge bg-primary">Soon</span></h4>
-                                @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
-                                    {{-- same date but passed this hour, or older than today --}}
-                                    <h4><span class="badge bg-secondary">Past</span></h4>
-                                @endif
+                                <h4>
+
+                                    @if($conflict_type != "")
                                     
+                                    {{-- if booking is conflicted, display warning labels --}}
+                                    <span class="badge bg-danger">Conflict</span>
+
+                                    @else
+
+                                        {{-- if booking is not conflicted, use default labels --}}
+                                        @if ($list->status_id == 0)
+
+                                            {{-- not paid --}}
+                                            <span class="badge bg-danger">Unpaid</span>
+                                        
+                                        @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot == date('H') || ($list->timeSlot + $list->timeLength - 1) <= date('H')))
+                                        
+                                            {{-- same date and same hour --}}
+                                            <span class="badge bg-primary">Current</span>
+                                        
+                                        @elseif ($list->dateSlot == date('Ymd') && ($list->timeSlot - date('H') <= 2 ))
+                                        
+                                            {{-- same date and happening in less than 2 hour --}}
+                                            <span class="badge bg-primary">Soon</span>
+                                        
+                                        @elseif (($list->dateSlot == date('Ymd') && $list->timeSlot < date('H')))
+                                        
+                                            {{-- same date but passed this hour, or older than today --}}
+                                            <span class="badge bg-secondary">Past</span>
+                                        
+                                        @endif
+
+                                    @endif
+
+                                </h4>
                             </div>
                         </button>
                     </h2>
                     <div id="accordian{{ $list->bookingID }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordian">
                         <div class="accordion-body">
+
+                            {{-- if booking has conflict, display conflict details --}}
+                            @if($conflict_type != "")
+                            <div class="col-md mb-3" id="conflict_info">
+                                <div class="card py-2 bg-danger">
+                                    <div class="mx-3 my-1">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-auto">
+                                                <i class="bi bi-exclamation-circle-fill text-white"></i>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <span class="text-white fw-bold">
+                                                        @if($conflict_type == "tc")
+                                                            {{ "New Number of Courts and Operation Hours May Conflict With Your Booking" }}
+                                                        @elseif($conflict_type == "t")
+                                                            {{ "New Operation Hours May Conflict With Your Booking" }}
+                                                        @elseif($conflict_type == "c")
+                                                            {{ "New Number of Courts May Conflict With Your Booking" }}
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="text-white">
+                                                        <a class="link-light" href="tel:{{ $phone }}">Contact the owner</a> to learn more and sort out the situation. If situation had been sorted, simply ignore this message. 
+                                                    </span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+
                             <div class="row align-items-center">
     
                                 <div class="col mb-4">
