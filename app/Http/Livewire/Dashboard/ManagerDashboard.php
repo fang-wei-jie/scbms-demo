@@ -76,13 +76,7 @@ class ManagerDashboard extends Component
             ->where('status_id', '!=', 0)
             ->get();
 
-        if ($settings->get('rates_weekend_weekday') == 1) {
-            // if weekend and weekday is in use, disable normal rate
-            $rates = Rates::where('status', 1)->get()->where('id', '!=', 3);
-        } else {
-            // if weekend and weekday is not in use, enable normal rate and disable weekend weekday rate
-            $rates = Rates::where('status', 1)->get()->where('id', '!=', 1)->where('id', '!=', 2);
-        }
+        $rates = Rates::where('status', 1)->get();
 
         // get sales metric for differnt time length, this year, this month, today
         $yearSales = DB::table('bookings')

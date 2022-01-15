@@ -22,10 +22,11 @@ class ManagerRatesController extends Controller
 
         // get setting values
         $settings = Valuestore::make(storage_path('app/settings.json'));
-
+        
         // get list of default and custom rates
-        $default = Rates::where('id', '<', 4)->get();
-        $custom = Rates::where('id', '>', 3)->get();
+        $rates = Rates::all();
+        $default = $rates -> where('id', '<', 4);
+        $custom = $rates -> where('id', '>', 3);
 
         return view('manager.rates', [
             'settings' => $settings,
