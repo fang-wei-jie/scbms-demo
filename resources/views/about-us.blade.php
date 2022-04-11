@@ -24,8 +24,8 @@ About Us
     <div class="row">
         <div class="col-lg mb-3">
             <p style="text-align: justify;">
-                Located in the center of Kajang city center, we aim to provide a good bstaffton playing experience at our court. We will treat you to a cup of complimentary healthy drink after a healty session of bstaffton exercise. 
-                Established since 2022, we had always made a commitment to made the bstaffton sport accessible to all people, by pricing our bookings affordably, so that everyone can enjoy the joy of the bstaffton sport. 
+                Located on top of the hills, we aim to provide a good badminton playing experience at our court. We will treat you to a cup of complimentary healthy drink after a healty session of badminton exercise. 
+                Established since 2022, we had always made a commitment to made the badminton sport accessible to all people, by pricing our bookings affordably, so that everyone can enjoy the joy of the badminton sport. 
             </p>
         </div>
 
