@@ -1,0 +1,52 @@
+{
+    "start_time": "8",
+    "end_time": "24",
+    "courts_count": "10",
+    "prebook_days_ahead": "14",
+    "booking_cut_off_time": "15",
+    "precheckin_duration": "30",
+    "payment_grace_period": "5",
+    "name": "NewEra Badminton",
+    "domain": "neb",
+    "registration": null,
+    "phone": "+60123456789",
+    "address": "Jln Datuk Mohammad Musa, 94300 Kota Samarahan, Sarawak",
+    "map_lat": "1.4666795",
+    "map_long": "110.4229593",
+    "navbar_customer_color": "rgb(245, 245, 245)",
+    "navbar_staff_color": "rgb(220, 53, 69)",
+    "navbar_manager_color": "rgb(33, 37, 41)",
+    "navbar_customer_text_class": "navbar-light",
+    "navbar_staff_text_class": "navbar-dark",
+    "navbar_manager_text_class": "navbar-dark",
+    "navbar_customer_logo": "favicon\/customer_favicon.png",
+    "navbar_manager_logo": "favicon\/file-person.png",
+    "navbar_staff_logo": "favicon\/person-badge.png",
+    "staff_cancel_booking": "1",
+    "staff_role": "1",
+    "staff_sales_report": "1",
+    "rates_weekend_weekday": "1",
+    "rates_editable_staff": "1",
+    "checkin_terminal": "0",
+    "operation_hours": {
+        "monday": [],
+        "tuesday": [
+            "08:00-22:00"
+        ],
+        "wednesday": [
+            "08:00-22:00"
+        ],
+        "thursday": [
+            "08:00-22:00"
+        ],
+        "friday": [
+            "08:00-24:00"
+        ],
+        "saturday": [
+            "08:00-24:00"
+        ],
+        "sunday": [
+            "08:00-24:00"
+        ]
+    }
+}
