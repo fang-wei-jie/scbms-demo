@@ -63,6 +63,16 @@ class ManagerRatesController extends Controller
                     'condition' => $request->condition,
                 ]);
 
+                // create a new record in rate records to store rate detail(s) change
+                RateRecords::create([
+
+                    'name' => $request->name,
+                    'rateID' => $request->id,
+                    'price' => $request->price,
+                    'condition' => $request->condition,
+
+                ]);
+
             } else {
                 // for rates that do change name (that excludes default rates)
 
